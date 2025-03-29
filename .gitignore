@@ -176,3 +176,5 @@ cython_debug/
 # external template
 /HtmlTemplate
 *pyc
+.idea
+note.txt

@@ -30,13 +30,14 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="عنوان محصول ")
     price = models.BigIntegerField(verbose_name="مبلغ")
     banner = models.ImageField(upload_to="Images/product", verbose_name="تصویر محصول")
-    is_available = models.BooleanField(verbose_name="موجودی", default=True)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name="برند")
     categories = models.ManyToManyField(ProductCategory, verbose_name="دسته بندی ها")
     count = models.IntegerField(verbose_name="تعداد موجودی", validators=[
             MinValueValidator(0, "حداقل موجودی کالا ۰ میباشد!")
     ], null=True)
     is_active = models.BooleanField(verbose_name="فعال", default=True)
+    is_available = models.BooleanField(verbose_name="موجودی", default=True)
+    is_new = models.BooleanField(verbose_name="کالا جدید است", default=True)
 
     class Meta:
         verbose_name = "کالا"

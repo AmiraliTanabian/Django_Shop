@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import SiteSetting
+from .models import SiteSetting, Slider
 
 def footer_partial(request):
     site_setting = SiteSetting.objects.filter(is_active=True).first()
@@ -15,3 +15,11 @@ def header_partial(request):
         "setting":site_setting,
     }
     return render(request, "components/header_component.html", context)
+
+
+def slider_partial(request):
+    sliders = Slider.objects.filter(is_active=True)
+    context = {
+        "sliders":sliders,
+    }
+    return render(request, "components/slider.html", context)

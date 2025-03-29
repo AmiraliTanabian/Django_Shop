@@ -30,7 +30,9 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="companyinfo">
-                        <img src="{{ setting.site_logo.url }}" alt="site-logo">
+                        <a href="{% url "home_page" %}">
+                            <img src="{{ setting.site_logo.url }}" alt="site-logo">
+                        </a>
                         <h4>درباره ما :</h4>
                         <p>
                             {{ setting.about_us }}

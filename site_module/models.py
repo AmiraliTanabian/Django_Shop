@@ -19,3 +19,17 @@ class SiteSetting(models.Model):
     def __str__(self):
         return self.site_name
 
+class Slider(models.Model):
+    title = models.CharField(max_length=50, verbose_name="عنوان اسلایدر")
+    banner = models.ImageField(upload_to="Images/slider", verbose_name="عکس اسلایدر")
+    text = models.CharField(max_length=255, verbose_name="متن اسلایدر")
+    url = models.URLField(verbose_name="آدرس اسلایدر")
+    btn_text = models.CharField(max_length=25, verbose_name="متن دکمه اسلایدر")
+    is_active = models.BooleanField(verbose_name="فعال بودن اسلایدر", default=True)
+
+    class Meta:
+        verbose_name = "اسلایدر"
+        verbose_name_plural = "اسلایدر ها"
+
+    def __str__(self):
+        return self.title

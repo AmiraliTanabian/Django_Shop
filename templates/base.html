@@ -1,3 +1,4 @@
+{% load render_partial %}
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -8,8 +9,8 @@
     {% include "components/style_references.html" %}
 </head>
 <body>
-    {% include "components/header_component.html" %}
+    {% render_partial "site_module.views.header_partial" %}
     {% block content %}{% endblock %}
-    {% include 'components/footer_components.html' %}
+    {% render_partial 'site_module.views.footer_partial' %}
 </body>
 </html>

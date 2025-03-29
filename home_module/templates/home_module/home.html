@@ -3,6 +3,15 @@
     صفحه اصلی | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
+
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="success-box" id="error-message">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <section id="slider"><!--slider-->
 		<div class="container">
 			<div class="row">

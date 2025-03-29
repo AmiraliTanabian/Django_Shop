@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "site_module",
     'about_us_module',
     "contact_module",
+    "product_module",
     # External apps
     'django_render_partial'
 ]

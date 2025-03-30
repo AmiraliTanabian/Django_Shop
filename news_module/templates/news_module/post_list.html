@@ -36,14 +36,19 @@
 						</div>
                         {% endfor %}
 
-						<div class="pagination-area">
+                    {% if is_paginated %}
+						<div class="pagination-area" style="display: flex; justify-content: center">
 							<ul class="pagination">
-								<li><a href="" class="active">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-							</ul>
+                                {% if page_obj.has_previous %}
+								    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+                                {% endif %}
+								<li><a href="" class="active">صفحه {{ page_obj.number }} از {{ paginator.num_pages }}</a></li>
+                                {% if page_obj.has_next %}
+								    <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+							    {% endif %}
+                            </ul>
 						</div>
+                    {% endif %}
 					</div>
 				</div>
 

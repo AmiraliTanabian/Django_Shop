@@ -7,6 +7,10 @@ class PostListView(ListView):
     template_name = "news_module/post_list.html"
     model = Article
     context_object_name = "news"
+    paginate_by = 3 
+
+    def get_queryset(self):
+        return self.model.objects.filter(is_active=True)
 
 
 class PostDetailView(DetailView):

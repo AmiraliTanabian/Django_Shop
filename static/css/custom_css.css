@@ -33,3 +33,39 @@
     width: 90%;
     max-width: 400px;
 }
+
+
+.empty-search-h {
+    margin-bottom: 0;
+    color: #696763;
+    font-size: 16px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.empty-search-btn{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.empty-search-btn:hover {
+    a{
+        color:white;
+    }
+    color:white;
+}
+
+
+.empty-search-btn-box{
+    margin-top: 2.5%;
+    display: flex;
+    justify-content: center;
+}
+
+.empty-search-btn-box a {
+    text-decoration: none;
+    color: #696763;
+    margin-right: 5px;
+}

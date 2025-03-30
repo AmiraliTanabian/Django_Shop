@@ -31,7 +31,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="نویسندخ مقاله")
     categories = models.ManyToManyField(ArticleCategories, verbose_name="دسته بندی ها")
     image = models.ImageField(upload_to="Images/BLog", verbose_name="عکس اصلی")
-    tags = models.ManyToManyField(ArticleTag, verbose_name="تگ ها")
+    tags = models.ManyToManyField(ArticleTag, verbose_name="تگ ها", related_name="article_list_by_tag")
     short_info = models.CharField(max_length=255, verbose_name="توضیحات کوتاه")
     text = models.TextField(verbose_name="متن خبر")
     data = jDateTimeField(verbose_name="تاریخ و زمان", auto_now=True)

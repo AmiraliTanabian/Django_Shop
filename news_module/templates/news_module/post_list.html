@@ -32,7 +32,7 @@
 							<p>
                                 {{ news_obj.short_info }}
                             </p>
-							<a class="btn btn-primary" href="">ادامـه مطلب</a>
+							<a class="btn btn-primary" href="{% url "post_detail_page" pk=news_obj.id %}">ادامـه مطلب</a>
 						</div>
                         {% endfor %}
 

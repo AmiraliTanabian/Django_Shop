@@ -1,0 +1,44 @@
+{% if messages %}
+    {% for msg in messages %}
+        {% if msg.tags == "success" %}
+            <div id="error-message" class="success-box" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #3fb33f;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 9999;
+    width: 90%;
+    max-width: 400px; ">
+                {{ msg }}
+            </div>
+        {% endif %}
+        {% if msg.tags == "errors" %}
+            <div id="error-message" class="error-box" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff4d4d;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 9999;
+    width: 90%;
+    max-width: 400px;">
+                {{ msg }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -72,7 +72,7 @@ class TagPageView(ListView):
     template_name = "news_module/tag_blog_page.html"
     model = Article
     context_object_name = "posts"
-    paginate_by = 5
+    paginate_by = 2
 
     def get_queryset(self):
         slug = self.kwargs["slug"]

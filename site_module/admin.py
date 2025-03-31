@@ -11,6 +11,5 @@ class SliderAdmin(admin.ModelAdmin):
     list_editable = ["is_active"]
     list_filter = ["is_active"]
 
-
 admin.site.register(SiteSetting, SiteSettingAdmin)
 admin.site.register(Slider, SliderAdmin)

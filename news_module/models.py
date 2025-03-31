@@ -4,7 +4,7 @@ from django_jalali.db.models import jDateTimeField
 
 class ArticleTag(models.Model):
     tag_name = models.CharField(max_length=100, verbose_name="نام تگ")
-    slug = models.SlugField(max_length=100, verbose_name="اسلاگ", null=True, allow_unicode=True)
+    slug = models.SlugField(max_length=100, verbose_name="اسلاگ", null=True, unique=True)
     is_active = models.BooleanField(default=True, verbose_name="فعال")
 
     class Meta:
@@ -19,7 +19,7 @@ class ArticleCategories(models.Model):
                                verbose_name="دسته بندی والد(اختیاری)", null=True, blank=True,
                                related_name="category_child")
     title = models.CharField(max_length=25, verbose_name="نام دسته بندی")
-    slug = models.SlugField(max_length=25, verbose_name="اسلاگ", null=True, allow_unicode=True)
+    slug = models.SlugField(max_length=25, verbose_name="اسلاگ", null=True, unique=True)
     is_active = models.BooleanField(default=True, verbose_name="فعال")
 
     def __str__(self):

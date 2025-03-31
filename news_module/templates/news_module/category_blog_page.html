@@ -8,15 +8,15 @@
 			<div class="row">
 				<div class="col-sm-9">
 					<div class="blog-post-area">
-						<h2 class="title text-center">آخریـن مقالات</h2>
-                        {% for news_obj in news %}
+						<h2 class="title text-center">مقالات برای دسته بندی {{ cat_title }} </h2>
+						    {% for post in posts %}
 						    <div class="single-blog-post">
-							<h3>{{ news_obj.title }}</h3>
+							<h3>{{ post.title }}</h3>
 							<div class="post-meta">
 								<ul>
-									<li><i class="fa fa-user"></i>{{ news_obj.author }}</li>
-									<li><i class="fa fa-clock-o"></i>{{ news_obj.data.time }}</li>
-									<li><i class="fa fa-calendar"></i>{{ news_obj.data.date|jformat:"%Y/%m/%d"   }}</li>
+									<li><i class="fa fa-user"></i>{{ post.author }}</li>
+									<li><i class="fa fa-clock-o"></i>{{ post.data.time }}</li>
+									<li><i class="fa fa-calendar"></i>{{ post.data.date|jformat:"%Y/%m/%d"   }}</li>
 								</ul>
 								<span>
 										<i class="fa fa-star"></i>
@@ -27,12 +27,12 @@
 								</span>
 							</div>
 							<a href="">
-								<img src="{{ news_obj.image.url }}" alt="{{ news_obj.title }}">
+								<img src="{{ post.image.url }}" alt="{{ post.title }}">
 							</a>
 							<p>
-                                {{ news_obj.short_info }}
+                                {{ post.short_info }}
                             </p>
-							<a class="btn btn-primary" href="{% url "post_detail_page" pk=news_obj.id %}">ادامـه مطلب</a>
+							<a class="btn btn-primary" href="{% url "post_detail_page" pk=post.id %}">ادامـه مطلب</a>
 						</div>
                         {% endfor %}
 
@@ -83,7 +83,7 @@
     									<div class="panel-body">
     										<ul>
                                                 {% for child in cat.category_child.all %}
-    											    <li><a href="{% url "category_blog_page" slug=child .slug %}">{{ child }}</a></li>
+    											    <li><a href="{% url "category_blog_page" slug=child.slug %}">{{ child }}</a></li>
                                                 {% endfor %}
     										</ul>
     									</div>

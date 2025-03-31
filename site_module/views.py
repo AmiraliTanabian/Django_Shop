@@ -10,9 +10,11 @@ def footer_partial(request):
 
 
 def header_partial(request):
+    print(request.path)
     site_setting = SiteSetting.objects.filter(is_active=True).first()
     context = {
         "setting":site_setting,
+        "path": request.path,
     }
     return render(request, "components/header_component.html", context)
 

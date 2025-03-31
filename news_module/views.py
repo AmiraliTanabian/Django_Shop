@@ -31,6 +31,11 @@ class PostDetailView(DetailView):
         stats = self.model.objects.aggregate(Max("id"), Min("id"))
         context["max_id"] = stats["id__max"]
         context["min_id"] = stats["id__min"]
+
+        cats = ArticleCategories.objects.all()
+        context["cats"] = cats
+
+
         return context
 
 class CategoryPageView(ListView):

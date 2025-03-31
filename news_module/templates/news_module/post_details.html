@@ -62,7 +62,14 @@
 						<ul class="tag">
 							<li>برچسب :</li>
                             {% for tag in news.tags.all %}
-							    <li><a class="color" href="{% url "tag_blog_page" slug=tag.slug %}">{{ tag.tag_name }}<span>/</span></a></li>
+							    <li><a class="color" href="{% url "tag_blog_page" slug=tag.slug %}">{{ tag.tag_name }}
+                                    <span>/</span></a></li>
+                            {% endfor %}
+                            <br>
+                            <li>دسته بندی :</li>
+                            {% for cat in current_cats %}
+                                <li><a class="color" href="{% url "category_blog_page" slug=cat.slug %}">{{ cat.title }}
+                                    <span>/</span></a></li>
                             {% endfor %}
 						</ul>
 					</div><!--/rating-area-->

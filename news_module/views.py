@@ -35,6 +35,9 @@ class PostDetailView(DetailView):
         cats = ArticleCategories.objects.all()
         context["cats"] = cats
 
+        current_post = Article.objects.get(id=self.kwargs['pk'])
+        current_cats = current_post.categories.all()
+        context["current_cats"] = current_cats
 
         return context
 

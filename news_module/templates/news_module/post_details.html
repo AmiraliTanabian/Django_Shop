@@ -57,7 +57,7 @@
 						<ul class="tag">
 							<li>برچسب :</li>
                             {% for tag in news.tags.all %}
-							    <li><a class="color" href="">{{ tag.tag_name }}<span>/</span></a></li>
+							    <li><a class="color" href="{% url "tag_blog_page" slug=tag.slug %}">{{ tag.tag_name }}<span>/</span></a></li>
                             {% endfor %}
 						</ul>
 					</div><!--/rating-area-->

@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load jformat %}
 {% block title %}
-    دسته بندی {{ cat_title }} | فروشگاه اینترنتی
+    تگ {{ tag_title }} | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-9">
 					<div class="blog-post-area">
-						<h2 class="title text-center">مقالات برای دسته بندی {{ cat_title }} </h2>
+						<h2 class="title text-center">مقالات برای تگ {{ tag_title }} </h2>
 						    {% for post in posts %}
 						    <div class="single-blog-post">
 							<h3>{{ post.title }}</h3>

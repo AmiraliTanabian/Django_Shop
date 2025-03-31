@@ -83,7 +83,7 @@
     									<div class="panel-body">
     										<ul>
                                                 {% for child in cat.category_child.all %}
-    											    <li><a href="{% url "category_blog_page" slug=child .slug %}">{{ child }}</a></li>
+    											    <li><a href="{% url "category_blog_page" slug=child.slug %}">{{ child }}</a></li>
                                                 {% endfor %}
     										</ul>
     									</div>

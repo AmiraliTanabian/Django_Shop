@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView
 from news_module.models import Article, ArticleCategories, ArticleTag
+from django.db.models.aggregates import Min, Max
 
 
 
@@ -22,6 +23,15 @@ class PostDetailView(DetailView):
     template_name = "news_module/post_details.html"
     context_object_name = "news"
     model = Article
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        stats = self.model.objects.aggregate(Max("id"), Min("id"))
+        context["max_id"] = stats["id__max"]
+        context["min_id"] = stats["id__min"]
+        return context
 
 class CategoryPageView(ListView):
     template_name = "news_module/category_blog_page.html"

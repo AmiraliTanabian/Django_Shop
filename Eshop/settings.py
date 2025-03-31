@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # External apps
     'django_render_partial',
     'django_jalali',
+    'django_template_maths',
 ]
 
 MIDDLEWARE = [

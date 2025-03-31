@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load jformat %}
+{% load django_template_maths %}
 
 {% block title %}
 {% endblock %}
@@ -35,8 +36,12 @@
                             </p>
 							<div class="pager-area">
 								<ul class="pager pull-left">
-									<li><a href="#">قبلی</a></li>
-									<li><a href="#">بعـدی</a></li>
+                                    {% if min_id != news.id %}
+									<li><a href="{% url "post_detail_page" pk=news.id|sub:1 %}">قبلی</a></li>
+                                    {% endif %}
+                                    {% if max_id != news.id %}
+                                    <li><a href="{% url "post_detail_page" pk=news.id|add:1 %}">بعـدی</a></li>
+                                    {% endif %}
 								</ul>
 							</div>
 						</div>

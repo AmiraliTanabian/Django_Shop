@@ -15,6 +15,9 @@ class ArticleTag(models.Model):
         return self.tag_name
 
 class ArticleCategories(models.Model):
+    parent = models.ForeignKey('self', on_delete=models.CASCADE,
+                               verbose_name="دسته بندی والد(اختیاری)", null=True, blank=True,
+                               related_name="category_child")
     title = models.CharField(max_length=25, verbose_name="نام دسته بندی")
     slug = models.SlugField(max_length=25, verbose_name="اسلاگ", null=True, allow_unicode=True)
     is_active = models.BooleanField(default=True, verbose_name="فعال")

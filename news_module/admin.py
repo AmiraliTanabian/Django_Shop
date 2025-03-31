@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, ArticleTag, ArticleCategories
+from .models import Article, ArticleTag, ArticleCategories, ArticleComment
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ["title", "short_info", "is_active"]
@@ -19,6 +19,12 @@ class ArticleCategoriesAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {"slug":("title",)}
 
+class ArticleCommentsAdmin(admin.ModelAdmin):
+    list_display = ["user", "parent", "is_active"]
+    list_editable = ["is_active"]
+    list_filter = ["is_active"]
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(ArticleTag, ArticleTagAdmin)
 admin.site.register(ArticleCategories, ArticleCategoriesAdmin)
+admin.site.register(ArticleComment, ArticleCommentsAdmin)

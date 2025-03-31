@@ -1,6 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django_jalali.db.models import jDateTimeField
+from django.contrib.auth import get_user_model
+
+class User(AbstractUser):
+    about_user = models.TextField(null=True, blank=True, verbose_name="درباره کاربر")
+    profile_image = models.ImageField(upload_to="Images/user_profile", verbose_name="آواتار کاربر")
+
+
+    def __str__(self):
+        if self.first_name is not '' and self.last_name is not '':
+            return self.get_full_name()
+
+        if self.username is not None:
+            return self.username
+        return self.email
+
+    class Meta:
+        verbose_name = "کاربر"
+        verbose_name_plural = "کاربر ها"
+
+User_model = get_user_model()
 
 class ArticleTag(models.Model):
     tag_name = models.CharField(max_length=100, verbose_name="نام تگ")
@@ -31,7 +51,7 @@ class ArticleCategories(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=300, verbose_name="عنوان")
-    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="نویسندخ مقاله")
+    author = models.ForeignKey(User_model, on_delete=models.PROTECT, verbose_name="نویسندخ مقاله")
     categories = models.ManyToManyField(ArticleCategories, verbose_name="دسته بندی ها")
     image = models.ImageField(upload_to="Images/BLog", verbose_name="عکس اصلی")
     tags = models.ManyToManyField(ArticleTag, verbose_name="تگ ها", related_name="article_list_by_tag")
@@ -46,3 +66,16 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class ArticleComment(models.Model):
+    user = models.ForeignKey(User_model, on_delete=models.CASCADE, verbose_name="کاربر")
+    parent = models.ForeignKey("self", on_delete=models.CASCADE,
+                               verbose_name="نظر والد (اختیاری)")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="مقاله")
+    text = models.TextField(verbose_name="متن نظر")
+    created_at = jDateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=False, verbose_name="فعال بودن نظر")
+
+    class Meta:
+        verbose_name = "نظر برای مقاله"
+        verbose_name_plural = "نظرات برای مقاله ها"

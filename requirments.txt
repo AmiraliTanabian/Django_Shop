@@ -1,0 +1,4 @@
+django-jalali==7.4.0
+django-recaptcha==4.0.0
+django-render-partial==0.4
+django-template-maths==0.2.0

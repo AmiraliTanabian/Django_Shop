@@ -142,4 +142,4 @@ MEDIA_URL = "media/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'news_module.User'
+AUTH_USER_MODEL = 'auth_module.User'

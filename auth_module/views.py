@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from . import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
 
 
 class loginView(FormView):
@@ -31,3 +33,16 @@ class loginView(FormView):
 class registerView(View):
     def get(self, request):
         return render(request, "auth_module/register_account.html")
+
+class logoutView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+    def get(self, request: HttpRequest):
+        username = request.user.username
+        logout(request)
+        msg = f"""
+        کاربر {username}
+        شما با موفقیت خارج شدید.
+        از اینکه وقت خود را در سایت ما گذراندید ممنونیم :)
+        """
+        messages.success(request, msg)
+        return redirect("home_page")

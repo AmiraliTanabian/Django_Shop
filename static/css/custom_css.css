@@ -69,3 +69,10 @@
     color: #696763;
     margin-right: 5px;
 }
+
+.user-profile-blog{
+    border-radius: 50%;
+    height: 120px !important;
+    width: 120px !important;
+    object-fit: cover;
+}

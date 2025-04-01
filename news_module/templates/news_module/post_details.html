@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load jformat %}
 {% load django_template_maths %}
+{% load static %}
 
 {% block title %}
 {% endblock %}
@@ -102,7 +103,12 @@
                             {% for comment in comments %}
                                     <li class="media">
                                     <a class="pull-right" href="#">
-                                        <img class="media-object" src="{{ comment.user.profile_image.url }}" alt="{{ comment.user }}">
+                                        {% if comment.user.profile_image %}
+                                            <img class="media-object user-profile-blog" src="{{ comment.user.profile_image.url }}" alt="{{ comment.user }}">
+                                        {% else %}
+                                            <img class="media-object" src="{% static 'images/blog/default-user-profile.jpg' %}" alt="{{ comment.user }}">
+                                        {% endif %}
+
                                     </a>
                                     <div class="media-body">
                                         <ul class="sinlge-post-meta">
@@ -119,7 +125,11 @@
                                 {% for answer in comment.articlecomment_set.all %}
                                     <li class="media second-media">
                                         <a class="pull-right" href="#">
-                                            <img class="media-object" src="{{ answer.user.profile_image.url }}" alt="">
+                                        {% if answer.user.profile_image %}
+                                            <img class="media-object user-profile-blog" src="{{ answer.user.profile_image.url }}" alt="{{ answer.user }}">
+                                        {% else %}
+                                            <img class="media-object" src="{% static 'images/blog/default-user-profile.jpg' %}" alt="{{ answer.user }}">
+                                        {% endif %}
                                         </a>
                                         <div class="media-body">
                                             <ul class="sinlge-post-meta">

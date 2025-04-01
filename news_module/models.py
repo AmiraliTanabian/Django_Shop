@@ -5,11 +5,12 @@ from django.contrib.auth import get_user_model
 
 class User(AbstractUser):
     about_user = models.TextField(null=True, blank=True, verbose_name="درباره کاربر")
-    profile_image = models.ImageField(upload_to="Images/user_profile", verbose_name="آواتار کاربر")
+    profile_image = models.ImageField(upload_to="Images/user_profile", verbose_name="آواتار کاربر",
+                                      null=True, blank=True)
 
 
     def __str__(self):
-        if self.first_name is not '' and self.last_name is not '':
+        if self.first_name != '' and self.last_name != '':
             return self.get_full_name()
 
         if self.username is not None:
@@ -70,7 +71,7 @@ class Article(models.Model):
 class ArticleComment(models.Model):
     user = models.ForeignKey(User_model, on_delete=models.CASCADE, verbose_name="کاربر")
     parent = models.ForeignKey("self", on_delete=models.CASCADE,
-                               verbose_name="نظر والد (اختیاری)")
+                               verbose_name="نظر والد (اختیاری)", blank=True, null=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="مقاله")
     text = models.TextField(verbose_name="متن نظر")
     created_at = jDateTimeField(auto_now_add=True)
@@ -79,3 +80,6 @@ class ArticleComment(models.Model):
     class Meta:
         verbose_name = "نظر برای مقاله"
         verbose_name_plural = "نظرات برای مقاله ها"
+
+    def __str__(self):
+        return str(self.user)

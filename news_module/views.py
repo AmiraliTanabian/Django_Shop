@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from news_module.models import Article, ArticleCategories, ArticleTag
+from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from django.db.models.aggregates import Min, Max
 
 
@@ -39,6 +39,9 @@ class PostDetailView(DetailView):
         current_cats = current_post.categories.all()
         context["current_cats"] = current_cats
 
+        current_comments = ArticleComment.objects.filter(is_active=True, article__id = self.object.pk, parent=None).prefetch_related("articlecomment_set")
+        context["comments"] = current_comments
+        print(current_comments)
         return context
 
 class CategoryPageView(ListView):

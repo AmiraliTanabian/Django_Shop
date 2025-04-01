@@ -3,19 +3,17 @@
     لاگین | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
+    {% include "components/message.html" %}
+
     <!--login form-->
     <section id="form">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="login-form">
                     <h2>ورود به حساب کاربـری :</h2>
-                    <form action="#">
-                        <input type="text" placeholder="نام کاربری">
-                        <input type="password" placeholder="رمز عبور">
-                        <span>
-                            <input type="checkbox" class="checkbox">
-                            مرا بخاطـر بسپـار
-                        </span>
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        {{ form }}
                         <span>
                             <a href="forget-password.html">رمـز عبـور خود را فراموش کرده ام</a>
                         </span>

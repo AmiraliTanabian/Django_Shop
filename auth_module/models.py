@@ -18,3 +18,18 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "کاربر"
         verbose_name_plural = "کاربر ها"
+
+class TempUser(models.Model):
+    username = models.CharField(max_length=150, verbose_name="نام کاربری")
+    password = models.CharField(max_length=150, verbose_name="رمز عبور")
+    email = models.EmailField(verbose_name="ایمیل")
+    random_string = models.CharField(max_length=72, verbose_name="عبارت فعال سازی")
+    data = models.DateTimeField(auto_now_add=True, null=True)
+
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        verbose_name = "کاربر موقت"
+        verbose_name_plural = "کاربران موقت"

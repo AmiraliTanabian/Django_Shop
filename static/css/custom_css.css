@@ -81,3 +81,12 @@
     display: flex !important;
     margin: 20px auto !important;
 }
+
+.comment-alert {
+    height: 50px;
+    border-radius:5px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

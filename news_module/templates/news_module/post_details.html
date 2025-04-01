@@ -157,9 +157,10 @@
                             {% endfor %}
 						</ul>
 					</div><!--/Response-area-->
-					<div class="replay-box">
-						<div class="row">
 
+                    {% if request.user.is_authenticated %}
+					<div class="replay-box" style="margin-bottom:35px">
+						<div class="row">
 							<div class="col-sm-8">
 								<div class="text-area">
 									<div class="blank-arrow">
@@ -191,7 +192,15 @@
 							</div>
 						</div>
 					</div><!--/Repaly Box-->
+                    {% else %}
+                        <div class="alert-danger comment-alert text-center" >
+                            <p>
+                            لطفا برای ثبت نظر ابتدا <a href="{% url "login_page" %}">لاگین</a> کنید
+                            </p>
+                        </div>
+                    {% endif %}
 				</div>
+
 
 				<div class="col-sm-3">
 					<div class="left-sidebar">
@@ -239,5 +248,4 @@
 
 			</div>
 		</div>
-
 {% endblock %}

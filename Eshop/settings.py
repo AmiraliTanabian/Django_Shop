@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "contact_module",
     "product_module",
     'news_module',
+    "auth_module",
     # External apps
     'django_render_partial',
     'django_jalali',

@@ -7,13 +7,14 @@ from . import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, Http404
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.db.models import Q
+from django.utils import timezone
 
 user_model = get_user_model()
 
@@ -120,5 +121,28 @@ class logoutView(LoginRequiredMixin, View):
         return redirect("home_page")
 
 class verifyAccount(View):
-    def get(self, request):
-        return HttpResponse("سلام")
+    def get(self, request, random_string):
+        temp_user = models.TempUser.objects.filter(random_string=random_string).first()
+
+
+        if not temp_user:
+            raise Http404
+
+        # 12 * 3600 = 12h
+        elif timezone.now().timestamp() - temp_user.date.timestamp() > 1 * 60:
+            context = {"status":"timeEnd"}
+            temp_user.delete()
+
+
+        else:
+            context = {"status":"Ok"}
+            username = temp_user.username
+            password = temp_user.password
+            email = temp_user.email
+            temp_user.delete()
+
+            UserObject = user_model(username=username, password=password, email=email)
+            UserObject.save()
+
+
+        return render(request, "auth_module/verify_result.html", context)

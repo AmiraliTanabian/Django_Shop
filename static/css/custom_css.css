@@ -76,3 +76,8 @@
     width: 120px !important;
     object-fit: cover;
 }
+
+.center-btn {
+    display: flex !important;
+    margin: 20px auto !important;
+}

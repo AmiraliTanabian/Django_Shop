@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="row">
+        {% if status == "Ok" %}
+            <div class="col">
+                <p class="text-center text-success alert-success" style="font-size: 20px">
+                    حساب کاربری شما با موفقیت فعال شد میتوانید لاگین کنید
+                </p>
+            </div>
+            <button type="button" class="btn btn-primary center-btn" style="display: flex; margin: 20px auto;">
+                <a style="color:white;" href="{% url 'login_page' %}">ورود به حساب</a>
+            </button>
+        {% elif status == "timeEnd" %}
+            <div class="col">
+                <p class="text-center text-danger alert-danger" style="font-size: 20px">
+                    لینک شما متاسفانه منقضی شده است!
+                    <br>
+                    میتوانید از لینک زیر درخواست جدید را ثبت کنید!
+                </p>
+            </div>
+            <button type="button" class="btn btn-primary center-btn" style="display: flex; margin: 20px auto;">
+                <a style="color:white;" href="{% url 'register_page' %}">ساخت حساب</a>
+            </button>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}

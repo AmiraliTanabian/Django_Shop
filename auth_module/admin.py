@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from .models import TempUser
 
 class TempUserAdmin(admin.ModelAdmin):
-    list_display = ["username", "email", "data"]
+    list_display = ["username", "email", "date"]
 
 
 admin.site.register(get_user_model())

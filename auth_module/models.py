@@ -24,7 +24,7 @@ class TempUser(models.Model):
     password = models.CharField(max_length=150, verbose_name="رمز عبور")
     email = models.EmailField(verbose_name="ایمیل")
     random_string = models.CharField(max_length=72, verbose_name="عبارت فعال سازی")
-    data = models.DateTimeField(auto_now_add=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
 
 
     def __str__(self):

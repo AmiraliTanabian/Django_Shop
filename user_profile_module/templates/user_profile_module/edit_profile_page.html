@@ -3,39 +3,103 @@
 	پروفایل کاربر
 {% endblock %}
 {% block content %}
+
+    {% include "components/message.html" %}
+
     <div class="container">
         <div class="contact-form">
             <div class="row">
-                <form class="contact-form" name="contact-form" >
+                <form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data" >
                     {% csrf_token %}
                 <div class="col-sm-8">
                     <div class="col-sm-12 form-group">
                         <label for="fileInputOnProfile">
                         {{ form.profile_image.label }}<br><br>
-                      <img src="/static/images/blog/default-user-profile.jpg" height="140" width="140" alt="user_logo"
-                         class="img-circle pull-right right img-thumbnail profile-image">
+                            {% if request.user.profile_image %}
+                            <img src="{{ request.user.profile_image.url }}" height="140" width="140" alt="user_logo"
+                            class="img-circle pull-right right img-thumbnail profile-image">
+                            {% else %}
+                            <img src="/static/images/blog/default-user-profile.jpg" height="140" width="140" alt="user_logo"
+                            class="img-circle pull-right right img-thumbnail profile-image">
+                            {% endif %}
                         </label>
+
                         {{ form.profile_image }}
+
                     </div>
                     <div class="col-sm-6 form-group pull-right">
                         {{ form.first_name }}
                         {{ form.username }}
 
+                        {% if form.first_name.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
+
+                        {% if form.username.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
+
                     </div>
                     <div class="col-sm-6 form-group pull-left">
                         {{ form.last_name }}
                         {{ form.email }}
+
+                        {% if form.last_name.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
+
+                        {% if form.email.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
                     </div>
+
+                    <div class="col-sm-6 form-group pull-right">
+                        {{ form.phone_number }}
+                    </div>
+
                     <div class="col-sm-12 form-group">
                         {{ form.about_user }}
+
+                        {% if form.about_user.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="col-sm-12 form-group">
                         {{ form.address }}
+
+                        {% if form.address.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                  <span class="sr-only">Error:</span>
+                                  Enter a valid email address
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="form-group col-md-12">
                         <input type="submit" name="submit" class="btn btn-primary pull-left" value="ویرایش">
                     </div>
+                {{ form.non_field_errors }}
 
                 </div>
                 </form>

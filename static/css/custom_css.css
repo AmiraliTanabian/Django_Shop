@@ -90,3 +90,8 @@
     justify-content: center;
     align-items: center;
 }
+
+.link-without-line{
+    text-decoration: none;
+    color:black;
+}

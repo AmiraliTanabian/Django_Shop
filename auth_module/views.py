@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 
 user_model = get_user_model()
 
@@ -72,7 +73,7 @@ class registerView(View):
                 models.TempUser.objects.create(
                     username = username,
                     email = email,
-                    password = password,
+                    password = make_password(password),
                     random_string = random_string
                 )
 

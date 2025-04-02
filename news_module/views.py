@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from django.db.models.aggregates import Min, Max
-
-
+from django.views import View
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.conf import settings
 
 class PostListView(ListView):
     template_name = "news_module/post_list.html"
@@ -41,7 +43,10 @@ class PostDetailView(DetailView):
 
         current_comments = ArticleComment.objects.filter(is_active=True, article__id = self.object.pk, parent=None).prefetch_related("articlecomment_set")
         context["comments"] = current_comments
-        print(current_comments)
+
+        add_comment_url = settings.SITE_URL + reverse_lazy("add_article_comment")
+        context["add_comment_url"] = add_comment_url
+
         return context
 
 class CategoryPageView(ListView):
@@ -97,3 +102,18 @@ class TagPageView(ListView):
         context["cats"] = cats
 
         return context
+
+def add_article_comment(request):
+    if request.user.is_authenticated:
+        print("Salam")
+        print(request.GET)
+        comment_text = request.GET["comment_text"]
+        article_id = request.GET["article_id"]
+        parent_id = request.GET["parent_id"]
+        user = request.user
+
+
+        article_comment = ArticleComment(user=user, parent_id=parent_id, article_id=article_id, text=comment_text)
+        article_comment.save()
+
+    return HttpResponse("Comment Added!")

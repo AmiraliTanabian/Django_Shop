@@ -129,7 +129,7 @@
                                         <p>
                                             {{ comment.text }}
                                         </p>
-                                        <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>پاسـخ</a>
+                                        <a class="btn btn-primary" href="#comment-box" onclick="setParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</a>
                                     </div>
                                 </li>
                                 {% for answer in comment.articlecomment_set.all %}
@@ -150,7 +150,6 @@
                                             <p>
                                                 {{ answer.text }}
                                             </p>
-                                            <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>پاسـخ</a>
                                         </div>
                                     </li>
                                 {% endfor %}
@@ -159,7 +158,7 @@
 					</div><!--/Response-area-->
 
                     {% if request.user.is_authenticated %}
-					<div class="replay-box" style="margin-bottom:35px">
+					<div class="replay-box" id="comment-box" style="margin-bottom:35px">
 						<div class="row">
 							<div class="col-sm-8">
 								<div class="text-area">
@@ -167,28 +166,14 @@
 										<label>متن پیام</label>
 									</div>
 									<span>*</span>
-									<textarea name="message" rows="11"></textarea>
-									<a class="btn btn-primary" href="">ارسـال نظـر</a>
+                                    <input type="hidden" id="parentId" value>
+									<textarea class="center" id="message" rows="11"></textarea>
+									<a class="btn btn-primary" href="" onclick="addComment({{ news.id }}, {{ add_comment_url }})">
+                                        ارسـال نظـر</a>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<h2>نظـر خود را بنویسیـد</h2>
-								<form>
-									<div class="blank-arrow">
-										<label>نام</label>
-									</div>
-									<span>*</span>
-									<input type="text" placeholder="نام شما ...">
-									<div class="blank-arrow">
-										<label>آدرس ایمیـل</label>
-									</div>
-									<span>*</span>
-									<input type="email" placeholder="ایمیـل شما ...">
-									<div class="blank-arrow">
-										<label>وبسایت</label>
-									</div>
-									<input type="email" placeholder="آدرس وبسایـت">
-								</form>
 							</div>
 						</div>
 					</div><!--/Repaly Box-->

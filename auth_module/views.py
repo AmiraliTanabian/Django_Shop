@@ -130,7 +130,7 @@ class verifyAccount(View):
             raise Http404
 
         # 12 * 3600 = 12h
-        elif timezone.now().timestamp() - temp_user.date.timestamp() > 1 * 60:
+        elif timezone.now().timestamp() - temp_user.date.timestamp() > 12 * 3600:
             context = {"status":"timeEnd"}
             temp_user.delete()
 

@@ -129,7 +129,7 @@
                                         <p>
                                             {{ comment.text }}
                                         </p>
-                                        <a class="btn btn-primary" href="#comment-box" onclick="setParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</a>
+                                        <a class="btn btn-primary" onclick="setParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</a>
                                     </div>
                                 </li>
                                 {% for answer in comment.articlecomment_set.all %}
@@ -168,7 +168,7 @@
 									<span>*</span>
                                     <input type="hidden" id="parentId" value>
 									<textarea class="center" id="message" rows="11"></textarea>
-									<a class="btn btn-primary" href="" onclick="addComment({{ news.id }}, {{ add_comment_url }})">
+									<a class="btn btn-primary" href="" onclick="addComment({{ news.id }})">
                                         ارسـال نظـر</a>
 								</div>
 							</div>

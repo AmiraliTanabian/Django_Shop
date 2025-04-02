@@ -3,7 +3,10 @@
     Cras justo odio
   </a>
   <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-  <a href="#" class="list-group-item">Morbi leo risus</a>
+  <a href="{% url "edit_profile_page" %}"
+     class="list-group-item {% if request.resolver_match.url_name == "edit_profile_page" %}active{% endif %}">
+      ویرایش اطلاعات کاربری
+  </a>
   <a href="#" class="list-group-item">Porta ac consectetur ac</a>
   <a href="{% url "logout_page" %}" class="list-group-item">
       <i class="glyphicon glyphicon-log-out"></i>

@@ -5,6 +5,8 @@ class User(AbstractUser):
     about_user = models.TextField(null=True, blank=True, verbose_name="درباره کاربر")
     profile_image = models.ImageField(upload_to="Images/user_profile", verbose_name="آواتار کاربر",
                                       null=True, blank=True)
+    phone_number = models.CharField(verbose_name="تلفن همراه", max_length=12, blank=True, null=True)
+    address = models.TextField(verbose_name="آدرس", blank=True, null=True)
 
 
     def __str__(self):

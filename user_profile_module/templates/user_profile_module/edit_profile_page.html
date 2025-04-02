@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+	پروفایل کاربر
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="contact-form">
+            <div class="row">
+                <form class="contact-form" name="contact-form" >
+                    {% csrf_token %}
+                <div class="col-sm-8">
+                    <div class="col-sm-12 form-group">
+                        <label for="fileInputOnProfile">
+                        {{ form.profile_image.label }}<br><br>
+                      <img src="/static/images/blog/default-user-profile.jpg" height="140" width="140" alt="user_logo"
+                         class="img-circle pull-right right img-thumbnail profile-image">
+                        </label>
+                        {{ form.profile_image }}
+                    </div>
+                    <div class="col-sm-6 form-group pull-right">
+                        {{ form.first_name }}
+                        {{ form.username }}
+
+                    </div>
+                    <div class="col-sm-6 form-group pull-left">
+                        {{ form.last_name }}
+                        {{ form.email }}
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        {{ form.about_user }}
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        {{ form.address }}
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <input type="submit" name="submit" class="btn btn-primary pull-left" value="ویرایش">
+                    </div>
+
+                </div>
+                </form>
+                <div class="col-sm-4">
+                    {% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

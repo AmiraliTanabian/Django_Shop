@@ -7,6 +7,7 @@ from django.http import HttpRequest
 from .forms import EditProfileModelForm, EditPasswordForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password, make_password
 
 
 from phonenumbers import parse, is_valid_number
@@ -90,3 +91,26 @@ class EditPasswordPageView(LoginRequiredMixin, View):
     def get(self, request):
         form = EditPasswordForm
         return render(request, "user_profile_module/edit_password_page.html", {"form":form})
+
+    def post(self, request):
+        form = EditPasswordForm(request.POST)
+
+        if form.is_valid():
+            user = get_user_model().objects.get(id=request.user.id)
+            old_password = form.cleaned_data.get("password")
+            new_password = form.cleaned_data.get("new_password")
+            is_password_correct = check_password(old_password, user.password)
+
+            if is_password_correct:
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "رمز عبور شما با موفقیت تغییر کرد")
+                return render(request, "user_profile_module/edit_password_page.html", {"form": form})
+
+            else:
+                messages.error(request, "رمز عبور شما با نادرست است.")
+                return render(request, "user_profile_module/edit_password_page.html", {"form": form})
+
+        else:
+            return render(request, "user_profile_module/edit_password_page.html", {"form": form})
+

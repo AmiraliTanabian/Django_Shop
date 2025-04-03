@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.validators import MinLengthValidator
 
 
 class EditProfileModelForm(forms.ModelForm):
@@ -53,8 +54,10 @@ class EditPasswordForm(forms.Form):
                                    attrs={"placeholder":"رمز جدید"
                                           ,"title":"رمز عبور جدید",
                                           'class':'form-control'}),
-                               error_messages= {"required":"رمز عبور جدید خود را وارد نکردید!"})
-
+                               error_messages= {"required":"رمز عبور جدید خود را وارد نکردید!"},
+                               validators=
+                                [MinLengthValidator(8, "حداقل تعداد کاراکتر های رمز عبور ۸ تا می باشد:)")]
+                                )
 
     new_password_confirm = forms.CharField(label="",
                                widget=forms.PasswordInput(
@@ -64,10 +67,11 @@ class EditPasswordForm(forms.Form):
                                error_messages= {"required":"تکرار رمز عبور جدید خود را وارد نکردید!"})
 
     def clean(self):
-        new_password = self.cleaned_data["new_password"]
-        new_password_confirm = self.cleaned_data["new_password_confirm"]
+        if "new_password" in self.cleaned_data:
+            new_password = self.cleaned_data["new_password"]
+            new_password_confirm = self.cleaned_data["new_password_confirm"]
 
-        if new_password != new_password_confirm :
-            raise forms.ValidationError("رمز شما با تکرارش مطابقت ندارد!")
+            if new_password != new_password_confirm :
+                raise forms.ValidationError("رمز شما با تکرارش مطابقت ندارد!")
 
         return self.cleaned_data

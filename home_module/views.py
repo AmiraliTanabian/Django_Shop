@@ -22,3 +22,4 @@ class SearchView(View):
         }
 
         return render(request, "product_module/search.html", context)
+

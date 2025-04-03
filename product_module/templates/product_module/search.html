@@ -3,7 +3,9 @@
     جستجو برای {{ search }}
 {% endblock %}
 {% block content %}
-        {% if result %}
+	<div class="container">
+	<div class="row">
+		{% if result %}
         <h2 class="title text-center">محصولات مرتبط با {{ search }}</h2>
             <div class="container">
                 <div class="row">
@@ -38,5 +40,13 @@
          empty-search-btn"><i class="fa fa-home"><a href="{% url "home_page" %}">صفحه اصلی</a></i></button>
     </div>
     {% endif %}
+	</div>
+    <div class="col-sm-9 padding-right">
+		<div class="features_items"><!--features_items-->
+			{% include "product_module/components/pagination_component.html" %}
+		</div><!--features_items-->
+	</div>
+	</div>
+
 
 {% endblock %}

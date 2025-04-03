@@ -2,7 +2,6 @@ from django.views.generic import ListView, DetailView
 from .models import Product, ProductCategory
 from django.shortcuts import render
 
-
 class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
     model = Product

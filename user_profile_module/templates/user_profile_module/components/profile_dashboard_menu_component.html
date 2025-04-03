@@ -1,8 +1,12 @@
 <div class="list-group">
   <a href="#" class="list-group-item">
-    Cras justo odio
+      <i class="glyphicon glyphicon-shopping-cart"></i>
+    سفارش های من
   </a>
-  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+  <a href="#" class="list-group-item">
+      <i class="fa fa-heart-o"></i>
+      لیست علافه مندی
+  </a>
   <a href="{% url "edit_profile_page" %}"
      class="list-group-item {% if request.resolver_match.url_name == "edit_profile_page" %}active{% endif %}">
         <i class="glyphicon glyphicon-info-sign"></i>
@@ -10,6 +14,7 @@
   </a>
   <a href="{% url "edit_password_page" %}"
      class="list-group-item {% if request.resolver_match.url_name == "edit_password_page"%}active{% endif %}">
+     <i class="material-icons" style="font-size: 15px">security</i>
       تغییر کلمه عبور
   </a>
   <a href="{% url "logout_page" %}" class="list-group-item">

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import HttpRequest
-from .forms import EditProfileModelForm
+from .forms import EditProfileModelForm, EditPasswordForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
@@ -85,5 +85,8 @@ class EditProfilePageView(LoginRequiredMixin, View):
             return render(request, "user_profile_module/edit_profile_page.html",
                           {"form": edit_profile_form})
 
-
-
+class EditPasswordPageView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+    def get(self, request):
+        form = EditPasswordForm
+        return render(request, "user_profile_module/edit_password_page.html", {"form":form})

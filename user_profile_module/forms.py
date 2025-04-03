@@ -44,20 +44,23 @@ class EditPasswordForm(forms.Form):
     password = forms.CharField(label="",
                                widget=forms.PasswordInput(
                                    attrs={"placeholder":"رمز فعلی"
-                                          ,"title":"رمز عبور فعلی"}),
+                                          ,"title":"رمز عبور فعلی",
+                                          'class':'form-control'}),
                                error_messages= {"required":"رمز عبور فعلی خود را وارد نکردید!"})
 
     new_password = forms.CharField(label="",
                                widget=forms.PasswordInput(
                                    attrs={"placeholder":"رمز جدید"
-                                          ,"title":"رمز عبور جدید"}),
+                                          ,"title":"رمز عبور جدید",
+                                          'class':'form-control'}),
                                error_messages= {"required":"رمز عبور جدید خود را وارد نکردید!"})
 
 
     new_password_confirm = forms.CharField(label="",
                                widget=forms.PasswordInput(
                                    attrs={"placeholder":" تکرار رمز جدید"
-                                          ,"title":"تکرار رمز عبور جدید"}),
+                                          ,"title":"تکرار رمز عبور جدید",
+                                          'class':'form-control'}),
                                error_messages= {"required":"تکرار رمز عبور جدید خود را وارد نکردید!"})
 
     def clean(self):

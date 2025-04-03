@@ -38,7 +38,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
                                 {% if request.user.is_authenticated %}
-                                    <li><a href="#"><i class="fa fa-user"></i> حساب کاربـری</a></li>
+                                    <li><a href="{% url "profile_page" %}"><i class="fa fa-user"></i> حساب کاربـری</a></li>
                                     <li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                                     {% if request.user.is_superuser %}

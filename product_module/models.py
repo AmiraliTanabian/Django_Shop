@@ -14,6 +14,8 @@ class Brand(models.Model):
         return self.title
 
 class ProductCategory(models.Model):
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="والد (اختیاری)", null=True, blank=True,
+                               related_name="childs")
     title = models.CharField(max_length=50, verbose_name="عنوان دسته بندی")
     slug = models.SlugField(verbose_name="اسلاگ", allow_unicode=True, db_index=True, unique=True)
     is_active = models.BooleanField(verbose_name="فعال")
@@ -24,7 +26,6 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="عنوان محصول ")

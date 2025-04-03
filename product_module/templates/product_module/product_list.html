@@ -20,13 +20,22 @@
                         {% for product in products %}
                             {% include "components/product_component.html" %}
                         {% endfor %}
+						
+						{% if is_paginated %}
+						<div class="pagination-area" style="display: flex; justify-content: center; clear:both;">
+							<ul class="pagination">
+                                {% if page_obj.has_previous %}
+								    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+                                {% endif %}
+								<li><a href="" class="active">صفحه {{ page_obj.number }} از {{ paginator.num_pages }}</a></li>
+                                {% if page_obj.has_next %}
+								    <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+							    {% endif %}
+                            </ul>
+						</div>
+                    {% endif %}
 
-						<ul class="pagination">
-							<li class="active"><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href="">&raquo;</a></li>
-						</ul>
+
 					</div><!--features_items-->
 				</div>
 

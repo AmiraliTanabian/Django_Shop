@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.http import HttpRequest
 from .forms import EditProfileModelForm
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 
 
 from phonenumbers import parse, is_valid_number, number_type
@@ -27,37 +28,51 @@ class EditProfilePageView(LoginRequiredMixin, View):
 
         if edit_profile_form.is_valid():
             mobile = edit_profile_form.cleaned_data["phone_number"]
+            email = edit_profile_form.cleaned_data["email"].strip()
 
+            # mobile validation
             if mobile is not None:
                 try:
                     parsed_number = parse(mobile, "IR")
-                    # mobile_validation = is_valid_number(parsed_number) and number_type(mobile) == PhoneNumberType
                     mobile_validation = is_valid_number(parsed_number)
                 except:
                     mobile_validation = False
-
-                # valid phone number
-                if mobile_validation:
-                    edit_profile_form.save()
-
-                    messages.success(request, "اطلاعات شما ویرایش شد!")
-                    return render(request, "user_profile_module/edit_profile_page.html",
-                                  {"form": edit_profile_form})
-
-                # invalid phone number
-                else:
-                    messages.error(request, "تلفن همراه شما نادرست است!")
-                    return render(request, "user_profile_module/edit_profile_page.html",
-                                  {"form": edit_profile_form})
-
-            # dont have mobile on form
+            # dont have mobile
             else:
-                edit_profile_form.save()
-                messages.success(request, "اطلاعات شما ویرایش شد!")
+                mobile_validation = True
+
+            # email validation
+            if email != '':
+                email_exists = get_user_model().objects.filter(email=email).exists()
+                if email_exists:
+                    email_validation = False
+                else:
+                    email_validation = True
+
+            # dont have email
+            else:
+                messages.error(request, "فیلد ایمیل ضرروری مبیاشد")
                 return render(request, "user_profile_module/edit_profile_page.html",
                               {"form": edit_profile_form})
 
+            if email_validation and mobile_validation :
+                edit_profile_form.save()
+                messages.success(request, "اطلاعات شما ویرایش شد")
+                return render(request, "user_profile_module/edit_profile_page.html",
+                         {"form": edit_profile_form})
 
+            elif not email_validation :
+                messages.error(request, "این ایمیل قبلا ثبت شده :(")
+                return render(request, "user_profile_module/edit_profile_page.html",
+                              {"form": edit_profile_form})
+
+            # invalid phone number
+            else:
+                messages.error(request, "متاسفانه موبایل شما نادرست است :(")
+                return render(request, "user_profile_module/edit_profile_page.html",
+                      {"form": edit_profile_form})
+
+        # form is invalid
         else:
             return render(request, "user_profile_module/edit_profile_page.html",
                           {"form": edit_profile_form})

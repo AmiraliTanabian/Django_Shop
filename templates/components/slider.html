@@ -3,13 +3,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-{#                    <ol class="carousel-indicators">#}
-{#                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>#}
-{#                        <li data-target="#slider-carousel" data-slide-to="1"></li>#}
-{#                    </ol>#}
+                        <ol class="carousel-indicators">
+                            {% for slider in sliders %}
+                                    <li data-target="#slider-carousel" data-slide-to="{{ forloop.counter0 }}"
+                                        class="{% if forloop.first %}active{% endif %}"></li>
+                            {% endfor %}
+                        </ol>
+
+
 
                     <div class="carousel-inner">
-
                         {% for slider in sliders %}
                             {% if forloop.first %}
                             <div class="item active">
@@ -22,7 +25,7 @@
                                     color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a></button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{ slider.banner.url }}" class="girl img-responsive" alt="" />
+                                    <img src="{{ slider.banner.url }}" style="height: 400px; width: 500px" class="girl img-responsive" alt="" />
                                 </div>
                             </div>
 
@@ -38,13 +41,15 @@
                                     color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a></button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{ slider.banner.url }}" class="girl img-responsive" alt="" />
+                                    <img src="{{ slider.banner.url }}" style="height: 400px; width: 500px"
+                                         class="girl img-responsive" alt="" />
                                 </div>
                             </div>
-                        </div>
-                        {% endif %}
 
+                        {% endif %}
                         {% endfor %}
+
+                    </div>
 
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                         <i class="fa fa-angle-left"></i>
@@ -53,7 +58,6 @@
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </div>
-
             </div>
         </div>
     </div>

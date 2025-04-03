@@ -9,8 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 
 
-from phonenumbers import parse, is_valid_number, number_type
-from phonenumbers.phonenumberutil import PhoneNumberType
+from phonenumbers import parse, is_valid_number
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy("login_page")
@@ -37,14 +36,23 @@ class EditProfilePageView(LoginRequiredMixin, View):
                     mobile_validation = is_valid_number(parsed_number)
                 except:
                     mobile_validation = False
+
+                # Second step for mobile validation
+                mobile_exists = get_user_model().objects.filter(phone_number = mobile)
+                if mobile_exists and mobile_exists == request.user:
+                    mobile_validation = False
+
             # dont have mobile
             else:
-                mobile_validation = True
+                messages.error(request, "فیلد موبایل ضرروری مبیاشد")
+                return render(request, "user_profile_module/edit_profile_page.html",
+                              {"form": edit_profile_form})
+
 
             # email validation
             if email != '':
-                email_exists = get_user_model().objects.filter(email=email).exists()
-                if email_exists:
+                email_exists = get_user_model().objects.filter(email=email).first()
+                if email_exists and email_exists != request.user:
                     email_validation = False
                 else:
                     email_validation = True

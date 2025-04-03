@@ -9,7 +9,7 @@ class EditProfileModelForm(forms.ModelForm):
                   "profile_image"]
         labels = {
             "first_name" : "", "last_name" : "", "username":"", "email":"", "phone_number":"", "about_user":"",
-            "profile_image":"عکس آواتار", }
+            "profile_image":"عکس پروفایل", }
 
         widgets = {
             "first_name" : forms.TextInput(attrs={"placeholder":"نام",

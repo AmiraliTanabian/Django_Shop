@@ -31,12 +31,13 @@ class EditProfilePageView(LoginRequiredMixin, View):
             if mobile is not None:
                 try:
                     parsed_number = parse(mobile, "IR")
-                    second_step_mobile_valid = is_valid_number(parsed_number) and number_type(mobile) == PhoneNumberType
+                    # mobile_validation = is_valid_number(parsed_number) and number_type(mobile) == PhoneNumberType
+                    mobile_validation = is_valid_number(parsed_number)
                 except:
-                    second_step_mobile_valid = False
+                    mobile_validation = False
 
                 # valid phone number
-                if second_step_mobile_valid:
+                if mobile_validation:
                     edit_profile_form.save()
 
                     messages.success(request, "اطلاعات شما ویرایش شد!")

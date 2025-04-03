@@ -39,3 +39,32 @@ class EditProfileModelForm(forms.ModelForm):
                                               "class":"form-control"
                                               }),
         }
+
+class EditPasswordForm(forms.Form):
+    password = forms.CharField(label="",
+                               widget=forms.PasswordInput(
+                                   attrs={"placeholder":"رمز فعلی"
+                                          ,"title":"رمز عبور فعلی"}),
+                               error_messages= {"required":"رمز عبور فعلی خود را وارد نکردید!"})
+
+    new_password = forms.CharField(label="",
+                               widget=forms.PasswordInput(
+                                   attrs={"placeholder":"رمز جدید"
+                                          ,"title":"رمز عبور جدید"}),
+                               error_messages= {"required":"رمز عبور جدید خود را وارد نکردید!"})
+
+
+    new_password_confirm = forms.CharField(label="",
+                               widget=forms.PasswordInput(
+                                   attrs={"placeholder":" تکرار رمز جدید"
+                                          ,"title":"تکرار رمز عبور جدید"}),
+                               error_messages= {"required":"تکرار رمز عبور جدید خود را وارد نکردید!"})
+
+    def clean(self):
+        new_password = self.cleaned_data["new_password"]
+        new_password_confirm = self.cleaned_data["new_password_confirm"]
+
+        if new_password != new_password_confirm :
+            raise forms.ValidationError("رمز شما با تکرارش مطابقت ندارد!")
+
+        return self.cleaned_data

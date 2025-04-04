@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Product, ProductCategory
+from .models import Product, ProductCategory, Brand
 from django.shortcuts import render
 
 class ProductPageView(ListView):
@@ -42,3 +42,10 @@ def product_category_part_partial(request):
         "cats" : cats
     }
     return render(request, "product_module/components/product_category_component.html", context)
+
+def product_brand_partial(request):
+    brands = Brand.objects.filter(is_active=True)
+    context = {
+        "brands" : brands,
+    }
+    return render(request, "product_module/components/brand_list_component.html", context)

@@ -3,7 +3,6 @@ from django.views import View
 from django.views.generic import TemplateView
 from product_module.models import Product, ProductCategory
 from django.db.models import Q
-from django.contrib import messages
 
 class HomeView(TemplateView):
     template_name = "home_module/home.html"
@@ -22,4 +21,3 @@ class SearchView(View):
         }
 
         return render(request, "product_module/search.html", context)
-

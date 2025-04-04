@@ -75,6 +75,19 @@ class AddProductToFavoriteView(LoginRequiredMixin,View):
             return HttpResponse("Product added to favorite")
         return HttpResponse("Product id not found error!")
 
+class FavoriteProductsView(LoginRequiredMixin, ListView):
+    template_name = "product_module/favorite_list.html"
+    context_object_name = "products"
+    login_url = reverse_lazy("login_page")
+    model = get_user_model()
+    paginate_by = 5
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        query = get_user_model().objects.get(id=user_id)
+        query = query.favorite_products.all()
+        return query
+
 def product_category_part_partial(request):
     cats = ProductCategory.objects.filter(is_active=True, parent=None).prefetch_related("childs")
     context = {

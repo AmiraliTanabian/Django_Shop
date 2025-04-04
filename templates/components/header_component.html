@@ -40,7 +40,9 @@
                                 {% if request.user.is_authenticated %}
                                     <li><a class="{% if request.resolver_match.url_name == "profile_page" %}active{% endif %}"
                                             href="{% url "profile_page" %}"><i class="fa fa-user"></i> حساب کاربـری</a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
+                                    <li><a class=" {% if request.resolver_match.url_name == "favorite_list" %}active{% endif %}"
+		                                    href="{% url "favorite_list" %}"><i class="fa fa-star">
+                                    </i> لیست علاقه مندی ها</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                                     {% if request.user.is_superuser %}
                                         <li><a href="/admin"><i class="fa fa-dashboard"></i>پنل مدیریت سایت</a></li>

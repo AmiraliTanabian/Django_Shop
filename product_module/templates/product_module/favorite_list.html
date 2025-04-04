@@ -7,16 +7,16 @@
 {% block content %}
 	<section id="advertisement">
 		<div class="container">
-			<img src="/static/images/shop/advertisement.jpg" alt="" />
+			<img src="images/shop/advertisement.jpg" alt="" />
 		</div>
 	</section>
 
 	<section>
 		<div class="container">
 			<div class="row">
-                <div class="col-sm-9 padding-right">
+                <div class="col-sm-12 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">محصولات برای برند {{ brand_name }}</h2>
+						<h2 class="title text-center">محصولات مورد علاقه</h2>
 
                         {% for product in products %}
                             {% include "components/product_component.html" %}
@@ -28,5 +28,6 @@
 			</div>
 		</div>
 	</section>
+	{% include "product_module/components/pagination_component.html" %}
 
 {% endblock %}

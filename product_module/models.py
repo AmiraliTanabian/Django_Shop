@@ -13,6 +13,10 @@ class Brand(models.Model):
     def __str__(self):
         return self.title
 
+    def get_product_count_with_brand(self):
+        count = Product.objects.filter(brand=self).count()
+        return count
+
 class ProductCategory(models.Model):
     parent = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="والد (اختیاری)", null=True, blank=True,
                                related_name="childs")

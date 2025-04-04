@@ -12,6 +12,22 @@ class ProductDetailView(DetailView):
     template_name = "product_module/product_detail.html"
     model = Product
 
+class ProductBrandPage(ListView):
+    template_name = "product_module/product_brand_page.html"
+    context_object_name = "products"
+    model = Product
+
+    def get_queryset(self):
+        base_query = self.model.objects.filter(is_active=True)
+        brand_slug =  self.kwargs["slug"]
+        query = base_query.filter(brand__slug=brand_slug)
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        brand_name = Brand.objects.filter(slug=self.kwargs["slug"]).first().title
+        context["brand_name"] = brand_name
+        return context
 class ProductCategoryPageView(ListView):
     template_name = "product_module/product_category_page.html"
     model = Product

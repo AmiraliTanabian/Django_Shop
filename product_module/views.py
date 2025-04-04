@@ -65,3 +65,6 @@ def product_brand_partial(request):
         "brands" : brands,
     }
     return render(request, "product_module/components/brand_list_component.html", context)
+
+def product_price_filter_partial(request):
+    return render(request, "product_module/components/product_price_component.html")

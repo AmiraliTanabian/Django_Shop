@@ -1,6 +1,13 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Product, ProductCategory, Brand
-from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponse
 
 class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
@@ -51,6 +58,22 @@ class ProductCategoryPageView(ListView):
         context["cat_title"] = cat_title
 
         return context
+
+class AddProductToFavoriteView(LoginRequiredMixin,View):
+    login_url = reverse_lazy("login_page")
+    def get(self, request: HttpRequest):
+        print(request.GET)
+        if "product_id" in request.GET:
+            user_id = request.user.id
+            user = get_user_model().objects.get(id=user_id)
+            product = Product.objects.get(id=request.GET["product_id"])
+            user.favorite_products.add(product)
+
+            print("OK")
+            messages.success(request, "محصول مورد نظر به علاقه مندی ها اضافه شد")
+
+            return HttpResponse("Product added to favorite")
+        return HttpResponse("Product id not found error!")
 
 def product_category_part_partial(request):
     cats = ProductCategory.objects.filter(is_active=True, parent=None).prefetch_related("childs")

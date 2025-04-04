@@ -14,6 +14,7 @@ class Brand(models.Model):
         return self.title
 
     def get_product_count_with_brand(self):
+        #TODO; Develop with annotate
         count = Product.objects.filter(brand=self).count()
         return count
 

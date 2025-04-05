@@ -25,6 +25,23 @@
 						{% include "product_module/components/pagination_component.html" %}
 					</div><!--features_items-->
 				</div>
+			
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    {% render_partial "product_module.views.product_category_part_partial" %}
+
+
+					{% render_partial "product_module.views.product_brand_partial" %}
+
+					{% render_partial "product_module.views.product_price_filter_partial" %}
+
+                    <div class="shipping text-center"><!--shipping-->
+            <img src="images/home/shipping.jpg" alt="" />
+        </div><!--/shipping-->
+
+                </div>
+            </div>
+			
 			</div>
 		</div>
 	</section>

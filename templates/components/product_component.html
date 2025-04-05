@@ -17,9 +17,19 @@
         </div>
         <div class="choose">
             <ul class="nav nav-pills nav-justified">
-                <li><a onclick="AddToFavorite({{ product.id }})"><i class="fa fa-plus-square">
-                </i>لیست علاقه مندی ها
-                </a></li>
+
+	            {% if product in favorite_list.all %}
+                    <li style="cursor:pointer;">
+	                    <a onclick="RemoveFavorite({{ product.id }})">
+		                    <i class="glyphicon glyphicon-remove-circle"></i>
+		                    حذف از علاقه مندی ها
+                        </a>
+                    </li>
+	            {% else %}
+	                <li style="cursor:pointer; color:green;"><a onclick="AddToFavorite({{ product.id }})"><i class="fa fa-plus-square">
+                    </i>افزودن به علاقه مندی ها
+                    </a></li>
+	            {% endif %}
                 <li><a href="{% url 'product_detail' pk=product.id %}"><i class="fa fa-info"></i>جزئیات</a></li>
             </ul>
         </div>

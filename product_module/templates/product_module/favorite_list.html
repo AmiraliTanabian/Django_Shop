@@ -18,9 +18,20 @@
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">محصولات مورد علاقه</h2>
 
+					{% if products %}
+
                         {% for product in products %}
-                            {% include "components/product_component.html" %}
+                            {% include "components/product_component.html" with product=product %}
                         {% endfor %}
+
+					{% else %}
+						<div class="alert alert-danger text-center">
+							<p>
+								هنوز محصولی را به لیست علاقه مندی اضافه نکردید ...<br>
+								<a class="link-without-line btn-link" href="{% url "product_page" %}">مشاهده محصولات</a>
+							</p>
+						</div>
+					{% endif %}
 
 						{% include "product_module/components/pagination_component.html" %}
 					</div><!--features_items-->

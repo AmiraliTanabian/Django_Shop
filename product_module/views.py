@@ -8,12 +8,20 @@ from django.views.generic import ListView, DetailView
 from .models import Product, ProductCategory, Brand
 from django.contrib import messages
 from django.http import HttpResponse
+from auth_module.models import User
 
 class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
     model = Product
     context_object_name = "products"
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        favorite_products = user.favorite_products.all()
+        context["favorite_list"] = favorite_products
+        return context
 
 class ProductDetailView(DetailView):
     template_name = "product_module/product_detail.html"
@@ -34,6 +42,11 @@ class ProductBrandPage(ListView):
         context = super().get_context_data(**kwargs)
         brand_name = Brand.objects.filter(slug=self.kwargs["slug"]).first().title
         context["brand_name"] = brand_name
+
+        user = self.request.user
+        favorite_products = user.favorite_products.all()
+        context["favorite_list"] = favorite_products
+
         return context
 class ProductCategoryPageView(ListView):
     template_name = "product_module/product_category_page.html"
@@ -57,20 +70,22 @@ class ProductCategoryPageView(ListView):
         cat_title = ProductCategory.objects.get(slug=self.kwargs["slug"]).title
         context["cat_title"] = cat_title
 
+        user = self.request.user
+        favorite_products = user.favorite_products.all()
+        context["favorite_list"] = favorite_products
+
+
         return context
 
 class AddProductToFavoriteView(LoginRequiredMixin,View):
     login_url = reverse_lazy("login_page")
     def get(self, request: HttpRequest):
-        print(request.GET)
         if "product_id" in request.GET:
             user_id = request.user.id
             user = get_user_model().objects.get(id=user_id)
             product = Product.objects.get(id=request.GET["product_id"])
+            product.is_favorite = True
             user.favorite_products.add(product)
-
-            print("OK")
-            messages.success(request, "محصول مورد نظر به علاقه مندی ها اضافه شد")
 
             return HttpResponse("Product added to favorite")
         return HttpResponse("Product id not found error!")
@@ -88,6 +103,13 @@ class FavoriteProductsView(LoginRequiredMixin, ListView):
         query = query.favorite_products.all()
         return query
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        favorite_products = user.favorite_products.all()
+        context["favorite_list"] = favorite_products
+        return context
+
 def product_category_part_partial(request):
     cats = ProductCategory.objects.filter(is_active=True, parent=None).prefetch_related("childs")
     context = {
@@ -104,3 +126,14 @@ def product_brand_partial(request):
 
 def product_price_filter_partial(request):
     return render(request, "product_module/components/product_price_component.html")
+
+class RemoveFromFavoriteView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+    def get(self, request):
+        if "product_id" in request.GET:
+            product_id = request.GET["product_id"]
+            product = Product.objects.get(pk=product_id)
+            user = request.user
+            user.favorite_products.remove(product)
+            return HttpResponse("Product removed to favorite")
+        return HttpResponse("Product id not found error!")

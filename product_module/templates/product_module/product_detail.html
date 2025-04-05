@@ -410,7 +410,7 @@
                     <div class="left-sidebar">
                         {% render_partial "product_module.views.product_category_part_partial" %}
                         {% render_partial "product_module.views.product_brand_partial" %}
-
+						{% include "components/banner_component.html" with banners=banners %}
                     </div>
 	            </div>
 

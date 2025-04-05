@@ -29,6 +29,12 @@ class ProductDetailView(DetailView):
     template_name = "product_module/product_detail.html"
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["banners"] = SiteBanners.objects.filter(is_active=True,
+                                                        position=SiteBanners.PositionChoices.product_detail)
+        return context
+
 class ProductBrandPage(ListView):
     template_name = "product_module/product_brand_page.html"
     context_object_name = "products"

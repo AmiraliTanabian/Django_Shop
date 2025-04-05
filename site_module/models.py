@@ -49,6 +49,7 @@ class SiteBanners(models.Model):
         blog = "blog", "وبلاگ"
         post_detail = "post_detail", "صفحه جزییات مقاله "
         product_detail = 'product_detail', "صفحه جزئیات محصول"
+        posts = "posts", "صفحه مقالات"
 
 
     title = models.CharField(max_length=200, verbose_name="عنوان بنر")

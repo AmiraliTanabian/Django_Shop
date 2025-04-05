@@ -5,6 +5,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.conf import settings
+from site_module.models import SiteBanners
 
 class PostListView(ListView):
     template_name = "news_module/post_list.html"
@@ -19,6 +20,9 @@ class PostListView(ListView):
         context = super().get_context_data(*args, **kwargs)
         cats = ArticleCategories.objects.all()
         context["cats"] = cats
+
+        context["banners"] = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.posts)
+
         return context
 
 class PostDetailView(DetailView):
@@ -46,6 +50,9 @@ class PostDetailView(DetailView):
 
         add_comment_url = settings.SITE_URL + reverse_lazy("add_article_comment")
         context["add_comment_url"] = add_comment_url
+
+        context["banners"] = SiteBanners.objects.filter(is_active=True,
+                                                        position=SiteBanners.PositionChoices.post_detail)
 
         return context
 

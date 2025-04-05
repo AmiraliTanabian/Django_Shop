@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  SiteSetting, Slider
+from .models import  SiteSetting, Slider, SiteBanners
 
 class SiteSettingAdmin(admin.ModelAdmin):
     list_display = ["site_name","site_url","is_active"]
@@ -13,3 +13,4 @@ class SliderAdmin(admin.ModelAdmin):
 
 admin.site.register(SiteSetting, SiteSettingAdmin)
 admin.site.register(Slider, SliderAdmin)
+admin.site.register(SiteBanners)

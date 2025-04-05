@@ -9,6 +9,7 @@ from .models import Product, ProductCategory, Brand
 from django.contrib import messages
 from django.http import HttpResponse
 from auth_module.models import User
+from site_module.models import SiteBanners
 
 class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
@@ -21,6 +22,7 @@ class ProductPageView(ListView):
         user = self.request.user
         favorite_products = user.favorite_products.all()
         context["favorite_list"] = favorite_products
+        context["banners"] = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.product)
         return context
 
 class ProductDetailView(DetailView):

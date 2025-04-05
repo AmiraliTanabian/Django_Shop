@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+	پروفایل کاربر
+{% endblock %}
+{% block content %}
+
+    {% include "components/message.html" %}
+
+<div class="container">
+    <div class="contact-form">
+        <div class="row">
+            <div class="col-sm-8">
+            <h1 class="text-center edit-profile-title">ویرایش اطلاعات کاربری</h1>
+                {% if products %}
+
+                    {% for product in products %}
+                        {% include "components/product_component.html"%}
+                    {% endfor %}
+
+				{% else %}
+					<div class="alert alert-danger text-center">
+						<p>
+							هنوز محصولی را به لیست علاقه مندی اضافه نکردید ...<br>
+							<a class="link-without-line btn-link" href="{% url "product_page" %}">مشاهده محصولات</a>
+						</p>
+					</div>
+				{% endif %}
+
+                </div>
+            <div class="col-sm-4">
+                {% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+                </div>
+            </div>
+	</div>
+</div>
+{% endblock %}

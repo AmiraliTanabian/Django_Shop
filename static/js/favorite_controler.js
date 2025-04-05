@@ -18,3 +18,15 @@ function RemoveFavorite(productId){
 
     })
 }
+
+
+function RemoveFavoriteOnProfilePage(productId){
+    event.preventDefault()
+    $.get("../remove-from-favorite", {
+        "product_id":productId,
+    }).then(re => {
+        console.log(re);
+        location.reload();
+
+    })
+}

@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import HttpRequest
 from .forms import EditProfileModelForm, EditPasswordForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.hashers import check_password
 
 
 from phonenumbers import parse, is_valid_number
@@ -114,3 +114,22 @@ class EditPasswordPageView(LoginRequiredMixin, View):
         else:
             return render(request, "user_profile_module/edit_password_page.html", {"form": form})
 
+class ProfileFavoriteProductsView(LoginRequiredMixin, ListView):
+    template_name = "user_profile_module/favorite_list_on_profile.html"
+    context_object_name = "products"
+    login_url = reverse_lazy("login_page")
+    model = get_user_model()
+    paginate_by = 5
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        query = get_user_model().objects.get(id=user_id)
+        query = query.favorite_products.all()
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        favorite_products = user.favorite_products.all()
+        context["favorite_list"] = favorite_products
+        return context

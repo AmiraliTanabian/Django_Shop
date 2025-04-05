@@ -1,3 +1,4 @@
+{% load static %}
 <div class="col-sm-4">
     <div class="product-image-wrapper">
         <div class="single-products">
@@ -20,13 +21,22 @@
 
 	            {% if product in favorite_list.all %}
                     <li style="cursor:pointer;">
-	                    <a onclick="RemoveFavorite({{ product.id }})">
-		                    <i class="glyphicon glyphicon-remove-circle"></i>
-		                    حذف از علاقه مندی ها
-                        </a>
+						{# For the difference in the product deletion function on the profile page or on the favorites page #}
+	                    {% if request.resolver_match.url_name == "favorite_list_on_profile" %}
+		                    <a onclick="RemoveFavoriteOnProfilePage({{ product.id }})">
+			                    <i class="glyphicon glyphicon-remove-circle"></i>
+			                    حذف از علاقه مندی ها
+	                        </a>
+	                    {% else %}
+                            <a onclick="RemoveFavorite({{ product.id }})">
+			                    <i class="glyphicon glyphicon-remove-circle"></i>
+			                    حذف از علاقه مندی ها
+	                        </a>
+	                    {%  endif %}
                     </li>
+		                    
 	            {% else %}
-	                <li style="cursor:pointer; color:green;"><a onclick="AddToFavorite({{ product.id }})"><i class="fa fa-plus-square">
+	                <li style="cursor:pointer"><a onclick="AddToFavorite({{ product.id }})"><i class="fa fa-plus-square">
                     </i>افزودن به علاقه مندی ها
                     </a></li>
 	            {% endif %}
@@ -35,3 +45,4 @@
         </div>
     </div>
 </div>
+

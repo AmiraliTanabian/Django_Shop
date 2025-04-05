@@ -46,7 +46,6 @@ class SiteBanners(models.Model):
     class PositionChoices(models.TextChoices):
         product = "product", "صفحه محصولات"
         contact = "contact", "صفحه تماس با ما"
-        blog = "blog", "وبلاگ"
         post_detail = "post_detail", "صفحه جزییات مقاله "
         product_detail = 'product_detail', "صفحه جزئیات محصول"
         posts = "posts", "صفحه مقالات"

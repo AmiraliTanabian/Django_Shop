@@ -10,7 +10,7 @@
     <div class="contact-form">
         <div class="row">
             <div class="col-sm-8">
-            <h1 class="text-center edit-profile-title">ویرایش اطلاعات کاربری</h1>
+            <h1 class="text-center edit-profile-title form-group">علاقه مندی ها</h1>
                 {% if products %}
 
                     {% for product in products %}
@@ -33,4 +33,5 @@
             </div>
 	</div>
 </div>
+	{% include "product_module/components/pagination_component.html" %}
 {% endblock %}

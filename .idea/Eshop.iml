@@ -27,7 +27,6 @@
       <list>
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/product_module/templates" />
-        <option value="$MODULE_DIR$/product_module/templates/product_module" />
         <option value="$MODULE_DIR$/user_profile_module/templates" />
       </list>
     </option>

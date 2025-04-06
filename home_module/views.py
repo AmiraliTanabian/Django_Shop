@@ -3,9 +3,16 @@ from django.views import View
 from django.views.generic import TemplateView
 from product_module.models import Product, ProductCategory
 from django.db.models import Q
+from utils.grouped_list import grouper
 
 class HomeView(TemplateView):
     template_name = "home_module/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        latest_products = Product.objects.filter(is_active=True).order_by("-id")[:12]
+        context["latest_products"] = grouper(latest_products, 4)
+        return context
 
 class SearchView(View):
     def get(self, request, **kwargs):

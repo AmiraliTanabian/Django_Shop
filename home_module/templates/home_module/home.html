@@ -89,7 +89,12 @@
 													<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
 												</a>
 											</li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
+											<li>
+												<a href="{% url "product_detail" pk=product.id %}">
+													جزئیات
+													<i class="fa fa-info"></i>
+												</a>
+											</li>
 										</ul>
 									</div>
 								</div>

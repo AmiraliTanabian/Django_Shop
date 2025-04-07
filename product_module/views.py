@@ -102,18 +102,22 @@ class ProductCategoryPageView(ListView):
 
         return context
 
-class AddProductToFavoriteView(LoginRequiredMixin,View):
-    login_url = reverse_lazy("login_page")
+class AddProductToFavoriteView(View):
     def get(self, request: HttpRequest):
-        if "product_id" in request.GET:
-            user_id = request.user.id
-            user = get_user_model().objects.get(id=user_id)
-            product = Product.objects.get(id=request.GET["product_id"])
-            product.is_favorite = True
-            user.favorite_products.add(product)
+        if request.user.is_authenticated:
+            if "product_id" in request.GET:
+                user_id = request.user.id
+                user = get_user_model().objects.get(id=user_id)
+                product = Product.objects.get(id=request.GET["product_id"])
+                product.is_favorite = True
+                user.favorite_products.add(product)
 
-            return HttpResponse("Product added to favorite")
-        return HttpResponse("Product id not found error!")
+                return HttpResponse("Product added to favorite")
+            return HttpResponse("Product id not found error!")
+
+        else:
+            return HttpResponse("User login error!!")
+
 
 class FavoriteProductsView(LoginRequiredMixin, ListView):
     template_name = "product_module/favorite_list.html"

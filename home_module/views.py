@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from product_module.models import Product, ProductCategory
 from django.db.models import Q
 from utils.grouped_list import grouper
+from django.db.models.aggregates import Count
 
 class HomeView(TemplateView):
     template_name = "home_module/home.html"
@@ -12,6 +13,16 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         latest_products = Product.objects.filter(is_active=True).order_by("-id")[:12]
         context["latest_products"] = grouper(latest_products, 4)
+
+        cats_list = ProductCategory.objects.filter(is_active=True).order_by("-id")[:7]
+        context["cats_list"] = cats_list
+
+        # most popular views
+        most_views = Product.objects.filter(is_active=True).annotate(
+            view_count = Count('productview')
+        ).order_by("-view_count")[:12]
+        context["most_views_product"] = grouper(most_views, 4)
+
         return context
 
 class SearchView(View):

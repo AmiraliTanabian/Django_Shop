@@ -5,11 +5,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView
-from .models import Product, ProductCategory, Brand
-from django.contrib import messages
+from .models import Product, ProductCategory, Brand, ProductView
 from django.http import HttpResponse
-from auth_module.models import User
 from site_module.models import SiteBanners
+from utils.http_service import get_user_ip
+
 
 class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
@@ -33,6 +33,19 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["banners"] = SiteBanners.objects.filter(is_active=True,
                                                         position=SiteBanners.PositionChoices.product_detail)
+
+        # Set view for product
+        user_ip = get_user_ip(self.request)
+        has_been_visited = ProductView.objects.filter(product=self.object, ip=user_ip).exists()
+
+        user = None
+        if self.request.user.is_authenticated:
+            user = self.request.user
+
+        if not has_been_visited:
+            new_visit = ProductView(product=self.object, ip=get_user_ip(self.request), user=user)
+            new_visit.save()
+
         return context
 
 class ProductBrandPage(ListView):

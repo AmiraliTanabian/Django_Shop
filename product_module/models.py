@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
+from django.contrib.auth import get_user_model
 
 class Brand(models.Model):
     title = models.CharField(max_length=50, verbose_name="عنوان برند")
@@ -51,3 +52,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductView(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name="کاربر", null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
+    ip = models.CharField(max_length=20, verbose_name="آی پی")

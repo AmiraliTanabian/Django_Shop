@@ -20,7 +20,11 @@ class ProductPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        favorite_products = user.favorite_products.all()
+        if user.is_authenticated:
+            favorite_products = user.favorite_products.all()
+        else:
+            favorite_products = list()
+
         context["favorite_list"] = favorite_products
         context["banners"] = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.product)
         return context

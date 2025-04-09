@@ -59,7 +59,7 @@
 
 				<div class="col-sm-12 padding-right">
 					<div class="features_items"><!--RetailSale_items-->
-						<a href="shop-2.html"><h2 class="title text-center">محصولات پر بازدید</h2></a>
+						<a><h2 class="title text-center">محصولات پر بازدید</h2></a>
 						<div id="new-item-carousel" class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
 							{% for group in most_views_product %}
@@ -123,7 +123,7 @@
 					</div><!--RetailSale_items-->
 
 					<div class="features_items"><!--WholeSale_items-->
-						<a href="shop.html"><h2 class="title text-center">فـروش عـمده</h2></a>
+						<a><h2 class="title text-center">پر فروش ترین محصولات</h2></a>
 						<div id="major-item-carousel" class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
 						<div class="item active">
@@ -373,73 +373,36 @@
 					<div class="category-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								{% for cat_list in cats_list %}
-									<li class="{% if forloop.first %}active{% endif %}">
-										<a href="#{{ cat_list.pk }}" data-toggle="tab">{{ cat_list.title }}</a>
+								{% for item in cats_result %}
+									<li class="{% if forloop.first %} active {% endif %}">
+										<a href="#{{ item.id }}" data-toggle="tab">{{ item.title }}</a>
 									</li>
-								{% endfor %}
+									{% endfor %}
 							</ul>
 						</div>
 						<div class="tab-content">
-							<div class="tab-pane fade active in" id="{{ cat_list.pk }}" >
-								<div class="col-sm-3">
+							{% for item in cats_result %}
+							<div class="tab-pane fade {% if forloop.first %} active {% endif %} in" id="{{ item.id }}" >
+								{% for product in item.products %}
+									<div class="col-sm-3">
 									<div class="product-image-wrapper">
 										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/Tabs.png" alt="" />
-												<h2>560.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
+											<div title="{{ product.name }}" class="productinfo text-center">
+												<img src="{{ product.banner.url }}" alt="{{ product.name }}" />
+												<h2>{{ product.price }}</h2>
+												<p>{{ product.name }}</p>
 												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 											</div>
 
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/Tabs.png" alt="" />
-												<h2>560.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/Tabs.png" alt="" />
-												<h2>560.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/Tabs.png" alt="" />
-												<h2>560.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
+								{% endfor %}
 							</div>
+						{% endfor %}
 						</div>
-					</div><!--/category-tab-->
 
-				</div>
-
+					</div>
 			</div>
 		</div>
 	</section>

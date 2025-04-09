@@ -14,15 +14,11 @@ class HomeView(TemplateView):
         latest_products = Product.objects.filter(is_active=True).order_by("-id")[:12]
         context["latest_products"] = grouper(latest_products, 4)
 
-        cats_list = ProductCategory.objects.filter(is_active=True).order_by("-id")[:7]
-        context["cats_list"] = cats_list
-
         # most popular views
         most_views = Product.objects.filter(is_active=True).annotate(
             view_count = Count('productview')
         ).order_by("-view_count")[:12]
         context["most_views_product"] = grouper(most_views, 4)
-
 
         user = self.request.user
         if user.is_authenticated:
@@ -31,6 +27,19 @@ class HomeView(TemplateView):
             favorite_products = list()
 
         context["favorite_list"] = favorite_products
+
+        # Categories part
+        cats_list = ProductCategory.objects.filter(is_active=True).order_by("-id")[:7]
+        cats_result = []
+        for cat in cats_list :
+            item = {
+                "id":cat.id,
+                "title":cat.title,
+                "products": list(cat.product_set.all()[:4])
+            }
+            cats_result.append(item)
+
+        context["cats_result"] = cats_result
 
         return context
 

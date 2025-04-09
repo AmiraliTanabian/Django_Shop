@@ -103,3 +103,7 @@
 .edit-profile-title{
     margin-bottom: 1vh;
 }
+
+#footer-nav{
+    float:right;
+}

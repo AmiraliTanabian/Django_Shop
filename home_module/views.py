@@ -23,6 +23,15 @@ class HomeView(TemplateView):
         ).order_by("-view_count")[:12]
         context["most_views_product"] = grouper(most_views, 4)
 
+
+        user = self.request.user
+        if user.is_authenticated:
+            favorite_products = user.favorite_products.all()
+        else:
+            favorite_products = list()
+
+        context["favorite_list"] = favorite_products
+
         return context
 
 class SearchView(View):

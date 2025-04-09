@@ -1,43 +1,44 @@
 {% extends "base.html" %}
+
 {% block title %}
-ثبت نام | فروشگاه اینترنتی
+	ثبت نام | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
-    {% include 'components/message.html' %}
-    
-    <section id="form">
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <div class="signup-form"><!--sign up form-->
-                    <h2>ثبت نام کاربـر جدیـد</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.username }}
-                        {{ form.email }}
-                        {{ form.password }}
-                        {{ form.confirm_password }}
-                        <button type="submit" class="btn btn-default">ثبت نام</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+	{% include 'components/message.html' %}
 
-    {% if form.errors %}
-        <div id="error-message" class="error-box">
-        <ul>
-            <li>{{ form.username.errors }}</li>
-            <li>{{ form.email.errors }}</li>
-            <li>{{ form.password.errors }}</li>
-            <li>{{ form.confirm_password.errors }}</li>
-        </ul>
-        </div>
-    {% endif %}
+	<section id="form">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<div class="signup-form"><!--sign up form-->
+					<h2>ثبت نام کاربـر جدیـد</h2>
+					<form method="post">
+						{% csrf_token %}
+						{{ form.username }}
+						{{ form.email }}
+						{{ form.password }}
+						{{ form.confirm_password }}
+						<button type="submit" class="btn btn-default">ثبت نام</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    {% if form.non_field_errors %}
-        <div id="error-message" class="error-box">
-            {{ form.non_field_errors }}
-        </div>
-    {% endif %}
+	{% if form.errors %}
+		<div id="error-message" class="error-box">
+			<ul>
+				<li>{{ form.username.errors }}</li>
+				<li>{{ form.email.errors }}</li>
+				<li>{{ form.password.errors }}</li>
+				<li>{{ form.confirm_password.errors }}</li>
+			</ul>
+		</div>
+	{% endif %}
+
+	{% if form.non_field_errors %}
+		<div id="error-message" class="error-box">
+			{{ form.non_field_errors }}
+		</div>
+	{% endif %}
 
 {% endblock %}

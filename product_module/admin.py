@@ -1,27 +1,30 @@
 from django.contrib import admin
+
 from .models import ProductCategory, Product, Brand
+
 
 class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ["title", "is_active"]
     list_filter = ["is_active"]
     list_editable = ["is_active"]
     prepopulated_fields = {
-        "slug" : ("title",)
+        "slug": ("title",)
     }
+
 
 class BrandAdmin(admin.ModelAdmin):
     list_display = ["title", "is_active"]
     list_filter = ["is_active"]
     list_editable = ["is_active"]
     prepopulated_fields = {
-        "slug" : ("title",)
+        "slug": ("title",)
     }
+
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "is_active", "banner"]
     list_filter = ["is_active"]
     list_editable = ["is_active"]
-
 
 
 admin.site.register(Brand, BrandAdmin)

@@ -1,10 +1,12 @@
+from django.db.models import Q
+from django.db.models.aggregates import Count
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
+
 from product_module.models import Product, ProductCategory
-from django.db.models import Q
 from utils.grouped_list import grouper
-from django.db.models.aggregates import Count
+
 
 class HomeView(TemplateView):
     template_name = "home_module/home.html"
@@ -16,7 +18,7 @@ class HomeView(TemplateView):
 
         # most popular views
         most_views = Product.objects.filter(is_active=True).annotate(
-            view_count = Count('productview')
+            view_count=Count('productview')
         ).order_by("-view_count")[:12]
         context["most_views_product"] = grouper(most_views, 4)
 
@@ -31,10 +33,10 @@ class HomeView(TemplateView):
         # Categories part
         cats_list = ProductCategory.objects.filter(is_active=True).order_by("-id")[:7]
         cats_result = []
-        for cat in cats_list :
+        for cat in cats_list:
             item = {
-                "id":cat.id,
-                "title":cat.title,
+                "id": cat.id,
+                "title": cat.title,
                 "products": list(cat.product_set.all()[:4])
             }
             cats_result.append(item)
@@ -42,6 +44,7 @@ class HomeView(TemplateView):
         context["cats_result"] = cats_result
 
         return context
+
 
 class SearchView(View):
     def get(self, request, **kwargs):
@@ -51,9 +54,9 @@ class SearchView(View):
         category_result = ProductCategory.objects.filter(is_active=True, title__icontains=input)
 
         context = {
-            "search":input,
-            "result":product_result,
-            "categories":category_result
+            "search": input,
+            "result": product_result,
+            "categories": category_result
         }
 
         return render(request, "product_module/search.html", context)

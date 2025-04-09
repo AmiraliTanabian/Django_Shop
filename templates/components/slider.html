@@ -1,64 +1,67 @@
 <section id="slider">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            {% for slider in sliders %}
-                                    <li data-target="#slider-carousel" data-slide-to="{{ forloop.counter0 }}"
-                                        class="{% if forloop.first %}active{% endif %}"></li>
-                            {% endfor %}
-                        </ol>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						{% for slider in sliders %}
+							<li data-target="#slider-carousel" data-slide-to="{{ forloop.counter0 }}"
+							    class="{% if forloop.first %}active{% endif %}"></li>
+						{% endfor %}
+					</ol>
 
 
+					<div class="carousel-inner">
+						{% for slider in sliders %}
+							{% if forloop.first %}
+								<div class="item active">
+									<div class="col-sm-6">
+										<h2>{{ slider.title }}</h2>
+										<p>
+											{{ slider.text }}
+										</p>
+										<button type="button" class="btn btn-default get"><a style="text-decoration: none;
+                                    color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a>
+										</button>
+									</div>
+									<div class="col-sm-6">
+										<img src="{{ slider.banner.url }}" style="height: 400px; width: 500px"
+										     class="girl img-responsive" alt=""/>
+									</div>
+								</div>
 
-                    <div class="carousel-inner">
-                        {% for slider in sliders %}
-                            {% if forloop.first %}
-                            <div class="item active">
-                                <div class="col-sm-6">
-                                    <h2>{{ slider.title }}</h2>
-                                    <p>
-                                        {{ slider.text }}
-                                    </p>
-                                    <button type="button" class="btn btn-default get"><a style="text-decoration: none;
-                                    color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a></button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{ slider.banner.url }}" style="height: 400px; width: 500px" class="girl img-responsive" alt="" />
-                                </div>
-                            </div>
 
+							{% else %}
+								<div class="item">
+									<div class="col-sm-6">
+										<h2>{{ slider.title }}</h2>
+										<p>
+											{{ slider.text }}
+										</p>
+										<button type="button" class="btn btn-default get"><a style="text-decoration: none;
+                                    color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a>
+										</button>
+									</div>
+									<div class="col-sm-6">
+										<img src="{{ slider.banner.url }}" style="height: 400px; width: 500px"
+										     class="girl img-responsive" alt=""/>
+									</div>
+								</div>
 
-                            {% else %}
-                            <div class="item">
-                                <div class="col-sm-6">
-                                    <h2>{{ slider.title }}</h2>
-                                    <p>
-                                        {{ slider.text }}
-                                    </p>
-                                    <button type="button" class="btn btn-default get"><a style="text-decoration: none;
-                                    color:white;" target="_blank" href="{{ slider.url }}">{{ slider.btn_text }}</a></button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{ slider.banner.url }}" style="height: 400px; width: 500px"
-                                         class="girl img-responsive" alt="" />
-                                </div>
-                            </div>
+							{% endif %}
+						{% endfor %}
 
-                        {% endif %}
-                        {% endfor %}
+					</div>
 
-                    </div>
+					<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+						<i class="fa fa-angle-left"></i>
+					</a>
+					<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+						<i class="fa fa-angle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>

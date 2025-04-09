@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from site_module.models import SiteSetting
 from django.views import View
+
+from site_module.models import SiteSetting
+
 
 class AboutView(View):
     def get(self, request):
         setting = SiteSetting.objects.filter(is_active=True).first()
         context = {
-            "setting":setting
+            "setting": setting
         }
         return render(request, "about_us_module/about_us.html", context)

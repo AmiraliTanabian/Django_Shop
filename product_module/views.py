@@ -1,14 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView
-from .models import Product, ProductCategory, Brand, ProductView
-from django.http import HttpResponse
+
 from site_module.models import SiteBanners
 from utils.http_service import get_user_ip
+from .models import Product, ProductCategory, Brand, ProductView
 
 
 class ProductPageView(ListView):
@@ -28,6 +29,7 @@ class ProductPageView(ListView):
         context["favorite_list"] = favorite_products
         context["banners"] = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.product)
         return context
+
 
 class ProductDetailView(DetailView):
     template_name = "product_module/product_detail.html"
@@ -52,6 +54,7 @@ class ProductDetailView(DetailView):
 
         return context
 
+
 class ProductBrandPage(ListView):
     template_name = "product_module/product_brand_page.html"
     context_object_name = "products"
@@ -59,7 +62,7 @@ class ProductBrandPage(ListView):
 
     def get_queryset(self):
         base_query = self.model.objects.filter(is_active=True)
-        brand_slug =  self.kwargs["slug"]
+        brand_slug = self.kwargs["slug"]
         query = base_query.filter(brand__slug=brand_slug)
         return query
 
@@ -73,6 +76,8 @@ class ProductBrandPage(ListView):
         context["favorite_list"] = favorite_products
 
         return context
+
+
 class ProductCategoryPageView(ListView):
     template_name = "product_module/product_category_page.html"
     model = Product
@@ -83,9 +88,9 @@ class ProductCategoryPageView(ListView):
         slug = self.kwargs["slug"]
         query = self.model.objects.filter(is_active=True)
         ok_items = []
-        for item in query :
+        for item in query:
             for cat in item.categories.all():
-                if cat.slug == slug :
+                if cat.slug == slug:
                     ok_items.append(item)
                     break
         return ok_items
@@ -99,8 +104,8 @@ class ProductCategoryPageView(ListView):
         favorite_products = user.favorite_products.all()
         context["favorite_list"] = favorite_products
 
-
         return context
+
 
 class AddProductToFavoriteView(View):
     def get(self, request: HttpRequest):
@@ -139,25 +144,30 @@ class FavoriteProductsView(LoginRequiredMixin, ListView):
         context["favorite_list"] = favorite_products
         return context
 
+
 def product_category_part_partial(request):
     cats = ProductCategory.objects.filter(is_active=True, parent=None).prefetch_related("childs")
     context = {
-        "cats" : cats
+        "cats": cats
     }
     return render(request, "product_module/components/product_category_component.html", context)
+
 
 def product_brand_partial(request):
     brands = Brand.objects.filter(is_active=True)
     context = {
-        "brands" : brands,
+        "brands": brands,
     }
     return render(request, "product_module/components/brand_list_component.html", context)
+
 
 def product_price_filter_partial(request):
     return render(request, "product_module/components/product_price_component.html")
 
+
 class RemoveFromFavoriteView(LoginRequiredMixin, View):
     login_url = reverse_lazy("login_page")
+
     def get(self, request):
         if "product_id" in request.GET:
             product_id = request.GET["product_id"]

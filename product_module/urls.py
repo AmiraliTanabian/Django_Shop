@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import (ProductPageView, ProductDetailView, ProductCategoryPageView, ProductBrandPage, AddProductToFavoriteView,
+
+from .views import (ProductPageView, ProductDetailView, ProductCategoryPageView, ProductBrandPage,
+                    AddProductToFavoriteView,
                     FavoriteProductsView, RemoveFromFavoriteView)
 
 urlpatterns = [

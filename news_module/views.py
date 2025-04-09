@@ -1,11 +1,12 @@
-from django.views.generic import ListView, DetailView
-from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
+from django.conf import settings
 from django.db.models.aggregates import Min, Max
-from django.views import View
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.conf import settings
+from django.views.generic import ListView, DetailView
+
+from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from site_module.models import SiteBanners
+
 
 class PostListView(ListView):
     template_name = "news_module/post_list.html"
@@ -25,11 +26,11 @@ class PostListView(ListView):
 
         return context
 
+
 class PostDetailView(DetailView):
     template_name = "news_module/post_details.html"
     context_object_name = "news"
     model = Article
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,7 +46,8 @@ class PostDetailView(DetailView):
         current_cats = current_post.categories.all()
         context["current_cats"] = current_cats
 
-        current_comments = ArticleComment.objects.filter(is_active=True, article__id = self.object.pk, parent=None).prefetch_related("articlecomment_set")
+        current_comments = ArticleComment.objects.filter(is_active=True, article__id=self.object.pk,
+                                                         parent=None).prefetch_related("articlecomment_set")
         context["comments"] = current_comments
 
         add_comment_url = settings.SITE_URL + reverse_lazy("add_article_comment")
@@ -55,6 +57,7 @@ class PostDetailView(DetailView):
                                                         position=SiteBanners.PositionChoices.post_detail)
 
         return context
+
 
 class CategoryPageView(ListView):
     template_name = "news_module/category_blog_page.html"
@@ -66,9 +69,9 @@ class CategoryPageView(ListView):
         slug = self.kwargs["slug"]
         query = self.model.objects.filter(is_active=True)
         ok_items = []
-        for item in query :
+        for item in query:
             for cat in item.categories.all():
-                if cat.slug == slug :
+                if cat.slug == slug:
                     ok_items.append(item)
                     break
         return ok_items
@@ -82,6 +85,7 @@ class CategoryPageView(ListView):
         context["cats"] = cats
 
         return context
+
 
 class TagPageView(ListView):
     template_name = "news_module/tag_blog_page.html"
@@ -110,6 +114,7 @@ class TagPageView(ListView):
 
         return context
 
+
 def add_article_comment(request):
     if request.user.is_authenticated:
         print("Salam")
@@ -118,7 +123,6 @@ def add_article_comment(request):
         article_id = request.GET["article_id"]
         parent_id = request.GET["parent_id"]
         user = request.user
-
 
         article_comment = ArticleComment(user=user, parent_id=parent_id, article_id=article_id, text=comment_text)
         article_comment.save()

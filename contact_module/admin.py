@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models import ContactModel
+
 
 class ContactModelAdmin(admin.ModelAdmin):
     list_display = ["subject", "email", "is_read"]

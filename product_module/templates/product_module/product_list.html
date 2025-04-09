@@ -1,48 +1,47 @@
 {% extends "base.html" %}
 {% load render_partial %}
 {% block title %}
-محصولات |‌فروشگاه اینترنتی
+	محصولات |‌فروشگاه اینترنتی
 {% endblock %}
 
 {% block content %}
-<section id="advertisement">
-	<div class="container">
-		<img src="images/shop/advertisement.jpg" alt="" />
-	</div>
-</section>
-
-<section>
-	<div class="container">
-		<div class="row">
-            <div class="col-sm-9 padding-right">
-				<div class="features_items"><!--features_items-->
-					<h2 class="title text-center">همه محصولات</h2>
-
-                    {% for product in products %}
-                        {% include "components/product_component.html" %}
-                    {% endfor %}
-
-					{% include "product_module/components/pagination_component.html" %}
-				</div><!--features_items-->
-			</div>
-
-        <div class="col-sm-3">
-            <div class="left-sidebar">
-                {% render_partial "product_module.views.product_category_part_partial" %}
-
-
-				{% render_partial "product_module.views.product_brand_partial" %}
-
-				{% render_partial "product_module.views.product_price_filter_partial" %}
-
-	            {% include "components/banner_component.html" %}
-            </div>
-        </div>
-
-
-
+	<section id="advertisement">
+		<div class="container">
+			<img src="images/shop/advertisement.jpg" alt=""/>
 		</div>
-	</div>
-</section>
+	</section>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">همه محصولات</h2>
+
+						{% for product in products %}
+							{% include "components/product_component.html" %}
+						{% endfor %}
+
+						{% include "product_module/components/pagination_component.html" %}
+					</div><!--features_items-->
+				</div>
+
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						{% render_partial "product_module.views.product_category_part_partial" %}
+
+
+						{% render_partial "product_module.views.product_brand_partial" %}
+
+						{% render_partial "product_module.views.product_price_filter_partial" %}
+
+						{% include "components/banner_component.html" %}
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</section>
 
 {% endblock %}

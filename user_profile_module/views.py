@@ -1,27 +1,29 @@
-from django.shortcuts import render
-from django.views import View
-from django.views.generic import TemplateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.http import HttpRequest
-from .forms import EditProfileModelForm, EditPasswordForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import TemplateView, ListView
 from phonenumbers import parse, is_valid_number
+
+from .forms import EditProfileModelForm, EditPasswordForm
+
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy("login_page")
     template_name = "user_profile_module/user_dashboard_page.html"
 
+
 class EditProfilePageView(LoginRequiredMixin, View):
     login_url = reverse_lazy("login_page")
+
     def get(self, request: HttpRequest):
         edit_profile_form = EditProfileModelForm(instance=request.user)
         return render(request, "user_profile_module/edit_profile_page.html",
-                      {"form":edit_profile_form})
+                      {"form": edit_profile_form})
 
     def post(self, request: HttpRequest):
         edit_profile_form = EditProfileModelForm(request.POST, request.FILES, instance=request.user)
@@ -39,7 +41,7 @@ class EditProfilePageView(LoginRequiredMixin, View):
                     mobile_validation = False
 
                 # Second step for mobile validation
-                mobile_exists = get_user_model().objects.filter(phone_number = mobile)
+                mobile_exists = get_user_model().objects.filter(phone_number=mobile)
                 if mobile_exists and mobile_exists == request.user:
                     mobile_validation = False
 
@@ -48,7 +50,6 @@ class EditProfilePageView(LoginRequiredMixin, View):
                 messages.error(request, "فیلد موبایل ضرروری مبیاشد")
                 return render(request, "user_profile_module/edit_profile_page.html",
                               {"form": edit_profile_form})
-
 
             # email validation
             if email != '':
@@ -64,13 +65,13 @@ class EditProfilePageView(LoginRequiredMixin, View):
                 return render(request, "user_profile_module/edit_profile_page.html",
                               {"form": edit_profile_form})
 
-            if email_validation and mobile_validation :
+            if email_validation and mobile_validation:
                 edit_profile_form.save()
                 messages.success(request, "اطلاعات شما ویرایش شد")
                 return render(request, "user_profile_module/edit_profile_page.html",
-                         {"form": edit_profile_form})
+                              {"form": edit_profile_form})
 
-            elif not email_validation :
+            elif not email_validation:
                 messages.error(request, "این ایمیل قبلا ثبت شده :(")
                 return render(request, "user_profile_module/edit_profile_page.html",
                               {"form": edit_profile_form})
@@ -79,18 +80,20 @@ class EditProfilePageView(LoginRequiredMixin, View):
             else:
                 messages.error(request, "متاسفانه موبایل شما نادرست است :(")
                 return render(request, "user_profile_module/edit_profile_page.html",
-                      {"form": edit_profile_form})
+                              {"form": edit_profile_form})
 
         # form is invalid
         else:
             return render(request, "user_profile_module/edit_profile_page.html",
                           {"form": edit_profile_form})
 
+
 class EditPasswordPageView(LoginRequiredMixin, View):
     login_url = reverse_lazy("login_page")
+
     def get(self, request):
         form = EditPasswordForm
-        return render(request, "user_profile_module/edit_password_page.html", {"form":form})
+        return render(request, "user_profile_module/edit_password_page.html", {"form": form})
 
     def post(self, request):
         form = EditPasswordForm(request.POST)
@@ -113,6 +116,7 @@ class EditPasswordPageView(LoginRequiredMixin, View):
 
         else:
             return render(request, "user_profile_module/edit_password_page.html", {"form": form})
+
 
 class ProfileFavoriteProductsView(LoginRequiredMixin, ListView):
     template_name = "user_profile_module/favorite_list_on_profile.html"

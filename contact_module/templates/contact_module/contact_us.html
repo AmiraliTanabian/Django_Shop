@@ -1,66 +1,67 @@
 {% extends "base.html" %}
 {% block title %}
-    تماس با ما | فروشگاه اینترنتی
+	تماس با ما | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
-    <div id="contact-page" class="container">
-    	<div class="bg">
-	    	<div class="row">
+	<div id="contact-page" class="container">
+		<div class="bg">
+			<div class="row">
 				<div class="container">
-	    			<div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">
-						<h2 class="title text-center">تمـاس با مـا</h2>    			    						<div id="gmap" class="contact-map">
-								<img src="/static/images/home/Map.jpg" alt="Map"/>
-							</div>
+					<div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">
+						<h2 class="title text-center">تمـاس با مـا</h2>
+						<div id="gmap" class="contact-map">
+							<img src="/static/images/home/Map.jpg" alt="Map"/>
+						</div>
 					</div>
 				</div>
-				</div>
-    		<div class="row">
-	    		<div class="col-sm-8">
-	    			<div class="contact-form">
-	    				<h2 class="title text-center">با ما در ارتباط باشیـد</h2>
-	    				<div class="status alert alert-success" style="display: none"></div>
-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-				            <div class="form-group col-md-6">
-                                {{ form.name }}
-				            </div>
-				            <div class="form-group col-md-6">
-                                {{ form.email }}
-                            </div>
-				            <div class="form-group col-md-12">
-				                {{ form.subject }}
-                            </div>
-				            <div class="form-group col-md-12">
-				                {{ form.msg }}
-                            </div>
-				            <div class="form-group col-md-12">
-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="ارسـال">
-				            </div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="contact-form">
+						<h2 class="title text-center">با ما در ارتباط باشیـد</h2>
+						<div class="status alert alert-success" style="display: none"></div>
+						<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+							<div class="form-group col-md-6">
+								{{ form.name }}
+							</div>
+							<div class="form-group col-md-6">
+								{{ form.email }}
+							</div>
+							<div class="form-group col-md-12">
+								{{ form.subject }}
+							</div>
+							<div class="form-group col-md-12">
+								{{ form.msg }}
+							</div>
+							<div class="form-group col-md-12">
+								<input type="submit" name="submit" class="btn btn-primary pull-right" value="ارسـال">
+							</div>
 
-                            {% if form.errors %}
-                            <div class="error-box" id="error-message">
-                                {{ form.name.error }}
-                                {{ form.email.error }}
-                                {{ form.subject.error }}
-                                {{ form.msg.error }}
-                            </div>
-                            {% endif %}
-                            {% csrf_token %}
-				        </form>
-	    			</div>
-	    		</div>
-	    		<div class="col-sm-4">
-	    			<div class="contact-info">
-	    				<h2 class="title text-center">اطلاعات تماس</h2>
-	    				<address>
-                            <p>{{ setting.site_name }}</p>
-                            <p>{{ setting.address }}</p>
+							{% if form.errors %}
+								<div class="error-box" id="error-message">
+									{{ form.name.error }}
+									{{ form.email.error }}
+									{{ form.subject.error }}
+									{{ form.msg.error }}
+								</div>
+							{% endif %}
+							{% csrf_token %}
+						</form>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="contact-info">
+						<h2 class="title text-center">اطلاعات تماس</h2>
+						<address>
+							<p>{{ setting.site_name }}</p>
+							<p>{{ setting.address }}</p>
 							<p>تلفن تماس : {{ setting.phone }}</p>
 							<p>فکس : {{ setting.fax }}</p>
 							<p style="font-family: tahoma;">ایمیـل : {{ setting.email }}</p>
-	    				</address>
-	    				<div class="social-networks">
-	    					<h2 class="title text-center">شبکـه های اجتـماعی</h2>
-							<span  class="socials-share share">
+						</address>
+						<div class="social-networks">
+							<h2 class="title text-center">شبکـه های اجتـماعی</h2>
+							<span class="socials-share share">
 									<ul>
 										<a href="#">
 											<li>
@@ -82,11 +83,12 @@
 										</a>
 									</ul>
 							</span>
-	    			</div>
-    			</div>
-            {% include "components/banner_component.html" with banners=banners %}
-	    	</div>
-    	</div>
-    </div>
-</div>
+						</div>
+					</div>
+					{% include "components/banner_component.html" with banners=banners %}
+				</div>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}

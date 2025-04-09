@@ -4,66 +4,69 @@
 {% endblock %}
 {% block content %}
 
-    {% include "components/message.html" %}
 
-    <div class="container">
-        <div class="contact-form">
-            <div class="row">
-                <form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data" >
-                    {% csrf_token %}
-                <div class="col-sm-8">
+	{% include "components/message.html" %}
+
+	<div class="container">
+		<div class="contact-form">
+			<div class="row">
+				<form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="col-sm-8">
 
 
-                <h1 class="text-center edit-profile-title">ویرایش اطلاعات کاربری</h1>
-                    <div class="col-sm-12 form-group">
-                        <label for="fileInputOnProfile">
-                        {{ form.profile_image.label }}<br><br>
-                            {% if request.user.profile_image %}
-                            <img src="{{ request.user.profile_image.url }}" height="140" width="140" alt="user_logo"
-                            class="img-circle pull-right right img-thumbnail profile-image">
-                            {% else %}
-                            <img src="/static/images/blog/default-user-profile.jpg" height="140" width="140" alt="user_logo"
-                            class="img-circle pull-right right img-thumbnail profile-image">
-                            {% endif %}
-                        </label>
+						<h1 class="text-center edit-profile-title">ویرایش اطلاعات کاربری</h1>
+						<div class="col-sm-12 form-group">
+							<label for="fileInputOnProfile">
+								{{ form.profile_image.label }}<br><br>
+								{% if request.user.profile_image %}
+									<img src="{{ request.user.profile_image.url }}" height="140" width="140"
+									     alt="user_logo"
+									     class="img-circle pull-right right img-thumbnail profile-image">
+								{% else %}
+									<img src="/static/images/blog/default-user-profile.jpg" height="140" width="140"
+									     alt="user_logo"
+									     class="img-circle pull-right right img-thumbnail profile-image">
+								{% endif %}
+							</label>
 
-                        {{ form.profile_image }}
+							{{ form.profile_image }}
 
-                    </div>
-                    <div class="col-sm-6 form-group pull-right">
-                        {{ form.first_name }}
-                        {{ form.username }}
+						</div>
+						<div class="col-sm-6 form-group pull-right">
+							{{ form.first_name }}
+							{{ form.username }}
 
-                    </div>
-                    <div class="col-sm-6 form-group pull-left">
-                        {{ form.last_name }}
-                        {{ form.email }}
-                    </div>
+						</div>
+						<div class="col-sm-6 form-group pull-left">
+							{{ form.last_name }}
+							{{ form.email }}
+						</div>
 
-                    <div class="col-sm-6 form-group pull-right">
-                        {{ form.phone_number }}
-                    </div>
+						<div class="col-sm-6 form-group pull-right">
+							{{ form.phone_number }}
+						</div>
 
-                    <div class="col-sm-12 form-group">
-                        {{ form.about_user }}
-                    </div>
+						<div class="col-sm-12 form-group">
+							{{ form.about_user }}
+						</div>
 
-                 <div class="col-sm-12 form-group">
-                         {{ form.address }}
-                 </div>
+						<div class="col-sm-12 form-group">
+							{{ form.address }}
+						</div>
 
-                    <div class="form-group col-md-12">
-                        <input type="submit" name="submit" class="btn btn-primary pull-left" value="ویرایش">
-                    </div>
-                {{ form.non_field_errors }}
+						<div class="form-group col-md-12">
+							<input type="submit" name="submit" class="btn btn-primary pull-left" value="ویرایش">
+						</div>
+						{{ form.non_field_errors }}
 
-                </div>
-                </form>
-                <div class="col-sm-4">
-                    {% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</form>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

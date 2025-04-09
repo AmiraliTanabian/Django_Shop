@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ContactModel(models.Model):
     name = models.CharField(max_length=255, verbose_name="نام")
     email = models.EmailField(verbose_name="ایمیل")
@@ -13,4 +14,3 @@ class ContactModel(models.Model):
 
     def __str__(self):
         return self.subject
-

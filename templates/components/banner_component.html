@@ -2,13 +2,14 @@
 	{% for banner in banners %}
 		<div class="shipping text-center"><!--shipping-->
 			{% if banner.url %}
-			<a target="_blank" href="{{ banner.url }}">
-				<img src="{{ banner.image.url }}" alt="بنر تبلیغاتی">
-			</a>
+				<a target="_blank" href="{{ banner.url }}">
+					<img src="{{ banner.image.url }}" alt="بنر تبلیغاتی">
+				</a>
 			{% else %}
 				<img src="{{ banner.image.url }}" alt="بنر تبلیغاتی">
 			{% endif %}
 		</div>
 		<br><br><br>
 	{% endfor %}
+
 {% endif %}

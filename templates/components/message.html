@@ -1,7 +1,7 @@
 {% if messages %}
-    {% for msg in messages %}
-        {% if msg.tags == "success" %}
-            <div id="error-message" class="success-box" style="
+	{% for msg in messages %}
+		{% if msg.tags == "success" %}
+			<div id="error-message" class="success-box" style="
     position: fixed;
     top: 20px;
     left: 50%;
@@ -17,11 +17,11 @@
     z-index: 9999;
     width: 90%;
     max-width: 400px; ">
-                {{ msg }}
-            </div>
-        {% endif %}
-        {% if msg.tags == "error" %}
-            <div id="error-message" class="error-box" style="
+				{{ msg }}
+			</div>
+		{% endif %}
+		{% if msg.tags == "error" %}
+			<div id="error-message" class="error-box" style="
     position: fixed;
     top: 20px;
     left: 50%;
@@ -37,8 +37,9 @@
     z-index: 9999;
     width: 90%;
     max-width: 400px;">
-                {{ msg }}
-            </div>
-        {% endif %}
-    {% endfor %}
+				{{ msg }}
+			</div>
+		{% endif %}
+	{% endfor %}
+
 {% endif %}

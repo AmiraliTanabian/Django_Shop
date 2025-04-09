@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import ContactUsForm
+
 from site_module.models import SiteSetting, SiteBanners
-from django.contrib import messages
+from .forms import ContactUsForm
+
 
 class ContactView(View):
     def get(self, request):
@@ -10,8 +12,8 @@ class ContactView(View):
         banners = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.contact)
         context = {
             "setting": site_setting,
-            "form" : ContactUsForm(),
-            "banners" : banners,
+            "form": ContactUsForm(),
+            "banners": banners,
         }
         return render(request, "contact_module/contact_us.html", context)
 
@@ -22,7 +24,7 @@ class ContactView(View):
         if not form.is_valid():
             context = {
                 "setting": site_setting,
-                "form" : form
+                "form": form
             }
             return render(request, "contact_module/contact_us.html", context)
 

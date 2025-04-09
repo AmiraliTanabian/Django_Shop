@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class SiteSetting(models.Model):
     site_name = models.CharField(max_length=200, verbose_name="نام سایت")
     site_url = models.URLField(verbose_name="دامنه سایت")
@@ -19,6 +20,7 @@ class SiteSetting(models.Model):
     def __str__(self):
         return self.site_name
 
+
 class Slider(models.Model):
     title = models.CharField(max_length=50, verbose_name="عنوان اسلایدر")
     banner = models.ImageField(upload_to="Images/slider", verbose_name="عکس اسلایدر")
@@ -33,14 +35,7 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.title
-#
-# [
-#                                     ("product", "صفحه محصولات"),
-#                                     ("contact", "صفحه تماس با ما"),
-#                                     ("blog", "وبلاگ"),
-#                                     ("about", "صفحه درباره ما"),
-#                                     ("product_detail", "جزئیات محصول"),
-#                                 ]
+
 
 class SiteBanners(models.Model):
     class PositionChoices(models.TextChoices):
@@ -50,7 +45,6 @@ class SiteBanners(models.Model):
         product_detail = 'product_detail', "صفحه جزئیات محصول"
         posts = "posts", "صفحه مقالات"
 
-
     title = models.CharField(max_length=200, verbose_name="عنوان بنر")
     image = models.ImageField(upload_to="Images/Banner", verbose_name="تصویر")
     position = models.CharField(max_length=200, verbose_name="محل قرار گیری در سایت",
@@ -59,7 +53,7 @@ class SiteBanners(models.Model):
     is_active = models.BooleanField(default=True, verbose_name="فعال")
 
     class Meta:
-        verbose_name="تبلیغ سایت"
+        verbose_name = "تبلیغ سایت"
         verbose_name_plural = "تبلیعات سایت"
 
     def __str__(self):

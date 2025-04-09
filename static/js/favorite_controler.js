@@ -1,7 +1,7 @@
-function AddToFavorite(productId){
+function AddToFavorite(productId) {
     event.preventDefault();
     $.get("add-to-favorite", {
-        "product_id" : productId,
+        "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();
@@ -9,20 +9,20 @@ function AddToFavorite(productId){
 }
 
 
-function AddToFavoriteOnHomePage(productId){
+function AddToFavoriteOnHomePage(productId) {
     event.preventDefault();
     $.get("products/add-to-favorite", {
-        "product_id" : productId,
+        "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();
     })
 }
 
-function RemoveFavoriteOnHomePage(productId){
+function RemoveFavoriteOnHomePage(productId) {
     event.preventDefault()
     $.get("products/remove-from-favorite", {
-        "product_id":productId,
+        "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();
@@ -31,10 +31,10 @@ function RemoveFavoriteOnHomePage(productId){
 }
 
 
-function RemoveFavorite(productId){
+function RemoveFavorite(productId) {
     event.preventDefault()
     $.get("remove-from-favorite", {
-        "product_id":productId,
+        "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();
@@ -43,10 +43,10 @@ function RemoveFavorite(productId){
 }
 
 
-function RemoveFavoriteOnProfilePage(productId){
+function RemoveFavoriteOnProfilePage(productId) {
     event.preventDefault()
     $.get("../remove-from-favorite", {
-        "product_id":productId,
+        "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();

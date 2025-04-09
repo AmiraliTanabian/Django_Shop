@@ -1,51 +1,53 @@
 {% extends "base.html" %}
+
 {% block title %}
-    جستجو برای {{ search }}
+	جستجو برای {{ search }}
 {% endblock %}
 {% block content %}
 	<div class="container">
-	<div class="row">
-		{% if result %}
-        <h2 class="title text-center">محصولات مرتبط با {{ search }}</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-9">
-                        {% for product in result %}
-                            {% include "components/product_component.html" with product=product %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+		<div class="row">
+			{% if result %}
+				<h2 class="title text-center">محصولات مرتبط با {{ search }}</h2>
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-9">
+							{% for product in result %}
+								{% include "components/product_component.html" with product=product %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
 
-    {% if categories %}
-        <h2 class="title text-center">دسته بندی های مرتبط با {{ search }}</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9">
-                    {% for cat in categories %}
-                        {% include "components/category_component.html" with cat=cat %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+			{% if categories %}
+				<h2 class="title text-center">دسته بندی های مرتبط با {{ search }}</h2>
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-9">
+							{% for cat in categories %}
+								{% include "components/category_component.html" with cat=cat %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
 
-    {% if not categories and not result %}
-    <h3 class="empty-search-h">متاسفانه برای {{ search }} محصولی پیدا نشد ! </h3>
-    <div class="empty-search-btn-box">
-        <button type="button" class="btn btn-default add-to-cart
-                empty-search-btn"><i class="fa fa-phone"><a href="{% url "contact_page" %}">ارتباط با ما</a></i></button>
-        <button type="button" class="btn btn-default add-to-cart
+			{% if not categories and not result %}
+				<h3 class="empty-search-h">متاسفانه برای {{ search }} محصولی پیدا نشد ! </h3>
+				<div class="empty-search-btn-box">
+					<button type="button" class="btn btn-default add-to-cart
+                empty-search-btn"><i class="fa fa-phone"><a href="{% url "contact_page" %}">ارتباط با ما</a></i>
+					</button>
+					<button type="button" class="btn btn-default add-to-cart
          empty-search-btn"><i class="fa fa-home"><a href="{% url "home_page" %}">صفحه اصلی</a></i></button>
-    </div>
-    {% endif %}
-	</div>
-    <div class="col-sm-9 padding-right">
-		<div class="features_items"><!--features_items-->
-			{% include "product_module/components/pagination_component.html" %}
-		</div><!--features_items-->
-	</div>
+				</div>
+			{% endif %}
+		</div>
+		<div class="col-sm-9 padding-right">
+			<div class="features_items"><!--features_items-->
+				{% include "product_module/components/pagination_component.html" %}
+			</div><!--features_items-->
+		</div>
 	</div>
 
 

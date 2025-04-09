@@ -1,26 +1,27 @@
 {% extends "base.html" %}
+
 {% block title %}
-    لاگین | فروشگاه اینترنتی
+	لاگین | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
-    {% include "components/message.html" %}
+	{% include "components/message.html" %}
 
-    <!--login form-->
-    <section id="form">
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <div class="login-form">
-                    <h2>ورود به حساب کاربـری :</h2>
-                    <form action="#" method="post">
-                        {% csrf_token %}
-                        {{ form }}
-                        <span>
+	<!--login form-->
+	<section id="form">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<div class="login-form">
+					<h2>ورود به حساب کاربـری :</h2>
+					<form action="#" method="post">
+						{% csrf_token %}
+						{{ form }}
+						<span>
                             <a href="forget-password.html">رمـز عبـور خود را فراموش کرده ام</a>
                         </span>
-                        <button type="submit" class="btn btn-default">ورود</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+						<button type="submit" class="btn btn-default">ورود</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

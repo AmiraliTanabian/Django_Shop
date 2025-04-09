@@ -9,69 +9,70 @@ class EditProfileModelForm(forms.ModelForm):
         fields = ["first_name", "last_name", "username", "email", "address", "phone_number", "about_user",
                   "profile_image"]
         labels = {
-            "first_name" : "", "last_name" : "", "username":"", "email":"", "phone_number":"", "about_user":"",
-            "profile_image":"عکس پروفایل", }
+            "first_name": "", "last_name": "", "username": "", "email": "", "phone_number": "", "about_user": "",
+            "profile_image": "عکس پروفایل", }
 
         widgets = {
-            "first_name" : forms.TextInput(attrs={"placeholder":"نام",
-                                                  "class":"form-control"
-                                                  }),
-            "last_name" : forms.TextInput(attrs={"placeholder":"نام خانوادگی",
-                                                 "class":"form-control"
+            "first_name": forms.TextInput(attrs={"placeholder": "نام",
+                                                 "class": "form-control"
                                                  }),
-            "username" : forms.TextInput(attrs={"placeholder":"نام کاربری",
-                                                "class":"form-control"
+            "last_name": forms.TextInput(attrs={"placeholder": "نام خانوادگی",
+                                                "class": "form-control"
                                                 }),
-            "email" :  forms.EmailInput(attrs={"placeholder":"ایمیل",
-                                               "class":"form-control"
+            "username": forms.TextInput(attrs={"placeholder": "نام کاربری",
+                                               "class": "form-control"
                                                }),
-            "phone_number" :  forms.NumberInput(attrs={"placeholder":"تلفن همراه",
-                                                       "class":"form-control"
-                                                       }),
-            "about_user" : forms.Textarea(attrs={"placeholder":"درباره کاربر",
-                                                 "class":"form-control"
-                                                 }),
-            "profile_image" : forms.FileInput(attrs={"placeholder":"آواتار",
-                                                     "class":"form-control",
-                                                     "id":"fileInputOnProfile",
-                                                     "hidden":"hidden",
+            "email": forms.EmailInput(attrs={"placeholder": "ایمیل",
+                                             "class": "form-control"
+                                             }),
+            "phone_number": forms.NumberInput(attrs={"placeholder": "تلفن همراه",
+                                                     "class": "form-control"
                                                      }),
-            "address" : forms.Textarea(attrs={"placeholder":"آدرس",
-                                              "class":"form-control"
-                                              }),
+            "about_user": forms.Textarea(attrs={"placeholder": "درباره کاربر",
+                                                "class": "form-control"
+                                                }),
+            "profile_image": forms.FileInput(attrs={"placeholder": "آواتار",
+                                                    "class": "form-control",
+                                                    "id": "fileInputOnProfile",
+                                                    "hidden": "hidden",
+                                                    }),
+            "address": forms.Textarea(attrs={"placeholder": "آدرس",
+                                             "class": "form-control"
+                                             }),
         }
+
 
 class EditPasswordForm(forms.Form):
     password = forms.CharField(label="",
                                widget=forms.PasswordInput(
-                                   attrs={"placeholder":"رمز فعلی"
-                                          ,"title":"رمز عبور فعلی",
-                                          'class':'form-control'}),
-                               error_messages= {"required":"رمز عبور فعلی خود را وارد نکردید!"})
+                                   attrs={"placeholder": "رمز فعلی"
+                                       , "title": "رمز عبور فعلی",
+                                          'class': 'form-control'}),
+                               error_messages={"required": "رمز عبور فعلی خود را وارد نکردید!"})
 
     new_password = forms.CharField(label="",
-                               widget=forms.PasswordInput(
-                                   attrs={"placeholder":"رمز جدید"
-                                          ,"title":"رمز عبور جدید",
-                                          'class':'form-control'}),
-                               error_messages= {"required":"رمز عبور جدید خود را وارد نکردید!"},
-                               validators=
-                                [MinLengthValidator(8, "حداقل تعداد کاراکتر های رمز عبور ۸ تا می باشد:)")]
-                                )
+                                   widget=forms.PasswordInput(
+                                       attrs={"placeholder": "رمز جدید"
+                                           , "title": "رمز عبور جدید",
+                                              'class': 'form-control'}),
+                                   error_messages={"required": "رمز عبور جدید خود را وارد نکردید!"},
+                                   validators=
+                                   [MinLengthValidator(8, "حداقل تعداد کاراکتر های رمز عبور ۸ تا می باشد:)")]
+                                   )
 
     new_password_confirm = forms.CharField(label="",
-                               widget=forms.PasswordInput(
-                                   attrs={"placeholder":" تکرار رمز جدید"
-                                          ,"title":"تکرار رمز عبور جدید",
-                                          'class':'form-control'}),
-                               error_messages= {"required":"تکرار رمز عبور جدید خود را وارد نکردید!"})
+                                           widget=forms.PasswordInput(
+                                               attrs={"placeholder": " تکرار رمز جدید"
+                                                   , "title": "تکرار رمز عبور جدید",
+                                                      'class': 'form-control'}),
+                                           error_messages={"required": "تکرار رمز عبور جدید خود را وارد نکردید!"})
 
     def clean(self):
         if "new_password" in self.cleaned_data:
             new_password = self.cleaned_data["new_password"]
             new_password_confirm = self.cleaned_data["new_password_confirm"]
 
-            if new_password != new_password_confirm :
+            if new_password != new_password_confirm:
                 raise forms.ValidationError("رمز شما با تکرارش مطابقت ندارد!")
 
         return self.cleaned_data

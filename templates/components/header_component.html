@@ -1,110 +1,119 @@
 <header id="header">
-		<div class="header_top">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> 80 21 24 36 98+ </a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
-							</ul>
-						</div>
+	<div class="header_top">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="contactinfo">
+						<ul class="nav nav-pills">
+							<li><a href="#"><i class="fa fa-phone"></i> 80 21 24 36 98+ </a></li>
+							<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+						</ul>
 					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-							</ul>
-						</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="social-icons pull-right">
+						<ul class="nav navbar-nav">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+							<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="header-middle">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4" style="text-align: left;">
-						<div class="logo">
-							<a href="{% url "home_page" %}"><img src="{{ setting.site_logo.url }}" alt="Logo" style="text-align: center;"></a>
-						</div>
+	<div class="header-middle">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4" style="text-align: left;">
+					<div class="logo">
+						<a href="{% url "home_page" %}"><img src="{{ setting.site_logo.url }}" alt="Logo"
+						                                     style="text-align: center;"></a>
 					</div>
+				</div>
 
-					<div class="col-sm-8 header-middle-menu">
-						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-                                {% if request.user.is_authenticated %}
-                                    <li><a class="{% if request.resolver_match.url_name == "profile_page" %}active{% endif %}"
-                                            href="{% url "profile_page" %}"><i class="fa fa-user"></i> حساب کاربـری</a></li>
-                                    <li><a class=" {% if request.resolver_match.url_name == "favorite_list" %}active{% endif %}"
-		                                    href="{% url "favorite_list" %}"><i class="fa fa-star">
-                                    </i> لیست علاقه مندی ها</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
-                                    {% if request.user.is_superuser %}
-                                        <li><a href="/admin"><i class="fa fa-dashboard"></i>پنل مدیریت سایت</a></li>
-                                    {% endif %}
-                                    <li><a href="{% url "logout_page" %}" class="text-danger danger"><i class="fa fa-arrow-right"></i>خروج</a></li>
+				<div class="col-sm-8 header-middle-menu">
+					<div class="shop-menu pull-right">
+						<ul class="nav navbar-nav">
+							{% if request.user.is_authenticated %}
+								<li>
+									<a class="{% if request.resolver_match.url_name == "profile_page" %}active{% endif %}"
+									   href="{% url "profile_page" %}"><i class="fa fa-user"></i> حساب کاربـری</a></li>
+								<li>
+									<a class=" {% if request.resolver_match.url_name == "favorite_list" %}active{% endif %}"
+									   href="{% url "favorite_list" %}"><i class="fa fa-star">
+									</i> لیست علاقه مندی ها</a></li>
+								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
+								{% if request.user.is_superuser %}
+									<li><a href="/admin"><i class="fa fa-dashboard"></i>پنل مدیریت سایت</a></li>
+								{% endif %}
+								<li><a href="{% url "logout_page" %}" class="text-danger danger"><i
+										class="fa fa-arrow-right"></i>خروج</a></li>
 
 
-                                {% else %}
-                                    <li><a
-                                        class="{% if request.resolver_match.url_name == "login_page" %}active{% endif %}"
-                                        href="{% url "login_page" %}"><i class="fa fa-lock">
-                                    </i>ورود</a></li>
-                                    <li><a
-                                        class="{% if request.resolver_match.url_name == 'register_page' %}active{% endif %}"
-                                        href="{% url "register_page" %}"><i class="fa fa-plus">
-                                    </i>ساختن حساب</a></li>
-                                {% endif %}
-							</ul>
-						</div>
+							{% else %}
+								<li><a
+										class="{% if request.resolver_match.url_name == "login_page" %}active{% endif %}"
+										href="{% url "login_page" %}"><i class="fa fa-lock">
+								</i>ورود</a></li>
+								<li><a
+										class="{% if request.resolver_match.url_name == 'register_page' %}active{% endif %}"
+										href="{% url "register_page" %}"><i class="fa fa-plus">
+								</i>ساختن حساب</a></li>
+							{% endif %}
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="header-bottom">
-			<div class="container">
-				<div class="row">
+	<div class="header-bottom">
+		<div class="container">
+			<div class="row">
 
-					<div class="col-sm-3">
-                        <form action="{% url "search_product_page" %}" method="get">
-                            <div class="search_box pull-left">
-                                <form method="get" action="{% url "search_product_page" %}">
-                                    <input name="input" type="text" placeholder="جستـجو">
-                                </form>
-                            </div>
-                        </form>
-					</div>
-
-					<div class="col-sm-9">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
+				<div class="col-sm-3">
+					<form action="{% url "search_product_page" %}" method="get">
+						<div class="search_box pull-left">
+							<form method="get" action="{% url "search_product_page" %}">
+								<input name="input" type="text" placeholder="جستـجو">
+							</form>
 						</div>
-						<div class="mainmenu pull-right">
-							<ul class="nav navbar-nav navbar-collapse collapse" style="height: 1px;">
-								<li><a href="{% url "home_page" %}" {% if path == "/" %}class="active"{% endif %}>خـانه</a></li>
-								<li><a class="{% if request.resolver_match.url_name == "product_page" %} active {% endif %}"
-										href="{% url "product_page" %}">محصولات</a>
-                                </li>
-								<li><a href="{% url "news_page" %}" {% if path == "/blog/" %}class="active"{% endif %} >مقالات</a>
-                                </li>
-								<li><a href="{% url "about_us_page" %}" {% if path == "/about-us/" %}class="active"{% endif %} >درباره مـا</a></li>
-								<li><a href="{% url "contact_page" %}" {% if path == "/contact-us" %}class="active"{% endif %} >تماس با مـا</a></li>
-							</ul>
-						</div>
-					</div>
-
+					</form>
 				</div>
+
+				<div class="col-sm-9">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+						        data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="mainmenu pull-right">
+						<ul class="nav navbar-nav navbar-collapse collapse" style="height: 1px;">
+							<li><a href="{% url "home_page" %}" {% if path == "/" %}class="active"{% endif %}>خـانه</a>
+							</li>
+							<li><a class="{% if request.resolver_match.url_name == "product_page" %} active {% endif %}"
+							       href="{% url "product_page" %}">محصولات</a>
+							</li>
+							<li><a href="{% url "news_page" %}" {% if path == "/blog/" %}class="active"{% endif %}>مقالات</a>
+							</li>
+							<li><a href="{% url "about_us_page" %}"
+							       {% if path == "/about-us/" %}class="active"{% endif %}>درباره مـا</a></li>
+							<li><a href="{% url "contact_page" %}"
+							       {% if path == "/contact-us" %}class="active"{% endif %}>تماس با مـا</a></li>
+						</ul>
+					</div>
+				</div>
+
 			</div>
 		</div>
+	</div>
+
 </header>

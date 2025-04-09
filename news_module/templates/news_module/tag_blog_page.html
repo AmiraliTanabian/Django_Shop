@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 {% load jformat %}
+
 {% block title %}
-    تگ {{ tag_title }} | فروشگاه اینترنتی
+	تگ {{ tag_title }} | فروشگاه اینترنتی
 {% endblock %}
 {% block content %}
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-9">
-					<div class="blog-post-area">
-						<h2 class="title text-center">مقالات برای تگ {{ tag_title }} </h2>
-						    {% for post in posts %}
-						    <div class="single-blog-post">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9">
+				<div class="blog-post-area">
+					<h2 class="title text-center">مقالات برای تگ {{ tag_title }} </h2>
+					{% for post in posts %}
+						<div class="single-blog-post">
 							<h3>{{ post.title }}</h3>
 							<div class="post-meta">
 								<ul>
 									<li><i class="fa fa-user"></i>{{ post.author }}</li>
 									<li><i class="fa fa-clock-o"></i>{{ post.data.time }}</li>
-									<li><i class="fa fa-calendar"></i>{{ post.data.date|jformat:"%Y/%m/%d"   }}</li>
+									<li><i class="fa fa-calendar"></i>{{ post.data.date|jformat:"%Y/%m/%d" }}</li>
 								</ul>
 								<span>
 										<i class="fa fa-star"></i>
@@ -30,71 +31,77 @@
 								<img src="{{ post.image.url }}" alt="{{ post.title }}">
 							</a>
 							<p>
-                                {{ post.short_info }}
-                            </p>
+								{{ post.short_info }}
+							</p>
 							<a class="btn btn-primary" href="{% url "post_detail_page" pk=post.id %}">ادامـه مطلب</a>
 						</div>
-                        {% endfor %}
+					{% endfor %}
 
-                    {% if is_paginated %}
+					{% if is_paginated %}
 						<div class="pagination-area" style="display: flex; justify-content: center">
 							<ul class="pagination">
-                                {% if page_obj.has_previous %}
-								    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
-                                {% endif %}
-								<li><a href="" class="active">صفحه {{ page_obj.number }} از {{ paginator.num_pages }}</a></li>
-                                {% if page_obj.has_next %}
-								    <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
-							    {% endif %}
-                            </ul>
+								{% if page_obj.has_previous %}
+									<li><a href="?page={{ page_obj.previous_page_number }}"><i
+											class="fa fa-angle-double-left"></i></a></li>
+								{% endif %}
+								<li><a href="" class="active">صفحه {{ page_obj.number }}
+									از {{ paginator.num_pages }}</a></li>
+								{% if page_obj.has_next %}
+									<li><a href="?page={{ page_obj.next_page_number }}"><i
+											class="fa fa-angle-double-right"></i></a></li>
+								{% endif %}
+							</ul>
 						</div>
-                    {% endif %}
-					</div>
+					{% endif %}
 				</div>
+			</div>
 
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>دسته بندی مقالات</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>دسته بندی مقالات</h2>
+					<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 
 
-                            {% for cat in cats %}
-                                {% if cat.category_child.all.first is None and cat.parent is None %}
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title"><a href="{% url "category_blog_page" slug=cat.slug %}">{{ cat }}</a></h4>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+						{% for cat in cats %}
+							{% if cat.category_child.all.first is None and cat.parent is None %}
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"><a
+												href="{% url "category_blog_page" slug=cat.slug %}">{{ cat }}</a></h4>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
 
-                            {% for cat in cats %}
-                            {% if cat.category_child.all.first is not None and cat.parent is None %}
-                                    <div class="panel panel-default">
-    								<div class="panel-heading">
-    									<h4 class="panel-title">
-    										<a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.slug }}">
-    											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-    											{{ cat }}
-    										</a>
-    									</h4>
-    								</div>
-    								<div id="{{ cat.slug }}" class="panel-collapse collapse" >
-    									<div class="panel-body">
-    										<ul>
-                                                {% for child in cat.category_child.all %}
-    											    <li><a href="{% url "category_blog_page" slug=child.slug %}">{{ child }}</a></li>
-                                                {% endfor %}
-    										</ul>
-    									</div>
-    								</div>
-    							</div>
-                            {% endif %}
-                            {% endfor %}
+						{% for cat in cats %}
+							{% if cat.category_child.all.first is not None and cat.parent is None %}
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.slug }}">
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												{{ cat }}
+											</a>
+										</h4>
+									</div>
+									<div id="{{ cat.slug }}" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>
+												{% for child in cat.category_child.all %}
+													<li>
+														<a href="{% url "category_blog_page" slug=child.slug %}">{{ child }}</a>
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
 
-						</div><!--/category-productsr-->
-					</div>
+					</div><!--/category-productsr-->
 				</div>
 			</div>
 		</div>
+	</div>
 {% endblock %}

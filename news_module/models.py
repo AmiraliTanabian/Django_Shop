@@ -1,9 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django_jalali.db.models import jDateTimeField
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django_jalali.db.models import jDateTimeField
 
 User_model = get_user_model()
+
 
 class ArticleTag(models.Model):
     tag_name = models.CharField(max_length=100, verbose_name="نام تگ")
@@ -16,6 +17,7 @@ class ArticleTag(models.Model):
 
     def __str__(self):
         return self.tag_name
+
 
 class ArticleCategories(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE,
@@ -31,6 +33,7 @@ class ArticleCategories(models.Model):
     class Meta:
         verbose_name = "دسته بندی مقاله"
         verbose_name_plural = "دسته بندی های مقالات"
+
 
 class Article(models.Model):
     title = models.CharField(max_length=300, verbose_name="عنوان")
@@ -49,6 +52,7 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class ArticleComment(models.Model):
     user = models.ForeignKey(User_model, on_delete=models.CASCADE, verbose_name="کاربر")

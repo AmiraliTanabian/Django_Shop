@@ -1,37 +1,39 @@
 {% extends "base.html" %}
 {% load render_partial %}
+
 {% block title %}
-    محصولات |‌فروشگاه اینترنتی
+	محصولات |‌فروشگاه اینترنتی
 {% endblock %}
 
 {% block content %}
 	<section id="advertisement">
 		<div class="container">
-			<img src="images/shop/advertisement.jpg" alt="" />
+			<img src="images/shop/advertisement.jpg" alt=""/>
 		</div>
 	</section>
 
 	<section>
 		<div class="container">
 			<div class="row">
-                <div class="col-sm-12 padding-right">
+				<div class="col-sm-12 padding-right">
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">محصولات مورد علاقه</h2>
 
-					{% if products %}
+						{% if products %}
 
-                        {% for product in products %}
-                            {% include "components/product_component.html" with product=product %}
-                        {% endfor %}
+							{% for product in products %}
+								{% include "components/product_component.html" with product=product %}
+							{% endfor %}
 
-					{% else %}
-						<div class="alert alert-danger text-center">
-							<p>
-								هنوز محصولی را به لیست علاقه مندی اضافه نکردید ...<br>
-								<a class="link-without-line btn-link" href="{% url "product_page" %}">مشاهده محصولات</a>
-							</p>
-						</div>
-					{% endif %}
+						{% else %}
+							<div class="alert alert-danger text-center">
+								<p>
+									هنوز محصولی را به لیست علاقه مندی اضافه نکردید ...<br>
+									<a class="link-without-line btn-link" href="{% url "product_page" %}">مشاهده
+										محصولات</a>
+								</p>
+							</div>
+						{% endif %}
 
 						{% include "product_module/components/pagination_component.html" %}
 					</div><!--features_items-->

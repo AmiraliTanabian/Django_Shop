@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+
 from product_module.models import Product
 
 
@@ -23,13 +24,13 @@ class User(AbstractUser):
         verbose_name = "کاربر"
         verbose_name_plural = "کاربر ها"
 
+
 class TempUser(models.Model):
     username = models.CharField(max_length=150, verbose_name="نام کاربری")
     password = models.CharField(max_length=150, verbose_name="رمز عبور")
     email = models.EmailField(verbose_name="ایمیل")
     random_string = models.CharField(max_length=72, verbose_name="عبارت فعال سازی")
     date = models.DateTimeField(auto_now_add=True, null=True)
-
 
     def __str__(self):
         return self.username

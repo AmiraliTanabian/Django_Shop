@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load render_partial %}
+{% load global_filters %}
 {% block title %}
     صفحه اصلی | فروشگاه اینترنتی
 {% endblock %}
@@ -35,7 +36,7 @@
 											<div class="single-products">
 												<div class="productinfo text-center">
 													<img src="{{ product.banner.url }}" alt="{{ product.name }}" />
-													<h2>{{ product.price }} R</h2>
+													<h2>{{ product.price | price_separator }}</h2>
 													<p>{{ product.name }}</p>
 													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خرید</a>
 												</div>
@@ -70,13 +71,13 @@
 									<div class="single-products">
 											<div class="productinfo text-center">
 												<img src="{{ product.banner.url }}" alt="{{ product.name }}" />
-												<h2>{{ product.price }}</h2>
+												<h2>{{ product.price | price_separator }}</h2>
 												<p>{{ product.name }}</p>
 												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 											</div>
 											<div class="product-overlay">
 												<div class="overlay-content">
-													<h2>{{ product.price }}</h2>
+													<h2>{{ product.price | price_separator }}</h2>
 													<p>{{ product.name }}</p>
 													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 												</div>
@@ -389,7 +390,7 @@
 										<div class="single-products">
 											<div title="{{ product.name }}" class="productinfo text-center">
 												<img src="{{ product.banner.url }}" alt="{{ product.name }}" />
-												<h2>{{ product.price }}</h2>
+												<h2>{{ product.price | price_separator }}</h2>
 												<p>{{ product.name }}</p>
 												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 											</div>

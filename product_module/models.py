@@ -45,6 +45,7 @@ class Product(models.Model):
     count = models.IntegerField(verbose_name="تعداد موجودی", validators=[
         MinValueValidator(0, "حداقل موجودی کالا ۰ میباشد!")
     ], null=True)
+    info = models.TextField(verbose_name="توضیحات", null=True)
     is_active = models.BooleanField(verbose_name="فعال", default=True)
     is_available = models.BooleanField(verbose_name="موجودی", default=True)
     is_new = models.BooleanField(verbose_name="کالا جدید است", default=True)

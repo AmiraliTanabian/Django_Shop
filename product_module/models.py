@@ -74,3 +74,17 @@ class ProductGallery(models.Model):
     class Meta:
         verbose_name = "گالری محصول"
         verbose_name_plural = "گالری محصولات"
+
+
+class ProductComment(models.Model):
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name="والد ( اختیاری )")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="کاربر")
+    text = models.TextField(verbose_name="متن نظر")
+
+    class Meta:
+        verbose_name = "نظر محصول"
+        verbose_name_plural = "نظرات محصول"
+
+    def __str__(self):
+        return f'{str(self.user)} | {str(self.product)}'

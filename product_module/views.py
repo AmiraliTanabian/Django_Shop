@@ -1,16 +1,18 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from site_module.models import SiteBanners
-from utils.http_service import get_user_ip
-from .models import Product, ProductCategory, Brand, ProductView, ProductGallery
 from utils.grouped_list import grouper
+from utils.http_service import get_user_ip
+from .forms import ProductCommentForm
+from .models import Product, ProductCategory, Brand, ProductView, ProductGallery, ProductComment
 
 
 class ProductPageView(ListView):
@@ -32,33 +34,87 @@ class ProductPageView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
-    template_name = "product_module/product_detail.html"
-    model = Product
+class ProductDetailView(View):
+    def initail(self, request, pk):
+        self.context = {}
+        self.context["banners"] = SiteBanners.objects.filter(is_active=True,
+                                                             position=SiteBanners.PositionChoices.product_detail)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["banners"] = SiteBanners.objects.filter(is_active=True,
-                                                        position=SiteBanners.PositionChoices.product_detail)
+        self.loaded_product = get_object_or_404(Product, is_active=True, id=pk)
+
+        # current product
+        self.context['product'] = self.loaded_product
 
         # Set view for product
         user_ip = get_user_ip(self.request)
-        has_been_visited = ProductView.objects.filter(product=self.object, ip=user_ip).exists()
+        has_been_visited = ProductView.objects.filter(product=self.loaded_product, ip=user_ip).exists()
 
         user = None
         if self.request.user.is_authenticated:
             user = self.request.user
 
         if not has_been_visited:
-            new_visit = ProductView(product=self.object, ip=get_user_ip(self.request), user=user)
+            new_visit = ProductView(product=self.loaded_product, ip=get_user_ip(self.request), user=user)
             new_visit.save()
 
         # Product Gallery
-        product_gallery = list(ProductGallery.objects.filter(is_active=True, product=self.object))
-        product_gallery.append(self.object)
-        context["product_gallery"] = grouper(product_gallery, 3)
+        product_gallery = list(ProductGallery.objects.filter(is_active=True, product=self.loaded_product))
+        product_gallery.append(self.loaded_product)
+        self.context["product_gallery"] = grouper(product_gallery, 3)
 
-        return context
+        # form for comments
+        self.context["comment_form"] = ProductCommentForm()
+
+    def get(self, request, pk):
+        self.initail(request, pk)
+
+        return render(request, "product_module/product_detail.html", self.context)
+
+    def post(self, request: HttpRequest, pk):
+        self.initail(request, pk)
+
+        form = ProductCommentForm(data=request.POST)
+
+        if form.is_valid():
+            new_comment = ProductComment(text=form.cleaned_data["text"], user=request.user,
+                                         product=self.loaded_product)
+            new_comment.save()
+            messages.success(request, "نظر شما ثبت شد بعد از تایید نمایش داده خواهد شد.")
+
+        self.context["form"] = form
+        return render(request, "product_module/product_detail.html", self.context)
+
+
+# class ProductDetailView(DetailView):
+#     template_name = "product_module/product_detail.html"
+#     model = Product
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["banners"] = SiteBanners.objects.filter(is_active=True,
+#                                                         position=SiteBanners.PositionChoices.product_detail)
+#
+#         # Set view for product
+#         user_ip = get_user_ip(self.request)
+#         has_been_visited = ProductView.objects.filter(product=self.object, ip=user_ip).exists()
+#
+#         user = None
+#         if self.request.user.is_authenticated:
+#             user = self.request.user
+#
+#         if not has_been_visited:
+#             new_visit = ProductView(product=self.object, ip=get_user_ip(self.request), user=user)
+#             new_visit.save()
+#
+#         # Product Gallery
+#         product_gallery = list(ProductGallery.objects.filter(is_active=True, product=self.object))
+#         product_gallery.append(self.object)
+#         context["product_gallery"] = grouper(product_gallery, 3)
+#
+#         # form for comments
+#         context["comment_form"] = ProductCommentForm()
+#
+#         return context
 
 
 class ProductBrandPage(ListView):
@@ -182,3 +238,18 @@ class RemoveFromFavoriteView(LoginRequiredMixin, View):
             user.favorite_products.remove(product)
             return HttpResponse("Product removed to favorite")
         return HttpResponse("Product id not found error!")
+
+
+def product_comment_partial(request: HttpRequest):
+    if request.method == "POST":
+        form = ProductCommentForm(request.POST)
+        context = {
+            "form": form
+        }
+
+        if form.is_valid():
+            new_comment = ProductComment(name=form.name, email=form.email, text=form.text)
+            messages.success(request, "کامنت شما ثبت شد \n بعد از تایید نمایش داده میشود")
+            new_comment.save()
+
+    return redirect(reverse_lazy("product_detail"))

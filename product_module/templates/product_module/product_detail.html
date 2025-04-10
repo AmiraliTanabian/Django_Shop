@@ -2,6 +2,7 @@
 {% load render_partial %}
 {% load static %}
 {% load global_filters %}
+{% load jformat %}
 
 {% block title %}
 	{{ product.name }}
@@ -118,7 +119,7 @@
 							<ul class="nav nav-tabs">
 								<li><a href="#details" data-toggle="tab">جزئیات</a></li>
 								<li><a href="#tag" data-toggle="tab">برچسب</a></li>
-								<li class="active"><a href="#reviews" data-toggle="tab">نظرات (5)</a></li>
+								<li class="active"><a href="#reviews" data-toggle="tab">نظرات ( {{ comments.count }} )</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -136,29 +137,50 @@
 							</div>
 
 							<div class="tab-pane fade active in" id="reviews">
-								{% if request.user.is_authenticated %}
-									<div class="col-sm-12">
-										<ul>
-											<li><a href=""><i class="fa fa-user"></i>مشتـری 1</a></li>
-											<li><a href=""><i class="fa fa-clock-o"></i>12:41 ب . ظ</a></li>
-											<li><a href=""><i class="fa fa-calendar-o"></i>29 تیـر 1397</a></li>
-										</ul>
-										<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
-											ازلورملورم
-											ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-											گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم
-											است و
-											برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-											کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-											فراوان
-											جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان
-											رایانه
-											ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
-										<p><b>نظـر خود را بنویسیـد</b></p>
+								{% if comments %}
+									{% for comment in comments %}
+										<div class="col-sm-12">
+											<ul>
+												<li><a href=""><i class="fa fa-user"></i>{{ comment.user }}</a></li>
+												<li><a href=""><i class="fa fa-clock-o"></i>{{ comment.date.time }}</a>
+												</li>
+												<li><a href=""><i
+														class="fa fa-calendar-o"></i>{{ comment.date.date|jformat:"%Y/%m/%d" }}
+												</a></li>
+												<li>
+													{% if comment.score != 0 %}
+														{% for _ in comment.comment_score_range %}
+															<span class="result-star">★</span>
+														{% endfor %}
+													{% else %}
+														<span class="star">★</span>
+														<span class="star">★</span>
+														<span class="star">★</span>
+														<span class="star">★</span>
+														<span class="star">★</span>
+													{% endif %}
 
-										{% include "product_module/components/product_comment_component.html" with form=comment_form %}
 
+												</li>
+											</ul>
+											<p>
+												{{ comment.text }}
+											</p>
+											<hr>
+										</div>
+									{% endfor %}
+								{% else %}
+									<div class="alert alert-info comment-alert text-center" role="alert">
+										<p>
+											کامنتی وجود ندارد ! شما اولین باشید...
+										</p>
 									</div>
+								{% endif %}
+
+
+								{% if request.user.is_authenticated %}
+									{% include "product_module/components/product_comment_component.html" with form=comment_form %}
+
 								{% else %}
 									{% include "components/comment_without_login.html" %}
 								{% endif %}
@@ -290,5 +312,6 @@
 {% block footer_references %}
 
 	<script src="{% static "lib/light-box/js/lightbox.js" %}"></script>
+	<script src="{% static "js/comment_starts_handler.js" %}"></script>
 
 {% endblock %}

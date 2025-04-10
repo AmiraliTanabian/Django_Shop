@@ -65,6 +65,10 @@ class ProductDetailView(View):
         # form for comments
         self.context["comment_form"] = ProductCommentForm()
 
+        # comments
+        self.context["comments"] = ProductComment.objects.filter(is_active=True, product=self.loaded_product,
+                                                                 parent=None)
+
     def get(self, request, pk):
         self.initail(request, pk)
 
@@ -76,8 +80,9 @@ class ProductDetailView(View):
         form = ProductCommentForm(data=request.POST)
 
         if form.is_valid():
+            score = int(request.POST["rating"])
             new_comment = ProductComment(text=form.cleaned_data["text"], user=request.user,
-                                         product=self.loaded_product)
+                                         product=self.loaded_product, score=score)
             new_comment.save()
             messages.success(request, "نظر شما ثبت شد بعد از تایید نمایش داده خواهد شد.")
 

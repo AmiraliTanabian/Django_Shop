@@ -1,8 +1,23 @@
+<p>
+	<b>نظـر خود را بنویسیـد</b>
+</p>
 <form action="#" method="post">
 	{% csrf_token %}
 	{{ form }}
-	<b>رتبـه : </b> <img src="/static/images/product-details/rating.png"
-	                     alt=""/>
+
+
+	<div class="stars" id="star-container">
+		<b class="comment-score-title">امتیاز شما:</b>
+		<span class="star" data-value="5">★</span>
+		<span class="star" data-value="4">★</span>
+		<span class="star" data-value="3">★</span>
+		<span class="star" data-value="2">★</span>
+		<span class="star" data-value="1">★</span>
+	</div>
+
+	<input type="hidden" name="rating" id="rating-input">
+	<br>
+
 	<button type="submit" class="btn btn-default pull-left">
 		ارسـال
 	</button>

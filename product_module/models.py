@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django_jalali.db.models import jDateTimeField
 
 
 class Brand(models.Model):
@@ -96,6 +97,13 @@ class ProductComment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="کاربر")
     text = models.TextField(verbose_name="متن نظر")
+    date = jDateTimeField(verbose_name="تاریخ", auto_now_add=True)
+    score = models.IntegerField(verbose_name="امتیاز کاربر",
+                                validators=[
+                                    MaxValueValidator(5, "امتیاز نمیتواند بیشتر از ۵ باشد"),
+                                    MinValueValidator(0, "امتیاز نمیتواند کمتر از ۰ باشد"),
+                                ])
+    is_active = models.BooleanField(verbose_name="تایید شده / نشده ", default=False)
 
     class Meta:
         verbose_name = "نظر محصول"
@@ -103,3 +111,6 @@ class ProductComment(models.Model):
 
     def __str__(self):
         return f'{str(self.user)} | {str(self.product)}'
+
+    def comment_score_range(self):
+        return range(self.score)

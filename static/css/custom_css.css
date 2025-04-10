@@ -132,3 +132,34 @@
     color: orange;
 
 }
+
+.stars {
+    display: inline;
+    cursor: pointer;
+}
+
+.stars > span {
+    display: inline;
+}
+
+.star {
+    font-size: 15px;
+    color: lightgray;
+    transition: color 0.2s;
+}
+
+.star.hovered,
+.star.selected,
+.result-star {
+    color: orange;
+}
+
+#star-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.comment-score-title {
+    margin-left: 5px;
+}

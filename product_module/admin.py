@@ -32,9 +32,15 @@ class ProductGalleryAdmin(admin.ModelAdmin):
     list_editable = ["is_active"]
 
 
+class ProductCommentAdmin(admin.ModelAdmin):
+    list_display = ["parent", "product", "user", "is_active"]
+    list_editable = ["is_active"]
+    list_filter = ["is_active"]
+
+
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductGallery, ProductGalleryAdmin)
-admin.site.register(ProductComment)
+admin.site.register(ProductComment, ProductCommentAdmin)
 admin.site.register(ProductTag)

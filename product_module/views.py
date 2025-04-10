@@ -65,6 +65,11 @@ class ProductDetailView(View):
         # form for comments
         self.context["comment_form"] = ProductCommentForm()
 
+        # Related products
+        current_cats = self.loaded_product.categories.all()
+        related_products = Product.objects.filter(is_active=True, categories__in=current_cats).distinct()[:36]
+        self.context["related_products"] = grouper(list(related_products), 3)
+
         # comments
         self.context["comments"] = ProductComment.objects.filter(is_active=True, product=self.loaded_product,
                                                                  parent=None)

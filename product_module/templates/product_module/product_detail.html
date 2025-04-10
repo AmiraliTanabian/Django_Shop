@@ -102,7 +102,8 @@
 										{% if product.categories.all %}
 											{% for cat in product.categories.all %}
 												<li>
-													<a style="text-decoration:none;" href="">
+													<a style="text-decoration:none;"
+													   href="{% url "product_category_page" slug=cat.slug %}">
 														{{ cat.title }}</a>
 												</li>
 											{% endfor %}
@@ -119,7 +120,8 @@
 							<ul class="nav nav-tabs">
 								<li><a href="#details" data-toggle="tab">جزئیات</a></li>
 								<li><a href="#tag" data-toggle="tab">برچسب</a></li>
-								<li class="active"><a href="#reviews" data-toggle="tab">نظرات ( {{ comments.count }} )</a></li>
+								<li class="active"><a href="#reviews" data-toggle="tab">نظرات ( {{ comments.count }}
+									)</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -190,98 +192,38 @@
 					</div><!--/category-tab-->
 
 					<div class="recommended_items"><!--recommended_items-->
-						<h2 class="title text-center">محصولات پیشنهادی</h2>
+						<h2 class="title text-center">محصولات مرتبط</h2>
 
 						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
-								<div class="item active">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend1.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
+								{% for group in related_products %}
+									<div class="item {% if forloop.first %} active {% endif %}">
+										{% for product in group %}
+											<div class="col-sm-4">
+												<div class="product-image-wrapper">
+													<div class="single-products">
+														<div class="productinfo text-center">
+
+															<a href="{% url "product_detail" pk=product.id %}">
+																<img src="{{ product.banner.url }}"
+															     alt="{{ product.name }}" width="85" height="180">
+															</a>
+															
+															<h2>{{ product.price | price_separator }}</h2>
+															<p> {{ product.name }} </p>
+															<button type="button" class="btn btn-default add-to-cart"><i
+																	class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
+															</button>
+
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
+										{% endfor %}
 									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend2.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend3.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend1.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend2.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/static/images/home/recommend3.jpg" alt=""/>
-													<h2>1.250.000 ريال</h2>
-													<p>توضیحات کوتاه محصول</p>
-													<button type="button" class="btn btn-default add-to-cart"><i
-															class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+
+
+								{% endfor %}
 							</div>
 							<a class="left recommended-item-control" href="#recommended-item-carousel"
 							   data-slide="prev">

@@ -61,3 +61,16 @@ class ProductView(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name="کاربر", null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     ip = models.CharField(max_length=20, verbose_name="آی پی")
+
+
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
+    banner = models.ImageField(upload_to="products_gallery", verbose_name="تصویر")
+    is_active = models.BooleanField(default=True, verbose_name="فعال / غیرفعال")
+
+    def __str__(self):
+        return str(self.product)
+
+    class Meta:
+        verbose_name = "گالری محصول"
+        verbose_name_plural = "گالری محصولات"

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ProductCategory, Product, Brand
+from .models import ProductCategory, Product, Brand, ProductGallery
 
 
 class ProductCategoryAdmin(admin.ModelAdmin):
@@ -27,6 +27,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ["is_active"]
 
 
+class ProductGalleryAdmin(admin.ModelAdmin):
+    list_display = ["product", "banner", "is_active"]
+    list_editable = ["is_active"]
+
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductGallery, ProductGalleryAdmin)

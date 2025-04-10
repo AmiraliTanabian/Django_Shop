@@ -7,3 +7,12 @@ setTimeout(function () {
 }, 3000);
 
 
+function bigImage(imageSrc) {
+    event.preventDefault();
+    console.log("Hi!")
+    let mainImage = document.getElementById("main-image")
+    let mainImageBiggerButton = document.getElementById("main-image-bigger-link")
+    mainImage.setAttribute("src", imageSrc)
+    mainImageBiggerButton.setAttribute("href", imageSrc)
+
+}

@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% load render_partial %}
+{% load static %}
+{% load global_filters %}
+
 {% block title %}
 
 {% endblock %}
+
+{% block header_references %}
+
+	<link rel="stylesheet" href="{% static "lib/light-box/css/lightbox.css" %}">
+
+{% endblock %}
+
 {% block content %}
 	<section>
 		<div class="container">
@@ -12,29 +22,28 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="{{ product.banner.url }}" alt="{{ product.name }}"/>
-								<h3>بزرگنمایـی</h3>
+								<img src="{{ product.banner.url }}" alt="{{ product.name }}" id="main-image"/>
+								<h3>
+									<a id="main-image-bigger-link" class="general-link"
+									   data-lightbox="image-1" data-title="{{ product.name }}"
+									   href="{{ product.banner.url }}">
+										بزرگنمایـی
+									</a>
+								</h3>
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 
 								<!-- Wrapper for slides -->
 								<div class="carousel-inner">
-									<div class="item active">
-										<a href=""><img src="/static/images/product-details/similar1.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar2.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar3.jpg" alt=""></a>
-									</div>
-									<div class="item">
-										<a href=""><img src="/static/images/product-details/similar1.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar2.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar3.jpg" alt=""></a>
-									</div>
-									<div class="item">
-										<a href=""><img src="/static/images/product-details/similar1.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar2.jpg" alt=""></a>
-										<a href=""><img src="/static/images/product-details/similar3.jpg" alt=""></a>
-									</div>
-
+									{% for group in product_gallery %}
+										<div class="item {% if forloop.first %} active {% endif %}">
+											{% for gallery in group %}
+												<a class="cursor" onclick="bigImage('{{ gallery.banner.url }}')">
+													<img src="{{ gallery.banner.url }}" width="85" height="85" alt="">
+												</a>
+											{% endfor %}
+										</div>
+									{% endfor %}
 								</div>
 
 								<!-- Controls -->
@@ -382,4 +391,10 @@
 			</div>
 		</div>
 	</section>
+{% endblock %}
+
+{% block footer_references %}
+
+	<script src="{% static "lib/light-box/js/lightbox.js" %}"></script>
+
 {% endblock %}

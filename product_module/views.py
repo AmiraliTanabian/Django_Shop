@@ -9,7 +9,8 @@ from django.views.generic import ListView, DetailView
 
 from site_module.models import SiteBanners
 from utils.http_service import get_user_ip
-from .models import Product, ProductCategory, Brand, ProductView
+from .models import Product, ProductCategory, Brand, ProductView, ProductGallery
+from utils.grouped_list import grouper
 
 
 class ProductPageView(ListView):
@@ -51,6 +52,11 @@ class ProductDetailView(DetailView):
         if not has_been_visited:
             new_visit = ProductView(product=self.object, ip=get_user_ip(self.request), user=user)
             new_visit.save()
+
+        # Product Gallery
+        product_gallery = list(ProductGallery.objects.filter(is_active=True, product=self.object))
+        product_gallery.append(self.object)
+        context["product_gallery"] = grouper(product_gallery, 3)
 
         return context
 

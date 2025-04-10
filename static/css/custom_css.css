@@ -109,3 +109,20 @@
 #footer-nav {
     float: right;
 }
+
+.cursor {
+    cursor: pointer;
+}
+
+.general-link {
+    color: white;
+}
+
+.general-link:hover {
+    color: white;
+}
+
+.lb-caption {
+    display: flex;
+    justify-content: center;
+}

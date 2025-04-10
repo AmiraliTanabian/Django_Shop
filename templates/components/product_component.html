@@ -1,16 +1,18 @@
 {% load static %}
+{% load global_filters %}
+
 <div class="col-sm-4">
 	<div class="product-image-wrapper">
 		<div class="single-products">
 			<div class="productinfo text-center">
 				<img src="{{ product.banner.url }}" alt="{{ product.name }}"/>
-				<h2>{{ product.price }} ريال</h2>
+				<h2>{{ product.price | price_separator }}</h2>
 				<p>{{ product.name }}</p>
 				<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 			</div>
 			<div class="product-overlay">
 				<div class="overlay-content">
-					<h2>{{ product.price }} ريال</h2>
+					<h2>{{ product.price | price_separator }}</h2>
 					<p>{{ product.name }}</p>
 					<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد
 						خریـد</a>
@@ -19,12 +21,22 @@
 		</div>
 		<div class="choose">
 			<ul class="nav nav-pills nav-justified">
-
 				{% if product in favorite_list.all %}
 					<li style="cursor:pointer;">
 						{# For the difference in the product deletion function on the profile page or on the favorites page #}
 						{% if request.resolver_match.url_name == "favorite_list_on_profile" %}
-							<a onclick="RemoveFavoriteOnProfilePage({{ product.id }})">
+							<a onclick="RemoveFavoriteCustomUrl({{ product.id }}, '../../products/remove-from-favorite')">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								حذف از علاقه مندی ها
+							</a>
+						{% elif request.resolver_match.url_name == "product_category_page" or request.resolver_match.url_name == "product_brand_page" %}
+							<a onclick="RemoveFavoriteCustomUrl({{ product.id }}, '../../products/remove-from-favorite')">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								حذف از علاقه مندی ها
+							</a>
+
+						{% elif request.resolver_match.url_name == "favorite_list_on_profile" %}
+							<a onclick="RemoveFavoriteCustomUrl({{ product.id }}, '../../products/remove-from-favorite')">
 								<i class="glyphicon glyphicon-remove-circle"></i>
 								حذف از علاقه مندی ها
 							</a>
@@ -37,12 +49,36 @@
 					</li>
 
 				{% else %}
-					<li style="cursor:pointer"><a onclick="AddToFavorite({{ product.id }})"><i
-							class="fa fa-plus-square">
-					</i>افزودن به علاقه مندی ها
-					</a></li>
+					<li style="cursor:pointer;">
+						{% if request.resolver_match.url_name == "favorite_list_on_profile" %}
+							<a onclick="AddToFavoriteCustomUrl({{ product.id }}, '../../products/add-to-favorite')">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								افزودن به علاقه مندی ها
+							</a>
+						{% elif request.resolver_match.url_name == "product_category_page" or request.resolver_match.url_name == "product_brand_page" %}
+							<a onclick="AddToFavoriteCustomUrl({{ product.id }}, '../../products/add-to-favorite')">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								افزودن به علاقه مندی ها
+							</a>
+
+						{% elif request.resolver_match.url_name == "favorite_list_on_profile" %}
+							<a onclick="AddToFavoriteCustomUrl({{ product.id }}, '../../products/add-to-favorite')">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								افزودن به علاقه مندی ها
+							</a>
+						{% else %}
+							<a onclick="AddToFavorite({{ product.id }})">
+								<i class="glyphicon glyphicon-remove-circle"></i>
+								افزودن به علاقه مندی ها
+							</a>
+						{% endif %}
+					</li>
+
+
 				{% endif %}
-				<li><a href="{% url 'product_detail' pk=product.id %}"><i class="fa fa-info"></i>جزئیات</a></li>
+				<li>
+					<a href="{% url 'product_detail' pk=product.id %}"><i class="fa fa-info"></i>جزئیات</a>
+				</li>
 			</ul>
 		</div>
 	</div>

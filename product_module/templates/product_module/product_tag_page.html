@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load jformat %}
+{% load render_partial %}
+
+{% block title %}
+	تگ {{ tag_title }} | فروشگاه اینترنتی
+{% endblock %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9">
+				<div class="blog-product-area">
+					<h2 class="title text-center">مقالات برای تگ {{ tag_title }} </h2>
+					{% for product in products %}
+						{% include "components/product_component.html" %}
+					{% endfor %}
+
+					{% include 'product_module/components/pagination_component.html' %}
+
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					{% render_partial 'product_module.views.product_category_part_partial' %}
+					{% render_partial "product_module.views.product_brand_partial" %}
+					<br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -12,7 +12,7 @@ from site_module.models import SiteBanners
 from utils.grouped_list import grouper
 from utils.http_service import get_user_ip
 from .forms import ProductCommentForm
-from .models import Product, ProductCategory, Brand, ProductView, ProductGallery, ProductComment
+from .models import Product, ProductCategory, Brand, ProductView, ProductGallery, ProductComment, ProductTag
 
 
 class ProductPageView(ListView):
@@ -253,3 +253,37 @@ def product_comment_partial(request: HttpRequest):
             new_comment.save()
 
     return redirect(reverse_lazy("product_detail"))
+
+
+class ProductTagView(ListView):
+    model = Product
+    template_name = "product_module/product_tag_page.html"
+    context_object_name = "products"
+    paginate_by = 5
+
+    def get_queryset(self):
+        # TODO; dirty code
+        slug = self.kwargs["slug"]
+        query = self.model.objects.filter(is_active=True)
+        ok_items = []
+        for item in query:
+            for tag in item.tags.all():
+                if tag.slug == slug:
+                    ok_items.append(item)
+                    break
+        return ok_items
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        if user.is_authenticated:
+            favorite_products = user.favorite_products.all()
+        else:
+            favorite_products = list()
+
+        context["favorite_list"] = favorite_products
+
+        slug = self.kwargs["slug"]
+        context["tag_title"] = get_object_or_404(ProductTag, is_active=True, slug=slug).tag_name
+        return context

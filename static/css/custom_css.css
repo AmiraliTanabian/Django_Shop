@@ -126,3 +126,9 @@
     display: flex;
     justify-content: center;
 }
+
+.product-tag {
+    margin-right: 15px;
+    color: orange;
+
+}

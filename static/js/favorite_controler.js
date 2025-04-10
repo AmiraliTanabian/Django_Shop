@@ -42,14 +42,23 @@ function RemoveFavorite(productId) {
     })
 }
 
-
-function RemoveFavoriteOnProfilePage(productId) {
+function RemoveFavoriteCustomUrl(productId, url) {
     event.preventDefault()
-    $.get("../remove-from-favorite", {
+    $.get(url, {
         "product_id": productId,
     }).then(re => {
         console.log(re);
         location.reload();
 
+    })
+}
+
+function AddToFavoriteCustomUrl(productId, url) {
+    event.preventDefault();
+    $.get(url, {
+        "product_id": productId,
+    }).then(re => {
+        console.log(re);
+        location.reload();
     })
 }

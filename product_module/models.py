@@ -36,12 +36,26 @@ class ProductCategory(models.Model):
         return self.title
 
 
+class ProductTag(models.Model):
+    tag_name = models.CharField(max_length=100, verbose_name="نام تگ")
+    slug = models.SlugField(max_length=100, verbose_name="اسلاگ", null=True, unique=True)
+    is_active = models.BooleanField(default=True, verbose_name="فعال")
+
+    class Meta:
+        verbose_name = "تگ محصول"
+        verbose_name_plural = "تگ های محصولات"
+
+    def __str__(self):
+        return self.tag_name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="عنوان محصول ")
     price = models.BigIntegerField(verbose_name="مبلغ")
     banner = models.ImageField(upload_to="Images/product", verbose_name="تصویر محصول")
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name="برند")
     categories = models.ManyToManyField(ProductCategory, verbose_name="دسته بندی ها")
+    tags = models.ManyToManyField(ProductTag, verbose_name="تگ های محصول", related_name="product_tags")
     count = models.IntegerField(verbose_name="تعداد موجودی", validators=[
         MinValueValidator(0, "حداقل موجودی کالا ۰ میباشد!")
     ], null=True)

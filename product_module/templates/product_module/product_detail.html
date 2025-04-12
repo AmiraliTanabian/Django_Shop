@@ -73,12 +73,14 @@
 								</div>
 								<div>
 									<span>
-										<span>قیمت : {{ product.price }} ريال</span>
+										<span>قیمت : {{ product.price| price_separator }} </span>
 									</span>
 									<span>
 										<label>تعداد :</label>
-										<input type="text" value="3" max="{{ product.count }}" class="search_box"/>
-										<button type="button" class="btn btn-fefault cart">
+										<input id='product_count' name="count" type="text" value="3"
+										       max="{{ product.count }}" class="search_box"/>
+										<button onclick="addToOrder({{ product.id }})"
+										        type="button" class="btn btn-fefault cart">
 											<i class="fa fa-shopping-cart"></i>
 											افـزودن به سبـد خریـد
 										</button>
@@ -206,13 +208,14 @@
 
 															<a href="{% url "product_detail" pk=product.id %}">
 																<img src="{{ product.banner.url }}"
-															     alt="{{ product.name }}" width="85" height="180">
+																     alt="{{ product.name }}" width="85" height="180">
 															</a>
-															
+
 															<h2>{{ product.price | price_separator }}</h2>
 															<p> {{ product.name }} </p>
 															<button type="button" class="btn btn-default add-to-cart"><i
-																	class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
+																	class="fa fa-shopping-cart"></i>افزودن به
+																سبـد خریـد
 															</button>
 
 														</div>
@@ -255,5 +258,6 @@
 
 	<script src="{% static "lib/light-box/js/lightbox.js" %}"></script>
 	<script src="{% static "js/comment_starts_handler.js" %}"></script>
+	<script src="{% static "js/order_handler_ajax.js" %}"></script>
 
 {% endblock %}

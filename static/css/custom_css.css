@@ -163,3 +163,13 @@
 .comment-score-title {
     margin-left: 5px;
 }
+
+.order-danger p,
+.order-danger a {
+    margin-top: 35px;
+}
+
+.order-danger {
+    height: 150%;
+    border-radius: 5px;
+}

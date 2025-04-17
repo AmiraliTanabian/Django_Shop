@@ -1,4 +1,5 @@
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
 
@@ -49,3 +50,26 @@ class OrderPage(ListView):
         else:
             query = list()
         return query
+
+
+class RemoveFromOrder(View):
+    def get(self, request: HttpRequest):
+        if request.user.is_authenticated:
+            product_id = request.GET["product_id"]
+            order = orderModel.objects.get(user=request.user)
+            order_product = orderProductModel.objects.get(order=order,
+                                                          product__id=product_id)
+            order_product.delete()
+
+            # Get the current product after remove
+            query: orderModel = orderModel.objects.filter(user=self.request.user, is_paid=False).first()
+            if query:
+                query = query.orderproductmodel_set.all()
+            else:
+                query = list()
+
+            return render(request, "order_module/order_list_ajax.html", {
+                "products": query,
+            })
+
+        return HttpResponse("User authentication is failed!")

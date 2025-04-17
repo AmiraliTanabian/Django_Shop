@@ -8,3 +8,13 @@ function addToOrder(productId) {
         console.log(re);
     })
 }
+
+function removeOrderProduct(productId) {
+    event.preventDefault();
+    $.get("../order/remove-from-order", {
+        "product_id": Number(productId),
+    }).then(re => {
+        $("#container").html(re)
+    })
+
+}

@@ -1,3 +1,4 @@
+{% load global_filters %}
 <section id="cart_items">
 	<div class="container">
 		{% if not products %}
@@ -50,11 +51,12 @@
 								<p>شناسـه : {{ product.id }}</p>
 							</td>
 							<td class="cart_price">
-								<p>{{ product.finally_price }}</p>
+								<p>{{ product.finally_price| price_separator }}</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
+									<a class="cart_quantity_up" id="addCount" style="cursor:pointer;"
+									   onclick="addCountProduct({{ product.product.id }})"> + </a>
 									<input class="cart_quantity_input" type="text" name="quantity"
 									       value="{{ product.count }}"
 									       autocomplete="off"
@@ -64,7 +66,7 @@
 							</td>
 							<td class="cart_total">
 								<p class="cart_total_price">
-									{{ product.total_price }}
+									{{ product.total_price| price_separator }}
 								</p>
 							</td>
 							<td class="cart_delete">

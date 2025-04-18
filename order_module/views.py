@@ -73,3 +73,22 @@ class RemoveFromOrder(View):
             })
 
         return HttpResponse("User authentication is failed!")
+
+
+class AddProductCountView(View):
+    def get(self, request: HttpRequest):
+        if request.user.is_authenticated:
+            product_id = request.GET["product_id"]
+            order: orderModel = orderModel.objects.filter(user=self.request.user, is_paid=False).first()
+            print(product_id)
+            order_product = order.orderproductmodel_set.get(product__id=product_id)
+            order_product.count += 1
+            order_product.save()
+
+            # Get the current product after remove
+            query = order.orderproductmodel_set.all()
+
+            return render(request, "order_module/order_list_ajax.html", {
+                "products": query,
+            })
+        return HttpResponse("User authentication is failed!")

@@ -18,3 +18,14 @@ function removeOrderProduct(productId) {
     })
 
 }
+
+function addCountProduct(productId) {
+    event.preventDefault()
+    $.get("../order/add-product-count", {
+        "product_id": Number(productId),
+    }).then(
+        re => {
+            $("#container").html(re);
+        }
+    )
+}

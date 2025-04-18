@@ -61,7 +61,8 @@
 									       value="{{ product.count }}"
 									       autocomplete="off"
 									       size="2">
-									<a class="cart_quantity_down" href=""> - </a>
+									<a class="cart_quantity_down" id="removeCount" style="cursor:pointer;"
+									   onclick="removeCountProduct({{ product.product.id }})"> - </a>
 								</div>
 							</td>
 							<td class="cart_total">

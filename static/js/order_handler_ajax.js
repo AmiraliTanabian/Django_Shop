@@ -29,3 +29,14 @@ function addCountProduct(productId) {
         }
     )
 }
+
+function removeCountProduct(productId) {
+    event.preventDefault()
+    $.get("../order/remove-product-count", {
+        "product_id": Number(productId),
+    }).then(
+        re => {
+            $("#container").html(re);
+        }
+    )
+}

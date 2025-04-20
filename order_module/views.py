@@ -10,7 +10,7 @@ class AddProductToOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
             order = orderModel.objects.filter(user=request.user, is_paid=False).first()
-            product_count = request.POST.get(["count"])
+            product_count = int(request.GET.get("count"))
 
             if not order:
                 order = orderModel.objects.create(user=request.user)
@@ -18,26 +18,44 @@ class AddProductToOrder(View):
             order_product = orderProductModel.objects.filter(order=order,
                                                              product_id=request.GET["product_id"]).first()
             if order_product is None:
-                return HttpResponse("Product not found!")
-
-            if int(product_count) > 1:
                 return JsonResponse({
-                    "status": "invalid_count_value"
+                    "status": "invalid_product",
+                    "title": "محصول نامعتبر!",
+                    "text": "متاسفانه محصول مورد نظر یافت نشد!!",
+                    "icon": "error",
+                })
+
+            if product_count < 1:
+                return JsonResponse({
+                    "status": "invalid_count_value",
+                    "title": "تعداد نامعبر!",
+                    "text": "تعداد مورد نظر نباید 0 یا منفی باشد!",
+                    "icon": "warning",
                 })
 
             # check the product on order exists or no
             if not order_product:
-                new_order_product = orderProductModel(order=order, count=int(product_count),
+                new_order_product = orderProductModel(order=order, count=product_count,
                                                       product_id=request.GET["product_id"])
                 new_order_product.save()
 
             else:
-                order_product.count += int(self.request.GET["count"])
+                order_product.count += product_count
                 order_product.save()
 
-            return HttpResponse("Order added!")
+            return JsonResponse({
+                "status": "success",
+                "title": "موفق!",
+                "text": "محصول به سبد خرید اضافه شد!",
+                "icon": "success",
+            })
 
-        return HttpResponse("User dont login")
+        return JsonResponse({
+            "status": "not_auth",
+            "title": "وارد حساب نشدید!",
+            "text": "شما باید وارد حساب خود شوید",
+            "icon": "error",
+        })
 
 
 class OrderPage(ListView):

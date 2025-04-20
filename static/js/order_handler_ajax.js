@@ -6,7 +6,23 @@ function addToOrder(productId) {
         product_id: productId,
     }).then(re => {
         console.log(re);
+        Swal.fire({
+            title: re.title,
+            text: re.text,
+            icon: re.icon,
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ورود به حساب"
+        }).then((result) => {
+            confirmButtonText: "ورود به حساب"
+            if (result.isConfirmed && re.status === "not_auth") {
+                location.href = "../../account/login"
+            }
+        });
     })
+
+
 }
 
 function removeOrderProduct(productId) {

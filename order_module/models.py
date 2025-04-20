@@ -23,7 +23,9 @@ class orderProductModel(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     count = models.IntegerField(verbose_name="تعداد", default=1)
     finally_price = models.BigIntegerField(verbose_name="قیمت نهایی محصول", null=True)
-    total_price = models.BigIntegerField(verbose_name="قیمت مجموع محصول")
+
+    def total_price(self):
+        return self.product.price * self.count
 
     def __str__(self):
         return '{} - {}'.format(str(self.order), str(self.product))

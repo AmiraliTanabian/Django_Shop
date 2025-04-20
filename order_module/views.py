@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
@@ -10,13 +10,20 @@ from .models import orderModel, orderProductModel
 class AddProductToOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
-            order = orderModel.objects.filter(is_paid=False).first()
+            order = orderModel.objects.filter(user=request.user, is_paid=False).first()
 
             if not order:
                 order = orderModel.objects.create(user=request.user)
 
             order_product = orderProductModel.objects.filter(order=order,
                                                              product_id=request.GET["product_id"]).first()
+            if order_product is None:
+                return HttpResponse("Product not found!")
+
+            if int(request.GET["count"]) > 1:
+                return JsonResponse({
+                    "status": "invalid_count_value"
+                })
 
             # check the product on order exists or no
             if not order_product:

@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
 
-from product_module.models import Product
 from .models import orderModel, orderProductModel
 
 
@@ -11,6 +10,7 @@ class AddProductToOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
             order = orderModel.objects.filter(user=request.user, is_paid=False).first()
+            product_count = request.POST.get(["count"])
 
             if not order:
                 order = orderModel.objects.create(user=request.user)
@@ -20,24 +20,19 @@ class AddProductToOrder(View):
             if order_product is None:
                 return HttpResponse("Product not found!")
 
-            if int(request.GET["count"]) > 1:
+            if int(product_count) > 1:
                 return JsonResponse({
                     "status": "invalid_count_value"
                 })
 
             # check the product on order exists or no
             if not order_product:
-                new_order_product = orderProductModel(order=order, count=int(request.GET["count"]),
-                                                      product_id=request.GET["product_id"],
-                                                      finally_price=Product.objects.get(
-                                                          pk=request.GET["product_id"]).price
-                                                      )
+                new_order_product = orderProductModel(order=order, count=int(product_count),
+                                                      product_id=request.GET["product_id"])
                 new_order_product.save()
 
             else:
                 order_product.count += int(self.request.GET["count"])
-                order_product.finally_price = Product.objects.get(
-                    pk=request.GET["product_id"]).price
                 order_product.save()
 
             return HttpResponse("Order added!")

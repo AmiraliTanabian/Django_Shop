@@ -31,7 +31,6 @@ class orderProductModel(models.Model):
         return '{} - {}'.format(str(self.order), str(self.product))
 
     def save(self, *args, **kwargs):
-        self.total_price = self.finally_price * self.count
         super().save(*args, **kwargs)
 
     class Meta:

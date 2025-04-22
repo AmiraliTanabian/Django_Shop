@@ -17,14 +17,6 @@ class AddProductToOrder(View):
 
             order_product = orderProductModel.objects.filter(order=order,
                                                              product_id=request.GET["product_id"]).first()
-            if order_product is None:
-                return JsonResponse({
-                    "status": "invalid_product",
-                    "title": "محصول نامعتبر!",
-                    "text": "متاسفانه محصول مورد نظر یافت نشد!!",
-                    "icon": "error",
-                })
-
             if product_count < 1:
                 return JsonResponse({
                     "status": "invalid_count_value",
@@ -76,13 +68,16 @@ class RemoveFromOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
             product_id = request.GET["product_id"]
+            print(product_id)
             order = orderModel.objects.get(user=request.user)
+            print(f"order: {order}")
             order_product = orderProductModel.objects.get(order=order,
-                                                          product__id=product_id)
+                                                          product__id=int(product_id))
             order_product.delete()
+            print(f"order product : {order_product}")
 
             # Get the current product after remove
-            query: orderModel = orderModel.objects.filter(user=self.request.user, is_paid=False).first()
+            query: orderModel = orderModel.objects.filter(user=request.user, is_paid=False).first()
             if query:
                 query = query.orderproductmodel_set.all()
             else:

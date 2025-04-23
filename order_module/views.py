@@ -63,28 +63,41 @@ class OrderPage(ListView):
             query = list()
         return query
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        order = self.model.objects.filter(user=self.request.user, is_paid=False).first()
+
+        if order:
+            total_price = order.total_order_price()
+            context["total_price"] = total_price
+        return context
+
 
 class RemoveFromOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
-            product_id = request.GET["product_id"]
-            print(product_id)
-            order = orderModel.objects.get(user=request.user)
-            print(f"order: {order}")
+            product_id = request.GET.get("product_id")
+
+            if product_id is None:
+                return JsonResponse({
+                    "status": "product id not found"
+                })
+
+            order, is_created_new_order = orderModel.objects.get_or_create(user=request.user, is_paid=False)
+
             order_product = orderProductModel.objects.get(order=order,
                                                           product__id=int(product_id))
             order_product.delete()
-            print(f"order product : {order_product}")
 
-            # Get the current product after remove
-            query: orderModel = orderModel.objects.filter(user=request.user, is_paid=False).first()
-            if query:
-                query = query.orderproductmodel_set.all()
+            if order:
+                query = order.orderproductmodel_set.all()
             else:
                 query = list()
 
+            total_price = order.total_order_price()
             return render(request, "order_module/order_list_ajax.html", {
                 "products": query,
+                "total_price": total_price,
             })
 
         return HttpResponse("User authentication is failed!")
@@ -102,9 +115,12 @@ class AddProductCountView(View):
             # Get the current product after remove
             query = order.orderproductmodel_set.all()
 
+            total_price = order.total_order_price()
             return render(request, "order_module/order_list_ajax.html", {
                 "products": query,
+                "total_price": total_price,
             })
+
         return HttpResponse("User authentication is failed!")
 
 
@@ -120,7 +136,10 @@ class RemoveProductCountView(View):
             # Get the current product after remove
             query = order.orderproductmodel_set.all()
 
+            total_price = order.total_order_price()
             return render(request, "order_module/order_list_ajax.html", {
                 "products": query,
+                "total_price": total_price,
             })
+        
         return HttpResponse("User authentication is failed!")

@@ -13,6 +13,16 @@ class orderModel(models.Model):
     def __str__(self):
         return '{} -- {}'.format(self.id, str(self.user))
 
+    def total_order_price(self):
+        total_amount = 0
+        if self.is_paid:
+            for product in self.orderproductmodel_set.all():
+                total_amount += product.finally_price * product.count
+        else:
+            for product in self.orderproductmodel_set.all():
+                total_amount += product.product.price * product.count
+        return (total_amount)
+
     class Meta:
         verbose_name = "سبد خرید"
         verbose_name_plural = "سبد های خرید"

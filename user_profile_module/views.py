@@ -137,3 +137,6 @@ class ProfileFavoriteProductsView(LoginRequiredMixin, ListView):
         favorite_products = user.favorite_products.all()
         context["favorite_list"] = favorite_products
         return context
+
+
+# class ProfileOrders(LoginRequiredMixin, ListView):

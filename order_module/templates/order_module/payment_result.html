@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+
+	نتیحه پرداخت
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				{% if error %}
+					<div class="alert alert-danger">
+						{{ error }}
+					</div>
+
+				{% elif success %}
+					<div class="alert alert-success">
+						{{ success }}
+					</div>
+
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

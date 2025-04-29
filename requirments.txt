@@ -3,3 +3,5 @@ django-recaptcha==4.0.0
 django-render-partial==0.4
 django-template-maths==0.2.0
 phonenumbers==9.0.2
+zeep==4.3.1
+requests==2.32.3

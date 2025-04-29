@@ -9,6 +9,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView
 from phonenumbers import parse, is_valid_number
 
+from order_module.models import orderModel
 from .forms import EditProfileModelForm, EditPasswordForm
 
 
@@ -139,4 +140,15 @@ class ProfileFavoriteProductsView(LoginRequiredMixin, ListView):
         return context
 
 
-# class ProfileOrders(LoginRequiredMixin, ListView):
+class ProfileOrders(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("login_page")
+    template_name = "user_profile_module/user_orders_list.html"
+    model = orderModel
+    context_object_name = "products"
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(is_paid=True, user=self.request.user)
+
+        return query

@@ -98,6 +98,16 @@
     color: black;
 }
 
+.order-detail-link-without-line {
+    text-decoration: none;
+    color: #333;
+}
+
+.order-detail-link-without-line:hover {
+    color: #333;
+}
+
+
 .margin-profile-fields {
     margin-bottom: 20px;
 }

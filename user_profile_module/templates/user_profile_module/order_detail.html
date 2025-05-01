@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load global_filters %}
+{% load jformat %}
+{% block title %}
+
+	جزئیات سفارش
+
+{% endblock %}
+{% block content %}
+
+
+	{% include "components/message.html" %}
+
+	<div class="container">
+		<div class="contact-form">
+			<div class="row">
+				<div class="col-sm-8">
+					<h1 class="text-center edit-profile-title">
+						جزئیات سفارش
+					</h1>
+					<br><br>
+
+					<ul>
+						<li class="edit-profile-item">
+							<i class="glyphicon glyphicon-time"></i>
+							تاریخ ثبت سفارش :
+							{{ order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}
+						</li>
+						<li>
+							<i class="glyphicon glyphicon-shopping-cart"></i>
+							قیمت نهایی سفارش :
+							{{ order.total_order_price|price_separator }}
+						</li>
+					</ul>
+
+					<br>
+					{#						<h3>#}
+					{#							<i class="glyphicon glyphicon-shopping-cart"></i>#}
+					{#							قیمت نهایی سفارش :#}
+					{#							{{ order.total_order_price }}#}
+					{#						</h3>#}
+
+					<table class="table table-striped table-hover table-responsive center">
+						<thead>
+						<tr>
+							<td>شناسه محصول</td>
+							<td>عنوان محصول</td>
+							<td>مبلغ نهایی خرید</td>
+							<td>تعداد</td>
+							<td>مجموع قیمت</td>
+						</tr>
+
+						</thead>
+						<tbody>
+						{% for product in order.orderproductmodel_set.all %}
+							<tr>
+							<td>
+								{{ product.product.id }}
+							</td>
+							<td>
+								<a class="order-detail-link-without-line"
+								   href="{% url "product_detail" pk=product.product.id %}">
+									{{ product.product.name }}
+								</a>
+							</td>
+							<td>
+								{{ product.finally_price| price_separator }}
+							</td>
+							<td>
+								{{ product.count }}
+							</td>
+							<td>
+								{% multiplication product.count product.finally_price %}
+							</td>
+						{% endfor %}
+						</tr>
+						</tbody>
+					</table>
+
+					{% if is_paginated %}
+						<nav aria-label="...">
+
+							<ul class="pager">
+								{% if page_obj.has_next %}
+									<li><a href="?page={{ page_obj.next_page_number }}">بعدی</a></li>
+
+								{% endif %}
+								{% if page_obj.has_previous %}
+									<li><a href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>
+
+								{% endif %}
+							</ul>
+
+						</nav>
+						<br>
+						<br>
+						<br>
+					{% endif %}
+
+				</div>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from phonenumbers import parse, is_valid_number
 
 from order_module.models import orderModel
@@ -151,4 +151,15 @@ class ProfileOrders(LoginRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.filter(is_paid=True, user=self.request.user)
 
+        return query
+
+
+class orderPageView(LoginRequiredMixin, DetailView):
+    template_name = "user_profile_module/order_detail.html"
+    context_object_name = "order"
+    model = orderModel
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query.filter(user=self.request.user).prefetch_related("orderproductmodel_set")
         return query

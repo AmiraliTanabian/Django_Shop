@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 {% load render_partial %}
+{% load static %}
+
 
 {% block title %}
 	محصولات |‌فروشگاه اینترنتی
+{% endblock %}
+
+{% block header_references %}
+
+	<script src="{% static "js/order_handler_ajax.js" %}"></script>
+	
 {% endblock %}
 
 {% block content %}
@@ -42,4 +50,9 @@
 		</div>
 	</section>
 
+{% endblock %}
+
+
+{% block footer_references %}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

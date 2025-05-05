@@ -14,7 +14,8 @@
 				<div class="overlay-content">
 					<h2>{{ product.price | price_separator }}</h2>
 					<p>{{ product.name }}</p>
-					<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد
+					<a onclick="addToOrder({{ product.id }})" class="btn btn-default add-to-cart"><i
+							class="fa fa-shopping-cart"></i>افزودن به سبـد
 						خریـد</a>
 				</div>
 			</div>

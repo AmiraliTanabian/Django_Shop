@@ -95,38 +95,6 @@ class ProductDetailView(View):
         return render(request, "product_module/product_detail.html", self.context)
 
 
-# class ProductDetailView(DetailView):
-#     template_name = "product_module/product_detail.html"
-#     model = Product
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["banners"] = SiteBanners.objects.filter(is_active=True,
-#                                                         position=SiteBanners.PositionChoices.product_detail)
-#
-#         # Set view for product
-#         user_ip = get_user_ip(self.request)
-#         has_been_visited = ProductView.objects.filter(product=self.object, ip=user_ip).exists()
-#
-#         user = None
-#         if self.request.user.is_authenticated:
-#             user = self.request.user
-#
-#         if not has_been_visited:
-#             new_visit = ProductView(product=self.object, ip=get_user_ip(self.request), user=user)
-#             new_visit.save()
-#
-#         # Product Gallery
-#         product_gallery = list(ProductGallery.objects.filter(is_active=True, product=self.object))
-#         product_gallery.append(self.object)
-#         context["product_gallery"] = grouper(product_gallery, 3)
-#
-#         # form for comments
-#         context["comment_form"] = ProductCommentForm()
-#
-#         return context
-
-
 class ProductBrandPage(ListView):
     template_name = "product_module/product_brand_page.html"
     context_object_name = "products"

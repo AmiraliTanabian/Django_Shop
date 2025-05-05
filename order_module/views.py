@@ -1,11 +1,5 @@
-import json
-
-import requests
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
 
@@ -16,7 +10,11 @@ class AddProductToOrder(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
             order = orderModel.objects.filter(user=request.user, is_paid=False).first()
-            product_count = int(request.GET.get("count"))
+
+            try:
+                product_count = int(request.GET.get("count"))
+            except TypeError:
+                product_count = 1
 
             if not order:
                 order = orderModel.objects.create(user=request.user)

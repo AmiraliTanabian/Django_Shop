@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% load render_partial %}
 {% load global_filters %}
+{% load static %}
+
 {% block title %}
 	صفحه اصلی | فروشگاه اینترنتی
 {% endblock %}
 
+{% block header_references %}
+	<script src="{% static "js/order_handler_ajax.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -37,7 +42,8 @@
 														<img src="{{ product.banner.url }}" alt="{{ product.name }}"/>
 														<h2>{{ product.price | price_separator }}</h2>
 														<p>{{ product.name }}</p>
-														<a href="#" class="btn btn-default add-to-cart"><i
+														<a onclick="addToOrder({{ product.id }})" class=" btn btn-default
+														   add-to-cart"><i
 																class="fa fa-shopping-cart"></i>افزودن به سبـد خرید</a>
 													</div>
 
@@ -81,7 +87,8 @@
 															<div class="overlay-content">
 																<h2>{{ product.price | price_separator }}</h2>
 																<p>{{ product.name }}</p>
-																<a href="#" class="btn btn-default add-to-cart"><i
+																<a onclick="addToOrder({{ product.id }})"
+																   class="btn btn-default add-to-cart"><i
 																		class="fa fa-shopping-cart"></i>افزودن به سبـد
 																	خریـد</a>
 															</div>
@@ -417,7 +424,8 @@
 														<img src="{{ product.banner.url }}" alt="{{ product.name }}"/>
 														<h2>{{ product.price | price_separator }}</h2>
 														<p>{{ product.name }}</p>
-														<a href="#" class="btn btn-default add-to-cart"><i
+														<a onclick="addToOrder({{ product.id }})"
+														   class="btn btn-default add-to-cart"><i
 																class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
 													</div>
 
@@ -433,4 +441,8 @@
 				</div>
 			</div>
 	</section>
+{% endblock %}
+
+{% block footer_references %}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

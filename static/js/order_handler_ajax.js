@@ -1,6 +1,9 @@
 function addToOrder(productId) {
     event.preventDefault();
     let productCount = $("#product_count").val();
+    if (productCount === null) {
+        productCount = 1
+    }
     $.get("../order/add-to-order", {
         count: productCount,
         product_id: productId,

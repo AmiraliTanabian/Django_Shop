@@ -6,8 +6,8 @@ from .models import newsLetterModel
 
 
 class AddMailToNewsLetter(View):
-    def post(self, request: HttpRequest):
-        email = request.POST.get("email")
+    def get(self, request: HttpRequest):
+        email = request.GET.get("email")
         email_on_db = newsLetterModel.objects.filter(is_active=True, email__iexact=email).first()
 
         if not email_on_db:

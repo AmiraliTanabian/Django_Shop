@@ -1,7 +1,7 @@
 function AddToNewsLetter() {
     console.log("salam")
     let email = $("#news_letter_email").val();
-    $.post("news-letter/add/", {
+    $.get("news-letter/add", {
         "email": email,
     }).then(re => {
         console.log(re);

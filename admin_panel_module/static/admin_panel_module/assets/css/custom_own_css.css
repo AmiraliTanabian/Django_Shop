@@ -1,0 +1,16 @@
+div#mail_body {
+    margin: auto;
+    width: 100%;
+}
+
+#mail-header {
+    margin-right: 0;
+}
+
+.content-limit {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 300px;
+}

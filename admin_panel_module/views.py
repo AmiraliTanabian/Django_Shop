@@ -1,8 +1,9 @@
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
 from news_module.models import Article
+from .forms import ArticleEditForm
 
 
 def index_page(request: HttpRequest):
@@ -14,3 +15,16 @@ class ArticlePageView(ListView):
     context_object_name = "articles"
     paginate_by = 10
     model = Article
+
+
+def edit_article_view(request: HttpRequest, pk):
+    current_article = get_object_or_404(Article, pk=int(pk))
+
+    form = ArticleEditForm(instance=current_article)
+
+    print(f"Post log: {request.POST}")
+
+    return render(request, "admin_panel_module/article_detail.html", {
+        "form": form,
+        "article": current_article,
+    })

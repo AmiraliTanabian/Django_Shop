@@ -403,12 +403,12 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 										</a>
 									</div>
 									<div class="item-sender">
-										<a href="message-view.html" class="col-name">
+										<a href="{% url "admin_article_detail_page" pk=article.id %}" class="col-name">
 											{{ article.title }}
 										</a>
 									</div>
 									<div class="item-subject">
-										<a href="message-view.html">
+										<a href="{% url "admin_article_detail_page" pk=article.id %}">
 											<p class="content-limit">
 												{{ article.short_info }}
 											</p>

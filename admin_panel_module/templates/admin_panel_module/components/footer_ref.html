@@ -1,3 +1,4 @@
+{% load static %}
 <!--Basic Scripts-->
 <script src="../../../static/admin_panel_module/assets/js/jquery.min.js"></script>
 <script src="../../../static/admin_panel_module/assets/js/bootstrap.min.js"></script>
@@ -313,3 +314,73 @@
     //Initiates Sparkline Chart instances in page
     InitiateSparklineCharts.init();
 </script>
+
+
+<script>
+    $(function () {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                    'Times New Roman', 'Verdana'],
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({container: 'body'});
+            $('.dropdown-menu input').click(function () {
+                return false;
+            })
+                .change(function () {
+                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                })
+                .keydown('esc', function () {
+                    this.value = '';
+                    $(this).change();
+                });
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this), target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+            if ("onwebkitspeechchange" in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+                $('#voiceBtn').css('position', 'absolute').offset({
+                    top: editorOffset.top,
+                    left: editorOffset.left + $('#editor').innerWidth() - 35
+                });
+            } else {
+                $('#voiceBtn').hide();
+            }
+        };
+
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            } else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        };
+        initToolbarBootstrapBindings();
+        $('.wysiwyg-editor').wysiwyg({fileUploadError: showErrorAlert});
+        window.prettyPrint && prettyPrint();
+    });
+</script>
+
+<!--Summernote Scripts-->
+<script src="../../../static/admin_panel_module/assets/js/editors/summernote/summernote.js"></script>
+<script>
+    $('#summernote').summernote({height: 300});
+</script>
+
+<!--Page Related Scripts-->
+<!--Bootstrap  wysiwig Scripts-->
+<script src="assets/js/editors/wysiwyg/jquery.hotkeys.js"></script>
+<script src="assets/js/editors/wysiwyg/prettify.js"></script>
+<script src="assets/js/editors/wysiwyg/bootstrap-wysiwyg.js"></script>
+<script src="{% static 'admin_panel_module/assets/js/own_custom_js.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>

@@ -1,5 +1,6 @@
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404
+from django.views import View
 from django.views.generic import ListView
 
 from news_module.models import Article
@@ -17,14 +18,25 @@ class ArticlePageView(ListView):
     model = Article
 
 
-def edit_article_view(request: HttpRequest, pk):
-    current_article = get_object_or_404(Article, pk=int(pk))
+class EditArticleView(View):
+    def get(self, request: HttpRequest, pk):
+        current_article = get_object_or_404(Article, pk=int(pk))
 
-    form = ArticleEditForm(instance=current_article)
+        form = ArticleEditForm(instance=current_article)
 
-    print(f"Post log: {request.POST}")
+        return render(request, "admin_panel_module/article_detail.html", {
+            "form": form,
+            "article": current_article,
+        })
 
-    return render(request, "admin_panel_module/article_detail.html", {
-        "form": form,
-        "article": current_article,
-    })
+    def post(self, request: HttpRequest, pk):
+        current_article = get_object_or_404(Article, pk=int(pk))
+
+        form = ArticleEditForm(instance=current_article)
+
+        print(f"Post log: {request.POST}")
+
+        return render(request, "admin_panel_module/article_detail.html", {
+            "form": form,
+            "article": current_article,
+        })

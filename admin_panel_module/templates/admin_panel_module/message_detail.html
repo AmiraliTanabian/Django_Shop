@@ -1,5 +1,5 @@
-{% load global_filters %}
 {% load jformat %}
+{% load global_filters %}
 <!DOCTYPE html>
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
@@ -11,14 +11,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>پیام ها</title>
+	<title>پیام ها | {% slicer msg.subject 15 %}</title>
 
-	<meta name="description" content="inbox"/>
+	<meta name="description" content="Mail View Message"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	{% include 'admin_panel_module/components/header_ref.html' %}
-
 
 </head>
 <!-- /Head -->
@@ -43,10 +42,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			</div>
 			<!-- /Navbar Barnd -->
 			<!-- Sidebar Collapse -->
-			<div class="sidebar-collapse" id="sidebar-collapse">
-				<i class="collapse-icon fa fa-bars"></i>
-			</div>
-			<!-- /Sidebar Collapse -->
 
 			{% include 'admin_panel_module/components/header_component.html' %}
 
@@ -307,57 +302,90 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url "admin_index_page" %}">خانه</a>
 					</li>
 					<li>
-						<a href="#">پیام ها</a>
+						<a href="{% url "contact_us_admin_page" %}">پیام ها</a>
 					</li>
+					<li class="active">{% slicer msg.subject 50 %}</li>
 				</ul>
 			</div>
 			<!-- /Page Breadcrumb -->
+			<!-- Page Header -->
+			<div class="page-header position-relative mail-header">
+				<div class="header-title">
+					<h1>
+						Veiw Message
+					</h1>
+				</div>
+				<!--Header Buttons-->
+				<div class="header-buttons">
+					<a class="sidebar-toggler" href="#">
+						<i class="fa fa-arrows-h"></i>
+					</a>
+					<a class="refresh" id="refresh-toggler" href="default.htm">
+						<i class="glyphicon glyphicon-refresh"></i>
+					</a>
+					<a class="fullscreen" id="fullscreen-toggler" href="#">
+						<i class="glyphicon glyphicon-fullscreen"></i>
+					</a>
+				</div>
+				<!--Header Buttons End-->
+			</div>
+			<!-- /Page Header -->
 			<!-- Page Body -->
 			<div class="page-body no-padding">
 				<div class="mail-container">
-					<div class="mail-body">
-						<ul class="mail-list">
-							{% for msg in messages %}
-
-								<li class="list-item {% if not msg.is_read %}unread{% endif %}">
-									<div class="item-check">
-										<label>
-											<input type="checkbox">
-											<span class="text"></span>
-										</label>
-									</div>
-									<div class="item-star">
-										<a href="#" class="">
-											<i class="fa fa-star-o"></i>
-										</a>
-									</div>
-									<div class="item-sender">
-										<a href="{% url "message-detail-page" pk=msg.id %}" class="col-name">{% slicer msg.subject 20 %}</a>
-									</div>
-									<div class="item-subject">
-										{#										<span class="label label-palegreen">Business</span>#}
-										<a href="{% url "message-detail-page" pk=msg.id %}">
-											{% slicer msg.msg 50 %}
-										</a>
-									</div>
-									<div class="item-time">
-										{{ msg.date|jformat:"%Y/%m/%d" }}
-									</div>
-								</li>
-
-							{% endfor %}
+					<div class="mail-header">
+						<div class="mail-title">
+							<strong>
+								{{ msg.subject }}
+							</strong>
+						</div>
+						<ul class="header-buttons pull-right">
+							<li>
+								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="Remove"><i
+										class="glyphicon glyphicon-remove"></i></a>
+							</li>
+							<li>
+								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="Print"><i
+										class="fa fa-print"></i></a>
+							</li>
 						</ul>
+					</div>
+					<div class="mail-body">
+						<div class="mail-info">
+							<div class="mail-sender">
+								<a href="mailto:{{ msg.email }}">
+									<span>{{ msg.name }}</span>
+									({{ msg.email }}) to <span>me</span>
+								</a>
+							</div>
+							<div class="mail-date">
+								{{ msg.date|jformat:"%Y/%m/%d" }}
+							</div>
+						</div>
+						<div class="mail-text">
+
+							<p>
+								{{ msg.msg }}
+							</p>
+
+						</div>
+
 					</div>
 				</div>
 			</div>
-			<!-- /Page Body -->
 		</div>
-		<!-- /Page Content -->
+		<!-- /Page Body -->
 	</div>
+	<!-- /Page Content -->
+</div>
+<!-- /Page Container -->
+<!-- Main Container -->
 
 </div>
 
 {% include 'admin_panel_module/components/footer_ref.html' %}
 
+
 </body>
+<!--  /Body -->
 </html>

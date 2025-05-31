@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index_page, name="admin_index_page"),
     path('articles', views.ArticlePageView.as_view(), name="admin_articles_page"),
     path("article/<int:pk>", views.EditArticleView.as_view(), name="admin_article_detail_page"),
-    path('contact-us/', views.ContactUSAdminView.as_view(), name="contact_us_admin_page")
+    path('contact-us/', views.ContactUSAdminView.as_view(), name="contact_us_admin_page"),
+    path("contact-us/<int:pk>", views.MessageDetailView.as_view(), name="message-detail-page"),
 ]

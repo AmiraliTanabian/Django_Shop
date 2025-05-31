@@ -37,7 +37,7 @@ div#mail_body {
     display: block !important;
 }
 
-/* اگر سایدبار با float یا position کار کرده */
 .sidebar {
     display: none !important;
 }
+

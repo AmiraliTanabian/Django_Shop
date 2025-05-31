@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
 
+from contact_module.models import ContactModel
 from news_module.models import Article
 from .forms import ArticleEditForm
 
@@ -40,3 +41,11 @@ class EditArticleView(View):
             "form": form,
             "article": current_article,
         })
+
+
+class ContactUSAdminView(ListView):
+    ordering = ["-date"]
+    model = ContactModel
+    context_object_name = 'messages'
+    paginate_by = 10
+    template_name = 'admin_panel_module/messages_list.html'

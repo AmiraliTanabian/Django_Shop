@@ -1,8 +1,10 @@
 from django.db import models
+from django_jalali.db.models import jDateTimeField
 
 
 class ContactModel(models.Model):
     name = models.CharField(max_length=255, verbose_name="نام")
+    date = jDateTimeField(verbose_name="تاریخ", auto_now_add=True, blank=True, null=True)
     email = models.EmailField(verbose_name="ایمیل")
     subject = models.CharField(max_length=255, verbose_name="موضوع")
     msg = models.TextField(verbose_name="متن پیام")

@@ -14,3 +14,30 @@ div#mail_body {
     overflow: hidden;
     width: 300px;
 }
+
+.page-body {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.mail-container,
+.mail-body,
+.mail-list {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.main-content, .page-body, .mail-container, .mail-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 15px !important;
+    float: none !important;
+    display: block !important;
+}
+
+/* اگر سایدبار با float یا position کار کرده */
+.sidebar {
+    display: none !important;
+}

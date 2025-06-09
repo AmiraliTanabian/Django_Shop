@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from contact_module.models import ContactModel
 from news_module.models import Article
 from .forms import ArticleEditForm
+from django.http import JsonResponse
 
 
 def index_page(request: HttpRequest):
@@ -55,3 +56,20 @@ class MessageDetailView(DetailView):
     model = ContactModel
     template_name = "admin_panel_module/message_detail.html"
     context_object_name = 'msg'
+
+
+class RemoveMessageAdminView(View):
+    def get(self, request):
+        msg_id = request.GET["msg_id"]
+        msg = ContactModel.objects.filter(pk=msg_id).first()
+        if not msg:
+            return JsonResponse({
+                "status": "failed",
+                "msg": "the msg id not found!"
+            })
+
+        else:
+            msg.delete()
+            return JsonResponse({
+                "status": "success",
+            })

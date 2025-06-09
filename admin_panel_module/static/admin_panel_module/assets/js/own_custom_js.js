@@ -9,7 +9,7 @@ $('#date-picker').persianDatepicker({
 
 
 function removeMsgAdmin(msgId) {
-    evenet.preventDefault();
+    event.preventDefault();
     Swal.fire({
         title: 'تایید حذف',
         text: 'آیا شما از حذف پیام مطمنئنید؟',
@@ -17,14 +17,19 @@ function removeMsgAdmin(msgId) {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "حذف"
+        confirmButtonText: "حذف",
+        cancelButtonText: "کنسل",
     }).then((result) => {
         confirmButtonText: "حذف"
         if (result.isConfirmed) {
-            $.get("../remove-msg/", {
+            $.get("./remove-msg/", {
                 "msg_id": msgId,
             }).then(re => {
-                console.log(re)
+                if (re.status === "success") {
+                    location.href = './'
+                } else {
+                    console.log(re.msg)
+                }
             })
         }
     });

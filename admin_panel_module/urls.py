@@ -8,4 +8,5 @@ urlpatterns = [
     path("article/<int:pk>", views.EditArticleView.as_view(), name="admin_article_detail_page"),
     path('contact-us/', views.ContactUSAdminView.as_view(), name="contact_us_admin_page"),
     path("contact-us/<int:pk>", views.MessageDetailView.as_view(), name="message-detail-page"),
+    path('contact-us/remove-msg/', views.RemoveMessageAdminView.as_view(), name="remove_msg_from_admin_ajax"),
 ]

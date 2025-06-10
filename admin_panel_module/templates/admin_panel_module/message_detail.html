@@ -341,12 +341,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						</div>
 						<ul class="header-buttons pull-right">
 							<li>
-								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="حذف" onclick="removeMsgAdmin({{ msg.id }})"><i
+								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="حذف"
+								   onclick="removeMsgAdmin({{ msg.id }})"><i
 										class="glyphicon glyphicon-remove"></i></a>
 							</li>
 							<li>
-								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="Print"><i
-										class="fa fa-print"></i></a>
+								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="پاسخ"><i
+										class="fa fa-send-o"></i></a>
 							</li>
 						</ul>
 					</div>
@@ -381,7 +382,43 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- /Page Container -->
 <!-- Main Container -->
 
+
 </div>
+
+
+<!-- مودال -->
+<div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+	<div class="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl">
+		<h2 class="text-xl font-bold mb-4">پاسخ به سوال</h2>
+		<textarea id="replyText" rows="4"
+		          class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+		          placeholder="پاسخ خود را بنویسید..."></textarea>
+		<div class="flex justify-between items-center mt-4">
+			<button onclick="submitReply()"
+			        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">ارسال
+			</button>
+			<button onclick="toggleModal(false)" class="text-gray-500 hover:text-gray-800 transition">بستن</button>
+		</div>
+	</div>
+</div>
+
+<script>
+    function toggleModal(show) {
+        document.getElementById('popup').style.display = show ? 'flex' : 'none';
+    }
+
+    function submitReply() {
+        const text = document.getElementById('replyText').value.trim();
+        if (text) {
+            alert("پاسخ ثبت شد:\n" + text);
+            toggleModal(false);
+            document.getElementById('replyText').value = '';
+        } else {
+            alert("لطفاً پاسخ را وارد کنید!");
+        }
+    }
+</script>
+
 
 {% include 'admin_panel_module/components/footer_ref.html' %}
 

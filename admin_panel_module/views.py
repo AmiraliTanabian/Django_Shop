@@ -1,12 +1,12 @@
 from django.http import HttpRequest
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
 from .forms import ArticleEditForm
-from django.http import JsonResponse
 
 
 def index_page(request: HttpRequest):
@@ -52,10 +52,23 @@ class ContactUSAdminView(ListView):
     template_name = 'admin_panel_module/messages_list.html'
 
 
-class MessageDetailView(DetailView):
-    model = ContactModel
-    template_name = "admin_panel_module/message_detail.html"
-    context_object_name = 'msg'
+#
+# class MessageDetailView(DetailView):
+#     model = ContactModel
+#     template_name = "admin_panel_module/message_detail.html"
+#     context_object_name = 'msg'
+
+
+class MessageDetailView(View):
+    def get(self, request, pk):
+        # Set msg to unread
+        obj = ContactModel.objects.filter(pk=pk).first()
+        obj.is_read = True
+        obj.save()
+
+        return render(request, 'admin_panel_module/message_detail.html', {
+            "msg": obj,
+        })
 
 
 class RemoveMessageAdminView(View):

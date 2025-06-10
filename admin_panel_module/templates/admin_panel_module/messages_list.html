@@ -307,7 +307,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url "admin_index_page" %}">خانه</a>
 					</li>
 					<li>
-						<a href="#">پیام ها</a>
+						<a href="{% url "contact_us_admin_page" %}">پیام ها</a>
 					</li>
 				</ul>
 			</div>
@@ -332,7 +332,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 										</a>
 									</div>
 									<div class="item-sender">
-										<a href="{% url "message-detail-page" pk=msg.id %}" class="col-name">{% slicer msg.subject 20 %}</a>
+										<a href="{% url "message-detail-page" pk=msg.id %}"
+										   class="col-name">{% slicer msg.subject 20 %}</a>
 									</div>
 									<div class="item-subject">
 										{#										<span class="label label-palegreen">Business</span>#}

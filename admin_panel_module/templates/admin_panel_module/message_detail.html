@@ -1,5 +1,6 @@
 {% load jformat %}
 {% load global_filters %}
+{% load static %}
 <!DOCTYPE html>
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
@@ -18,6 +19,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	{% include 'admin_panel_module/components/header_ref.html' %}
+	<link rel="stylesheet" href="{% static "admin_panel_module/assets/css/answer_msg_admin_own.css" %}">
 
 </head>
 <!-- /Head -->
@@ -312,7 +314,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<div class="page-header position-relative mail-header">
 				<div class="header-title">
 					<h1>
-						Veiw Message
+						{{ msg.subject }}
 					</h1>
 				</div>
 				<!--Header Buttons-->
@@ -346,7 +348,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 										class="glyphicon glyphicon-remove"></i></a>
 							</li>
 							<li>
-								<a class="tooltip-primary" data-toggle="tooltip" data-original-title="پاسخ"><i
+								<a onclick="toggleModal(true)" class="tooltip-primary" data-toggle="tooltip"
+								   data-original-title="پاسخ"><i
 										class="fa fa-send-o"></i></a>
 							</li>
 						</ul>
@@ -379,32 +382,35 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	</div>
 	<!-- /Page Content -->
 </div>
-<!-- /Page Container -->
-<!-- Main Container -->
 
-
-</div>
-
-
-<!-- مودال -->
-<div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+{#class="hidden absolute top-0 bottom-0 right-0 left-0 bg-black bg-opacity-50 flex items-center justify-center z-50"#}
+<script src="https://cdn.tailwindcss.com"></script>
+<div id="popup-overlay"
+     class="hidden absolute top-0 bottom-0 right-0 left-0 flex items-center bg-opacity-50 bg-black justify-center z-150 pop-up-height">
 	<div class="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl">
-		<h2 class="text-xl font-bold mb-4">پاسخ به سوال</h2>
+		<h2 class="text-xl font-bold mb-4">پاسخ به پیام</h2>
 		<textarea id="replyText" rows="4"
 		          class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
 		          placeholder="پاسخ خود را بنویسید..."></textarea>
 		<div class="flex justify-between items-center mt-4">
 			<button onclick="submitReply()"
-			        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">ارسال
+			        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+				ارسال
 			</button>
-			<button onclick="toggleModal(false)" class="text-gray-500 hover:text-gray-800 transition">بستن</button>
+			<button onclick="toggleModal(false)" class="text-gray-500 hover:text-gray-800 transition">
+				بستن
+			</button>
 		</div>
 	</div>
 </div>
 
+{#<script src="{% static "admin_panel_module/assets/js/answer_msg_admin_own.js" %}"></script>#}
+{% include 'admin_panel_module/components/footer_ref.html' %}
+
 <script>
     function toggleModal(show) {
-        document.getElementById('popup').style.display = show ? 'flex' : 'none';
+        const popUp = document.getElementById('popup-overlay');
+        popUp.classList.toggle('hidden', !show);
     }
 
     function submitReply() {
@@ -417,11 +423,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
             alert("لطفاً پاسخ را وارد کنید!");
         }
     }
+
 </script>
-
-
-{% include 'admin_panel_module/components/footer_ref.html' %}
-
 
 </body>
 <!--  /Body -->

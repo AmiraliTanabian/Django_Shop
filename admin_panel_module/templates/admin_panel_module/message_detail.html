@@ -316,13 +316,16 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					<h1>
 						{{ msg.subject }}
 					</h1>
+					<p class="hide" id="user_email_ajax">
+						{{ msg.email }}
+					</p>
 				</div>
 				<!--Header Buttons-->
 				<div class="header-buttons">
 					<a class="sidebar-toggler" href="#">
 						<i class="fa fa-arrows-h"></i>
 					</a>
-					<a class="refresh" id="refresh-toggler" href="default.htm">
+					<a class="refresh" id="refresh-toggler" href="default.html">
 						<i class="glyphicon glyphicon-refresh"></i>
 					</a>
 					<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -392,6 +395,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 		<textarea id="replyText" rows="4"
 		          class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
 		          placeholder="پاسخ خود را بنویسید..."></textarea>
+		<p class="text-align-center">
+			لطفا پس از ارسال کمی صبر کنید :)
+		</p>
 		<div class="flex justify-between items-center mt-4">
 			<button onclick="submitReply()"
 			        class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
@@ -404,28 +410,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	</div>
 </div>
 
-{#<script src="{% static "admin_panel_module/assets/js/answer_msg_admin_own.js" %}"></script>#}
+<script src="{% static "admin_panel_module/assets/js/answer_msg_admin_own.js" %}"></script>
 {% include 'admin_panel_module/components/footer_ref.html' %}
 
-<script>
-    function toggleModal(show) {
-        const popUp = document.getElementById('popup-overlay');
-        popUp.classList.toggle('hidden', !show);
-    }
-
-    function submitReply() {
-        const text = document.getElementById('replyText').value.trim();
-        if (text) {
-            alert("پاسخ ثبت شد:\n" + text);
-            toggleModal(false);
-            document.getElementById('replyText').value = '';
-        } else {
-            alert("لطفاً پاسخ را وارد کنید!");
-        }
-    }
-
-</script>
-
 </body>
-<!--  /Body -->
 </html>

@@ -1,3 +1,6 @@
+import re
+
+from django.core.mail import EmailMessage
 from django.http import HttpRequest
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
@@ -52,13 +55,6 @@ class ContactUSAdminView(ListView):
     template_name = 'admin_panel_module/messages_list.html'
 
 
-#
-# class MessageDetailView(DetailView):
-#     model = ContactModel
-#     template_name = "admin_panel_module/message_detail.html"
-#     context_object_name = 'msg'
-
-
 class MessageDetailView(View):
     def get(self, request, pk):
         # Set msg to unread
@@ -86,3 +82,32 @@ class RemoveMessageAdminView(View):
             return JsonResponse({
                 "status": "success",
             })
+
+
+class SendMsgAnswer(View):
+    def get(self, request):
+        email = request.GET.get("email")
+        cleaned_email = re.sub(r'[\s\r\n\t]', '', email)
+        text = request.GET.get("text")
+
+        mail_template = text
+        mail = EmailMessage(
+            "پاسخ به پیام شما",
+            mail_template,
+            'atanabain@gmail.com',
+            [cleaned_email]
+        )
+
+        try:
+            mail.send()
+            return JsonResponse({
+                "status": "success",
+            })
+
+        except Exception as Error:
+            return JsonResponse(
+                {
+                    "status": "Error",
+                    "msg": Error
+                }
+            )

@@ -9,6 +9,7 @@ from django.views.generic import ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
+from site_module.models import Slider
 from .forms import ArticleEditForm
 
 
@@ -57,7 +58,7 @@ class ContactUSAdminView(ListView):
 
 class MessageDetailView(View):
     def get(self, request, pk):
-        # Set msg to unread
+        # Set msg to read
         obj = ContactModel.objects.filter(pk=pk).first()
         obj.is_read = True
         obj.save()
@@ -111,3 +112,16 @@ class SendMsgAnswer(View):
                     "msg": Error
                 }
             )
+
+
+class sliderShow(ListView):
+    template_name = "admin_panel_module/slider_list.html"
+    paginate_by = 1
+    context_object_name = "sliders"
+    model = Slider
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        sliders_count = self.model.objects.all().count()
+        context["slidersCount"] = sliders_count
+        return context

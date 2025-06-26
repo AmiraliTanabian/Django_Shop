@@ -1,6 +1,7 @@
 from django import forms
 
 from news_module.models import Article
+from site_module.models import Slider
 
 
 class ArticleEditForm(forms.ModelForm):
@@ -16,3 +17,9 @@ class ArticleEditForm(forms.ModelForm):
             "data": "تاریخ ثبت مقاله",
             "is_active": "فعال / غیرفعال بودن مقاله"
         }
+
+
+class SliderDetailsForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        model = Slider

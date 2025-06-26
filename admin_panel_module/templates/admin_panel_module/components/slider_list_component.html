@@ -2,7 +2,8 @@
      class="margin-auto w-full slider-box-setting bg-white shadow-md rounded-2xl p-10 flex items-center gap-6 hover:shadow-xl transition">
 
 	<label>
-		<input class="checkbox-slider slider-icon colored-success" type="checkbox">
+		<input class="checkbox-slider slider-icon colored-success" type="checkbox"
+		       {% if slider.is_active %}checked{% endif %}>
 		<span class="text"></span>
 	</label>
 
@@ -12,12 +13,12 @@
 
 	<!-- Text + Buttons -->
 	<div class="flex-1">
-		<h3 class="text-xl font-semibold text-gray-800"> {{ slider.title }}</h3>
+		<h3 class="font-semibold text-gray-800"> {{ slider.title }}</h3>
 		<div class="mt-4 flex gap-3">
 			<a href="{{ slider.url }}" target="_blank"
-			   class="slider-box-blue-btn px-4 py-2 bg-blue-500 text-white text-sm rounded">رفتن به لینک</a>
+			   class="slider-box-blue-btn px-4 py-2 bg-blue-500 text-white text-base rounded">رفتن به لینک</a>
 			<button onclick="toggleSlider()"
-			        class="px-4 py-2 bg-gray-200 text-gray-800 text-sm rounded hover:bg-gray-300 transition">
+			        class="px-4 py-2 bg-gray-200 text-gray-800 text-base rounded hover:bg-gray-300 transition">
 
 				مشاهده / تنظیمات
 

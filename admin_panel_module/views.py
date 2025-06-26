@@ -3,14 +3,15 @@ import re
 from django.core.mail import EmailMessage
 from django.http import HttpRequest
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
 from site_module.models import Slider
-from .forms import ArticleEditForm
+from .forms import ArticleEditForm, SliderDetailsForm
 
 
 def index_page(request: HttpRequest):
@@ -114,9 +115,9 @@ class SendMsgAnswer(View):
             )
 
 
-class sliderShow(ListView):
+class sliderList(ListView):
     template_name = "admin_panel_module/slider_list.html"
-    paginate_by = 1
+    paginate_by = 5
     context_object_name = "sliders"
     model = Slider
 
@@ -125,3 +126,25 @@ class sliderShow(ListView):
         sliders_count = self.model.objects.all().count()
         context["slidersCount"] = sliders_count
         return context
+
+
+class sliderDetail(View):
+    def get(self, request: HttpRequest, pk):
+        obj = Slider.objects.filter(pk=pk).first()
+        form = SliderDetailsForm(instance=obj)
+        return render(request, "admin_panel_module/slider_detail.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest, pk):
+        obj = Slider.objects.filter(pk=pk).first()
+        form = SliderDetailsForm(instance=obj, data=request.POST, files=request.FILES)
+
+        if form.is_valid():
+            # For refresh to remove cache to load image.
+            form.save()
+            return redirect(reverse_lazy('slider_detail', args=[obj.id]))
+
+        return render(request, "admin_panel_module/slider_detail.html", {
+            "form": form,
+        })

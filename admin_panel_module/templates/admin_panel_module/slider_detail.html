@@ -338,9 +338,6 @@
 											<i class="form-control-feedback"
 											   data-bv-icon-for="email"
 											   style="display: none;"></i>
-											<small class="help-block" data-bv-validator="emailAddress"
-											       data-bv-for="email" data-bv-result="NOT_VALIDATED"
-											       style="display: none;">The input is not a valid email address</small>
 										</div>
 									</div>
 
@@ -352,20 +349,7 @@
 											<i class="form-control-feedback"
 											   data-bv-icon-for="password"
 											   style="display: none;"></i>
-
-											<small class="help-block" data-bv-validator="different"
-											       data-bv-for="password" data-bv-result="NOT_VALIDATED"
-											       style="display: none;">The password cannot be the same as
-												username</small><small class="help-block" data-bv-validator="identical"
-											                           data-bv-for="password"
-											                           data-bv-result="NOT_VALIDATED"
-											                           style="display: none;">The password and its
-											confirm are not the same</small><small class="help-block"
-											                                       data-bv-validator="notEmpty"
-											                                       data-bv-for="password"
-											                                       data-bv-result="NOT_VALIDATED"
-											                                       style="display: none;">The password
-											is required and cannot be empty</small></div>
+										</div>
 									</div>
 
 									<div class="form-group has-feedback">
@@ -376,21 +360,7 @@
 											<i class="form-control-feedback"
 											   data-bv-icon-for="confirmPassword"
 											   style="display: none;"></i>
-
-
-											<small class="help-block" data-bv-validator="different"
-											       data-bv-for="confirmPassword" data-bv-result="NOT_VALIDATED"
-											       style="display: none;">The password cannot be the same as
-												username</small><small class="help-block" data-bv-validator="identical"
-											                           data-bv-for="confirmPassword"
-											                           data-bv-result="NOT_VALIDATED"
-											                           style="display: none;">The password and its
-											confirm are not the same</small><small class="help-block"
-											                                       data-bv-validator="notEmpty"
-											                                       data-bv-for="confirmPassword"
-											                                       data-bv-result="NOT_VALIDATED"
-											                                       style="display: none;">The confirm
-											password is required and cannot be empty</small></div>
+										</div>
 									</div>
 									<div class="form-group has-feedback">
 										<label class="col-lg-4 control-label">{{ form.url.label }}</label>
@@ -400,21 +370,7 @@
 											<i class="form-control-feedback"
 											   data-bv-icon-for="confirmPassword"
 											   style="display: none;"></i>
-
-
-											<small class="help-block" data-bv-validator="different"
-											       data-bv-for="confirmPassword" data-bv-result="NOT_VALIDATED"
-											       style="display: none;">The password cannot be the same as
-												username</small><small class="help-block" data-bv-validator="identical"
-											                           data-bv-for="confirmPassword"
-											                           data-bv-result="NOT_VALIDATED"
-											                           style="display: none;">The password and its
-											confirm are not the same</small><small class="help-block"
-											                                       data-bv-validator="notEmpty"
-											                                       data-bv-for="confirmPassword"
-											                                       data-bv-result="NOT_VALIDATED"
-											                                       style="display: none;">The confirm
-											password is required and cannot be empty</small></div>
+										</div>
 									</div>
 									<a href="{{ form.url.value }}" target="_blank" class="btn btn-sky left-float">مشاهده
 										لینک</a><br>
@@ -427,7 +383,6 @@
 												     class="center-block">
 											</a>
 										</div>
-										...
 									</div>
 
 									<div class="form-group has-feedback">
@@ -438,30 +393,28 @@
 											<i class="form-control-feedback"
 											   data-bv-icon-for="confirmPassword"
 											   style="display: none;"></i>
-
-
-											<small class="help-block" data-bv-validator="different"
-											       data-bv-for="confirmPassword" data-bv-result="NOT_VALIDATED"
-											       style="display: none;">The password cannot be the same as
-												username</small><small class="help-block" data-bv-validator="identical"
-											                           data-bv-for="confirmPassword"
-											                           data-bv-result="NOT_VALIDATED"
-											                           style="display: none;">The password and its
-											confirm are not the same</small><small class="help-block"
-											                                       data-bv-validator="notEmpty"
-											                                       data-bv-for="confirmPassword"
-											                                       data-bv-result="NOT_VALIDATED"
-											                                       style="display: none;">The confirm
-											password is required and cannot be empty</small></div>
-									</div>
-									<div class="form-group">
-										<input class="checkbox-slider slider-icon colored-success" type="checkbox">+
-									</div>
-									<div class="form-group">
-										<div class="col-lg-offset-4 col-lg-8">
-											<input class="btn btn-palegreen left-float" type="submit" value="ویرایش">
 										</div>
 									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.is_active.label }}</label>
+										<div class="col-lg-8">
+											<label>
+												{% if not form.is_active.value %}
+													{% render_field form.is_active name="is_active" class="checkbox-slider slider-icon colored-success" %}
+												{% else %}
+													{% render_field form.is_active name="is_active" class="checkbox-slider slider-icon colored-success" checked="checked" %}
+												{% endif %}
+												<span class="text"></span>
+											</label>
+										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<input class="btn btn-palegreen left-float" type="submit"
+												       value="ویرایش">
+											</div>
+										</div>
 
 								</form>
 							</div>

@@ -139,8 +139,10 @@ class sliderDetail(View):
     def post(self, request: HttpRequest, pk):
         obj = Slider.objects.filter(pk=pk).first()
         form = SliderDetailsForm(instance=obj, data=request.POST, files=request.FILES)
+        is_active = request.POST.get("is_active")
 
         if form.is_valid():
+            form.is_active = is_active
             # For refresh to remove cache to load image.
             form.save()
             return redirect(reverse_lazy('slider_detail', args=[obj.id]))

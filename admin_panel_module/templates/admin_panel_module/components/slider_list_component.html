@@ -1,9 +1,11 @@
+{% load static %}
 <div dir="rtl"
      class="margin-auto w-full slider-box-setting bg-white shadow-md rounded-2xl p-10 flex items-center gap-6 hover:shadow-xl transition">
 
 	<label>
-		<input class="checkbox-slider slider-icon colored-success" type="checkbox"
-		       {% if slider.is_active %}checked{% endif %}>
+		<input id="is_active_button_slider_component" onchange="isActiveChanged({{ slider.pk }})"
+		       class="checkbox-slider slider-icon colored-success" type="checkbox"
+		       {% if slider.is_active %}checked="checked"{% endif %}>
 		<span class="text"></span>
 	</label>
 
@@ -31,3 +33,6 @@
 		</div>
 	</div>
 </div>
+
+
+<script src="{% static "admin_panel_module/assets/js/slider_component_active_btn_controller.js" %}"></script>

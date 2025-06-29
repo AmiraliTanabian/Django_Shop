@@ -13,5 +13,7 @@ urlpatterns = [
     path("settings/slider/", views.sliderList.as_view(), name="sliders"),
     path("settings/slider/<int:pk>", views.sliderDetail.as_view(), name="slider_detail"),
     path("settings/add-slider/", views.addSliderView.as_view(), name="add_slider_page"),
-    path("settings/slider/remove-slider/", views.RemoveSliderView.as_view(), name="remove_slider_page")
+    path("settings/slider/remove-slider/", views.RemoveSliderView.as_view(), name="remove_slider_page"),
+    path("settings/slider/set-slider-enable/", views.SetSliderEnableView, name="set_slider_enable_ajax"),
+    path("settings/slider/set-slider-disable/", views.SetSliderDisableView, name="set_slider_disable_ajax"),
 ]

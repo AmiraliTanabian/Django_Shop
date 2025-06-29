@@ -179,3 +179,37 @@ class RemoveSliderView(View):
             return JsonResponse({
                 "status": "error",
             })
+
+
+def SetSliderEnableView(request):
+    "Set slider active use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        slider = get_object_or_404(Slider, pk=id)
+        slider.is_active = True
+        slider.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
+        })
+
+
+def SetSliderDisableView(request):
+    "Set slider active use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        slider = get_object_or_404(Slider, pk=id)
+        slider.is_active = False
+        slider.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
+        })

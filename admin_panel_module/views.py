@@ -158,19 +158,24 @@ class addSliderView(FormView):
     success_url = "../slider/"
 
     def form_valid(self, form):
-        print("Form is valid!")
-        # cleaned_data = form.cleaned_data
-        # new_slider = Slider(
-        #     title=cleaned_data.get("title"),
-        #     banner=cleaned_data["banner"],
-        #     text=cleaned_data.get("text"),
-        #     url=cleaned_data.get("url"),
-        #     is_active=cleaned_data.get("is_active"),
-        #     btn_text=cleaned_data.get("btn_text"),
-        # )
         form.save()
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("Form is invalid!")
         return super().form_invalid(form)
+
+
+class RemoveSliderView(View):
+    def get(self, request):
+        try:
+            pk = request.GET.get("id")
+            slider: Slider = get_object_or_404(Slider, pk=pk)
+            slider.delete()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })

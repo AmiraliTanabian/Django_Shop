@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
@@ -150,3 +150,27 @@ class sliderDetail(View):
         return render(request, "admin_panel_module/slider_detail.html", {
             "form": form,
         })
+
+
+class addSliderView(FormView):
+    form_class = SliderDetailsForm
+    template_name = "admin_panel_module/add_slider_page.html"
+    success_url = "../slider/"
+
+    def form_valid(self, form):
+        print("Form is valid!")
+        # cleaned_data = form.cleaned_data
+        # new_slider = Slider(
+        #     title=cleaned_data.get("title"),
+        #     banner=cleaned_data["banner"],
+        #     text=cleaned_data.get("text"),
+        #     url=cleaned_data.get("url"),
+        #     is_active=cleaned_data.get("is_active"),
+        #     btn_text=cleaned_data.get("btn_text"),
+        # )
+        form.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("Form is invalid!")
+        return super().form_invalid(form)

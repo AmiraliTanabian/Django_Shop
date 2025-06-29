@@ -1,10 +1,11 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>اسلایدر ها</title>
+	<title>افزودن اسلایدر</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,10 +15,7 @@
 
 
 </head>
-<!-- /Head -->
-<!-- Body -->
 <body>
-<!-- Loading Container -->
 <div class="loading-container">
 	<div class="loader"></div>
 </div>
@@ -303,33 +301,118 @@
 						تنظیمات
 					</li>
 					<li>
-						اسلایدر ها
+						<a href="{% url "sliders" %}"> اسلایدر ها</a>
+					</li>
+					<li>
+						افزودن اسلایدر
 					</li>
 				</ul>
 			</div>
-			<!-- /Page Breadcrumb -->
 			{% include 'admin_panel_module/components/footer_ref.html' %}
+
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-12 col-sm-6 col-xs-12">
+						<div class="widget radius-bordered">
+							<div class="widget-header">
+								<span class="widget-caption">افزودن اسلایدر</span>
+							</div>
+							<div class="widget-body">
+								<form id="registrationForm" method="post" class="form-horizontal bv-form"
+								      data-bv-message="This value is not valid"
+								      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+								      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+								      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+								      novalidate="novalidate" enctype="multipart/form-data">
+									{% csrf_token %}
+									<button type="submit" class="bv-hidden-submit"
+									        style="display: none; width: 0px; height: 0px;"></button>
+									<div class="form-title">
+										افزودن اسلایدر
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.title.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.title class="form-control" %}
+											<i class="form-control-feedback"
+											   data-bv-icon-for="email"
+											   style="display: none;"></i>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.text.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.text class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="password"
+											   style="display: none;"></i>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.btn_text.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.btn_text class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.url.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.url class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.banner.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.banner %}
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.is_active.label }}</label>
+										<div class="col-lg-8">
+											<label>
+												{% render_field form.is_active class="checkbox-slider slider-icon colored-success" %}
+												<span class="text"></span>
+											</label>
+										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<input class="btn btn-palegreen left-float" type="submit"
+												       value="افزودن">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<h1 class="sliders-main-title">
-		اسلایدر ها ({{ slidersCount }})
-	</h1>
-
-	<div class="row">
-		<div class="col-md-12 justify-center">
-			<a href="{% url 'add_slider_page' %}" class="btn btn-primary radius-5 margin-1rem">افزودن اسلایدر</a>
-		</div>
-	</div>
-
-
-	{% for slider in sliders %}
-		{% include 'admin_panel_module/components/slider_list_component.html' with slider=slider %}
-	{% endfor %}
 </div>
 
-{% include 'admin_panel_module/components/admin_pagination.html' %}
+{% include "admin_panel_module/components/show_errors_component.html" %}
+
+<script src="{% static 'admin_panel_module/assets/js/add_slider.js' %}"></script>
+{#Script for error boxs time out: #}
+
 
 </body>
-<script src="{% static "admin_panel_module/assets/js/slider_admin.js" %}"></script>
 </html>

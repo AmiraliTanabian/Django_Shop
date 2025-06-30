@@ -11,7 +11,7 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
-from site_module.models import Slider, SiteSetting
+from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm
 
 
@@ -236,3 +236,16 @@ class SiteSettingEditView(View):
         return render(request, "admin_panel_module/site_settings_edit.html", {
             "form": form,
         })
+
+
+class BannersListView(ListView):
+    model = SiteBanners
+    paginate_by = 5
+    template_name = "admin_panel_module/banner_list.html"
+    context_object_name = "banners"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        banners_count = SiteBanners.objects.all().count()
+        context["bannersCount"] = banners_count
+        return context

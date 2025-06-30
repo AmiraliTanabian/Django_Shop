@@ -17,4 +17,5 @@ urlpatterns = [
     path("settings/slider/set-slider-enable/", views.SetSliderEnableView, name="set_slider_enable_ajax"),
     path("settings/slider/set-slider-disable/", views.SetSliderDisableView, name="set_slider_disable_ajax"),
     path("settings/site-setting/", views.SiteSettingEditView.as_view(), name="site_setting_page"),
+    path("settings/banners/", views.BannersListView.as_view(), name="banners_list_page"),
 ]

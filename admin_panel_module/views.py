@@ -1,5 +1,6 @@
 import re
 
+from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.http import HttpRequest
 from django.http import JsonResponse
@@ -10,8 +11,8 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
-from site_module.models import Slider
-from .forms import ArticleEditForm, SliderDetailsForm
+from site_module.models import Slider, SiteSetting
+from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm
 
 
 def index_page(request: HttpRequest):
@@ -212,4 +213,26 @@ def SetSliderDisableView(request):
     except:
         return JsonResponse({
             "status": "error"
+        })
+
+
+class SiteSettingEditView(View):
+    def get(self, request):
+        site_setting = SiteSetting.objects.filter(is_active=True).first()
+        form = SiteSettingsForm(instance=site_setting)
+        return render(request, "admin_panel_module/site_settings_edit.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest):
+        site_setting = SiteSetting.objects.filter(is_active=True).first()
+        form = SiteSettingsForm(instance=site_setting, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.is_active = True
+            obj.save()
+            messages.success(request, "اطلاعات سایت با موفقیت ویرایش شد!")
+
+        return render(request, "admin_panel_module/site_settings_edit.html", {
+            "form": form,
         })

@@ -11,7 +11,7 @@ class SiteSetting(models.Model):
     copy_right = models.CharField(max_length=255, verbose_name="متن کپی رایت")
     about_us = models.TextField(verbose_name="متن درباره ما")
     site_logo = models.ImageField(upload_to="Images/site_settings/", verbose_name="لوگو سایت")
-    is_active = models.BooleanField(verbose_name="فعال / غیرفعال")
+    is_active = models.BooleanField(verbose_name="فعال / غیرفعال", default=True)
 
     class Meta:
         verbose_name = "تنظیمات سایت"

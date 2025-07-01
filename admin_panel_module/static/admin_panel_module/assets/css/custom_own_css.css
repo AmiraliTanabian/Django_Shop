@@ -111,3 +111,12 @@ div#mail_body {
     color: inherit;
     text-decoration: none;
 }
+
+
+.no-border {
+    border: none;
+}
+
+.border-radius-5px {
+    border-radius: 5px;
+}

@@ -49,7 +49,7 @@ class SiteBanners(models.Model):
     image = models.ImageField(upload_to="Images/Banner", verbose_name="تصویر")
     position = models.CharField(max_length=200, verbose_name="محل قرار گیری در سایت",
                                 choices=PositionChoices)
-    url = models.URLField(verbose_name="آدرس مقصد", blank=True, null=True)
+    url = models.URLField(verbose_name="آدرس مقصد(اختیاری)", blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name="فعال")
 
     class Meta:

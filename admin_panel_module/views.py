@@ -256,5 +256,17 @@ class BannerEditPageView(View):
         banner = get_object_or_404(SiteBanners, pk=pk)
         form = BannerEditForm(instance=banner)
         return render(request, "admin_panel_module/banner_edit.html", {
-            "banner": form,
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest, pk):
+        banner = get_object_or_404(SiteBanners, pk=pk)
+        form = BannerEditForm(instance=banner, data=request.POST, files=request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "تبلیغ شما با موفقیت ویرایش شد!")
+
+        return render(request, "admin_panel_module/banner_edit.html", {
+            "form": form,
         })

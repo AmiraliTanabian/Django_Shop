@@ -74,3 +74,8 @@ class BannerEditForm(forms.ModelForm):
     class Meta:
         model = SiteBanners
         fields = "__all__"
+        error_messages = {
+            "title": {"required": "عنوان را وارد کنید.",
+                      "max_length": "حداکثر کاراکتر مجاز برای عنوان ۲۰۰ میباشد!!"},
+            "image": {"required": "تصویر بنر را وارد کنید!"},
+        }

@@ -1,24 +1,25 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>تبلیغ ها</title>
+	<title>ویرایش اسلایدر | ادمین</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	{% include 'admin_panel_module/components/header_ref.html' %}
-	<link rel="stylesheet" href="{% static "admin_panel_module/assets/css/banner_component.css" %}">
 
 
 </head>
-<!-- /Head -->
-<!-- Body -->
 <body>
-<!-- Loading Container -->
+
+	{% include 'admin_panel_module/components/footer_ref.html' %}
+
+
 <div class="loading-container">
 	<div class="loader"></div>
 </div>
@@ -304,33 +305,46 @@
 						تنظیمات
 					</li>
 					<li>
-						تبلیغ ها
+						<a href="{% url "sliders" %}"> اسلایدر ها</a>
+					</li>
+					<li>
+						{{ form.title.value }}
 					</li>
 				</ul>
 			</div>
-			<!-- /Page Breadcrumb -->
-			{% include 'admin_panel_module/components/footer_ref.html' %}
+
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-12 col-sm-6 col-xs-12">
+						<div class="widget radius-bordered">
+							<div class="widget-header">
+								<span class="widget-caption">ویرایش اسلایدر</span>
+							</div>
+							<div class="widget-body">
+								<form id="registrationForm" method="post" class="form-horizontal bv-form"
+								      data-bv-message="This value is not valid"
+								      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+								      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+								      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+								      novalidate="novalidate" enctype="multipart/form-data">
+									{% csrf_token %}
+									<button type="submit" class="bv-hidden-submit"
+									        style="display: none; width: 0px; height: 0px;"></button>
+
+								
+								
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<h1 class="sliders-main-title">
-		تبلیغ ها ({{ bannersCount }})
-	</h1>
-
-	<div class="row">
-		<div class="col-md-12 justify-center">
-			<a href="{% url 'add_slider_page' %}" class="btn btn-primary radius-5 margin-1rem">افزودن تبلیغ</a>
-		</div>
-	</div>
-
-
-	{% for banner in banners %}
-		{% include 'admin_panel_module/components/banners_component.html' with banner=banner %}
-	{% endfor %}
 </div>
 
-{% include 'admin_panel_module/components/admin_pagination.html' %}
 
-<script src="{% static "admin_panel_module/assets/js/slider_admin.js" %}"></script>
+{#<script src="{% static "admin_panel_module/assets/js/remove_slider_ajax.js" %}"></script>#}
+{#<script src="{% static 'admin_panel_module/assets/js/slider_detail.js' %}"></script>#}
 </body>
 </html>

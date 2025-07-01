@@ -12,7 +12,7 @@ from django.views.generic import ListView, FormView
 from contact_module.models import ContactModel
 from news_module.models import Article
 from site_module.models import Slider, SiteSetting, SiteBanners
-from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm
+from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm
 
 
 def index_page(request: HttpRequest):
@@ -249,3 +249,12 @@ class BannersListView(ListView):
         banners_count = SiteBanners.objects.all().count()
         context["bannersCount"] = banners_count
         return context
+
+
+class BannerEditPageView(View):
+    def get(self, request: HttpRequest, pk):
+        banner = get_object_or_404(SiteBanners, pk=pk)
+        form = BannerEditForm(instance=banner)
+        return render(request, "admin_panel_module/banner_edit.html", {
+            "banner": form,
+        })

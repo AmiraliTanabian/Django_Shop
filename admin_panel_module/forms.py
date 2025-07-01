@@ -1,7 +1,7 @@
 from django import forms
 
 from news_module.models import Article
-from site_module.models import Slider, SiteSetting
+from site_module.models import Slider, SiteSetting, SiteBanners
 
 
 class ArticleEditForm(forms.ModelForm):
@@ -68,3 +68,9 @@ class SiteSettingsForm(forms.ModelForm):
             "about_us": {"required": "لطفا متن درباره ما را وارد کنید."},
             "site_logo": {"required": "لطفا لوگو سایت را وارد کنید."},
         }
+
+
+class BannerEditForm(forms.ModelForm):
+    class Meta:
+        model = SiteBanners
+        fields = "__all__"

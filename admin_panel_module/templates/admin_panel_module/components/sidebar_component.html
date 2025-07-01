@@ -1,3 +1,4 @@
+{% load global_filters %}
 <div class="page-sidebar" id="sidebar">
 	<div class="sidebar-header-wrapper">
 		<input type="text" class="searchinput"/>
@@ -58,7 +59,7 @@
 			</ul>
 		</li>
 		<li>
-			<a href="">
+			<a href="{% default_admin_url %}">
 				<i class="menu-icon glyphicon glyphicon-dashboard"></i>
 				<span class="menu-text"> پنل ادمین دوم </span>
 			</a>

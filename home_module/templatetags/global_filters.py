@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
@@ -22,3 +23,8 @@ def slicer(value, index):
     if len(value) <= index + 1:
         return value
     return f'{value[:index]} ... '
+
+
+@register.simple_tag
+def default_admin_url():
+    return settings.SITE_URL + "default_admin/"

@@ -20,4 +20,5 @@ urlpatterns = [
     path("settings/banners/", views.BannersListView.as_view(), name="banners_list_page"),
     path("settings/banners/<int:pk>/", views.BannerEditPageView.as_view(), name="banner_edit_page"),
     path("settings/add-banner/", views.AddBannerView.as_view(), name="add_banner_page"),
+    path("settings/banners/remove-banner/", views.RemoveBannerView.as_view(), name="remove_banner_ajax")
 ]

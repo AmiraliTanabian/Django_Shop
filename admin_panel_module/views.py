@@ -285,3 +285,19 @@ class AddBannerView(FormView):
         form.save()
         messages.success(self.request, "تبلیغ جدید افزوده شد.")
         return super().form_valid(form)
+
+
+class RemoveBannerView(View):
+    def get(self, request: HttpRequest):
+        try:
+            pk = request.GET.get("id")
+            banner: SiteBanners = get_object_or_404(SiteBanners, pk=pk)
+            banner.delete()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })

@@ -78,4 +78,5 @@ class BannerEditForm(forms.ModelForm):
             "title": {"required": "عنوان را وارد کنید.",
                       "max_length": "حداکثر کاراکتر مجاز برای عنوان ۲۰۰ میباشد!!"},
             "image": {"required": "تصویر بنر را وارد کنید!"},
+            "position": {"required": "لطفا محل قرار گیری تبلیغ را وارد کنید"}
         }

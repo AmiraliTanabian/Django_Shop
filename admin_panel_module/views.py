@@ -248,6 +248,10 @@ class BannersListView(ListView):
         context = super().get_context_data(**kwargs)
         banners_count = SiteBanners.objects.all().count()
         context["bannersCount"] = banners_count
+
+        # Remove messages (just to be sure)
+        storage = messages.get_messages(self.request)
+        list(storage)
         return context
 
 
@@ -270,3 +274,14 @@ class BannerEditPageView(View):
         return render(request, "admin_panel_module/banner_edit.html", {
             "form": form,
         })
+
+
+class AddBannerView(FormView):
+    template_name = "admin_panel_module/add_banner.html"
+    form_class = BannerEditForm
+    success_url = reverse_lazy('banners_list_page')
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "تبلیغ جدید افزوده شد.")
+        return super().form_valid(form)

@@ -24,4 +24,5 @@ urlpatterns = [
     path("products/", views.ProductListView.as_view(), name="product_list_page"),
     path("products/remove-product/", views.RemoveProductViewAjax.as_view(), name="remove_product_ajax"),
     path("products/change-count/", views.change_product_count_ajax, name="change_product_count_ajax"),
+    path("products/<int:pk>", views.ProductDetailView.as_view(), name="product_edit")
 ]

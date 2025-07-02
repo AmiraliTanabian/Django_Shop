@@ -34,7 +34,8 @@
 				</button>
 
 				<button class="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">
-					ویرایش
+					<a target="_blank" href="{% url "product_edit" pk=product.id %}"
+					   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">ویرایش</a>
 				</button>
 				<button onclick="removeProductOnProductList({{ product.id }})"
 				        class="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors">حذف

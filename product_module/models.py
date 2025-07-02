@@ -52,7 +52,9 @@ class ProductTag(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="عنوان محصول ")
-    price = models.BigIntegerField(verbose_name="مبلغ")
+    price = models.BigIntegerField(verbose_name="مبلغ", validators=[
+        MinValueValidator(0, "حداقل مبلغ محصول ۰ میباشد!")
+    ])
     banner = models.ImageField(upload_to="Images/product", verbose_name="تصویر محصول")
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name="برند")
     categories = models.ManyToManyField(ProductCategory, verbose_name="دسته بندی ها")

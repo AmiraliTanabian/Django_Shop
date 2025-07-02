@@ -13,7 +13,7 @@ from contact_module.models import ContactModel
 from news_module.models import Article
 from product_module.models import Product
 from site_module.models import Slider, SiteSetting, SiteBanners
-from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm
+from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm
 
 
 def index_page(request: HttpRequest):
@@ -337,8 +337,25 @@ def change_product_count_ajax(request: HttpRequest):
     return JsonResponse({
         "status": "ok",
     })
-    #
-    # except:
-    #     return JsonResponse({
-    #         "status": "error",
-    #     })
+
+
+class ProductDetailView(View):
+    def get(self, request: HttpRequest, pk):
+        product = get_object_or_404(Product, pk=pk)
+        form = ProductEditForm(instance=product)
+        return render(request, "admin_panel_module/product_detail.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest, pk):
+        product = get_object_or_404(Product, pk=pk)
+        form = ProductEditForm(instance=product, files=request.FILES, data=request.POST)
+        if form.is_valid():
+            form_obj = form.save(commit=False)
+            form_obj.is_available = True
+            form_obj.save()
+            messages.success(request, "محصول مورد نظر ویرایش شد!")
+
+        return render(request, "admin_panel_module/product_detail.html", {
+            "form": form,
+        })

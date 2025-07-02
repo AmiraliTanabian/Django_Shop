@@ -1,23 +1,23 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>محصولات | ادمین</title>
+	<title>ویرایش اسلایدر | ادمین</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	{% include 'admin_panel_module/components/header_ref.html' %}
+	{#	Summernote css cdn:#}
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
 
 
 </head>
-<!-- /Head -->
-<!-- Body -->
 <body>
-<!-- Loading Container -->
 <div class="loading-container">
 	<div class="loader"></div>
 </div>
@@ -300,32 +300,195 @@
 						<a href="{% url "admin_index_page" %}">خانه</a>
 					</li>
 					<li>
-						محصولات
+						<a href="{% url "product_list_page" %}">محصولات</a>
+					</li>
+					<li>
+						{{ form.name.value }}
 					</li>
 				</ul>
 			</div>
-			<!-- /Page Breadcrumb -->
 			{% include 'admin_panel_module/components/footer_ref.html' %}
-		</div>
-	</div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-9 left-float">
-				{% for product in products %}
-					{% include 'admin_panel_module/components/product_cart_component.html' with product=product %}
-				{% endfor %}
+			{% include 'admin_panel_module/components/summernote_scripts_cdn.html' %}
+
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-12 col-sm-6 col-xs-12">
+						<div class="widget radius-bordered">
+							<div class="widget-header">
+								<span class="widget-caption">ویرایش محصول</span>
+							</div>
+							<div class="widget-body">
+								<form id="registrationForm" method="post" class="form-horizontal bv-form"
+								      data-bv-message="This value is not valid"
+								      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+								      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+								      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+								      novalidate="novalidate" enctype="multipart/form-data">
+									{% csrf_token %}
+									<button type="submit" class="bv-hidden-submit"
+									        style="display: none; width: 0px; height: 0px;"></button>
+									<div class="form-title">
+										{{ form.name.value }}
+									</div>
+
+									<i class="fa fa-id-card-o"></i>
+									<p class="col-lg-4 control-label">
+										شناسه : {{ form.instance.id }}
+									</p>
+
+									<button class="padding-10 flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+										<a target="_blank" href="{% url "product_detail" pk=form.instance.id %}"
+										   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">مشاهده
+											در وبسایت</a>
+									</button>
+
+									<button class="padding-10 flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors" onclick="removeSlider({{ form.instance.pk }})"
+									   class="btn btn-danger">
+										حذف
+									</button>
+
+
+									<br><br>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.name.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.name class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.price.label }} (تومان)</label>
+										<div class="col-lg-8">
+											{% render_field form.price class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.count.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.count class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="row" id="row-thumbnail-center">
+										<div class="col-xs-6 col-md-3">
+											<a href="#" class="thumbnail">
+												<img onclick="changeBanner()" src="{{ form.banner.value.url }}"
+												     alt="{{ form.title.value }}"
+												     class="center-block">
+											</a>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.banner.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.banner class="form-control" style="display:none;" id="slider-change-image" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.brand.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.brand class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.categories.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.categories class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.tags.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.tags class="form-control" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.info.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.info id="summernote" name="editordata" class+="form-control summernote" %}
+
+											<i class="form-control-feedback"
+											   data-bv-icon-for="confirmPassword"
+											   style="display: none;"></i>
+										</div>
+									</div>
+
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.is_active.label }}</label>
+										<div class="col-lg-8">
+											<label>
+												{% if not form.is_active.value %}
+													{% render_field form.is_active name="is_active" class="checkbox-slider slider-icon colored-success" %}
+												{% else %}
+													{% render_field form.is_active name="is_active" class="checkbox-slider slider-icon colored-success" checked="checked" %}
+												{% endif %}
+												<span class="text"></span>
+											</label>
+										</div>
+										<div class="form-group has-feedback">
+											<label class="col-lg-4 control-label">{{ form.is_new.label }}</label>
+											<div class="col-lg-8">
+												<label>
+													{% if not form.is_active.value %}
+														{% render_field form.is_new name="is_active" class="checkbox-slider slider-icon colored-success" %}
+													{% else %}
+														{% render_field form.is_new name="is_active" class="checkbox-slider slider-icon colored-success" checked="checked" %}
+													{% endif %}
+													<span class="text"></span>
+												</label>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<input class="btn btn-palegreen left-float" type="submit"
+												       value="ویرایش">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
-
 </div>
 
-<br><br>
-{% include 'admin_panel_module/components/admin_pagination.html' %}
+{% include 'admin_panel_module/components/show_errors_component.html' %}
+{% include 'components/message.html' %}
 
+<script src="{% static "admin_panel_module/assets/js/remove_slider_ajax.js" %}"></script>
+<script src="{% static 'admin_panel_module/assets/js/slider_detail.js' %}"></script>
 </body>
-<script src="{% static 'admin_panel_module/assets/js/product_admin_handler.js' %}"></script>
-<script src="{% static "admin_panel_module/assets/js/slider_admin.js" %}"></script>
 </html>

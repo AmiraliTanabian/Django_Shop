@@ -1,6 +1,7 @@
 from django import forms
 
 from news_module.models import Article
+from product_module.models import Product
 from site_module.models import Slider, SiteSetting, SiteBanners
 
 
@@ -79,4 +80,25 @@ class BannerEditForm(forms.ModelForm):
                       "max_length": "حداکثر کاراکتر مجاز برای عنوان ۲۰۰ میباشد!!"},
             "image": {"required": "تصویر بنر را وارد کنید!"},
             "position": {"required": "لطفا محل قرار گیری تبلیغ را وارد کنید"}
+        }
+
+
+class ProductEditForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
+        error_messages = {
+            "name": {"required": "لطفا نام محصول را وارد کنید",
+                     "max_length": "حداکثر کاراکتر مجاز برای نام محصول ۱۰۰ کاراکتر میباشد!!"},
+            "price": {"required": "لطفا مبلغ محصول را وارد کنید"},
+            "banner": {"required": "لطفا تصویر محصول را وارد کنید"},
+            "brand": {"required": "لطفا برند محصول را انتخاب کنید"},
+            "tags": {"required": "لطفا تگ محصول را انتخاب کنید"},
+            "count": {"required": "لطفا تعداد محصول را وارد کنید"},
+            "info": {"required": "لطفا اطلاعات محصول را وارد کنید"},
+            "is_active": {"required": "لطفا وضعیت فعال بودن محصول را مشخص کنید"},
+            "is_new": {"required": "لطفا وضعیت جدید بودن محصول را مشخص کنید"},
+        }
+        widgets = {
+            "info": forms.Textarea
         }

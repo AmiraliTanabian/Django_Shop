@@ -13,7 +13,8 @@ from contact_module.models import ContactModel
 from news_module.models import Article
 from product_module.models import Product, Brand
 from site_module.models import Slider, SiteSetting, SiteBanners
-from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm
+from .forms import (ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm,
+                    BrandEditForm, )
 
 
 def index_page(request: HttpRequest):
@@ -409,4 +410,19 @@ def SetBrandDisableView(request):
     except:
         return JsonResponse({
             "status": "error"
+        })
+
+
+class AddBrandPageView(FormView):
+    form_class = BrandEditForm
+    template_name = "admin_panel_module/add_brand_page.html"
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "برند با موفقیت ارسال شد.")
+        return redirect(reverse_lazy('brand_list_page'))
+
+    def form_invalid(self, form):
+        return render(self.request, "admin_panel_module/add_brand_page.html", {
+            "form": form,
         })

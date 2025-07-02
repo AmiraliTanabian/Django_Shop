@@ -1,10 +1,11 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>برند ها</title>
+	<title>افزودن برند | ادمین</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,10 +15,7 @@
 
 
 </head>
-<!-- /Head -->
-<!-- Body -->
 <body>
-<!-- Loading Container -->
 <div class="loading-container">
 	<div class="loader"></div>
 </div>
@@ -300,42 +298,83 @@
 						<a href="{% url "admin_index_page" %}">خانه</a>
 					</li>
 					<li>
-						برند ها
+						<a href="{% url "brand_list_page" %}"> برند ها</a>
+					</li>
+					<li>
+						افزودن برند
 					</li>
 				</ul>
 			</div>
-			<!-- /Page Breadcrumb -->
 			{% include 'admin_panel_module/components/footer_ref.html' %}
-		</div>
-	</div>
 
-	<h1 class="sliders-main-title">
-		برند ها ({{ BrandCount }})
-	</h1>
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-12 col-sm-6 col-xs-12">
+						<div class="widget radius-bordered">
+							<div class="widget-header">
+								<span class="widget-caption">افزودن اسلایدر</span>
+							</div>
+							<div class="widget-body">
+								<form id="registrationForm" method="post" class="form-horizontal bv-form"
+								      data-bv-message="This value is not valid"
+								      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+								      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+								      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+								      novalidate="novalidate" enctype="multipart/form-data">
+									{% csrf_token %}
+									<button type="submit" class="bv-hidden-submit"
+									        style="display: none; width: 0px; height: 0px;"></button>
+									<div class="form-title">
+										افزودن برند
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.title.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.title class="form-control" %}
+											<i class="form-control-feedback"
+											   data-bv-icon-for="email"
+											   style="display: none;"></i>
+										</div>
+									</div>
 
-	<div class="row">
-		<div class="col-md-12 justify-center">
-			<a href="{% url 'add_brand_page' %}" class="btn btn-primary radius-5 margin-1rem">افزودن برند</a>
-		</div>
-	</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.slug.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.slug class="form-control" %}
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-9 left-float">
+											<i class="form-control-feedback"
+											   data-bv-icon-for="password"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.is_active.label }}</label>
+										<div class="col-lg-8">
+											<label>
+												{% render_field form.is_active class="checkbox-slider slider-icon colored-success" checked="checked"%}
+												<span class="text"></span>
+											</label>
+										</div>
 
-				{% for brand in brands %}
-					{% include 'admin_panel_module/components/brand_component.html' with brand=brand %}
-				{% endfor %}
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<input class="btn btn-palegreen left-float" type="submit"
+												       value="افزودن">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 
-<br><br>
-{% include 'admin_panel_module/components/admin_pagination.html' %}
-{% include 'components/message.html' %}
+{% include "admin_panel_module/components/show_errors_component.html" %}
+
+<script src="{% static 'admin_panel_module/assets/js/add_slider.js' %}"></script>
 </body>
-<script src="{% static 'admin_panel_module/assets/js/brand_handler.js' %}"></script>
-<script src="{% static "admin_panel_module/assets/js/slider_admin.js" %}"></script>
 </html>

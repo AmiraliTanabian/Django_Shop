@@ -1,7 +1,7 @@
 from django import forms
 
 from news_module.models import Article
-from product_module.models import Product
+from product_module.models import Product, Brand
 from site_module.models import Slider, SiteSetting, SiteBanners
 
 
@@ -101,4 +101,15 @@ class ProductEditForm(forms.ModelForm):
         }
         widgets = {
             "info": forms.Textarea
+        }
+
+
+class BrandEditForm(forms.ModelForm):
+    class Meta:
+        model = Brand
+        fields = "__all__"
+        error_messages = {
+            "title": {"required": "لطفا عنوان را وارد کنید",
+                      "max_length": "حداکثر کاراکتر مجاز برای عنوان ۵۰ تا میباشد!! "},
+            "slug": {"required": "لطفا اسلاگ را وارد کنید"},
         }

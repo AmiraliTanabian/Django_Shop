@@ -5,7 +5,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>ویرایش اسلایدر | ادمین</title>
+	<title>ویرایش محصول | ادمین</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -343,8 +343,9 @@
 											در وبسایت</a>
 									</button>
 
-									<button class="padding-10 flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors" onclick="removeSlider({{ form.instance.pk }})"
-									   class="btn btn-danger">
+									<button type="button"
+									        class="padding-10 flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors"
+									        onclick="removeProductOnProductDetail({{ form.instance.pk }})">
 										حذف
 									</button>
 
@@ -411,6 +412,12 @@
 											   style="display: none;"></i>
 										</div>
 									</div>
+									<div class="hint text-center">
+										برای انتخاب چند گزینه به عنوان تگ یا دسته بندی ، کلید <strong>Ctrl</strong> (در
+										ویندوز) یا
+										<strong>Cmd</strong> (در مک) را نگه دارید و کلیک کنید.
+									</div>
+
 									<div class="form-group has-feedback">
 										<label class="col-lg-4 control-label">{{ form.categories.label }}</label>
 										<div class="col-lg-8">
@@ -488,7 +495,7 @@
 {% include 'admin_panel_module/components/show_errors_component.html' %}
 {% include 'components/message.html' %}
 
-<script src="{% static "admin_panel_module/assets/js/remove_slider_ajax.js" %}"></script>
+<script src="{% static 'admin_panel_module/assets/js/product_admin_handler.js' %}"></script>
 <script src="{% static 'admin_panel_module/assets/js/slider_detail.js' %}"></script>
 </body>
 </html>

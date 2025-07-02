@@ -312,6 +312,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-9 left-float">
+
+				<h1 class="sliders-main-title">
+					محصولات ({{ productCount }})
+				</h1> <br><br>
+
 				{% for product in products %}
 					{% include 'admin_panel_module/components/product_cart_component.html' with product=product %}
 				{% endfor %}

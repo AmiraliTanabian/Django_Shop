@@ -310,6 +310,11 @@ class ProductListView(ListView):
     context_object_name = "products"
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["productCount"] = Product.objects.all().count()
+        return context
+
 
 class RemoveProductViewAjax(View):
     def get(self, request: HttpRequest):
@@ -328,7 +333,6 @@ class RemoveProductViewAjax(View):
 
 
 def change_product_count_ajax(request: HttpRequest):
-    # try:
     product_id = request.GET.get("id")
     count = request.GET.get("count")
     product = get_object_or_404(Product, pk=int(product_id))

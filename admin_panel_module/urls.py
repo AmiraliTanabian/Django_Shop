@@ -24,5 +24,8 @@ urlpatterns = [
     path("products/", views.ProductListView.as_view(), name="product_list_page"),
     path("products/remove-product/", views.RemoveProductViewAjax.as_view(), name="remove_product_ajax"),
     path("products/change-count/", views.change_product_count_ajax, name="change_product_count_ajax"),
-    path("products/<int:pk>", views.ProductDetailView.as_view(), name="product_edit")
+    path("products/<int:pk>", views.ProductDetailView.as_view(), name="product_edit"),
+    path("brands/", views.BrandListView.as_view(), name="brand_list_page"),
+    path("brands/set-brand-enable/", views.SetSBrandEnableView, name="set_brand_enable_ajax"),
+    path("brands/set-brand-disable/", views.SetBrandDisableView, name="set_brand_disable_ajax"),
 ]

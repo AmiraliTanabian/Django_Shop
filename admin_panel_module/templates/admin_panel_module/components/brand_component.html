@@ -1,0 +1,19 @@
+<div class="col-sm-4">
+	<div class="brand-card">
+		<h2 class="brand-card__title">{{ brand.title }}</h2>
+		<p class="brand-card__english-name">{{ brand.slug }}</p>
+		<div class="brand-card__toggle">
+			<span class="brand-card__toggle-label">وضعیت:</span>
+			<label class="brand-card__toggle-switch">
+				{% if brand.is_active %}
+				<input id="brand_is_active" type="checkbox" checked="checked" 
+				       onclick="brandHandlerOnBrandList({{ brand.id }})">
+				{% else %}
+				<input id="brand_is_active" type="checkbox" 
+				       onclick="brandHandlerOnBrandList({{ brand.id }})">
+				{% endif %}				
+				<span class="brand-card__slider"></span>
+			</label>
+		</div>
+	</div>
+</div>

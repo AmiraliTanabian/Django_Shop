@@ -130,3 +130,84 @@ div#mail_body {
     padding: 10px;
     border-radius: 8px;
 }
+
+.brand-card {
+    width: 300px;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    font-family: Arial, sans-serif;
+    text-align: right;
+}
+
+.brand-card__title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.brand-card__english-name {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 16px 0;
+}
+
+.brand-card__toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-card__toggle-label {
+    font-size: 14px;
+    color: #333;
+}
+
+.brand-card__toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.brand-card__toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.brand-card__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.brand-card__slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.brand-card__toggle-switch input:checked + .brand-card__slider {
+    background-color: #4ade80;
+}
+
+.brand-card__toggle-switch input:checked + .brand-card__slider:before {
+    transform: translateX(20px);
+}

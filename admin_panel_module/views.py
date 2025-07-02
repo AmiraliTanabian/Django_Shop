@@ -11,7 +11,7 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
-from product_module.models import Product
+from product_module.models import Product, Brand
 from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm
 
@@ -362,4 +362,51 @@ class ProductDetailView(View):
 
         return render(request, "admin_panel_module/product_detail.html", {
             "form": form,
+        })
+
+
+class BrandListView(ListView):
+    paginate_by = 6
+    template_name = "admin_panel_module/brand_list.html"
+    model = Brand
+    context_object_name = "brands"
+    ordering = ["-id"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BrandCount"] = Brand.objects.all().count()
+        return context
+
+
+def SetSBrandEnableView(request):
+    "Set brand enable use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        brand = get_object_or_404(Brand, pk=id)
+        brand.is_active = True
+        brand.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
+        })
+
+
+def SetBrandDisableView(request):
+    "Set brand disable use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        brand = get_object_or_404(Brand, pk=id)
+        brand.is_active = False
+        brand.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
         })

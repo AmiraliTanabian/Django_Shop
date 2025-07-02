@@ -59,6 +59,32 @@
 			</ul>
 		</li>
 		<li>
+			<a href="#" class="menu-dropdown">
+				<i class="menu-icon fa fa-shopping-basket"></i>
+				<span class=" menu-text"> محصولات </span>
+				<i class="menu-expand"></i>
+			</a>
+
+			<ul class="submenu">
+				<li>
+					<a href="{% url "product_list_page" %}">
+						<span class="menu-text">لیست محصولات</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="{% url 'site_setting_page' %}">
+						<span class="menu-text">تنظیمات سایت</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url "banners_list_page" %}">
+						<span class="menu-text">تبلیغات سایت</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li>
 			<a href="{% default_admin_url %}">
 				<i class="menu-icon glyphicon glyphicon-dashboard"></i>
 				<span class="menu-text"> پنل ادمین دوم </span>

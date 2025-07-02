@@ -1,0 +1,51 @@
+{% load global_filters %}
+<div class="col-sm-4">
+	<div class="margin-1rem bg-white rounded-xl shadow-lg overflow-hidden transform transition hover:scale-105 duration-300 max-w-sm mx-auto">
+		<img
+				src="{{ product.banner.url }}"
+				alt="عکس نمونه"
+				class="w-full h-48 object-cover"
+		>
+		<div class="p-4">
+			<h3 class="text-lg font-bold text-gray-800 mb-2 truncate">{{ product.name }}</h3>
+
+			<p class="text-xl font-semibold text-green-600 mb-2">{{ product.price | price_separator }}</p>
+
+			<p class="text-sm text-gray-500 mb-4">
+				<span class="font-medium">بازدید:</span> {% product_view product %}
+			</p>
+
+			<div class="flex items-center mb-4">
+				<label for="quantity" class="text-sm text-gray-600 ml-2">تعداد:</label>
+				<input
+						type="number"
+						id="quantity{{ product.id }}"
+						value="{{ product.count }}"
+						min="1"
+						onchange="changeProductCount({{ product.id }})"
+						class="w-16 p-1 border rounded-md text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+				>
+			</div>
+
+			<div class="flex justify-between gap-2">
+				<button class="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+					<a target="_blank" href="{% url "product_detail" pk=product.id %}"
+					   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">مشاهده</a>
+				</button>
+
+				<button class="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+					ویرایش
+				</button>
+				<button onclick="removeProductOnProductList({{ product.id }})"
+				        class="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors">حذف
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    document.getElementById('quantity').addEventListener('input', function () {
+        if (this.value < 1) this.value = 1;
+    });
+</script>

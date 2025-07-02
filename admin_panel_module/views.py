@@ -11,6 +11,7 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
+from product_module.models import Product
 from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm
 
@@ -301,3 +302,43 @@ class RemoveBannerView(View):
             return JsonResponse({
                 "status": "error",
             })
+
+
+class ProductListView(ListView):
+    template_name = "admin_panel_module/product_list.html"
+    paginate_by = 6
+    context_object_name = "products"
+    model = Product
+
+
+class RemoveProductViewAjax(View):
+    def get(self, request: HttpRequest):
+        try:
+            pk = request.GET.get("id")
+            product: Product = get_object_or_404(Product, pk=pk)
+            product.delete()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })
+
+
+def change_product_count_ajax(request: HttpRequest):
+    # try:
+    product_id = request.GET.get("id")
+    count = request.GET.get("count")
+    product = get_object_or_404(Product, pk=int(product_id))
+    product.count = int(count)
+    product.save()
+    return JsonResponse({
+        "status": "ok",
+    })
+    #
+    # except:
+    #     return JsonResponse({
+    #         "status": "error",
+    #     })

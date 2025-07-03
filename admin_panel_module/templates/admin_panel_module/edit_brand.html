@@ -355,7 +355,7 @@
 													{% render_field form.is_active class="checkbox-slider slider-icon colored-success" checked="checked" %}
 												{% else %}
 													{% render_field form.is_active class="checkbox-slider slider-icon colored-success" %}
-												{% endif %}												
+												{% endif %}
 												<span class="text"></span>
 											</label>
 										</div>
@@ -366,6 +366,16 @@
 												       value="ویرایش">
 											</div>
 										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<a onclick="removeBrandOnEditPage({{ form.instance.pk }})"
+												   class="btn btn-danger left-float">
+													حذف
+												</a>
+											</div>
+										</div>
+
 
 								</form>
 							</div>
@@ -380,8 +390,7 @@
 {% include 'components/message.html' %}
 {% include 'admin_panel_module/components/show_errors_component.html' %}
 
-
-<script src="{% static "admin_panel_module/assets/js/remove_slider_ajax.js" %}"></script>
+<script src="{% static 'admin_panel_module/assets/js/brand_handler.js' %}"></script>
 <script src="{% static 'admin_panel_module/assets/js/slider_detail.js' %}"></script>
 </body>
 </html>

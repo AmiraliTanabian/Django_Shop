@@ -6,14 +6,18 @@
 			<span class="brand-card__toggle-label">وضعیت:</span>
 			<label class="brand-card__toggle-switch">
 				{% if brand.is_active %}
-				<input id="brand_is_active" type="checkbox" checked="checked" 
-				       onclick="brandHandlerOnBrandList({{ brand.id }})">
+					<input id="brand_is_active" type="checkbox" checked="checked"
+					       onclick="brandHandlerOnBrandList({{ brand.id }})">
 				{% else %}
-				<input id="brand_is_active" type="checkbox" 
-				       onclick="brandHandlerOnBrandList({{ brand.id }})">
-				{% endif %}				
+					<input id="brand_is_active" type="checkbox"
+					       onclick="brandHandlerOnBrandList({{ brand.id }})">
+				{% endif %}
 				<span class="brand-card__slider"></span>
 			</label>
+		</div>
+		<div class="brand-card__actions">
+			<button class="brand-card__button brand-card__button--edit">ویرایش</button>
+			<button class="brand-card__button brand-card__button--delete" onclick="removeBrandOnBrandList({{ brand.id }})">حذف</button>
 		</div>
 	</div>
 </div>

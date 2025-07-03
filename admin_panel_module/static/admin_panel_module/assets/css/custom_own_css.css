@@ -160,6 +160,7 @@ div#mail_body {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 16px;
 }
 
 .brand-card__toggle-label {
@@ -210,4 +211,36 @@ div#mail_body {
 
 .brand-card__toggle-switch input:checked + .brand-card__slider:before {
     transform: translateX(20px);
+}
+
+.brand-card__actions {
+    display: flex;
+    gap: 8px;
+}
+
+.brand-card__button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.brand-card__button--edit {
+    background-color: #2563eb;
+    color: white;
+}
+
+.brand-card__button--edit:hover {
+    background-color: #1e40af;
+}
+
+.brand-card__button--delete {
+    background-color: #dc2626;
+    color: white;
+}
+
+.brand-card__button--delete:hover {
+    background-color: #b91c1c;
 }

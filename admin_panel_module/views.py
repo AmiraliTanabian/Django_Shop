@@ -426,3 +426,19 @@ class AddBrandPageView(FormView):
         return render(self.request, "admin_panel_module/add_brand_page.html", {
             "form": form,
         })
+
+
+class RemoveBrandAjax(View):
+    def get(self, request: HttpRequest):
+        try:
+            pk = request.GET.get("id")
+            brand: Brand = get_object_or_404(Brand, pk=pk)
+            brand.delete()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })

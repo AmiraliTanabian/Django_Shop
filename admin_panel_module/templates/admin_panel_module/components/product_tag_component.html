@@ -1,0 +1,28 @@
+<div class="col-sm-4">
+	<div class="brand-card">
+		<h2 class="brand-card__title">{{ tag.tag_name }}</h2>
+		<p class="brand-card__english-name">{{ tag.slug }}</p>
+		<div class="brand-card__toggle">
+			<span class="brand-card__toggle-label">وضعیت:</span>
+			<label class="brand-card__toggle-switch">
+				{% if tag.is_active %}
+					<input id="product_tag_is_active" type="checkbox" checked="checked"
+					       onclick="productTagIsActiveHandler({{ tag.id }})">
+				{% else %}
+					<input id="product_tag_is_active" type="checkbox"
+					       onclick="productTagIsActiveHandler({{ tag.id }})">
+				{% endif %}
+				<span class="brand-card__slider"></span>
+			</label>
+		</div>
+		<div class="brand-card__actions">
+			<button class="brand-card__button brand-card__button--edit">
+				<a target="_blank" href="{% url "edit_brand_page" pk=tag.id %}"
+				   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">ویرایش</a>
+			</button>
+			<button class="brand-card__button brand-card__button--delete"
+			        onclick="removeProductTagOnList({{ tag.id }})">حذف
+			</button>
+		</div>
+	</div>
+</div>

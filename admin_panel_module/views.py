@@ -11,7 +11,7 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
-from product_module.models import Product, Brand
+from product_module.models import Product, Brand, ProductTag
 from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import (ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm,
                     BrandEditForm, )
@@ -379,7 +379,7 @@ class BrandListView(ListView):
         return context
 
 
-def SetSBrandEnableView(request):
+def SetBrandEnableView(request):
     "Set brand enable use for ajax and checkbox on slider list"
     try:
         id = request.GET.get("id")
@@ -463,3 +463,66 @@ class BrandEditPageView(View):
         return render(request, "admin_panel_module/edit_brand.html", {
             "form": form,
         })
+
+
+class ProductBrandList(ListView):
+    template_name = "admin_panel_module/product_tags_list.html"
+    paginate_by = 6
+    ordering = ['-id']
+    model = ProductTag
+    context_object_name = "tags"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["productTagCount"] = ProductTag.objects.all().count()
+        return context
+
+
+def SetProductTagEnableView(request):
+    "Set Product tag enable use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        product_tag = get_object_or_404(ProductTag, pk=id)
+        product_tag.is_active = True
+        product_tag.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
+        })
+
+
+def SetProductTagDisableView(request):
+    "Set Product tag disable use for ajax and checkbox on slider list"
+    try:
+        id = request.GET.get("id")
+        product_tag = get_object_or_404(ProductTag, pk=id)
+        product_tag.is_active = False
+        product_tag.save()
+        return JsonResponse({
+            "status": "ok"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error"
+        })
+
+
+class RemoveProductTagAjax(View):
+    def get(self, request: HttpRequest):
+        try:
+            pk = request.GET.get("id")
+            product_tag: ProductTag = get_object_or_404(ProductTag, pk=int(pk))
+            product_tag.delete()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })

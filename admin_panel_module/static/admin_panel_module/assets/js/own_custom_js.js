@@ -20,7 +20,6 @@ function removeMsgAdmin(msgId) {
         confirmButtonText: "حذف",
         cancelButtonText: "کنسل",
     }).then((result) => {
-        confirmButtonText: "حذف"
         if (result.isConfirmed) {
             $.get("./remove-msg/", {
                 "msg_id": msgId,

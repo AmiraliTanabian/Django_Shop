@@ -26,9 +26,14 @@ urlpatterns = [
     path("products/change-count/", views.change_product_count_ajax, name="change_product_count_ajax"),
     path("products/<int:pk>", views.ProductDetailView.as_view(), name="product_edit"),
     path("brands/", views.BrandListView.as_view(), name="brand_list_page"),
-    path("brands/set-brand-enable/", views.SetSBrandEnableView, name="set_brand_enable_ajax"),
+    path("brands/set-brand-enable/", views.SetBrandEnableView, name="set_brand_enable_ajax"),
     path("brands/set-brand-disable/", views.SetBrandDisableView, name="set_brand_disable_ajax"),
     path("brands/add-brand/", views.AddBrandPageView.as_view(), name="add_brand_page"),
     path("brands/remove-brand/", views.RemoveBrandAjax.as_view(), name="remove_brand_ajax"),
     path("brands/<int:pk>", views.BrandEditPageView.as_view(), name="edit_brand_page"),
+    path("product-tags/set-product-tag-enable/", views.SetProductTagEnableView, name="set_product_tag_enable_ajax"),
+    path("product-tags/set-product-tag-disable/", views.SetProductTagDisableView, name="set_product_tag_disable_ajax"),
+    path("product-tags/", views.ProductBrandList.as_view(), name="product_brand_list_page"),
+    path("product-tags/remove/", views.RemoveProductTagAjax.as_view(), name="remove_product_tag_ajax_admin"),
+
 ]

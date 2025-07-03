@@ -16,7 +16,10 @@
 			</label>
 		</div>
 		<div class="brand-card__actions">
-			<button class="brand-card__button brand-card__button--edit">ویرایش</button>
+			<button class="brand-card__button brand-card__button--edit">
+				<a target="_blank" href="{% url "edit_brand_page" pk=brand.id %}"
+					   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">ویرایش</a>
+			</button>
 			<button class="brand-card__button brand-card__button--delete" onclick="removeBrandOnBrandList({{ brand.id }})">حذف</button>
 		</div>
 	</div>

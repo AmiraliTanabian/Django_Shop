@@ -442,3 +442,24 @@ class RemoveBrandAjax(View):
             return JsonResponse({
                 "status": "error",
             })
+
+
+class BrandEditPageView(View):
+    def get(self, request: HttpRequest, pk):
+        brand = get_object_or_404(Brand, pk=pk)
+        form = BrandEditForm(instance=brand)
+        return render(request, "admin_panel_module/edit_brand.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest, pk):
+        brand = get_object_or_404(Brand, pk=pk)
+        form = BrandEditForm(instance=brand, data=request.POST, files=request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "برند شما با موفقیت ویرایش شد!")
+
+        return render(request, "admin_panel_module/edit_brand.html", {
+            "form": form,
+        })

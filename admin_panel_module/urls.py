@@ -30,4 +30,5 @@ urlpatterns = [
     path("brands/set-brand-disable/", views.SetBrandDisableView, name="set_brand_disable_ajax"),
     path("brands/add-brand/", views.AddBrandPageView.as_view(), name="add_brand_page"),
     path("brands/remove-brand/", views.RemoveBrandAjax.as_view(), name="remove_brand_ajax"),
+    path("brands/<int:pk>", views.BrandEditPageView.as_view(), name="edit_brand_page"),
 ]

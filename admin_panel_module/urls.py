@@ -33,7 +33,8 @@ urlpatterns = [
     path("brands/<int:pk>", views.BrandEditPageView.as_view(), name="edit_brand_page"),
     path("product-tags/set-product-tag-enable/", views.SetProductTagEnableView, name="set_product_tag_enable_ajax"),
     path("product-tags/set-product-tag-disable/", views.SetProductTagDisableView, name="set_product_tag_disable_ajax"),
-    path("product-tags/", views.ProductBrandList.as_view(), name="product_brand_list_page"),
+    path("product-tags/", views.ProductBrandList.as_view(), name="product_tag_list_page"),
     path("product-tags/remove/", views.RemoveProductTagAjax.as_view(), name="remove_product_tag_ajax_admin"),
+    path("product-tags/edit/<int:pk>", views.ProductTagEditPageView.as_view(), name="product_tag_edit_page"),
 
 ]

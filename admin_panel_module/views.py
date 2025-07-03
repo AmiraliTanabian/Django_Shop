@@ -14,7 +14,7 @@ from news_module.models import Article
 from product_module.models import Product, Brand, ProductTag
 from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import (ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm,
-                    BrandEditForm, )
+                    BrandEditForm, ProductTagEditForm)
 
 
 def index_page(request: HttpRequest):
@@ -526,3 +526,24 @@ class RemoveProductTagAjax(View):
             return JsonResponse({
                 "status": "error",
             })
+
+
+class ProductTagEditPageView(View):
+    def get(self, request: HttpRequest, pk):
+        product_tag = get_object_or_404(ProductTag, pk=pk)
+        form = ProductTagEditForm(instance=product_tag)
+        return render(request, "admin_panel_module/product_tag_edit.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest, pk):
+        product_tag = get_object_or_404(ProductTag, pk=pk)
+        form = ProductTagEditForm(instance=product_tag, data=request.POST, files=request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "تگ شما با موفقیت ویرایش شد!")
+
+        return render(request, "admin_panel_module/product_tag_edit.html", {
+            "form": form,
+        })

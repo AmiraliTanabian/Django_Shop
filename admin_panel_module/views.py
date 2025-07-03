@@ -547,3 +547,18 @@ class ProductTagEditPageView(View):
         return render(request, "admin_panel_module/product_tag_edit.html", {
             "form": form,
         })
+
+
+class AddProductTagPageView(FormView):
+    form_class = ProductTagEditForm
+    template_name = "admin_panel_module/add_product_tag.html"
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "نگ شما با موفقیت افزوده شد")
+        return redirect(reverse_lazy('product_tag_list_page'))
+
+    def form_invalid(self, form):
+        return render(self.request, "admin_panel_module/add_product_tag.html", {
+            "form": form,
+        })

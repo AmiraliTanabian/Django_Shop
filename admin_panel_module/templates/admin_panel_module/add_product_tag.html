@@ -1,10 +1,11 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>تگ محصولات | پنل ادمین</title>
+	<title>افزودن تگ | ادمین</title>
 
 	<meta name="description" content="inbox"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,10 +15,7 @@
 
 
 </head>
-<!-- /Head -->
-<!-- Body -->
 <body>
-<!-- Loading Container -->
 <div class="loading-container">
 	<div class="loader"></div>
 </div>
@@ -300,42 +298,83 @@
 						<a href="{% url "admin_index_page" %}">خانه</a>
 					</li>
 					<li>
-						تگ محصولات
+						<a href="{% url "product_tag_list_page" %}"> تگ ها</a>
+					</li>
+					<li>
+						افزودن تگ
 					</li>
 				</ul>
 			</div>
-			<!-- /Page Breadcrumb -->
 			{% include 'admin_panel_module/components/footer_ref.html' %}
-		</div>
-	</div>
 
-	<h1 class="sliders-main-title">
-		تگ ها ({{ productTagCount }})
-	</h1>
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-12 col-sm-6 col-xs-12">
+						<div class="widget radius-bordered">
+							<div class="widget-header">
+								<span class="widget-caption">افزودن اسلایدر</span>
+							</div>
+							<div class="widget-body">
+								<form id="registrationForm" method="post" class="form-horizontal bv-form"
+								      data-bv-message="This value is not valid"
+								      data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+								      data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+								      data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+								      novalidate="novalidate" enctype="multipart/form-data">
+									{% csrf_token %}
+									<button type="submit" class="bv-hidden-submit"
+									        style="display: none; width: 0px; height: 0px;"></button>
+									<div class="form-title">
+										افزودن تگ
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.tag_name.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.tag_name class="form-control" %}
+											<i class="form-control-feedback"
+											   data-bv-icon-for="email"
+											   style="display: none;"></i>
+										</div>
+									</div>
 
-	<div class="row">
-		<div class="col-md-12 justify-center">
-			<a href="{% url 'add_product_tag_page' %}" class="btn btn-primary radius-5 margin-1rem">افزودن تگ</a>
-		</div>
-	</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.slug.label }}</label>
+										<div class="col-lg-8">
+											{% render_field form.slug class="form-control" %}
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-9 left-float">
-			
-				{% for tag in tags %}
-					{% include 'admin_panel_module/components/product_tag_component.html' with tag=tag %}
-				{% endfor %}
+											<i class="form-control-feedback"
+											   data-bv-icon-for="password"
+											   style="display: none;"></i>
+										</div>
+									</div>
+									<div class="form-group has-feedback">
+										<label class="col-lg-4 control-label">{{ form.is_active.label }}</label>
+										<div class="col-lg-8">
+											<label>
+												{% render_field form.is_active class="checkbox-slider slider-icon colored-success" checked="checked" %}
+												<span class="text"></span>
+											</label>
+										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-4 col-lg-8">
+												<input class="btn btn-palegreen left-float" type="submit"
+												       value="افزودن">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </div>
 
-<br><br>
-{% include 'admin_panel_module/components/admin_pagination.html' %}
+{% include "admin_panel_module/components/show_errors_component.html" %}
 {% include 'components/message.html' %}
+
 </body>
-<script src="{% static 'admin_panel_module/assets/js/product_tag_handler.js' %}"></script>
-<script src="{% static "admin_panel_module/assets/js/slider_admin.js" %}"></script>
 </html>

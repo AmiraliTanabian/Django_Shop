@@ -36,5 +36,6 @@ urlpatterns = [
     path("product-tags/", views.ProductBrandList.as_view(), name="product_tag_list_page"),
     path("product-tags/remove/", views.RemoveProductTagAjax.as_view(), name="remove_product_tag_ajax_admin"),
     path("product-tags/<int:pk>", views.ProductTagEditPageView.as_view(), name="product_tag_edit_page"),
+    path("product-tags/add/", views.AddProductTagPageView.as_view(), name="add_product_tag_page"),
 
 ]

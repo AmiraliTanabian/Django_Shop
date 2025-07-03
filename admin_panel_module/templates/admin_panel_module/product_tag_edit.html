@@ -301,7 +301,7 @@
 						<a href="{% url "product_tag_list_page" %}"> تگ ها</a>
 					</li>
 					<li>
-						{{ form.title.value }}
+						{{ form.tag_name.value }}
 					</li>
 				</ul>
 			</div>
@@ -369,7 +369,7 @@
 
 										<div class="form-group">
 											<div class="col-lg-offset-4 col-lg-8">
-												<a onclick="removeBrandOnEditPage({{ form.instance.pk }})"
+												<a onclick="removeProductTagOnEditPage({{ form.instance.pk }})"
 												   class="btn btn-danger left-float">
 													حذف
 												</a>
@@ -390,7 +390,7 @@
 {% include 'components/message.html' %}
 {% include 'admin_panel_module/components/show_errors_component.html' %}
 
-<script src="{% static 'admin_panel_module/assets/js/brand_handler.js' %}"></script>
+<script src="{% static 'admin_panel_module/assets/js/product_tag_handler.js' %}"></script>
 <script src="{% static 'admin_panel_module/assets/js/slider_detail.js' %}"></script>
 </body>
 </html>

@@ -60,3 +60,50 @@ function removeProductTagOnList(productTagId) {
         }
     })
 }
+
+function removeProductTagOnEditPage(productTagId) {
+    event.preventDefault();
+    Swal.fire({
+        title: "تایید حذف تگ",
+        text: "آیا میخواهید تگ حذف شود؟",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "تایید",
+        cancelButtonText: "لغو",
+    }).then(firstSweetRe => {
+        if (firstSweetRe.isConfirmed) {
+            $.get("./remove/", {
+                "id": productTagId,
+            }).then(re => {
+                if (re.status === "ok") {
+                    Swal.fire({
+                        title: "حذف تگ",
+                        text: "تگ حذف شد",
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "خروج"
+                    }).then(sweetRe => {
+                        if (sweetRe.isConfirmed) {
+                            location.href = ".";
+                        }
+                    })
+
+                } else {
+                    Swal.fire({
+                        title: "ارر",
+                        text: "تگ حذف نشد\n خطایی رخ داد",
+                        icon: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "خروج"
+                    })
+                }
+            })
+        }
+    })
+}

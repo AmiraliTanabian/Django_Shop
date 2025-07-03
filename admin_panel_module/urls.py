@@ -35,6 +35,6 @@ urlpatterns = [
     path("product-tags/set-product-tag-disable/", views.SetProductTagDisableView, name="set_product_tag_disable_ajax"),
     path("product-tags/", views.ProductBrandList.as_view(), name="product_tag_list_page"),
     path("product-tags/remove/", views.RemoveProductTagAjax.as_view(), name="remove_product_tag_ajax_admin"),
-    path("product-tags/edit/<int:pk>", views.ProductTagEditPageView.as_view(), name="product_tag_edit_page"),
+    path("product-tags/<int:pk>", views.ProductTagEditPageView.as_view(), name="product_tag_edit_page"),
 
 ]

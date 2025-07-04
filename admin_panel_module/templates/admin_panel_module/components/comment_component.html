@@ -54,10 +54,12 @@
 		</div>
 		<div class="comment-actions">
 			<button id="approve-btn" class="action-btn approve"
-            {% if comment.status == "approved" %}disabled{% endif %}
+                    {% if comment.status == "approved" %}disabled{% endif %}
+                    onclick="setProductCommentApproved({{ comment.id }})"
             >تأیید</button>
 			<button id="reject-btn" class="action-btn reject"
             {% if comment.status == "rejected" %}disabled{% endif %}
+                    onclick="setProductCommentRejected({{ comment.id }})"
             >رد</button>
 			<a href="#"
                class="comment-details text-white no-underline hover:text-white hover:no-underline">جزئیات</a>

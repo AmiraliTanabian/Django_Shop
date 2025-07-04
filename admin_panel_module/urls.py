@@ -37,6 +37,8 @@ urlpatterns = [
     path("product-tags/remove/", views.RemoveProductTagAjax.as_view(), name="remove_product_tag_ajax_admin"),
     path("product-tags/<int:pk>", views.ProductTagEditPageView.as_view(), name="product_tag_edit_page"),
     path("product-tags/add/", views.AddProductTagPageView.as_view(), name="add_product_tag_page"),
-    path("product-comments/", views.ProductCommentsList.as_view(), name="product_comments_list_page")
+    path("product-comments/", views.ProductCommentsList.as_view(), name="product_comments_list_page"),
+    path("product-comments/set-approved/", views.set_product_comment_approved, name="set_product_comment_approved"),
+    path("product-comments/set-rejected/", views.set_product_comment_rejected, name="set_product_comment_rejected"),
 
 ]

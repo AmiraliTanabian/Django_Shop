@@ -581,3 +581,36 @@ class ProductCommentsList(ListView):
         context = super().get_context_data(**kwargs)
         context['commentCount'] = self.count
         return context
+
+
+def set_product_comment_approved(request:HttpRequest):
+    comment_id = request.GET.get("id")
+    comment = get_object_or_404(ProductComment, id=comment_id)
+    if comment.status == "approved":
+        return JsonResponse({
+            "status":"error",
+            "msg":"The comment for the selected product has already been approved; you cannot activate it again"
+        })
+
+    else:
+        comment.status = "approved"
+        comment.save()
+        return JsonResponse({
+            "status":"ok",
+        })
+
+def set_product_comment_rejected(request:HttpRequest):
+    comment_id = request.GET.get("id")
+    comment = get_object_or_404(ProductComment, id=comment_id)
+    if comment.status == "rejected":
+        return JsonResponse({
+            "status":"error",
+            "msg":"The comment for the selected product has already been rejected; you cannot activate it again"
+        })
+
+    else:
+        comment.status = "rejected"
+        comment.save()
+        return JsonResponse({
+            "status":"ok",
+        })

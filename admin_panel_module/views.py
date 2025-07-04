@@ -11,7 +11,7 @@ from django.views.generic import ListView, FormView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
-from product_module.models import Product, Brand, ProductTag
+from product_module.models import Product, Brand, ProductTag, ProductComment
 from site_module.models import Slider, SiteSetting, SiteBanners
 from .forms import (ArticleEditForm, SliderDetailsForm, SiteSettingsForm, BannerEditForm, ProductEditForm,
                     BrandEditForm, ProductTagEditForm)
@@ -562,3 +562,22 @@ class AddProductTagPageView(FormView):
         return render(self.request, "admin_panel_module/add_product_tag.html", {
             "form": form,
         })
+
+
+class ProductCommentsList(ListView):
+    template_name = "admin_panel_module/product_comments_list.html"
+    context_object_name = "comments"
+    ordering = ["-id"]
+    model = ProductComment
+    paginate_by = 8
+
+    def get_queryset(self):
+        # productcomment_set : comment replies
+        query = ProductComment.objects.filter(parent=None).prefetch_related('productcomment_set').all()
+        self.count = query.count()
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['commentCount'] = self.count
+        return context

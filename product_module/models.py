@@ -95,6 +95,11 @@ class ProductGallery(models.Model):
 
 
 class ProductComment(models.Model):
+    class StatusChoices(models.TextChoices):
+        approved = ("approved", "تایید شده")
+        pending = ("pending", "در انتظار تایید")
+        rejected = ("rejected", "رد شده")
+
     parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name="والد ( اختیاری )")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="کاربر")
@@ -105,6 +110,8 @@ class ProductComment(models.Model):
                                     MaxValueValidator(5, "امتیاز نمیتواند بیشتر از ۵ باشد"),
                                     MinValueValidator(0, "امتیاز نمیتواند کمتر از ۰ باشد"),
                                 ])
+    status = models.CharField(max_length=255, verbose_name="وضعیت کامنت", choices=StatusChoices,
+                              default="pending")
     is_active = models.BooleanField(verbose_name="تایید شده / نشده ", default=False)
 
     class Meta:

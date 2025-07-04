@@ -1,0 +1,67 @@
+{% load jformat %}
+{% load static %}
+<div class="col-sm-4">
+	<div class="comment-card">
+		<div class="comment-header">
+			<div class="comment-title"></div>
+			{% if comment.status == "approved" %}
+				<div id="status" class="comment-status status-approved">تایید شده</div>
+			{% elif comment.status == "rejected" %}
+				<div id="status" class="comment-status status-rejected">رد شده</div>
+			{% elif comment.status == "pending" %}
+				<div id="status" class="comment-status status-pending">در انتظار تایید</div>
+			{% endif %}
+		</div>
+		<div class="comment-body">
+			{{ comment.text }}
+		</div>
+		<div class="comment-rating">
+			امتیاز:
+			{% if comment.score == 0 %}
+				☆☆☆☆☆
+			{% elif comment.score == 1 %}
+				★☆☆☆☆
+			{% elif comment.score == 2 %}
+				★★☆☆☆
+			{% elif comment.score == 3 %}
+				★★★☆☆
+			{% elif comment.score == 4 %}
+				★★★★☆
+			{% else %}
+				★★★★★
+			{% endif %}
+			({{ comment.score }} از 5)
+		</div>
+		<div class="comment-meta">
+			<div>
+				<img class="avatar"
+						{% if comment.user.profile_image %}
+                     src="{{ comment.user.profile_image.url }}" alt="">
+						{% else %}
+							src="{% static 'images/blog/default-user-profile.jpg' %}" alt="" >
+						{% endif %}
+				<span>نویسنده: {{ comment.user }}</span>
+			</div>
+			<span style="clear:both;">تاریخ: {{ comment.date|jformat:"%Y/%m/%d" }}</span>
+			<span>تعداد جواب‌ها: {{ comment.productcomment_set.all.count }}</span>
+			<span>
+                <a href="{% url 'product_detail' pk=comment.product.id %}"
+                   target="_blank"
+                   class="block w-full h-full text-inherit no-underline hover:text-inherit hover:no-underline">
+                    محصول: {{ comment.product }}
+                </a>
+            </span>
+		</div>
+		<div class="comment-actions">
+			<button id="approve-btn" class="action-btn approve"
+            {% if comment.status == "approved" %}disabled{% endif %}
+            >تأیید</button>
+			<button id="reject-btn" class="action-btn reject"
+            {% if comment.status == "rejected" %}disabled{% endif %}
+            >رد</button>
+			<a href="#"
+               class="comment-details text-white no-underline hover:text-white hover:no-underline">جزئیات</a>
+		</div>
+	</div>
+</div>
+

@@ -71,8 +71,8 @@ class ProductDetailView(View):
         self.context["related_products"] = grouper(list(related_products), 3)
 
         # comments
-        self.context["comments"] = ProductComment.objects.filter(is_active=True, product=self.loaded_product,
-                                                                 parent=None)
+        self.context["comments"] = ProductComment.objects.filter(status="approved", product=self.loaded_product,
+                                                                 parent=None, is_active=True)
 
     def get(self, request, pk):
         self.initail(request, pk)

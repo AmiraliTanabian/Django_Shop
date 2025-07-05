@@ -40,5 +40,7 @@ urlpatterns = [
     path("product-comments/", views.ProductCommentsList.as_view(), name="product_comments_list_page"),
     path("product-comments/set-approved/", views.set_product_comment_approved, name="set_product_comment_approved"),
     path("product-comments/set-rejected/", views.set_product_comment_rejected, name="set_product_comment_rejected"),
-
+    path("product-comments/<int:pk>", views.ProductCommentDetailView.as_view(), name="product_comment_detail_page"),
+    path("product-comments/send-reply/", views.SendProductCommentReplyAdmin.as_view(),
+         name="product_comment_send_reply_on_admin"),
 ]

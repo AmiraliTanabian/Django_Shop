@@ -109,10 +109,11 @@ class ProductComment(models.Model):
                                 validators=[
                                     MaxValueValidator(5, "امتیاز نمیتواند بیشتر از ۵ باشد"),
                                     MinValueValidator(0, "امتیاز نمیتواند کمتر از ۰ باشد"),
-                                ])
+                                ], null=True, )
     status = models.CharField(max_length=255, verbose_name="وضعیت کامنت", choices=StatusChoices,
                               default="pending")
-    is_active = models.BooleanField(verbose_name="تایید شده / نشده ", default=False)
+    is_active = models.BooleanField(verbose_name="فعال بودن / نبودن", default=True)
+    has_unread_reply = models.BooleanField(verbose_name="داشتن پاسخ خوانده نشده", default=False)
 
     class Meta:
         verbose_name = "نظر محصول"

@@ -11,6 +11,11 @@
 			{% elif comment.status == "pending" %}
 				<div id="status" class="comment-status status-pending">در انتظار تایید</div>
 			{% endif %}
+
+			{% if comment.has_unread_reply %}	
+				<span class="unread-indicator" title="پاسخ خوانده نشده"></span>
+			{% endif %}
+		
 		</div>
 		<div class="comment-body">
 			{{ comment.text }}
@@ -61,7 +66,7 @@
             {% if comment.status == "rejected" %}disabled{% endif %}
                     onclick="setProductCommentRejected({{ comment.id }})"
             >رد</button>
-			<a href="#"
+			<a href="{% url 'product_comment_detail_page' pk=comment.id %}"
                class="comment-details text-white no-underline hover:text-white hover:no-underline">جزئیات</a>
 		</div>
 	</div>

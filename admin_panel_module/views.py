@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
@@ -583,34 +583,67 @@ class ProductCommentsList(ListView):
         return context
 
 
-def set_product_comment_approved(request:HttpRequest):
+def set_product_comment_approved(request: HttpRequest):
     comment_id = request.GET.get("id")
     comment = get_object_or_404(ProductComment, id=comment_id)
     if comment.status == "approved":
         return JsonResponse({
-            "status":"error",
-            "msg":"The comment for the selected product has already been approved; you cannot activate it again"
+            "status": "error",
+            "msg": "The comment for the selected product has already been approved; you cannot activate it again"
         })
 
     else:
         comment.status = "approved"
         comment.save()
         return JsonResponse({
-            "status":"ok",
+            "status": "ok",
         })
 
-def set_product_comment_rejected(request:HttpRequest):
+
+def set_product_comment_rejected(request: HttpRequest):
     comment_id = request.GET.get("id")
     comment = get_object_or_404(ProductComment, id=comment_id)
     if comment.status == "rejected":
         return JsonResponse({
-            "status":"error",
-            "msg":"The comment for the selected product has already been rejected; you cannot activate it again"
+            "status": "error",
+            "msg": "The comment for the selected product has already been rejected; you cannot activate it again"
         })
 
     else:
         comment.status = "rejected"
         comment.save()
         return JsonResponse({
-            "status":"ok",
+            "status": "ok",
         })
+
+
+class ProductCommentDetailView(DetailView):
+    model = ProductComment
+    template_name = "admin_panel_module/product_comment_detail.html"
+    context_object_name = "comment"
+
+
+class SendProductCommentReplyAdmin(View):
+    def get(self, request: HttpRequest):
+        try:
+            parent_id = request.GET.get("parentId")
+            parent_comment = ProductComment.objects.get(pk=int(parent_id))
+            product_id = request.GET.get("productId")
+            product = Product.objects.get(pk=int(product_id))
+            text = request.GET.get("text")
+            new_comment = ProductComment(
+                parent=parent_comment,
+                product=product,
+                user=request.user,
+                text=text,
+                status="approved",
+            )
+            new_comment.save()
+            return JsonResponse({
+                "status": "ok",
+            })
+
+        except:
+            return JsonResponse({
+                "status": "error",
+            })

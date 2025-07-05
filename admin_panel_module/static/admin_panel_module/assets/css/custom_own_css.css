@@ -384,7 +384,7 @@ div#mail_body {
     transition: background-color 0.2s;
 }
 
-.comment-details:hover{
+.comment-details:hover {
     background-color: #339cff;
 }
 
@@ -405,4 +405,25 @@ div#mail_body {
     .comment-meta span {
         margin-bottom: 5px;
     }
+
+    .unread-indicator {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.unread-indicator {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #ff6b6b, #dc3545);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(50%, -50%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.unread-indicator:hover {
+    transform: translate(50%, -50%) scale(1.2);
 }

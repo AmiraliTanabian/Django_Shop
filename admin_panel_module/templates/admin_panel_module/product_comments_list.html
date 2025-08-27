@@ -311,14 +311,27 @@
 			{% include 'admin_panel_module/components/footer_ref.html' %}
 		</div>
 	</div>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-9 left-float">
-
 				<h1 class="sliders-main-title">
 					نظرات محصول ({{ commentCount }})
 				</h1> <br><br>
+
+				<div class="filter-section">
+					<div class="checkbox-wrapper">
+						<input type="checkbox" id="filter-unread">
+						<label for="filter-unread">فقط کامنت‌های دارای پاسخ خونده‌نشده</label>
+					</div>
+					
+					<select id="filter-status">
+						<option value="all" selected>همه وضعیت‌ها</option>
+						<option value="pending">در انتظار تأیید</option>
+						<option value="approved">تأیید شده</option>
+						<option value="rejected">رد شده</option>
+					</select>
+				</div>
+
 
 				{% for comment in comments %}
 					{% include 'admin_panel_module/components/comment_component.html' with comment=comment %}

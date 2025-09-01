@@ -1,0 +1,53 @@
+{% verbatim %}
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+
+export default function SimpleLoader() {
+const [loading, setLoading] = useState(false);
+
+const handleAction = () => {
+setLoading(true);
+setTimeout(() => {
+setLoading(false);
+}, 2000);
+};
+
+return (
+<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+	<Card className="w-96 shadow-lg rounded-2xl p-6">
+		<CardContent className="flex flex-col items-center space-y-6">
+			<h2 className="text-xl font-bold">کامپوننت ساده</h2>
+			<Button
+					onClick={handleAction}
+					disabled={loading}
+					className="w-full rounded-xl"
+			>
+				{loading ? (
+				<span className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin"/>
+                در حال بارگذاری...
+              </span>
+				) : (
+				"انجام عملیات"
+				)}
+			</Button>
+
+			{loading && (
+			<motion.div
+					className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
+					initial={{ scale: 0 }}
+					animate={{ scale: 1 }}
+					transition={{ duration: 0.3 }}
+			/>
+			)}
+		</CardContent>
+	</Card>
+</div>
+);
+}
+
+{% endverbatim %}

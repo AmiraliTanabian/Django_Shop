@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, FormView, DetailView
+from django.views.generic import ListView, FormView, DetailView, TemplateView
 
 from contact_module.models import ContactModel
 from news_module.models import Article
@@ -564,25 +564,6 @@ class AddProductTagPageView(FormView):
         })
 
 
-class ProductCommentsList(ListView):
-    template_name = "admin_panel_module/product_comments_list.html"
-    context_object_name = "comments"
-    ordering = ["-id"]
-    model = ProductComment
-    paginate_by = 8
-
-    def get_queryset(self):
-        # productcomment_set : comment replies
-        query = ProductComment.objects.filter(parent=None).prefetch_related('productcomment_set').all()
-        self.count = query.count()
-        return query
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['commentCount'] = self.count
-        return context
-
-
 def set_product_comment_approved(request: HttpRequest):
     comment_id = request.GET.get("id")
     comment = get_object_or_404(ProductComment, id=comment_id)
@@ -647,3 +628,7 @@ class SendProductCommentReplyAdmin(View):
             return JsonResponse({
                 "status": "error",
             })
+
+
+class ProductCommentList(TemplateView):
+    template_name = "admin_panel_module/product_comments_list.html"

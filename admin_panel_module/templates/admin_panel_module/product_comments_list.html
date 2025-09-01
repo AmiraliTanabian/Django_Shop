@@ -323,7 +323,7 @@
 						<input type="checkbox" id="filter-unread">
 						<label for="filter-unread">فقط کامنت‌های دارای پاسخ خونده‌نشده</label>
 					</div>
-					
+
 					<select id="filter-status">
 						<option value="all" selected>همه وضعیت‌ها</option>
 						<option value="pending">در انتظار تأیید</option>
@@ -332,14 +332,11 @@
 					</select>
 				</div>
 
-
-				{% for comment in comments %}
-					{% include 'admin_panel_module/components/comment_component.html' with comment=comment %}
-				{% endfor %}
 			</div>
 		</div>
 	</div>
 
+	{% include 'admin_panel_module/components/product_comment_component.html' %}
 
 </div>
 

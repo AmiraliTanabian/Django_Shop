@@ -56,11 +56,10 @@
 				<div class="col-sm-3">
 					<div class="single-widget">
 						<ul class="nav nav-pills nav-stacked" id="footer-nav">
-							<li><a href="#">درباره ما</a></li>
-							<li><a href="#">تماس با ما</a></li>
-							<li><a href="#">لیست محصولات</a></li>
-							<li><a href="#">لیست مقالات</a></li>
-							<li><a href="#">FAQ’s</a></li>
+							<li><a href="{% url 'about_us_page' %}">درباره ما</a></li>
+							<li><a href={% url 'contact_page' %}>تماس با ما</a></li>
+							<li><a href="{% url 'product_page' %}">لیست محصولات</a></li>
+							<li><a href="{% url 'news_page' %}">لیست مقالات</a></li>
 						</ul>
 					</div>
 				</div>

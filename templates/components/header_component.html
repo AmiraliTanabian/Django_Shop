@@ -46,11 +46,13 @@
 									<a class=" {% if request.resolver_match.url_name == "favorite_list" %}active{% endif %}"
 									   href="{% url "favorite_list" %}"><i class="fa fa-star">
 									</i> لیست علاقه مندی ها</a></li>
-								<li><a class="{% if request.resolver_match.url_name == "order_page" %} active {% endif %}"
-										href="{% url "order_page" %}">
-									<i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
+								<li>
+									<a class="{% if request.resolver_match.url_name == "order_page" %} active {% endif %}"
+									   href="{% url "order_page" %}">
+										<i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
 								{% if request.user.is_superuser %}
-									<li><a href="/admin"><i class="fa fa-dashboard"></i>پنل مدیریت سایت</a></li>
+									<li><a href="/admin"><i class="fa fa-dashboard"></i>پنل مدیریت سایت</a>
+									</li>
 								{% endif %}
 								<li><a href="{% url "logout_page" %}" class="text-danger danger"><i
 										class="fa fa-arrow-right"></i>خروج</a></li>

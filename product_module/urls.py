@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (ProductPageView, ProductDetailView, ProductCategoryPageView, ProductBrandPage,
                     AddProductToFavoriteView,
-                    FavoriteProductsView, RemoveFromFavoriteView, ProductTagView)
+                    FavoriteProductsView, RemoveFromFavoriteView, ProductTagView, ProductPriceFilter)
 
 urlpatterns = [
     path("", ProductPageView.as_view(), name="product_page"),
@@ -12,5 +12,6 @@ urlpatterns = [
     path("add-to-favorite", AddProductToFavoriteView.as_view(), name="add_product_to_favorite"),
     path("favorite-list", FavoriteProductsView.as_view(), name="favorite_list"),
     path("remove-from-favorite", RemoveFromFavoriteView.as_view(), name="remove_from_favorite"),
-    path("tag/<slug:slug>", ProductTagView.as_view(), name="product_tag_page")
+    path("tag/<slug:slug>", ProductTagView.as_view(), name="product_tag_page"),
+    path("price-fiter", ProductPriceFilter.as_view(), name="product_price_filter")
 ]

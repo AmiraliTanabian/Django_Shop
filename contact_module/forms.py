@@ -10,9 +10,9 @@ class ContactUsForm(forms.ModelForm):
 
         error_messages = {
             "subject": {"required": "وارد کردن موضوع ضروری می باشد!"},
-            "email": {"required": "وارد کردن ایمیل ضروری میباشد!"},
-            "name": {"required": "وارد کردن نام ضروری مبباشد!"},
-            "msg": {"required": "وارد کردن پیام ضروری مبباشد "},
+            "email": {"required": "وارد کردن ایمیل ضروری می باشد!"},
+            "name": {"required": "وارد کردن نام ضروری می باشد!"},
+            "msg": {"required": "وارد کردن پیام ضروری می باشد! "},
         }
 
         widgets = {

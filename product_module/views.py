@@ -265,3 +265,17 @@ class ProductTagView(ListView):
         slug = self.kwargs["slug"]
         context["tag_title"] = get_object_or_404(ProductTag, is_active=True, slug=slug).tag_name
         return context
+
+
+class ProductPriceFilter(ListView):
+    template_name = "product_module/product_list.html"
+    model = Product
+    context_object_name = "products"
+    paginate_by = 5
+
+    def get_queryset(self, **kwargs):
+        max_price = self.request.GET["value"].split(",")[1].split("]")[0]
+        min_price = self.request.GET["value"].split(",")[0].split('[')[1]
+        context = Product.objects.filter(is_active=True, price__lt=float(max_price), price__gt=float(min_price))
+
+        return context

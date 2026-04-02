@@ -111,10 +111,6 @@ class ProductBrandPage(ListView):
         brand_name = Brand.objects.filter(slug=self.kwargs["slug"]).first().title
         context["brand_name"] = brand_name
 
-        user = self.request.user
-        favorite_products = user.favorite_products.all()
-        context["favorite_list"] = favorite_products
-
         return context
 
 
@@ -139,10 +135,6 @@ class ProductCategoryPageView(ListView):
         context = super().get_context_data(*args, **kwargs)
         cat_title = ProductCategory.objects.get(slug=self.kwargs["slug"]).title
         context["cat_title"] = cat_title
-
-        user = self.request.user
-        favorite_products = user.favorite_products.all()
-        context["favorite_list"] = favorite_products
 
         return context
 

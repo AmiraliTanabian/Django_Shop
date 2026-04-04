@@ -1,9 +1,12 @@
 import json
+from datetime import datetime
 
 import requests
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
+from order_module.models import orderModel
 from . import zarinpal_config
 
 if zarinpal_config.SANDBOX:
@@ -17,14 +20,19 @@ ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/v4/payment/verify.json"
 
 description = "نهایی کردن خرید شما از سایت ما"  # it's only an example
 
-price = 100000  # it's only an example
 CallbackURL = 'http://localhost:8000/payment/verify/'  # you should customize it
 
 
 def request_payment(request: HttpRequest):
+    current_order = orderModel.objects.get(is_paid=False, user=request.user)
+    total_price = current_order.total_order_price() * 10  # *10 : Convert from Toman to Rial
+
+    if total_price == 0:
+        return redirect(reverse("home_page"))
+
     data = {
         "merchant_id": zarinpal_config.MERCHANT,
-        "amount": price,
+        "amount": total_price,
         "description": description,
         "callback_url": CallbackURL,
     }
@@ -49,13 +57,16 @@ def request_payment(request: HttpRequest):
 
 
 def verify_payment(request: HttpRequest):
+    current_order = orderModel.objects.get(is_paid=False, user=request.user)
+    total_price = current_order.total_order_price() * 10  # *10 : Convert from Toman to Rial
+
     status = request.GET.get('Status')
     authority = request.GET['Authority']
 
     if status == "OK":
         data = {
             "merchant_id": zarinpal_config.MERCHANT,
-            "amount": price,
+            "amount": total_price,
             "authority": authority
         }
         data = json.dumps(data)
@@ -67,17 +78,32 @@ def verify_payment(request: HttpRequest):
         if response.status_code == 200:
             response = response.json()
             if response['data']['code'] == 100:
-                # put your logic here
-                return HttpResponse("خرید شما با موفقیت انجام شد.")
+                current_order.is_paid = True
+                current_order.paid_date = datetime.now()
+                current_order.save()
+                ref_id = response['data'].get("ref_id")
+                return render(request, 'zarinpal_payment/payment_result.html', {
+                    'success': f"پرداخت شما با موفقیت انجام گردید \n شناسه پرداخت :{ref_id}"
+                })
+
 
             elif response['data']['code'] == 101:
-                return HttpResponse("این پرداخت قبلا انجام شده است.")
+                return render(request, 'zarinpal_payment/payment_result.html', {
+                    'info': "این پرداخت قبلا انجام شده است."
+                })
+
 
             else:
-                return HttpResponse("پرداخت شما ناموفق بود.")
+                return render(request, 'zarinpal_payment/payment_result.html', {
+                    'error': 'پرداخت با خطا مواجه شد / کاربر از پرداخت ممانعت کرد \n در صورت کسر مبلغ تا ۷۲ ساعت به حساب شما باز میگردد'
+                })
 
         else:
-            return HttpResponse("پرداخت شما ناموفق بود.")
+            return render(request, 'zarinpal_payment/payment_result.html', {
+                'error': 'پرداخت با خطا مواجه شد / کاربر از پرداخت ممانعت کرد \n در صورت کسر مبلغ تا ۷۲ ساعت به حساب شما باز میگردد'
+            })
 
     else:
-        return HttpResponse("پرداخت شما ناموفق بود.")
+        return render(request, 'zarinpal_payment/payment_result.html', {
+            'error': 'پرداخت با خطا مواجه شد / کاربر از پرداخت ممانعت کرد \n در صورت کسر مبلغ تا ۷۲ ساعت به حساب شما باز میگردد'
+        })

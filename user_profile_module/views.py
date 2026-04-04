@@ -144,7 +144,7 @@ class ProfileOrders(LoginRequiredMixin, ListView):
     login_url = reverse_lazy("login_page")
     template_name = "user_profile_module/user_orders_list.html"
     model = orderModel
-    context_object_name = "products"
+    context_object_name = "orders"
     paginate_by = 10
 
     def get_queryset(self):

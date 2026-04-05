@@ -5,10 +5,21 @@ from django_jalali.db.models import jDateTimeField
 from product_module.models import Product
 
 
+class orderStatus(models.TextChoices):
+    pending_payment = "pending_payment", "در انتظار پرداخت"
+    pendingـreview = "pending_review", "در انتظار بررسی"
+    preparing = "preparing", "در حال آماده سازی"
+    shipped = "shipped", "ارسال شده"
+    delivered = "delivered", "تحویل شده"
+    returned = "returned", "مرجوعی"
+
+
 class orderModel(models.Model):
     user = models.ForeignKey(get_user_model(), verbose_name="کاربر", on_delete=models.CASCADE)
     paid_date = jDateTimeField(verbose_name="تاریخ پرداخت", null=True)
     is_paid = models.BooleanField(verbose_name="پرداخت شده / نشده", default=False)
+    status = models.CharField(max_length=255, verbose_name="وضعیت سفارش", choices=orderStatus,
+                              default=orderStatus.pending_payment)
 
     def __str__(self):
         return '{} -- {}'.format(self.id, str(self.user))
@@ -25,14 +36,13 @@ class orderModel(models.Model):
 
     def set_finally_price(self):
         order_products = orderProductModel.objects.filter(order=self)
-        print(f"Result: {order_products}")
         for product in order_products:
             product.finally_price = product.product.price
             product.save()
 
     class Meta:
-        verbose_name = "سبد خرید"
-        verbose_name_plural = "سبد های خرید"
+        verbose_name = "سفارش / سبد خرید"
+        verbose_name_plural = "سفارش ها / سبد های خرید"
 
 
 class orderProductModel(models.Model):

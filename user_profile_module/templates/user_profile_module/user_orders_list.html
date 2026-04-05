@@ -33,16 +33,16 @@
 							{% for order in orders %}
 								<tr>
 								<td>
-									{{ product.id }}
+									{{ order.id }}
 								</td>
 								<td>
-									{{ product.paid_date|jformat:"%Y/%m/%d | %H:%M" }}
+									{{ order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}
 								</td>
 								<td>
-									{{ product.total_order_price | price_separator }}
+									{{ order.total_order_price | price_separator }}
 								</td>
 								<td>
-									<a href="{% url 'order_detail_page' pk=product.id %}" class="btn btn-info">
+									<a href="{% url 'order_detail_page' pk=order.id %}" class="btn btn-info">
 										جزئیات سفارش
 									</a>
 								</td>

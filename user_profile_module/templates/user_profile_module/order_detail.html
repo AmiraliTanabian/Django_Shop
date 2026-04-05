@@ -21,16 +21,35 @@
 					<br><br>
 
 					<ul>
-						<li class="edit-profile-item">
-							<i class="glyphicon glyphicon-time"></i>
-							تاریخ ثبت سفارش :
-							{{ order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}
-						</li>
-						<li>
-							<i class="glyphicon glyphicon-shopping-cart"></i>
-							قیمت نهایی سفارش :
-							{{ order.total_order_price|price_separator }}
-						</li>
+						<div class="col-md-6">
+							<li class="edit-profile-item">
+								وضعیت سفارش:
+								{% if order.status == 'pending_payment' %} در انتظار پرداخت  {% endif %}
+								{% if order.status == 'pendingـreview' %} در انتظار بررسی{% endif %}
+								{% if order.status == 'preparing' %}در حال آماده سازی{% endif %}
+								{% if order.shipped == 'shipped' %}ارسال شده {% endif %}
+								{% if order.status == 'delivered' %}تحویل شده{% endif %}
+								{% if order.status == 'returned' %}مرجوعی{% endif %}
+							</li>
+						</div>
+						<div class="col-md-6">
+							<li>
+								<i class="glyphicon glyphicon-shopping-cart"></i>
+								قیمت نهایی سفارش :
+								{{ order.total_order_price|price_separator }}
+							</li>
+						</div>
+						<div class="col-md-6">
+
+						</div>
+						<div class="col-md-6">
+							<li class="edit-profile-item">
+								<i class="glyphicon glyphicon-time"></i>
+								تاریخ ثبت سفارش :
+								{{ order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}
+							</li>
+						</div>
+
 					</ul>
 
 					<br>

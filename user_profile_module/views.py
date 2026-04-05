@@ -148,9 +148,7 @@ class ProfileOrders(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        query = super().get_queryset()
-        query = query.filter(is_paid=True, user=self.request.user)
-
+        query = orderModel.objects.filter(is_paid=True, user=self.request.user)
         return query
 
 

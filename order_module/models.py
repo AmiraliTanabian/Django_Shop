@@ -23,6 +23,13 @@ class orderModel(models.Model):
                 total_amount += product.product.price * product.count
         return (total_amount)
 
+    def set_finally_price(self):
+        order_products = orderProductModel.objects.filter(order=self)
+        print(f"Result: {order_products}")
+        for product in order_products:
+            product.finally_price = product.product.price
+            product.save()
+
     class Meta:
         verbose_name = "سبد خرید"
         verbose_name_plural = "سبد های خرید"

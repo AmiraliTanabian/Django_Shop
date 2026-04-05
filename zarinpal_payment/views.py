@@ -1,10 +1,11 @@
 import json
-from datetime import datetime
 
 import requests
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.timezone import now
 
 from order_module.models import orderModel
 from . import zarinpal_config
@@ -23,6 +24,7 @@ description = "نهایی کردن خرید شما از سایت ما"  # it's o
 CallbackURL = 'http://localhost:8000/payment/verify/'  # you should customize it
 
 
+@login_required
 def request_payment(request: HttpRequest):
     current_order = orderModel.objects.get(is_paid=False, user=request.user)
     total_price = current_order.total_order_price() * 10  # *10 : Convert from Toman to Rial
@@ -56,6 +58,7 @@ def request_payment(request: HttpRequest):
         return HttpResponse("مشکلی پیش آمد.")
 
 
+@login_required
 def verify_payment(request: HttpRequest):
     current_order = orderModel.objects.get(is_paid=False, user=request.user)
     total_price = current_order.total_order_price() * 10  # *10 : Convert from Toman to Rial
@@ -79,7 +82,8 @@ def verify_payment(request: HttpRequest):
             response = response.json()
             if response['data']['code'] == 100:
                 current_order.is_paid = True
-                current_order.paid_date = datetime.now()
+                current_order.paid_date = now()
+                current_order.set_finally_price()
                 current_order.save()
                 ref_id = response['data'].get("ref_id")
                 return render(request, 'zarinpal_payment/payment_result.html', {

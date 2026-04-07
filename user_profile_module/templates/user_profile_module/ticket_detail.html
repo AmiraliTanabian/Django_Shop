@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load global_filters %}
+{% load jformat %}
+{% block title %}
+
+	جزئیات تیکت
+
+{% endblock %}
+{% block content %}
+
+
+	{% include "components/message.html" %}
+
+	<div class="container">
+		<div class="contact-form">
+			<div class="row">
+				<div class="col-sm-8">
+					<h1 class="text-center edit-profile-title">
+						جزئیات تیکت
+					</h1>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<div class="panel panel-default" style="margin-bottom: 30px;">
+								<div class="panel-heading">
+									<h3 class="panel-title">{{ ticket.title }}</h3>
+								</div>
+
+								<div class="panel-body">
+
+									<p>
+										<strong>اولویت: </strong>
+										{% if ticket.Priority == "low" %}
+											<span class="label label-success">کم</span>
+										{% elif ticket.Priority == "medium" %}
+											<span class="label label-warning">متوسط</span>
+										{% elif ticket.Priority == "high" %}
+											<span class="label label-danger">بالا</span>
+										{% endif %}
+									</p>
+
+									<p>
+										<strong>واحد مربوطه: </strong>
+										{% if ticket.Unit == "TechnicalUnit" %}
+											<span class="label label-primary">واحد فنی</span>
+										{% elif ticket.Unit == "FinancialUnit" %}
+											<span class="label label-info">واحد مالی</span>
+										{% elif ticket.Unit == "OrderTracking" %}
+											<span class="label label-default">پیگیری سفارش</span>
+										{% endif %}
+									</p>
+
+									<p>
+										<strong>وضعیت تیکت:</strong>
+										{% if ticket.is_closed %}
+											<span class="label label-danger">بسته</span>
+										{% else %}
+											<span class="label label-success">باز</span>
+										{% endif %}
+									</p>
+
+									<hr>
+
+									<p style="line-height: 1.8;">
+										<strong>متن تیکت:</strong><br>
+										{{ ticket.text | escape }}
+									</p>
+
+								</div>
+							</div>
+
+
+							<h4 style="margin-bottom: 20px;">پاسخ‌ها</h4>
+
+							{% if answers %}
+								{% for ans in answers %}
+
+									{% if ans.user.is_superuser %}
+										<div class="panel panel-info answer-box" style="margin-bottom: 20px;">
+											<div class="panel-heading">
+												<strong>پاسخ ادمین</strong>
+												<span class="pull-left text-muted" style="font-size: 12px;">
+                                {{ ans.created_at|jformat:"%Y/%m/%d" }}
+                            </span>
+											</div>
+											<div class="panel-body">
+												{{ ans.text | linebreaks }}
+											</div>
+										</div>
+
+									{% else %}
+										<div class="panel panel-default answer-box" style="margin-bottom: 20px;">
+											<div class="panel-heading">
+												<strong>پاسخ شما</strong>
+												<span class="pull-left text-muted" style="font-size: 12px;">
+                                {{ ans.created_at|jformat:"%Y/%m/%d" }}
+                            </span>
+											</div>
+											<div class="panel-body">
+												{{ ans.text | linebreaks }}
+											</div>
+										</div>
+									{% endif %}
+
+								{% endfor %}
+							{% else %}
+								<div class="alert alert-info">هنوز پاسخی برای این تیکت وجود ندارد.</div>
+							{% endif %}
+
+
+							{% if not ticket.is_closed %}
+
+								<div class="panel panel-success" style="margin-top: 30px;">
+									<div class="panel-heading">
+										<strong>ارسال پاسخ جدید</strong>
+									</div>
+									<div class="panel-body">
+
+										<form action="" method="post">
+											{% csrf_token %}
+
+											<div class="form-group">
+												<label for="reply">متن پاسخ</label>
+												{{ reply_form }}
+											</div>
+
+											<button class="btn btn-success" type="submit">
+												ارسال پاسخ
+											</button>
+
+										</form>
+									</div>
+								</div>
+
+							{% else %}
+								<div class="alert alert-danger" style="margin-top: 20px;">
+									این تیکت بسته شده و امکان ارسال پاسخ جدید وجود ندارد.
+								</div>
+							{% endif %}
+
+						</div>
+					</div>
+
+				</div>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

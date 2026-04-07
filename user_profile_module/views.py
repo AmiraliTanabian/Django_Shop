@@ -10,8 +10,8 @@ from django.views.generic import TemplateView, ListView, DetailView
 from phonenumbers import parse, is_valid_number
 
 from order_module.models import orderModel
-from .forms import EditProfileModelForm, EditPasswordForm, AddTicketForm
-from .models import ticket_model
+from .forms import EditProfileModelForm, EditPasswordForm, AddTicketForm, TicketAnswerForm
+from .models import ticket_model, TicketAnswerModel
 
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
@@ -200,3 +200,36 @@ class TicketList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         query = ticket_model.objects.filter(is_active=True, user=self.request.user)
         return query
+
+
+class TicketDetailView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+
+    def get(self, request: HttpRequest, id):
+        current_ticket = ticket_model.objects.filter(id=int(id), user=self.request.user, is_active=True).first()
+        reply_form = TicketAnswerForm()
+        answers = TicketAnswerModel.objects.filter(ticket=current_ticket)
+        return render(request, "user_profile_module/ticket_detail.html", {
+            "ticket": current_ticket,
+            "reply_form": reply_form,
+            "answers": answers,
+        })
+
+    def post(self, request: HttpRequest, id):
+        current_ticket = ticket_model.objects.filter(id=int(id), user=self.request.user, is_active=True).first()
+        reply_form = TicketAnswerForm(request.POST)
+        answers = TicketAnswerModel.objects.filter(ticket=current_ticket).order_by("-id")
+
+        if reply_form.is_valid():
+            TicketAnswerModel.objects.create(text=reply_form.cleaned_data.get("text"),
+                                             user=request.user,
+                                             ticket=current_ticket
+                                             )
+            return redirect(reverse_lazy("ticket_detail_page", args=[id]))
+
+        return render(request, "user_profile_module/ticket_detail.html", {
+            "ticket": current_ticket,
+            "reply_form": reply_form,
+            "answers": answers,
+
+        })

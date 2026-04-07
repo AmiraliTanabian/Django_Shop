@@ -40,3 +40,14 @@ class ticket_attachment(models.Model):
     class Meta:
         verbose_name = "پیوست تیکت"
         verbose_name_plural = " پیوست های تیکت ها"
+
+
+class TicketAnswerModel(models.Model):
+    text = models.TextField(verbose_name="متن پاسخ")
+    user = models.ForeignKey(get_user_model(), verbose_name="پاسخ دهنده", on_delete=models.CASCADE)
+    ticket = models.ForeignKey(ticket_model, on_delete=models.CASCADE, verbose_name="تیکت")
+    created_at = models.DateTimeField(verbose_name="تاریخ ثبت تیکت", auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name = "پاسخ تیکت"
+        verbose_name_plural = " پاسخ های تیکت ها"

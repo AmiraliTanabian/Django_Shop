@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 
-from .models import ticket_model, PriorityChoices, UnitsChoices
+from .models import PriorityChoices, UnitsChoices
 
 
 class EditProfileModelForm(forms.ModelForm):
@@ -80,20 +80,6 @@ class EditPasswordForm(forms.Form):
         return self.cleaned_data
 
 
-class AddTicketModelForm(forms.ModelForm):
-    class Meta:
-        model = ticket_model
-        fields = ["title", "Priority", "Unit", "text", "user"]
-
-        widgets = {
-            "text": forms.widgets.Textarea(attrs={"class": "form-control"}),
-            "title": forms.widgets.TextInput(attrs={"class": "form-control"}),
-            "Priority": forms.widgets.Select(attrs={"class": "form-control"}),
-            "Unit": forms.widgets.Select(attrs={"class": "form-control"}),
-            "user": forms.widgets.HiddenInput()
-        }
-
-
 class AddTicketForm(forms.Form):
     title = forms.CharField(widget=forms.widgets.TextInput(attrs={"class": "form-control"}), label="عنوان")
     priority = forms.CharField(widget=forms.widgets.Select(attrs={"class": "form-control"}, choices=PriorityChoices),
@@ -101,3 +87,12 @@ class AddTicketForm(forms.Form):
     unit = forms.CharField(widget=forms.widgets.Select(attrs={"class": "form-control"}, choices=UnitsChoices),
                            label="واحد مربوطه")
     text = forms.CharField(widget=forms.widgets.Textarea(attrs={"class": "form-control"}), label="متن")
+
+
+class TicketAnswerForm(forms.Form):
+    text = forms.CharField(label="", widget=forms.widgets.Textarea(attrs={
+        "class": "form-control",
+        "id": "reply",
+        "name": "reply",
+        "rows": "4",
+    }))

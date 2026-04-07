@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import ticket_model, ticket_attachment
+from .models import ticket_model, ticket_attachment, TicketAnswerModel
 
-admin.site.register(ticket_model)
+
+class TicketAnswerAdmin(admin.ModelAdmin):
+    fields = ["text", "ticket"]
+
+
+admin.site.register(ticket_model, TicketAnswerAdmin)
 admin.site.register(ticket_attachment)
+admin.site.register(TicketAnswerModel)

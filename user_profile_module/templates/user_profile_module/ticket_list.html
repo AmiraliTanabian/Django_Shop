@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load global_filters %}
+{% load jformat %}
+{% block title %}
+	لیست تیکت ها
+{% endblock %}
+{% block content %}
+
+
+	{% include "components/message.html" %}
+
+	<div class="container">
+		<div class="contact-form">
+			<div class="row">
+				<div class="col-sm-8">
+					<h1 class="text-center edit-profile-title">
+						تیکت های شما ({{ tickets.count }})
+					</h1>
+					<a class="btn-primary btn" style="float: left; margin-bottom: 20px"
+					   href="{% url "add_ticket_page" %}">ثبت تیکت جدید</a>
+					<br><br>
+
+					{% if tickets %}
+						<div class="row">
+							{% for ticket in tickets %}
+								<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+									<div class="panel panel-default ticket-panel" style="margin-bottom: 25px;">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												{{ ticket.title }}
+											</h4>
+										</div>
+
+										<div class="panel-body">
+
+											<p>
+												<strong>اولویت:</strong>
+												{% if ticket.Priority == "low" %}
+													<span class="label label-success">کم</span>
+												{% elif ticket.Priority == "medium" %}
+													<span class="label label-warning">متوسط</span>
+												{% elif ticket.Priority == "high" %}
+													<span class="label label-danger">بالا</span>
+												{% endif %}
+											</p>
+
+											<p>
+												<strong>واحد مربوطه:</strong>
+												{% if ticket.Unit == "TechnicalUnit" %}
+													<span class="label label-primary">واحد فنی</span>
+												{% elif ticket.Unit == "FinancialUnit" %}
+													<span class="label label-info">واحد مالی</span>
+												{% elif ticket.Unit == "OrderTracking" %}
+													<span class="label label-default">پیگیری سفارش</span>
+												{% endif %}
+											</p>
+
+											<p>
+												<strong>وضعیت تیکت:</strong>
+												{% if ticket.is_closed %}
+													<span class="label label-danger">بسته</span>
+												{% else %}
+													<span class="label label-success">باز</span>
+												{% endif %}
+											</p>
+
+											<hr>
+
+											<p style="line-height: 1.8;">
+												<strong>متن:</strong><br>
+												{{ ticket.text | escape }}
+											</p>
+
+											<div class="text-left" style="margin-top: 15px;">
+												<a href="{% url 'ticket_detail_page' id=ticket.id %}"
+												   class="btn btn-link">
+													مشاهده جزئیات
+												</a>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+
+						{% if is_paginated %}
+							<nav aria-label="Ticket pagination" class="text-center">
+								<ul class="pager">
+									{% if page_obj.has_next %}
+										<li><a href="?page={{ page_obj.next_page_number }}">بعدی</a></li>
+									{% endif %}
+
+									{% if page_obj.has_previous %}
+										<li><a href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>
+									{% endif %}
+								</ul>
+							</nav>
+						{% endif %}
+
+					{% else %}
+						<div class="alert alert-info text-center">
+							شما هنوز تیکتی ثبت نکرده‌اید!
+						</div>
+					{% endif %}
+
+				</div>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

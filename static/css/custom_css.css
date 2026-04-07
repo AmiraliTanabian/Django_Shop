@@ -183,3 +183,9 @@
     height: 150%;
     border-radius: 5px;
 }
+
+.ticker-box {
+    border: gray 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+}

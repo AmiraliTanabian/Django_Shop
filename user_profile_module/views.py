@@ -188,3 +188,15 @@ class AddTickerView(LoginRequiredMixin, View):
         return render(request, "user_profile_module/add_ticket.html", {
             "form": form
         })
+
+
+class TicketList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("login_page")
+    model = ticket_model
+    paginate_by = 5
+    template_name = "user_profile_module/ticket_list.html"
+    context_object_name = "tickets"
+
+    def get_queryset(self):
+        query = ticket_model.objects.filter(is_active=True, user=self.request.user)
+        return query

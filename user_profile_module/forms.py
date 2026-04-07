@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
+from django_summernote.widgets import SummernoteWidget
+
 
 
 class EditProfileModelForm(forms.ModelForm):
@@ -76,3 +78,4 @@ class EditPasswordForm(forms.Form):
                 raise forms.ValidationError("رمز شما با تکرارش مطابقت ندارد!")
 
         return self.cleaned_data
+

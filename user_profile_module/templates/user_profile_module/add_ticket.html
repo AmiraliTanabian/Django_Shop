@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+
+	ثبت تیکت
+
+{% endblock %}
+{% block header_references %}
+					{{ form.media }}
+{% endblock %}
+{% block content %}
+
+
+	{% include "components/message.html" %}
+
+	<div class="container">
+		<div class="contact-form">
+			<div class="row">
+				<form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{ form }}
+					<!--Load the js-->
+				</form>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% if form.non_field_errors %}
+		<div id="error-message" class="error-box">
+			رمز جدید شما با تکرارش مطابقت ندارد
+		</div>
+
+	{% endif %}
+{% endblock %}

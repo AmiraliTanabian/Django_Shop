@@ -13,6 +13,7 @@ from order_module.models import orderModel
 from .forms import EditProfileModelForm, EditPasswordForm
 
 
+
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy("login_page")
     template_name = "user_profile_module/user_dashboard_page.html"

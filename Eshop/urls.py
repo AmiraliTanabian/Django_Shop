@@ -30,7 +30,8 @@ urlpatterns = [
     path("profile/", include("user_profile_module.urls")),
     path("order/", include("order_module.urls")),
     path("news-letter/", include("newsletter_module.urls")),
-    path("payment/", include("zarinpal_payment.urls"))
+    path("payment/", include("zarinpal_payment.urls")),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,15 +3,15 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from phonenumbers import parse, is_valid_number
 
 from order_module.models import orderModel
-from .forms import EditProfileModelForm, EditPasswordForm
-
+from .forms import EditProfileModelForm, EditPasswordForm, AddTicketForm
+from .models import ticket_model
 
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
@@ -162,3 +162,29 @@ class orderPageView(LoginRequiredMixin, DetailView):
         query = super().get_queryset()
         query.filter(user=self.request.user).prefetch_related("orderproductmodel_set")
         return query
+
+
+class AddTickerView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+
+    def get(self, request: HttpRequest):
+        form = AddTicketForm()
+        return render(request, "user_profile_module/add_ticket.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddTicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            current_ticket = ticket_model(title=form.cleaned_data.get("title"),
+                                          user=request.user,
+                                          Priority=form.cleaned_data.get("priority"),
+                                          Unit=form.cleaned_data.get("unit"),
+                                          text=form.cleaned_data.get("text"))
+            current_ticket.save()
+            messages.success(request, "تیکت شما با موفقیت ثبت شد \n پاسخ آن را در همان بخش دریافت میکنید")
+            return redirect(reverse_lazy("ticket_list_page"))
+
+        return render(request, "user_profile_module/add_ticket.html", {
+            "form": form
+        })

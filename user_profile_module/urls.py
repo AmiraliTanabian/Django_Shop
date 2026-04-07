@@ -9,4 +9,6 @@ urlpatterns = [
     path("favorite-list", views.ProfileFavoriteProductsView.as_view(), name="favorite_list_on_profile"),
     path("orders", views.ProfileOrders.as_view(), name="profile_order_page"),
     path("order/<int:pk>", views.orderPageView.as_view(), name="order_detail_page"),
+    path("ticket/add/", views.AddTickerView.as_view(), name="add_ticket_page"),
+    path("ticket/list/", views.AddTickerView.as_view(), name="ticket_list_page"),
 ]

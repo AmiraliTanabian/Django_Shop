@@ -1,25 +1,30 @@
 <div class="list-group">
-  <a href="{% url "profile_order_page" %}" class="list-group-item">
-      <i class="glyphicon glyphicon-shopping-cart"></i>
-    سفارش های من
-  </a>
-  <a href="{% url "favorite_list_on_profile" %}"
-     class="list-group-item {% if request.resolver_match.url_name == "favorite_list_on_profile" %}active{% endif %}">
-      <i class="fa fa-heart-o"></i>
-      لیست علاقه مندی
-  </a>
-  <a href="{% url "edit_profile_page" %}"
-     class="list-group-item {% if request.resolver_match.url_name == "edit_profile_page" %}active{% endif %}">
-        <i class="glyphicon glyphicon-info-sign"></i>
-      ویرایش اطلاعات کاربری
-  </a>
-  <a href="{% url "edit_password_page" %}"
-     class="list-group-item {% if request.resolver_match.url_name == "edit_password_page"%}active{% endif %}">
-     <i class="material-icons" style="font-size: 15px">security</i>
-      تغییر کلمه عبور
-  </a>
-  <a href="{% url "logout_page" %}" class="list-group-item">
-      <i class="glyphicon glyphicon-log-out"></i>
-      خروج
-  </a>
+	<a href="{% url "profile_order_page" %}" class="list-group-item">
+		<i class="glyphicon glyphicon-shopping-cart"></i>
+		سفارش های من
+	</a>
+	<a href="{% url "favorite_list_on_profile" %}"
+	   class="list-group-item {% if request.resolver_match.url_name == "favorite_list_on_profile" %}active{% endif %}">
+		<i class="fa fa-heart-o"></i>
+		لیست علاقه مندی
+	</a>
+	<a href="{% url "edit_profile_page" %}"
+	   class="list-group-item {% if request.resolver_match.url_name == "edit_profile_page" %}active{% endif %}">
+		<i class="glyphicon glyphicon-info-sign"></i>
+		ویرایش اطلاعات کاربری
+	</a>
+	<a href="{% url "edit_password_page" %}"
+	   class="list-group-item {% if request.resolver_match.url_name == "edit_password_page" %}active{% endif %}">
+		<i class="glyphicon glyphicon-lock" style="font-size: 15px"></i>
+		تغییر کلمه عبور
+	</a>
+	<a href="{% url "ticket_list_page" %}"
+	   class="list-group-item {% if request.resolver_match.url_name == "ticket_list_page" %}active{% endif %}">
+		<i class="glyphicon glyphicon-book" style="font-size: 15px"></i>
+		لیست تیکت ها
+	</a>
+	<a href="{% url "logout_page" %}" class="list-group-item danger">
+		<i class="glyphicon glyphicon-log-out"></i>
+		خروج
+	</a>
 </div>

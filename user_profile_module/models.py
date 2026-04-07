@@ -22,7 +22,7 @@ class ticket_model(models.Model):
     text = models.CharField(max_length=255, verbose_name="متن تیکت")
     created_date = models.DateTimeField(verbose_name="تاریخ ساخت تیکت", auto_now_add=True)
     updated_date = models.DateTimeField(verbose_name="تاریخ بروزرسانی تیکت", auto_now=True)
-    is_closed = models.BooleanField(verbose_name="بسته شدن تیکت")
+    is_closed = models.BooleanField(verbose_name="بسته شدن تیکت", default=False)
     is_active = models.BooleanField(verbose_name="فعال / غیرفعال", default=True)
 
     def __str__(self):

@@ -19,6 +19,10 @@
 				<div class="col-sm-8">
 					<div class="contact-form">
 						<h2 class="title text-center">با ما در ارتباط باشیـد</h2>
+						<p class="info alert-info alert">
+							اگر پیام شما نیازمند پیگیری است <a href="{% url "ticket_list_page" %}">تیکت</a>
+							بزنید
+						</p>
 						<div class="status alert alert-success" style="display: none"></div>
 						<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
 							<div class="form-group col-md-6 {% if form.name.errors %}text-danger{% endif %}">

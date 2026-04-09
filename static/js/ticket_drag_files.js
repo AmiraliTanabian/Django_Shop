@@ -115,6 +115,7 @@ function addDeleteButton(div, fileId) {
             div.remove();
             return;
         }
+        removeIdFromHiddenInput(fileId)
         $.get("/profile/ticket/remove-file-ajax/" + fileId, {}).then(re => {
             console.log(re)
         })
@@ -150,4 +151,20 @@ function previewFile(file, fileId = null) {
     };
 
     reader.readAsDataURL(file);
+}
+
+
+function removeIdFromHiddenInput(fileId) {
+    const hidden_input = document.getElementById("id_list_input");
+
+    if (hidden_input.value) {
+        const ids = hidden_input.value
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+        console.log(ids)
+        const nextIds = ids.filter(id => String(id) !== String(fileId));
+
+        hidden_input.value = nextIds.join(',');
+    }
 }

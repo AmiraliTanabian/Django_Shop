@@ -64,6 +64,9 @@ function handleFiles(files) {
             })
             .then(data => {
                 console.log('Success:', data);
+                // Add file id to hidden input
+                const hidden_input = document.getElementById("id_list_input");
+                hidden_input.value += "," + String(data.file_id)
                 previewFile(file, data.file_id);
             })
             .catch((error) => {

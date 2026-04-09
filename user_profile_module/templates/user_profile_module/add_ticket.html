@@ -14,7 +14,7 @@
 					<form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data">
 						{% csrf_token %}
 						{{ form }}
-
+						<input type="hidden" name="files_id_list" id="id_list_input" value="">
 						<div class="drop-zone" id="drop-zone">
 							<p>فایل را اینجا رها کنید یا کلیک کنید</p>
 							<input type="file" id="file-input" class="hidden-file-input" multiple>

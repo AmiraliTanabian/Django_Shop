@@ -183,6 +183,15 @@ class AddTickerView(LoginRequiredMixin, View):
                                           Unit=form.cleaned_data.get("unit"),
                                           text=form.cleaned_data.get("text"))
             current_ticket.save()
+
+            # Ticket attachment part:
+            ticket_attachments = request.POST.get("files_id_list").split(",")
+            ticket_attachments.remove("")
+            for id in ticket_attachments:
+                attachment = ticket_attachment.objects.get(id=int(id))
+                attachment.ticket = current_ticket
+                attachment.save()
+
             messages.success(request, "تیکت شما با موفقیت ثبت شد \n پاسخ آن را در همان بخش دریافت میکنید")
             return redirect(reverse_lazy("ticket_list_page"))
 

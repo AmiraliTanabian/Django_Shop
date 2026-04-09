@@ -41,10 +41,6 @@ function handleFiles(files) {
     const previewContainer = document.getElementById("preview-container");
 
     [...files].forEach(file => {
-        if (!file.type.startsWith("image/") && !file.type.startsWith("application/pdf")) {
-            console.warn("Unsupported file type:", file.type);
-            return;
-        }
 
         const formData = new FormData();
         formData.append("ticket_file", file);

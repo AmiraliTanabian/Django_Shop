@@ -165,7 +165,7 @@ class orderPageView(LoginRequiredMixin, DetailView):
         return query
 
 
-class AddTickerView(LoginRequiredMixin, View):
+class AddTicketView(LoginRequiredMixin, View):
     login_url = reverse_lazy("login_page")
 
     def get(self, request: HttpRequest):
@@ -210,6 +210,12 @@ class TicketList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         query = ticket_model.objects.filter(is_active=True, user=self.request.user)
         return query
+
+    def get_context_data(self, **kwargs):
+        count = ticket_model.objects.filter(is_active=True, user=self.request.user).count()
+        context = super().get_context_data(**kwargs)
+        context["count"] = count
+        return context
 
 
 class TicketDetailView(LoginRequiredMixin, View):

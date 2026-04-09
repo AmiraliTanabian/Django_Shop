@@ -12,4 +12,6 @@ urlpatterns = [
     path("ticket/add/", views.AddTickerView.as_view(), name="add_ticket_page"),
     path("ticket/list/", views.TicketList.as_view(), name="ticket_list_page"),
     path("ticket/detial/<int:id>", views.TicketDetailView.as_view(), name="ticket_detail_page"),
+    path("ticket/add-file-ajax/", views.ticket_add_file_ajax, name="add_file_to_ticket_ajax"),
+    path("ticket/remove-file-ajax/<int:id>", views.remove_ticket_file, name="add_file_to_ticket_ajax"),
 ]

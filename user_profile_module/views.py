@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.http import HttpRequest, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
@@ -11,7 +12,7 @@ from phonenumbers import parse, is_valid_number
 
 from order_module.models import orderModel
 from .forms import EditProfileModelForm, EditPasswordForm, AddTicketForm, TicketAnswerForm
-from .models import ticket_model, TicketAnswerModel
+from .models import ticket_model, TicketAnswerModel, ticket_attachment
 
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
@@ -232,4 +233,36 @@ class TicketDetailView(LoginRequiredMixin, View):
             "reply_form": reply_form,
             "answers": answers,
 
+        })
+
+
+@login_required
+def ticket_add_file_ajax(request):
+    if request.method == "POST":
+        file = request.FILES.get('ticket_file')
+
+        if file:
+            attachment = ticket_attachment.objects.create(files=file)
+
+            return JsonResponse({
+                'success': True,
+                "msg": "file added!",
+                'file_id': attachment.id
+            })
+        else:
+            return JsonResponse({'success': False, 'error': 'فایلی دریافت نشد'}, status=400)
+
+    return JsonResponse({'success': False, 'error': 'درخواست نامعتبر'}, status=400)
+
+
+@login_required
+def remove_ticket_file(request, id):
+    if request.method == "GET":
+        file = get_object_or_404(ticket_attachment, id=int(id))
+        file.delete()
+
+        return JsonResponse({
+            'success': True,
+            "msg": "file removed!",
+            'file_id': id
         })

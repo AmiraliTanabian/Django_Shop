@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
 	ثبت تیکت
 {% endblock %}
@@ -10,13 +11,17 @@
 		<div class="contact-form">
 			<div class="row">
 				<div class="col-sm-8">
-					{% csrf_token %}
 					<form class="contact-form" name="contact-form" method="post" enctype="multipart/form-data">
 						{% csrf_token %}
 						{{ form }}
 
-						<input type="hidden" name="attachment_filenames" id="attachment-filenames-input">
+						<div class="drop-zone" id="drop-zone">
+							<p>فایل را اینجا رها کنید یا کلیک کنید</p>
+							<input type="file" id="file-input" class="hidden-file-input" multiple>
+						</div>
 
+						<div id="preview-container"></div>
+						<link rel="stylesheet" href="{% static 'css/ticket_drag_files.css' %}">
 						<button type="submit" class="btn btn-primary" style="float:left; margin-bottom: 30px;">ارسال
 						</button>
 
@@ -28,5 +33,8 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
 
+{% block footer_references %}
+	<script src="{% static 'js/ticket_drag_files.js' %}"></script>
 {% endblock %}

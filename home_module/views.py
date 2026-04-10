@@ -4,8 +4,10 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
+from order_module.models import orderProductModel
 from product_module.models import Product, ProductCategory
 from utils.grouped_list import grouper
+from django.db.models.aggregates import Sum
 
 
 class HomeView(TemplateView):

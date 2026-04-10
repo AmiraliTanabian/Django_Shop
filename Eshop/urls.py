@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django_admin/', admin.site.urls),
     path("", include("home_module.urls")),
     path("about-us/", include("about_us_module.urls")),
     path("contact-us", include("contact_module.urls")),
@@ -31,6 +31,7 @@ urlpatterns = [
     path("order/", include("order_module.urls")),
     path("news-letter/", include("newsletter_module.urls")),
     path("payment/", include("zarinpal_payment.urls")),
+    path("admin/", include("admin_module.urls"))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -36,6 +36,7 @@ class ticket_model(models.Model):
 class ticket_attachment(models.Model):
     files = models.FileField(verbose_name="پیوست", upload_to="tickets")
     ticket = models.ForeignKey(ticket_model, on_delete=models.CASCADE, verbose_name="تیکت ها", null=True)
+    created_time = models.DateTimeField(verbose_name="زمان آپلود فایل", null=True, auto_now_add=True)
 
     class Meta:
         verbose_name = "پیوست تیکت"

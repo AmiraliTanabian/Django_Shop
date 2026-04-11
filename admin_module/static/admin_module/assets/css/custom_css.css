@@ -1,0 +1,20 @@
+.setting-btn {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.setting-a {
+    color: white;
+}
+
+.setting-a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

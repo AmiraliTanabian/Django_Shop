@@ -685,7 +685,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					<a class="sidebar-toggler" href="#">
 						<i class="fa fa-arrows-h"></i>
 					</a>
-					<a class="refresh" id="refresh-toggler" href="default.htm">
+					<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
 						<i class="glyphicon glyphicon-refresh"></i>
 					</a>
 					<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -694,23 +694,76 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 			</div>
 			<div class="page-body">
-				<div class="row center">
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="{% url 'admin_setting_main_page' %}" class="link-without-line setting-a">
-							تنظیمات سایت
-						</a>
-					</button>
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="" class="link-without-line setting-a">
-							تبلیغات سایت
-						</a>
-					</button>
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="" class="link-without-line setting-a">
-							اسلایدر ها
-						</a>
-					</button>
-
+				<div class="row">
+					<div class="col-lg-6 col-sm-6 col-xs-12">
+						<div class="widget">
+							<div class="widget-header bordered-top bordered-palegreen">
+								<span class="widget-caption">تنظیمات سایت</span>
+							</div>
+							<div class="widget-body">
+								<div class="collapse in">
+									<form role="form" method="post" action="#" enctype="multipart/form-data">
+										{% csrf_token %}
+										<div class="form-group {% if form.site_name.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_name.label }}</label>
+											{{ form.site_name }}
+											{% if form.site_name.errors %}{{ form.site_name.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.site_url.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_url.label }}</label>
+											{{ form.site_url }}
+											{% if form.site_url.errors %}{{ form.site_url.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.address.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.address.label }}</label>
+											{{ form.address }}
+											{% if form.address.errors %}{{ form.address.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.email.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.email.label }}</label>
+											{{ form.email }}
+											{% if form.email.errors %}{{ form.email.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.phone.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.phone.label }}</label>
+											{{ form.phone }}
+											{% if form.phone.errors %}{{ form.phone.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.fax.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.fax.label }}</label>
+											{{ form.fax }}
+											{% if form.fax.errors %}{{ form.fax.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.copy_right.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.copy_right.label }}</label>
+											{{ form.copy_right }}
+											{% if form.copy_right.errors %}{{ form.copy_right.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.about_us.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.about_us.label }}</label>
+											{{ form.about_us }}
+											{% if form.about_us.errors %}{{ form.about_us.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.site_logo.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_logo.label }}</label>
+											{{ form.site_logo }}
+											{% if form.site_logo.errors %}{{ form.site_logo.errors }}{% endif %}
+										</div>
+										<label class="checkbox-wrapper">
+											{{ form.is_active }}
+											<span class="checkmark"></span>
+											فعال باشد
+											{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
+										</label>
+										<br><br>
+										<button class="btn btn-sky" type="submit">
+											تایید
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -1035,7 +1088,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     InitiateSparklineCharts.init();
 </script>
 
-{% include 'components/message.html' %}
 
 </body>
 <!--  /Body -->

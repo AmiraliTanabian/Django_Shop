@@ -40,3 +40,8 @@ class MainSetting(View):
         return render(request, "admin_module/settings_page.html", {
             "form": form
         })
+
+
+class SettingsAdsView(View):
+    def get(self, request: HttpRequest):
+        return render(request, "admin_module/settings_ads.html")

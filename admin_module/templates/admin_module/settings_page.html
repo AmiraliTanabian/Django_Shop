@@ -670,9 +670,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<ul class="breadcrumb">
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="#">خانه</a>
+						<a href="{% url 'admin_home_page' %}">خانه</a>
 					</li>
-					<li class="active">تنظیمات</li>
+					<li>
+						<a href="{% url 'admin_setting_page' %}">تنظیمات</a>
+
+					</li>
+					<li class="active">اطلاعات سایت</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">

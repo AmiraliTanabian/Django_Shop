@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import View
+from django.views.generic import View, ListView
 
-from site_module.models import SiteSetting
+from site_module.models import SiteSetting, SiteBanners
 from .forms import SettingEditForms
 
 
@@ -41,6 +42,8 @@ class MainSetting(View):
         })
 
 
-class SettingsAdsView(View):
-    def get(self, request: HttpRequest):
-        return render(request, "admin_module/settings_ads.html")
+class SettingsAdsView(LoginRequiredMixin, ListView):
+    model = SiteBanners
+    paginate_by = 1
+    context_object_name = "banners"
+    template_name = "admin_module/settings_ads.html"

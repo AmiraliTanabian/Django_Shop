@@ -1,0 +1,10 @@
+{% if is_paginated %}
+	<ul class="pager">
+		{% if page_obj.has_previous %}
+			<li class=""><a href="?page={{ page_obj.previous_page_number }}">← قبلی</a></li>
+		{% endif %}
+		{% if page_obj.has_next %}
+			<li class=""><a href="?page={{ page_obj.next_page_number }}">بعدی →</a></li>
+		{% endif %}
+	</ul>
+{% endif %}

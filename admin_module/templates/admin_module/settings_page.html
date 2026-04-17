@@ -744,8 +744,28 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 											{{ form.about_us }}
 											{% if form.about_us.errors %}{{ form.about_us.errors }}{% endif %}
 										</div>
+										<br><br>
+
+
 										<div class="form-group {% if form.site_logo.errors %}danger{% endif %}">
 											<label for="xsinput">{{ form.site_logo.label }}</label>
+											<br>
+											{% if setting.site_logo %}
+												{{ form.site_logo.url }}
+												<img src="{{ setting.site_logo.url }}"
+												     class=" pull-right right img-thumbnail profile-image center-block"
+												     alt="site logo"
+												     height="140" width="140">
+												<br><br>
+												<br><br>
+											{% else %}
+												<p class="danger">
+													هنوز لوگویی آپلود نشده!
+												</p>
+											{% endif %}
+
+
+
 											{{ form.site_logo }}
 											{% if form.site_logo.errors %}{{ form.site_logo.errors }}{% endif %}
 										</div>
@@ -1087,8 +1107,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     //Initiates Sparkline Chart instances in page
     InitiateSparklineCharts.init();
 </script>
+{% include 'components/message.html' %}
 
 
 </body>
-<!--  /Body -->
 </html>

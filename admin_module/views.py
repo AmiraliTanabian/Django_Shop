@@ -22,8 +22,10 @@ class MainSetting(View):
     def get(self, request: HttpRequest):
         current_settings = SiteSetting.objects.all().first()
         form = SettingEditForms(instance=current_settings)
+        setting = current_settings
         return render(request, "admin_module/settings_page.html", {
-            "form": form
+            "form": form,
+            "setting": setting,
         })
 
     def post(self, request: HttpRequest):
@@ -33,10 +35,7 @@ class MainSetting(View):
         if form.is_valid():
             form.save()
             messages.success(request, "اطلاعات با موفقیت تغییر کرده است")
-            print("Form is valid")
-            return redirect(reverse_lazy('admin_setting_page'))
-        print("form is invalid")
-        print(form.errors)
+            return redirect(reverse_lazy('admin_setting_main_page'))
         return render(request, "admin_module/settings_page.html", {
             "form": form
         })

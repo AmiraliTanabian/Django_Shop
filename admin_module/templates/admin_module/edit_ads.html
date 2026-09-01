@@ -10,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>لیست تبلیغات - ادمین</title>
+	<title>داشبورد</title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -674,22 +674,22 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li>
 						<a href="{% url 'admin_setting_page' %}">تنظیمات</a>
-					</li>
-					<li class="active">تبلیغات سایت</li>
 
+					</li>
+					<li class="active">اطلاعات سایت</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						تبلیغات سایت
+						تنظیمات
 					</h1>
 				</div>
 				<div class="header-buttons">
 					<a class="sidebar-toggler" href="#">
 						<i class="fa fa-arrows-h"></i>
 					</a>
-					<a class="refresh" id="refresh-toggler" href="{% url 'admin_ads_setting_page' %}">
+					<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
 						<i class="glyphicon glyphicon-refresh"></i>
 					</a>
 					<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -699,62 +699,65 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			</div>
 			<div class="page-body">
 				<div class="row">
-					<div class="col-xs-12 col-md-12">
-						<div class="well with-header with-footer">
-							<div class="header bordered-pink">
-								تبلیغات سایت
+					<div class="col-lg-6 col-sm-6 col-xs-12">
+						<div class="widget">
+							<div class="widget-header bordered-top bordered-palegreen">
+								<span class="widget-caption">تنظیمات سایت</span>
 							</div>
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-								<tr>
-									<th>
-										<span></span> عنوان
-									</th>
-									<th class="hidden-xs">
-										<span></span> محل قرار گیری
-									</th>
-									<th>
-										<span></span> وضعیت
-									</th>
-									<th>
-									</th>
-								</tr>
-								</thead>
-								<tbody>
-								{% for banner in banners %}
-
-									<tr>
-										<td>
-											<a href="#">{{ banner.title }}</a>
-										</td>
-										<td class="hidden-xs">
-											{{ banner.get_position_display }}
-										</td>
-										<td>
-											{% if banner.is_active %}
-												<span class="label label-palegreen">
-                                                        فعال
-												</span>
+							<div class="widget-body">
+								<div class="collapse in">
+									<form role="form" method="post" enctype="multipart/form-data">
+										{% csrf_token %}
+										<div class="form-group {% if form.title.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.title.label }}</label>
+											{{ form.title }}
+											{% if form.title.errors %}{{ form.title.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.position.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.position.label }}</label>
+											{{ form.position }}
+											{% if form.position.errors %}{{ form.position.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.url.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.url.label }}</label>
+											{{ form.url }}
+											{% if form.url.errors %}{{ form.url.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.image.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.image.label }}</label>
+											<br>
+											{% if banner.image %}
+												<img src="{{ banner.image.url }}"
+												     class=" pull-right right img-thumbnail profile-image center-block"
+												     alt="site logo"
+												     height="140" width="140">
+												<br><br>
+												<br><br>
 											{% else %}
-												<span class="label label-orange">
-												غیرفعال
-												</span>
+												<p class="danger">
+													هنوز لوگویی آپلود نشده!
+												</p>
 											{% endif %}
-										</td>
-										<td>
-											<a href="{% url 'ads_edit_page' banner.id %}"
-											   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
-												ویرایش
-											</a>
-										</td>
-									</tr>
-
-								{% endfor %}
-								</tbody>
-							</table>
+											{{ form.image }}
+											{% if form.image.errors %}{{ form.image.errors }}{% endif %}
+										</div>
+										<label class="checkbox-wrapper">
+											{{ form.is_active }}
+											<span class="checkmark"></span>
+											فعال باشد
+											{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
+										</label>
+										<br><br>
+										<button class="btn btn-sky" type="submit">
+											تایید
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -1076,9 +1079,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     //Initiates Sparkline Chart instances in page
     InitiateSparklineCharts.init();
 </script>
-
 {% include 'components/message.html' %}
-{% include 'admin_module/components/admin_pagination.html' %}
+
 
 </body>
 </html>

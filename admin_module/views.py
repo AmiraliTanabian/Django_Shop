@@ -2,12 +2,12 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
 from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
 from site_module.models import SiteSetting, SiteBanners
-from .forms import SettingEditForms
+from .forms import SettingEditForms, BannersEditForm
 
 
 # Create your views here.
@@ -47,3 +47,25 @@ class SettingsAdsView(LoginRequiredMixin, ListView):
     paginate_by = 1
     context_object_name = "banners"
     template_name = "admin_module/settings_ads.html"
+
+
+class AdsEditView(View):
+    def get(self, request: HttpRequest, id):
+        current_banner = get_object_or_404(SiteBanners, id=int(id))
+        form = BannersEditForm(instance=current_banner)
+        return render(request, "admin_module/edit_ads.html", {
+            "form": form,
+            "banner": current_banner,
+        })
+
+    def post(self, request: HttpRequest, id):
+        current_banner = get_object_or_404(SiteBanners, id=id)
+        form = BannersEditForm(request.POST, request.FILES, instance=current_banner)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "بنر با موفقیت تغییر کرده است")
+            return redirect(reverse_lazy('ads_edit_page_page'))
+        return render(request, "admin_module/edit_ads.html", {
+            "form": form
+        })

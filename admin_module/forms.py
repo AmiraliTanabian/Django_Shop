@@ -1,6 +1,6 @@
 from django import forms
 
-from site_module.models import SiteSetting
+from site_module.models import SiteSetting, SiteBanners
 
 
 class SettingEditForms(forms.ModelForm):
@@ -78,3 +78,9 @@ class SettingEditForms(forms.ModelForm):
 
                 }),
         }
+
+
+class BannersEditForm(forms.ModelForm):
+    class Meta:
+        model = SiteBanners
+        fields = "__all__"

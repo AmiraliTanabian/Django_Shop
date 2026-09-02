@@ -1,10 +1,12 @@
-// get csrf_token
-// var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-var btn = document.getElementById("price_filter_btn");
-btn.addEventListener('click', function () {
-    // sl2 : price filter input
-    value = document.getElementById("sl2").getAttribute('data-slider-value');
-    $.get("/products/price-fiter", {
-        "value": value,
-    })
-})
+const min_price = document.getElementById('min_price');
+const max_price = document.getElementById('max_price');
+const button = document.getElementById("button");
+const price_filter = document.getElementById("sl2");
+
+button.addEventListener('click', function () {
+    console.log('i am here')
+    let result = price_filter.value.split(',');
+    min_price.value = result[0];
+    max_price.value = result[1];
+});
+

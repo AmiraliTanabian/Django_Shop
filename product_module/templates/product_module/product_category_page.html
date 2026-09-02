@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load render_partial %}
+{% load global_filters %}
 
 {% block title %}
 	محصولات |‌فروشگاه اینترنتی
@@ -34,7 +35,36 @@
 
 						{% render_partial "product_module.views.product_brand_partial" %}
 
-						{% render_partial "product_module.views.product_price_filter_partial" %}
+						{% if is_price_filter_show %}
+							<div class="price-range"><!--price-range-->
+								<h2>فیلتـر قیمـت</h2>
+								<div class="well">
+									<input type="text"
+									       class="span2"
+									       value="{{ user_min_price }}, {{ user_max_price }}"
+									       data-slider-min="{{ db_min_price }}"
+									       data-slider-max="{{ db_max_price }}"
+									       data-slider-step="5"
+									       data-slider-value="[{{ user_min_price }}, {{ user_max_price }}]"
+									       id="sl2"><br/>
+									<b>{{ db_min_price|price_separator }}</b> <b
+										class="pull-left">{{ db_max_price|price_separator }}</b>
+									<br><br><br><br>
+									<form action="#" method="get">
+										<input type="hidden" name="min_price" id="min_price"
+										       value="{{ user_min_price }}">
+										<input type="hidden" name="max_price" id="max_price"
+										       value="{{ user_max_price }}">
+										<button type="submit" id="button" class="btn btn-maroon center-block">اعمال
+											فیلتر
+										</button>
+
+									</form>
+
+								</div>
+							</div><!--/price-range-->
+						{% endif %}
+
 
 						<div class="shipping text-center"><!--shipping-->
 							<img src="images/home/shipping.jpg" alt=""/>

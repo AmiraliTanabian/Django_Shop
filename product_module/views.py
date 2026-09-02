@@ -21,6 +21,19 @@ class ProductPageView(ListView):
     context_object_name = "products"
     paginate_by = 5
 
+    def get_queryset(self):
+        query = super().get_queryset().filter(is_active=True)
+
+        min_price = self.request.GET.get("min_price")
+        max_price = self.request.GET.get("max_price")
+        if min_price != '' and min_price is not None:
+            query = query.filter(price__gte=float(min_price))
+
+        if max_price != '' and max_price is not None:
+            query = query.filter(price__lte=max_price)
+
+        return query
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
@@ -31,6 +44,28 @@ class ProductPageView(ListView):
 
         context["favorite_list"] = favorite_products
         context["banners"] = SiteBanners.objects.filter(is_active=True, position=SiteBanners.PositionChoices.product)
+
+        # Price Filter
+        db_max_price = Product.objects.filter(is_active=True).order_by("-price")
+        if db_max_price:  # products is not empty
+            is_price_filter_show = True
+            db_max_price = db_max_price.first().price
+        else:
+            is_price_filter_show = False
+
+        db_min_price = Product.objects.filter(is_active=True).order_by("price")
+        if db_min_price:
+            db_min_price = db_min_price.first().price
+
+        user_min_price = self.request.GET.get("min_price") or 0
+        user_max_price = self.request.GET.get("max_price") or db_max_price
+
+        context["db_max_price"] = db_max_price
+        context["db_min_price"] = db_min_price
+        context["user_min_price"] = user_min_price
+        context["user_max_price"] = user_max_price
+        context["is_price_filter_show"] = is_price_filter_show
+
         return context
 
 

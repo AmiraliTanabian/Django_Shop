@@ -1,4 +1,5 @@
 function addToOrder(productId) {
+    let confirm;
     event.preventDefault();
     let productCount = $("#product_count").val();
     if (productCount === null) {
@@ -8,7 +9,11 @@ function addToOrder(productId) {
         count: productCount,
         product_id: productId,
     }).then(re => {
-        console.log(re);
+        if (re.status === "not_auth") {
+            confirm = "ورود به حساب کاربری";
+        } else {
+            confirm = "مشاهده سبد خرید";
+        }
         Swal.fire({
             title: re.title,
             text: re.text,
@@ -16,11 +21,15 @@ function addToOrder(productId) {
             showCancelButton: false,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "ورود به حساب"
+            confirmButtonText: confirm,
+
         }).then((result) => {
-            confirmButtonText: "ورود به حساب"
             if (result.isConfirmed && re.status === "not_auth") {
                 location.href = "../../account/login"
+                // confirmButtonText: "ورود به حساب"
+
+            } else {
+                location.href = "../order"
             }
         });
     })

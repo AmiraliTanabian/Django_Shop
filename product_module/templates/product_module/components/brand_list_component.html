@@ -5,7 +5,7 @@
 			{% for brand in brands %}
 				<li><a href="{% url "product_brand_page" brand_slug=brand.slug %}">
 	            <span class="pull-left">
-		            ({{ brand.get_product_count_with_brand }})
+		            ({{ brand.product_count }})
 	            </span>{{ brand.title }}</a></li>
 			{% endfor %}
 		</ul>

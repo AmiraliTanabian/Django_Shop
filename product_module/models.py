@@ -16,11 +16,6 @@ class Brand(models.Model):
     def __str__(self):
         return self.title
 
-    def get_product_count_with_brand(self):
-        # TODO; Develop with annotate
-        count = Product.objects.filter(brand=self).count()
-        return count
-
 
 class ProductCategory(models.Model):
     parent = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="والد (اختیاری)", null=True, blank=True,
@@ -56,7 +51,7 @@ class Product(models.Model):
         MinValueValidator(0, "حداقل مبلغ محصول ۰ میباشد!")
     ])
     banner = models.ImageField(upload_to="Images/product", verbose_name="تصویر محصول")
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name="برند")
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name="برند", related_name="products")
     categories = models.ManyToManyField(ProductCategory, verbose_name="دسته بندی ها")
     tags = models.ManyToManyField(ProductTag, verbose_name="تگ های محصول", related_name="product_tags")
     count = models.IntegerField(verbose_name="تعداد موجودی", validators=[

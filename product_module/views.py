@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.aggregates import Count
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -219,7 +220,9 @@ def product_category_part_partial(request):
 
 
 def product_brand_partial(request):
-    brands = Brand.objects.filter(is_active=True)
+    brands = Brand.objects.filter(is_active=True).annotate(
+        product_count=Count('products')
+    )
     context = {
         "brands": brands,
     }

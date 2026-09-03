@@ -3,7 +3,7 @@
 	<div class="brands-name">
 		<ul class="nav nav-pills nav-stacked">
 			{% for brand in brands %}
-				<li><a href="{% url "product_brand_page" slug=brand.slug %}">
+				<li><a href="{% url "product_brand_page" brand_slug=brand.slug %}">
 	            <span class="pull-left">
 		            ({{ brand.get_product_count_with_brand }})
 	            </span>{{ brand.title }}</a></li>

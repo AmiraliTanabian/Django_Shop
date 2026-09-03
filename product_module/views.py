@@ -25,9 +25,14 @@ class ProductPageView(ListView):
         query = super().get_queryset().filter(is_active=True)
 
         # Category part
-        category = self.kwargs.get("category")
-        if category:
-            query.filter(categories__slug__iexact=category)
+        category = self.kwargs.get("cat_slug")
+        if category is not None:
+            query = query.filter(categories__slug__iexact=category)
+
+        # Brand
+        brand = self.kwargs.get("brand_slug")
+        if brand is not None:
+            query = query.filter(brand__slug__iexact=brand)
 
         # Price Filter
         min_price = self.request.GET.get("min_price")
@@ -71,6 +76,18 @@ class ProductPageView(ListView):
         context["user_min_price"] = user_min_price
         context["user_max_price"] = user_max_price
         context["is_price_filter_show"] = is_price_filter_show
+
+        # Brand & Category flag
+        category = self.kwargs.get("cat_slug")
+        brand = self.kwargs.get("brand_slug")
+
+        if category:
+            category_obj = get_object_or_404(ProductCategory, is_active=True, slug__iexact=category)
+            context['category'] = category_obj
+
+        if brand:
+            brand_obj = get_object_or_404(Brand, is_active=True, slug__iexact=brand)
+            context['brand'] = brand_obj
 
         return context
 

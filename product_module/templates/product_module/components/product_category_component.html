@@ -1,32 +1,35 @@
 <h2>دسته بندی محصولات</h2>
 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-    {% for cat in cats %}
-    	{% if cat.childs.all %}
-	        <div class="panel panel-default">
-		        <div class="panel-heading">
-		            <h4 class="panel-title">
-		                <a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.slug }}">
-		                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+	{% for cat in cats %}
+		{% if cat.childs.all %}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.slug }}">
+							<span class="badge pull-right"><i class="fa fa-plus"></i></span>
 							{{ cat }}
-		                </a>
-		            </h4>
-		        </div>
-		        <div id="{{ cat.slug }}" class="panel-collapse collapse">
-		            <div class="panel-body">
-		                <ul>
-			                {% for child in cat.childs.all %}
-		                        <li><a href="{% url "product_category_page" slug=child.slug %}">{{ child.title }}</a></li>
-			                {% endfor %}
-		                </ul>
-		            </div>
-		        </div>
-	        </div>
+						</a>
+					</h4>
+				</div>
+				<div id="{{ cat.slug }}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul>
+							{% for child in cat.childs.all %}
+								<li>
+									<a href="{% url "product_category_page" cat_slug=child.slug %}">{{ child.title }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
 		{% else %}
-	        <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><a href="{% url "product_category_page" slug=cat.slug %}">{{ cat }}</a></h4>
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title"><a href="{% url "product_category_page" cat_slug=cat.slug %}">{{ cat }}</a>
+					</h4>
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
 </div><!--/category-productsr-->

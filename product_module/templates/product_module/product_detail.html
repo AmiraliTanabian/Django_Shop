@@ -105,7 +105,7 @@
 											{% for cat in product.categories.all %}
 												<li>
 													<a style="text-decoration:none;"
-													   href="{% url "product_category_page" slug=cat.slug %}">
+													   href="{% url "product_category_page" cat_slug=cat.slug %}">
 														{{ cat.title }}</a>
 												</li>
 											{% endfor %}
@@ -185,7 +185,8 @@
 									{% include "product_module/components/product_comment_component.html" with form=comment_form %}
 
 								{% else %}
-									<div class="alert alert-info comment-alert text-center" style="visibility: hidden" role="alert">
+									<div class="alert alert-info comment-alert text-center" style="visibility: hidden"
+									     role="alert">
 										<p>
 										</p>
 									</div>

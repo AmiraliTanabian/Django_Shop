@@ -24,7 +24,19 @@
 			<div class="row">
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">همه محصولات</h2>
+						{% if brand %}
+							<h2 class="title text-center">
+								محصولات برند {{ brand.title }}
+							</h2>
+						{% elif category %}
+							<h2 class="title text-center">
+								محصولات دسته بندی {{ category.title }}
+							</h2>
+						{% else %}
+							<h2 class="title text-center">همه محصولات</h2>
+						{% endif %}
+
+
 
 						{% for product in products %}
 							{% include "components/product_component.html" %}

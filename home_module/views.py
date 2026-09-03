@@ -4,10 +4,8 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
-from order_module.models import orderProductModel
 from product_module.models import Product, ProductCategory
 from utils.grouped_list import grouper
-from django.db.models.aggregates import Sum
 
 
 class HomeView(TemplateView):
@@ -44,6 +42,11 @@ class HomeView(TemplateView):
             cats_result.append(item)
 
         context["cats_result"] = cats_result
+
+        # Best-selling part
+        best_selling_products = Product.objects.filter(is_active=True).order_by("-order_count")[:12]
+        best_selling_products = grouper(best_selling_products, 4)
+        context["best_shellings"] = best_selling_products
 
         return context
 

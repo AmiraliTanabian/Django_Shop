@@ -40,6 +40,12 @@ class orderModel(models.Model):
             product.finally_price = product.product.price
             product.save()
 
+    def set_product_order_count(self):
+        products = orderProductModel.objects.filter(order=self)
+        for product in products:
+            product.product.order_count += product.count
+            product.product.save()
+
     class Meta:
         verbose_name = "سفارش / سبد خرید"
         verbose_name_plural = "سفارش ها / سبد های خرید"

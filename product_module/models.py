@@ -61,6 +61,7 @@ class Product(models.Model):
     is_active = models.BooleanField(verbose_name="فعال", default=True)
     is_available = models.BooleanField(verbose_name="موجودی", default=True)
     is_new = models.BooleanField(verbose_name="کالا جدید است", default=True)
+    order_count = models.PositiveIntegerField(verbose_name="تعداد سفارش از این محصول", editable=False, default=0)
 
     class Meta:
         verbose_name = "کالا"

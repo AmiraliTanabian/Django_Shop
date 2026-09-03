@@ -84,6 +84,7 @@ def verify_payment(request: HttpRequest):
                 current_order.is_paid = True
                 current_order.paid_date = now()
                 current_order.set_finally_price()
+                current_order.set_product_order_count()
                 current_order.save()
                 ref_id = response['data'].get("ref_id")
                 return render(request, 'zarinpal_payment/payment_result.html', {

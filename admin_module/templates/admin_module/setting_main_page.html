@@ -43,6 +43,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/demo.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/typicons.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/animate.min.css" %}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/settings_main_page.css' %}">
 
 	<link id="skin-link" href="" rel="stylesheet" type="text/css"/>
 </head>
@@ -694,25 +695,50 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 			</div>
 			<div class="page-body">
-				<div class="row center">
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="{% url 'admin_setting_main_page' %}" class="link-without-line setting-a">
-							تنظیمات سایت
-						</a>
-					</button>
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="{% url 'admin_ads_setting_page' %}" class="link-without-line setting-a">
-							تبلیغات سایت
-						</a>
-					</button>
-					<button style="width: 20%" class="btn-sky setting-btn link-without-line">
-						<a href="{% url 'admin_sliders_list_page' %}" class="link-without-line setting-a">
-							اسلایدر ها
-						</a>
-					</button>
+				<div class="admin-menu">
+
+					<a href="{% url 'admin_setting_main_page' %}" class="menu-item">
+						<div class="menu-icon">
+							⚙
+						</div>
+
+						<div class="menu-content">
+							<h3>تنظیمات سایت</h3>
+							<p>مدیریت تنظیمات اصلی سایت</p>
+						</div>
+
+						<span class="menu-arrow">←</span>
+					</a>
+
+
+					<a href="{% url 'admin_ads_setting_page' %}" class="menu-item">
+						<div class="menu-icon">
+							📢
+						</div>
+
+						<div class="menu-content">
+							<h3>تبلیغات سایت</h3>
+							<p>مدیریت و تنظیم تبلیغات</p>
+						</div>
+
+						<span class="menu-arrow">←</span>
+					</a>
+
+
+					<a href="{% url 'admin_sliders_list_page' %}" class=" menu-item">
+						<div class="menu-icon">
+							🖼
+						</div>
+
+						<div class="menu-content">
+							<h3>اسلایدر ها</h3>
+							<p>مدیریت اسلایدرهای صفحه اصلی</p>
+						</div>
+
+						<span class="menu-arrow">←</span>
+					</a>
 
 				</div>
-
 			</div>
 		</div>
 	</div>

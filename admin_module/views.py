@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
 from site_module.models import SiteSetting, SiteBanners, Slider
-from .forms import SettingEditForms, BannersEditForm
+from .forms import SettingEditForms, BannersEditForm, EditSliderForm
 
 
 # Create your views here.
@@ -85,3 +85,24 @@ class SliderListPage(ListView):
         query = super().get_queryset()
         query = query.filter(is_active=True)
         return query
+
+
+class SliderDetailView(View):
+    def get(self, request: HttpRequest, id):
+        current_slider = get_object_or_404(Slider, id=id)
+        form = EditSliderForm(instance=current_slider)
+        return render(request, "admin_module/settings_slider_edit.html", {
+            "form": form,
+            "slider": current_slider
+        })
+
+    def post(self, request: HttpRequest, id):
+        current_slider = get_object_or_404(Slider, id=id)
+        form = EditSliderForm(request.POST, request.FILES, instance=current_slider)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "اسلایدر با موفقیت ویرایش شد")
+        return render(request, "admin_module/settings_slider_edit.html", {
+            "form": form,
+            "slider": current_slider
+        })

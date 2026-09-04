@@ -700,99 +700,14 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<div class="page-body">
 				<div class="row">
 					<div class="col-lg-6 col-sm-6 col-xs-12">
-						<div class="widget">
-							<div class="widget-header bordered-top bordered-palegreen">
-								<span class="widget-caption">تنظیمات سایت</span>
-							</div>
-							<div class="widget-body">
-								<div class="collapse in">
-									<form role="form" method="post" action="#" enctype="multipart/form-data">
-										{% csrf_token %}
-										<div class="form-group {% if form.site_name.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.site_name.label }}</label>
-											{{ form.site_name }}
-											{% if form.site_name.errors %}{{ form.site_name.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.site_url.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.site_url.label }}</label>
-											{{ form.site_url }}
-											{% if form.site_url.errors %}{{ form.site_url.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.address.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.address.label }}</label>
-											{{ form.address }}
-											{% if form.address.errors %}{{ form.address.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.email.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.email.label }}</label>
-											{{ form.email }}
-											{% if form.email.errors %}{{ form.email.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.phone.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.phone.label }}</label>
-											{{ form.phone }}
-											{% if form.phone.errors %}{{ form.phone.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.fax.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.fax.label }}</label>
-											{{ form.fax }}
-											{% if form.fax.errors %}{{ form.fax.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.copy_right.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.copy_right.label }}</label>
-											{{ form.copy_right }}
-											{% if form.copy_right.errors %}{{ form.copy_right.errors }}{% endif %}
-										</div>
-										<div class="form-group {% if form.about_us.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.about_us.label }}</label>
-											{{ form.about_us }}
-											{% if form.about_us.errors %}{{ form.about_us.errors }}{% endif %}
-										</div>
-										<br><br>
 
-
-										<div class="form-group {% if form.site_logo.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.site_logo.label }}</label>
-											<br>
-											{% if setting.site_logo %}
-												{{ form.site_logo.url }}
-												<img src="{{ setting.site_logo.url }}"
-												     class=" pull-right right img-thumbnail profile-image center-block"
-												     alt="site logo"
-												     height="140" width="140">
-												<br><br>
-												<br><br>
-											{% else %}
-												<p class="danger">
-													هنوز لوگویی آپلود نشده!
-												</p>
-											{% endif %}
-
-
-
-											{{ form.site_logo }}
-											{% if form.site_logo.errors %}{{ form.site_logo.errors }}{% endif %}
-										</div>
-										<label class="checkbox-wrapper">
-											{{ form.is_active }}
-											<span class="checkmark"></span>
-											فعال باشد
-											{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
-										</label>
-										<br><br>
-										<button class="btn btn-sky" type="submit">
-											تایید
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
-
 			</div>
+
 		</div>
 	</div>
+</div>
 
 </div>
 
@@ -820,6 +735,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
 <script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
 <script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
 <script src="{% static 'admin_module/assets/js/inline_js.js' %}"></script>
 
 {% include 'components/message.html' %}

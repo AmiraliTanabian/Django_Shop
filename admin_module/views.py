@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
-from site_module.models import SiteSetting, SiteBanners
+from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm
 
 
@@ -73,3 +73,10 @@ class AdsEditView(View):
             "form": form,
             "banner": current_banner,
         })
+
+
+class SliderListPage(ListView):
+    template_name = "admin_module/settings_sliders_list.html"
+    context_object_name = "sliders"
+    paginate_by = 5
+    model = Slider

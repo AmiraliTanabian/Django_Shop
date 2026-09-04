@@ -8,4 +8,5 @@ urlpatterns = [
     path("settings/setting", views.MainSetting.as_view(), name="admin_setting_main_page"),
     path("settings/ads", views.SettingsAdsView.as_view(), name="admin_ads_setting_page"),
     path("settings/ads/<id>", views.AdsEditView.as_view(), name="ads_edit_page"),
+    path("settings/sliders", views.SliderListPage.as_view(), name="admin_sliders_list_page"),
 ]

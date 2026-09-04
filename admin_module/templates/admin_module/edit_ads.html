@@ -23,7 +23,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/bootstrap-rtl.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/font-awesome.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/weather-icons.min.css" %}" rel="stylesheet"/>
-	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 
 	<!--Fonts-->
 	<style>
@@ -49,7 +48,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- /Head -->
 <!-- Body -->
 <body>
-<!-- Loading Container -->
+{#<!-- Loading Container -->#}
 {#<div class="loading-container">#}
 {#	<div class="loader"></div>#}
 {#</div>#}
@@ -413,7 +412,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 		</div>
 	</div>
 </div>
-
 <!-- /Navbar -->
 <!-- Main Container -->
 <div class="main-container container-fluid">
@@ -429,7 +427,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			</div>
 			<!-- /Page Sidebar Header -->
 			{% include 'admin_module/components/sidebar_component.html' %}
-
 		</div>
 		<!-- /Page Sidebar -->
 		<!-- Chat Bar -->
@@ -660,14 +657,15 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 				</ul>
 				<div class="send-message">
-		                        <span class="input-icon icon-right">
-		                            <textarea rows="4" class="form-control" placeholder="Type your message"></textarea>
-		                            <i class="fa fa-camera themeprimary"></i>
-		                        </span>
-
+                        <span class="input-icon icon-right">
+                            <textarea rows="4" class="form-control" placeholder="Type your message"></textarea>
+                            <i class="fa fa-camera themeprimary"></i>
+                        </span>
 				</div>
 			</div>
 		</div>
+		<!-- /Chat Bar -->
+		<!-- Page Content -->
 		<div class="page-content">
 			<div class="page-breadcrumbs">
 				<ul class="breadcrumb">

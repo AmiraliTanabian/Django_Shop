@@ -10,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>ویرایش اسلایدر</title>
+	<title>تنظیمات سایت | ادمین</title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -23,6 +23,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/bootstrap-rtl.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/font-awesome.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/weather-icons.min.css" %}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 
 	<!--Fonts-->
 	<style>
@@ -42,18 +43,16 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/demo.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/typicons.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/animate.min.css" %}" rel="stylesheet"/>
-	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
-
 
 	<link id="skin-link" href="" rel="stylesheet" type="text/css"/>
 </head>
 <!-- /Head -->
 <!-- Body -->
 <body>
-{#<!-- Loading Container -->#}
-{#<div class="loading-container">#}
-{#	<div class="loader"></div>#}
-{#</div>#}
+<!-- Loading Container -->
+<div class="loading-container">
+	<div class="loader"></div>
+</div>
 <!--  /Loading Container -->
 <!-- Navbar -->
 <div class="navbar">
@@ -63,7 +62,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<div class="navbar-header pull-right">
 				<a href="#" class="navbar-brand">
 					<small>
-						<img src="../../static/admin_module/assets/img/logo-rtl.png" alt=""/>
+						<img src="../../../static/admin_module/assets/img/logo-rtl.png" alt=""/>
 					</small>
 				</a>
 			</div>
@@ -168,7 +167,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 							<ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
 								<li>
 									<a href="#">
-										<img src="../../static/admin_module/assets/img/avatars/divyia.jpg"
+										<img src="../../../static/admin_module/assets/img/avatars/divyia.jpg"
 										     class="message-avatar"
 										     alt="Divyia Austin">
 										<div class="message">
@@ -189,7 +188,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 								</li>
 								<li>
 									<a href="#">
-										<img src="../../static/admin_module/assets/img/avatars/bing.png"
+										<img src="../../../static/admin_module/assets/img/avatars/bing.png"
 										     class="message-avatar"
 										     alt="Microsoft Bing">
 										<div class="message">
@@ -210,7 +209,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 								</li>
 								<li>
 									<a href="#">
-										<img src="../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
+										<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
 										     class="message-avatar"
 										     alt="Divyia Austin">
 										<div class="message">
@@ -315,7 +314,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<li>
 							<a class="login-area dropdown-toggle" data-toggle="dropdown">
 								<div class="avatar" title="View your public profile">
-									<img src="../../static/admin_module/assets/img/avatars/adam-jansen.jpg">
+									<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg">
 								</div>
 								<section>
 									<h2><span class="profile"><span>دیوید استیونسون </span></span></h2>
@@ -328,7 +327,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 								<!--Avatar Area-->
 								<li>
 									<div class="avatar-area">
-										<img src="../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
+										<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
 										     class="avatar">
 										<span class="caption">تغییر تصویر</span>
 									</div>
@@ -442,7 +441,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<ul class="contacts-list">
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/divyia.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/divyia.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Divyia Philips</div>
@@ -457,7 +456,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/nicolai-larson.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/nicolai-larson.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Adam Johnson</div>
@@ -472,7 +471,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/john-smith.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/john-smith.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">John Smith</div>
@@ -487,7 +486,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/osvaldus-valutis.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/osvaldus-valutis.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Osvaldus Valutis</div>
@@ -502,7 +501,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/javi-jimenez.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/javi-jimenez.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Javi Jimenez</div>
@@ -517,7 +516,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/stephanie-walter.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/stephanie-walter.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Stephanie Walter</div>
@@ -532,7 +531,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/sergey-azovskiy.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/sergey-azovskiy.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Sergey Azovskiy</div>
@@ -547,7 +546,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/lee-munroe.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/lee-munroe.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Lee Munroe</div>
@@ -562,7 +561,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 					<li class="contact">
 						<div class="contact-avatar">
-							<img src="../../static/admin_module/assets/img/avatars/divyia.jpg"/>
+							<img src="../../../static/admin_module/assets/img/avatars/divyia.jpg"/>
 						</div>
 						<div class="contact-info">
 							<div class="contact-name">Divyia Philips</div>
@@ -580,7 +579,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<div class="chatbar-messages" style="display: none;">
 				<div class="messages-contact">
 					<div class="contact-avatar">
-						<img src="../../static/admin_module/assets/img/avatars/divyia.jpg"/>
+						<img src="../../../static/admin_module/assets/img/avatars/divyia.jpg"/>
 					</div>
 					<div class="contact-info">
 						<div class="contact-name">Divyia Philips</div>
@@ -666,8 +665,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 			</div>
 		</div>
-		<!-- /Chat Bar -->
-		<!-- Page Content -->
 		<div class="page-content">
 			<div class="page-breadcrumbs">
 				<ul class="breadcrumb">
@@ -679,19 +676,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url 'admin_setting_page' %}">تنظیمات</a>
 
 					</li>
-					<li>
-						<a href="{% url 'admin_sliders_list_page' %}">اسلایدر ها</a>
-
-					</li>
-					<li>
-						ویرایش اسلایدر
-					</li>
+					<li class="active">اطلاعات سایت</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						ویرایش اسلایدر
+						تنظیمات
 					</h1>
 				</div>
 				<div class="header-buttons">
@@ -711,37 +702,61 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					<div class="col-lg-6 col-sm-6 col-xs-12">
 						<div class="widget">
 							<div class="widget-header bordered-top bordered-palegreen">
-								<span class="widget-caption">ویرایش اسلایدر</span>
+								<span class="widget-caption">تنظیمات سایت</span>
 							</div>
 							<div class="widget-body">
 								<div class="collapse in">
-									<form role="form" method="post" enctype="multipart/form-data">
+									<form role="form" method="post" action="#" enctype="multipart/form-data">
 										{% csrf_token %}
-										<div class="form-group {% if form.title.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.title.label }}</label>
-											{{ form.title }}
-											{% if form.title.errors %}{{ form.title.errors }}{% endif %}
+										<div class="form-group {% if form.site_name.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_name.label }}</label>
+											{{ form.site_name }}
+											{% if form.site_name.errors %}{{ form.site_name.errors }}{% endif %}
 										</div>
-										<div class="form-group {% if form.text.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.text.label }}</label>
-											{{ form.text }}
-											{% if form.text.errors %}{{ form.text.errors }}{% endif %}
+										<div class="form-group {% if form.site_url.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_url.label }}</label>
+											{{ form.site_url }}
+											{% if form.site_url.errors %}{{ form.site_url.errors }}{% endif %}
 										</div>
-										<div class="form-group {% if form.url.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.url.label }}</label>
-											{{ form.url }}
-											{% if form.url.errors %}{{ form.url.errors }}{% endif %}
+										<div class="form-group {% if form.address.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.address.label }}</label>
+											{{ form.address }}
+											{% if form.address.errors %}{{ form.address.errors }}{% endif %}
 										</div>
-										<div class="form-group {% if form.btn_text.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.btn_text.label }}</label>
-											{{ form.btn_text }}
-											{% if form.btn_text.errors %}{{ form.btn_text.errors }}{% endif %}
+										<div class="form-group {% if form.email.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.email.label }}</label>
+											{{ form.email }}
+											{% if form.email.errors %}{{ form.email.errors }}{% endif %}
 										</div>
-										<div class="form-group {% if form.image.errors %}danger{% endif %}">
-											<label for="xsinput">{{ form.image.label }}</label>
+										<div class="form-group {% if form.phone.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.phone.label }}</label>
+											{{ form.phone }}
+											{% if form.phone.errors %}{{ form.phone.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.fax.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.fax.label }}</label>
+											{{ form.fax }}
+											{% if form.fax.errors %}{{ form.fax.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.copy_right.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.copy_right.label }}</label>
+											{{ form.copy_right }}
+											{% if form.copy_right.errors %}{{ form.copy_right.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.about_us.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.about_us.label }}</label>
+											{{ form.about_us }}
+											{% if form.about_us.errors %}{{ form.about_us.errors }}{% endif %}
+										</div>
+										<br><br>
+
+
+										<div class="form-group {% if form.site_logo.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_logo.label }}</label>
 											<br>
-											{% if slider.banner %}
-												<img src="{{ slider.banner.url }}"
+											{% if setting.site_logo %}
+												{{ form.site_logo.url }}
+												<img src="{{ setting.site_logo.url }}"
 												     class=" pull-right right img-thumbnail profile-image center-block"
 												     alt="site logo"
 												     height="140" width="140">
@@ -751,9 +766,12 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 												<p class="danger">
 													هنوز لوگویی آپلود نشده!
 												</p>
-											{% endif %}<br><br><br><br><br><br>
-											{{ form.banner }}
-											{% if form.banner.errors %}{{ form.banner.errors }}{% endif %}
+											{% endif %}
+
+
+
+											{{ form.site_logo }}
+											{% if form.site_logo.errors %}{{ form.site_logo.errors }}{% endif %}
 										</div>
 										<label class="checkbox-wrapper">
 											{{ form.is_active }}
@@ -771,38 +789,39 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-
 	</div>
+
 </div>
 
 <!--Basic Scripts-->
-<script src="../../static/admin_module/assets/js/jquery.min.js"></script>
-<script src="../../static/admin_module/assets/js/bootstrap.min.js"></script>
-<script src="../../static/admin_module/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../../../static/admin_module/assets/js/jquery.min.js"></script>
+<script src="../../../static/admin_module/assets/js/bootstrap.min.js"></script>
+<script src="../../../static/admin_module/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 
 <!--Beyond Scripts-->
-<script src="../../static/admin_module/assets/js/skins.min.js"></script>
-<script src="../../static/admin_module/assets/js/beyond.min.js"></script>
+<script src="../../../static/admin_module/assets/js/skins.min.js"></script>
+<script src="../../../static/admin_module/assets/js/beyond.min.js"></script>
 
 
 <!--Page Related Scripts-->
 <!--Sparkline Charts Needed Scripts-->
-<script src="../../static/admin_module/assets/js/charts/sparkline/jquery.sparkline.js"></script>
-<script src="../../static/admin_module/assets/js/charts/sparkline/sparkline-init.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/sparkline/jquery.sparkline.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/sparkline/sparkline-init.js"></script>
 
 <!--Easy Pie Charts Needed Scripts-->
-<script src="../../static/admin_module/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
-<script src="../../static/admin_module/assets/js/charts/easypiechart/easypiechart-init.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/easypiechart/easypiechart-init.js"></script>
 
 <!--Flot Charts Needed Scripts-->
-<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.js"></script>
-<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
-<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
-<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
-<script src="../../static/admin_module/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
-<sciprt src="{% static 'admin_module/assets/js/inline_js.js' %}"></sciprt>
+<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
+<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+<script src="{% static 'admin_module/assets/js/inline_js.js' %}"></script>
+
 {% include 'components/message.html' %}
 
 

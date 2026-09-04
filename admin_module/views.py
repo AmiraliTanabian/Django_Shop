@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
+from contact_module.models import ContactModel
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm
 
@@ -16,7 +17,7 @@ def index(request):
 
 
 def main_setting_page(request):
-    return render(request, "admin_module/setting_main_page.html")
+    return render(request, "admin_module/settings/setting_main_page.html")
 
 
 class MainSetting(View):
@@ -24,7 +25,7 @@ class MainSetting(View):
         current_settings = SiteSetting.objects.all().first()
         form = SettingEditForms(instance=current_settings)
         setting = current_settings
-        return render(request, "admin_module/settings_page.html", {
+        return render(request, "admin_module/settings/settings_page.html", {
             "form": form,
             "setting": setting,
         })
@@ -37,7 +38,7 @@ class MainSetting(View):
             form.save()
             messages.success(request, "اطلاعات با موفقیت تغییر کرده است")
             return redirect(reverse_lazy('admin_setting_main_page'))
-        return render(request, "admin_module/settings_page.html", {
+        return render(request, "admin_module/settings/settings_page.html", {
             "form": form
         })
 
@@ -46,7 +47,7 @@ class SettingsAdsView(LoginRequiredMixin, ListView):
     model = SiteBanners
     paginate_by = 5
     context_object_name = "banners"
-    template_name = "admin_module/settings_ads.html"
+    template_name = "admin_module/settings/settings_ads.html"
 
 
 class AdsEditView(View):
@@ -56,7 +57,7 @@ class AdsEditView(View):
         form = BannersEditForm(instance=current_banner)
         print("View End")
 
-        return render(request, "admin_module/edit_ads.html", {
+        return render(request, "admin_module/settings/settings_edit_ads.html", {
             "form": form,
             "banner": current_banner,
         })
@@ -69,14 +70,14 @@ class AdsEditView(View):
             form.save()
             messages.success(request, "بنر با موفقیت تغییر کرده است")
             # return redirect(reverse_lazy('ads_edit_page'))
-        return render(request, "admin_module/edit_ads.html", {
+        return render(request, "admin_module/settings/settings_edit_ads.html", {
             "form": form,
             "banner": current_banner,
         })
 
 
 class SliderListPage(ListView):
-    template_name = "admin_module/settings_sliders_list.html"
+    template_name = "admin_module/settings/settings_sliders_list.html"
     context_object_name = "sliders"
     paginate_by = 5
     model = Slider
@@ -91,7 +92,7 @@ class SliderDetailView(View):
     def get(self, request: HttpRequest, id):
         current_slider = get_object_or_404(Slider, id=id)
         form = EditSliderForm(instance=current_slider)
-        return render(request, "admin_module/settings_slider_edit.html", {
+        return render(request, "admin_module/settings/settings_slider_edit.html", {
             "form": form,
             "slider": current_slider
         })
@@ -102,7 +103,19 @@ class SliderDetailView(View):
         if form.is_valid():
             form.save()
             messages.success(request, "اسلایدر با موفقیت ویرایش شد")
-        return render(request, "admin_module/settings_slider_edit.html", {
+        return render(request, "admin_module/settings/settings_slider_edit.html", {
             "form": form,
             "slider": current_slider
         })
+
+
+class ContactUsListView(ListView):
+    model = ContactModel
+    paginate_by = 10
+    template_name = "admin_module/contact-us/contact_us_list.html"
+    context_object_name = "messages"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("date")
+        return query

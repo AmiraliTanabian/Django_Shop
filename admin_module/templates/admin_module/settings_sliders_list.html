@@ -10,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>تنظیمات سایت | ادمین</title>
+	<title>اسلایدرها | ادمین</title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -24,6 +24,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/font-awesome.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/weather-icons.min.css" %}" rel="stylesheet"/>
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/slider_cart_style.css' %}">
 
 	<!--Fonts-->
 	<style>
@@ -676,13 +677,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url 'admin_setting_page' %}">تنظیمات</a>
 
 					</li>
-					<li class="active">اطلاعات سایت</li>
+					<li class="active">اسلایدرها</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						تنظیمات
+						اسلایدر ها
 					</h1>
 				</div>
 				<div class="header-buttons">
@@ -700,13 +701,44 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<div class="page-body">
 				<div class="row">
 					<div class="col-lg-6 col-sm-6 col-xs-12">
+						{% for slider in sliders %}
 
+							<div class="slider-card">
+								<div class="card-media">
+									<img src="{{ slider.banner.url }}"
+									     alt="{{ slider.title }}">
+								</div>
+								<div class="card-body">
+									<h3 class="card-title">{{ slider.title }}</h3>
+									<p class="card-text">
+										{{ slider.text }}
+									</p>
+								</div>
+								<div class="card-actions">
+									<button class="btn btn-details">جزئیات</button>
+									<a href="#" class="btn btn-link-outline">
+										مشاهده لینک
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										     stroke-linecap="round" stroke-linejoin="round">
+											<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+											<polyline points="15 3 21 3 21 9"></polyline>
+											<line x1="10" y1="14" x2="21" y2="3"></line>
+										</svg>
+									</a>
+								</div>
+							</div>
+							<br><br><br>
+
+
+						{% endfor %}
 					</div>
+
 				</div>
 			</div>
-
 		</div>
+
 	</div>
+</div>
 </div>
 
 </div>
@@ -739,6 +771,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="{% static 'admin_module/assets/js/inline_js.js' %}"></script>
 
 {% include 'components/message.html' %}
+{% include 'admin_module/components/admin_pagination.html' %}
 
 
 </body>

@@ -80,3 +80,8 @@ class SliderListPage(ListView):
     context_object_name = "sliders"
     paginate_by = 5
     model = Slider
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(is_active=True)
+        return query

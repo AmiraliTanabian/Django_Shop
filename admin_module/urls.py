@@ -7,5 +7,5 @@ urlpatterns = [
     path("settings/", views.main_setting_page, name="admin_setting_page"),
     path("settings/setting", views.MainSetting.as_view(), name="admin_setting_main_page"),
     path("settings/ads", views.SettingsAdsView.as_view(), name="admin_ads_setting_page"),
-    path("settings/ads/<int:id>", views.AdsEditView.as_view(), name="ads_edit_page"),
+    path("settings/ads/<id>", views.AdsEditView.as_view(), name="ads_edit_page"),
 ]

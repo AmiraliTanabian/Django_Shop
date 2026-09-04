@@ -44,15 +44,18 @@ class MainSetting(View):
 
 class SettingsAdsView(LoginRequiredMixin, ListView):
     model = SiteBanners
-    paginate_by = 1
+    paginate_by = 5
     context_object_name = "banners"
     template_name = "admin_module/settings_ads.html"
 
 
 class AdsEditView(View):
     def get(self, request: HttpRequest, id):
-        current_banner = get_object_or_404(SiteBanners, id=int(id))
+        print("View start")
+        current_banner = get_object_or_404(SiteBanners, id=id)
         form = BannersEditForm(instance=current_banner)
+        print("View End")
+
         return render(request, "admin_module/edit_ads.html", {
             "form": form,
             "banner": current_banner,
@@ -65,7 +68,8 @@ class AdsEditView(View):
         if form.is_valid():
             form.save()
             messages.success(request, "بنر با موفقیت تغییر کرده است")
-            return redirect(reverse_lazy('ads_edit_page_page'))
+            # return redirect(reverse_lazy('ads_edit_page'))
         return render(request, "admin_module/edit_ads.html", {
-            "form": form
+            "form": form,
+            "banner": current_banner,
         })

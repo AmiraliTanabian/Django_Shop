@@ -50,9 +50,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Body -->
 <body>
 <!-- Loading Container -->
-<div class="loading-container">
-	<div class="loader"></div>
-</div>
+{#<div class="loading-container">#}
+{#	<div class="loader"></div>#}
+{#</div>#}
 <!--  /Loading Container -->
 <!-- Navbar -->
 <div class="navbar">
@@ -413,6 +413,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 		</div>
 	</div>
 </div>
+
 <!-- /Navbar -->
 <!-- Main Container -->
 <div class="main-container container-fluid">
@@ -428,6 +429,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			</div>
 			<!-- /Page Sidebar Header -->
 			{% include 'admin_module/components/sidebar_component.html' %}
+
 		</div>
 		<!-- /Page Sidebar -->
 		<!-- Chat Bar -->
@@ -658,10 +660,11 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</li>
 				</ul>
 				<div class="send-message">
-                        <span class="input-icon icon-right">
-                            <textarea rows="4" class="form-control" placeholder="Type your message"></textarea>
-                            <i class="fa fa-camera themeprimary"></i>
-                        </span>
+		                        <span class="input-icon icon-right">
+		                            <textarea rows="4" class="form-control" placeholder="Type your message"></textarea>
+		                            <i class="fa fa-camera themeprimary"></i>
+		                        </span>
+
 				</div>
 			</div>
 		</div>
@@ -737,7 +740,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 												<p class="danger">
 													هنوز لوگویی آپلود نشده!
 												</p>
-											{% endif %}
+											{% endif %}<br><br><br><br><br><br>
 											{{ form.image }}
 											{% if form.image.errors %}{{ form.image.errors }}{% endif %}
 										</div>
@@ -757,11 +760,10 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
-	</div>
 
+	</div>
 </div>
 
 <!--Basic Scripts-->

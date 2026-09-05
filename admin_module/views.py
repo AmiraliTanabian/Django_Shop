@@ -1,14 +1,19 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import EmailMessage
 from django.http import HttpRequest
+from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from site_module.models import SiteSetting, SiteBanners, Slider
-from .forms import SettingEditForms, BannersEditForm, EditSliderForm
+from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm
 
 
 # Create your views here.
@@ -119,3 +124,70 @@ class ContactUsListView(ListView):
         query = super().get_queryset()
         query = query.order_by("date")
         return query
+
+
+class ContactUsDetailView(View):
+    def get(self, request, id):
+        current_obj = get_object_or_404(ContactModel, id=id)
+        form = AdminContactForm(instance=current_obj)
+        return render(request, "admin_module/contact-us/contact_us_edit.html", {
+            "form": form,
+            "contact_us": current_obj,
+        })
+
+    def post(self, request, id):
+        current_obj = get_object_or_404(ContactModel, id=id)
+        form = AdminContactForm(request.POST, request.FILES, instance=current_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "پیغام با موفقیت ویرایش شد")
+        return render(request, "admin_module/contact-us/contact_us_edit.html", {
+            "form": form,
+            "contact_us": current_obj,
+        })
+
+
+def send_msg_answer_ajax(request: HttpRequest):
+    answer = request.GET.get("answer")
+    id = request.GET.get('id')
+    contact_model = get_object_or_404(ContactModel, id=id)
+    user_email = contact_model.email
+
+    if not request.user.is_superuser:
+        return JsonResponse({
+            "status": "faild",
+            "msg": "شما دسترسی به این کار را ندارید."
+        })
+
+    try:
+        email_content = render_to_string("admin_module/contact-us/email_template.html", {
+            "answer_text": answer
+        })
+        mail = EmailMessage(
+            "پاسخ به پیام",
+            email_content,
+            "atanabain@gmail.com",
+            [user_email],
+        )
+        mail.content_subtype = "html"
+        mail.send()
+
+        contact_model.is_read = True
+        contact_model.answer_date = datetime.now()
+        contact_model.answer = answer
+        contact_model.save()
+
+        return JsonResponse({
+            "status": "failed!",
+            "title": "انجام شد",
+            "msg": 'پاسخ با موفقیت ایمیل شد ',
+            "icon": "success"
+        })
+
+    except:
+        return JsonResponse({
+            "status": "failed!",
+            "title": "خطا",
+            "msg": 'ارسال ایمیل با مشکل مواجه شد \n لطفا دوباره تلاش کنید',
+            "icon": "error"
+        })

@@ -1,5 +1,6 @@
 from django import forms
 
+from contact_module.models import ContactModel
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -90,3 +91,42 @@ class EditSliderForm(forms.ModelForm):
     class Meta:
         model = Slider
         fields = '__all__'
+
+
+class AdminContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactModel
+        fields = "__all__"
+
+        widgets = {
+            "msg": forms.Textarea(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "email": forms.EmailInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "subject": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "answer": forms.Textarea(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+        }

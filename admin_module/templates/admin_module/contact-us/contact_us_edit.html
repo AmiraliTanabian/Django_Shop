@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
-{% load jformat %}
+{% load static jformat %}
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
 Version: 1.6.0
@@ -11,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>تماس یا ما - ادمین</title>
+	<title>مشاهده پیام | ادمین </title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -24,7 +23,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/bootstrap-rtl.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/font-awesome.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/weather-icons.min.css" %}" rel="stylesheet"/>
-	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 
 	<!--Fonts-->
 	<style>
@@ -44,16 +42,18 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/demo.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/typicons.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/animate.min.css" %}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+
 
 	<link id="skin-link" href="" rel="stylesheet" type="text/css"/>
 </head>
 <!-- /Head -->
 <!-- Body -->
 <body>
-<!-- Loading Container -->
-<div class="loading-container">
-	<div class="loader"></div>
-</div>
+{#<!-- Loading Container -->#}
+{#<div class="loading-container">#}
+{#	<div class="loader"></div>#}
+{#</div>#}
 <!--  /Loading Container -->
 <!-- Navbar -->
 <div class="navbar">
@@ -666,6 +666,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 			</div>
 		</div>
+		<!-- /Chat Bar -->
+		<!-- Page Content -->
 		<div class="page-content">
 			<div class="page-breadcrumbs">
 				<ul class="breadcrumb">
@@ -674,22 +676,25 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url 'admin_home_page' %}">خانه</a>
 					</li>
 					<li>
-						تماس با ما
-					</li>
+						<a href="{% url 'admin_contact_us_list' %}">تماس با ما</a>
 
+					</li>
+					<li>
+						ویرایش پیام
+					</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						پیغام های تماس با ما
+						ویرایش پیام
 					</h1>
 				</div>
 				<div class="header-buttons">
 					<a class="sidebar-toggler" href="#">
 						<i class="fa fa-arrows-h"></i>
 					</a>
-					<a class="refresh" id="refresh-toggler" href="{% url 'admin_ads_setting_page' %}">
+					<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
 						<i class="glyphicon glyphicon-refresh"></i>
 					</a>
 					<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -697,83 +702,116 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					</a>
 				</div>
 			</div>
+
 			<div class="page-body">
 				<div class="row">
-					<div class="col-xs-12 col-md-12">
-						<div class="well with-header with-footer">
-							<div class="header bordered-pink">
-								پیغام ها
+					<div class="col-lg-6 col-sm-6 col-xs-12">
+						<div class="widget">
+							<div class="widget-header bordered-top bordered-palegreen">
+								<span class="widget-caption">شناسه پیام : {{ contact_us.id }}</span>
 							</div>
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-								<tr>
-									<th>
-										<span></span> عنوان
-									</th>
-									<th class="hidden-xs">
-										<span>ایمیل</span>
-									</th>
-									<th>
-										<span></span> تاریخ
-									</th>
-									<th>
-										<span></span>وضعیت
-									</th>
-									<th>
-										<span></span>
-									</th>
+							<div class="widget-body">
+								<div class="collapse in">
+									<form role="form" method="post" action="#" enctype="multipart/form-data">
+										{% csrf_token %}
+										<div class="form-group {% if form.name.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.name.label }}</label>
+											{{ form.name }}
+											{% if form.name.errors %}{{ form.name.errors }}{% endif %}
+										</div>
+
+										<div class="form-group {% if form.email.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.email.label }}</label>
+											{{ form.email }}
+											{% if form.email.errors %}{{ form.email.errors }}{% endif %}
+										</div>
+
+										<div class="form-group {% if form.subject.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.subject.label }}</label>
+											{{ form.subject }}
+											{% if form.subject.errors %}{{ form.subject.errors }}{% endif %}
+										</div>
+
+										<div class="form-group">
+											<label for="xsinput">تاریخ ارسال پیام</label>
+											<p class="form-control input-x">
+												{{ contact_us.date|jformat:"%Y/%m/%d" }}
+
+											</p>
+										</div>
+
+										<div class="form-group {% if form.msg.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.msg.label }}</label>
+											{{ form.msg }}
+											{% if form.msg.errors %}{{ form.msg.errors }}{% endif %}
+										</div>
+
+										{% if contact_us.answer %}
+											<div class="form-group">
+												<label for="xsinput">پاسخ ادمین</label>
+												<p class="form-control input-xs">
+													{{ contact_us.answer }}
+												</p>
+											</div>
+
+											<div class="form-group">
+												<label for="xsinput">تاریخ پاسخ</label>
+												<p class="form-control input-xs">
+													{{ contact_us.date|jformat:"%Y/%m/%d" }}
+												</p>
+											</div>
+
+											<div class="form-group">
+												<label for="xsinput">ادمین پاسخ دهنده</label>
+												<p class="form-control input-xs">
+													{{ contact_us.answer_admin }}
+												</p>
+											</div>
+
+										{% else %}
+											<div class="form-group">
+												<label for="xsinput">ارسال پاسخ</label>
+												<textarea id="answer_box" class="form-control input-xs"></textarea>
+												<br>
+												<input type="hidden" value="{{ contact_us.id }}" id="contact_us_id">
+												<a class="btn btn-maroon" onclick="sendMsgAnswer({{ contact_us.id }})">ارسال
+													پاسخ
+												</a>
+												<p class="alert alert-danger margin-top-10">
+													لطفا پس از زدن کلید ارسال پاسخ چند ثانیه صبر کنید از فشردن مجدد کلید
+													یا رفرش صفحه جلوگیری کنید
+												</p>
+											</div>
 
 
-								</tr>
-								</thead>
-								<tbody>
-								{% for msg in messages %}
 
-									<tr>
-										<td>
-											<a href="#">{{ msg.subject }}</a>
-										</td>
-										<td class="hidden-xs">
-											{{ msg.email }}
-										</td>
-										<td class="hidden-xs">
-											{{ msg.date|jformat:"%Y/%m/%d" }}
-										</td>
-										<td>
-											{% if msg.is_read %}
-												<span class="label label-palegreen">
-                                                        خوانده شده
-												</span>
-											{% else %}
-												<span class="label label-orange">
-												خوانده نشده
-												</span>
-											{% endif %}
-										</td>
-										<td>
-											<a href="{% url 'admin_contact_detail_page' id=msg.id %}"
-											   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
-												مشاهده
-											</a>
-										</td>
-									</tr>
+										{% endif %}
 
-								{% endfor %}
-								</tbody>
-							</table>
+
+										<br><br>
+										<button class="btn btn-sky" type="submit">
+											ویرایش
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
 
+			</div>
+
+
+		</div>
+
+	</div>
 </div>
 
 <!--Basic Scripts-->
 <script src="../../../static/admin_module/assets/js/jquery.min.js"></script>
 <script src="../../../static/admin_module/assets/js/bootstrap.min.js"></script>
-<script src="../../../static/admin_module/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 
 <!--Beyond Scripts-->
 <script src="../../../static/admin_module/assets/js/skins.min.js"></script>
@@ -782,24 +820,37 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
 <!--Page Related Scripts-->
 <!--Sparkline Charts Needed Scripts-->
-<script src="../../../static/admin_module/assets/js/charts/sparkline/jquery.sparkline.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/sparkline/sparkline-init.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/sparkline/jquery.sparkline.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/sparkline/sparkline-init.js"></script>
 
 <!--Easy Pie Charts Needed Scripts-->
-<script src="../../../static/admin_module/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/easypiechart/easypiechart-init.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/easypiechart/easypiechart-init.js"></script>
 
 <!--Flot Charts Needed Scripts-->
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
-<script src="{% static 'admin_module/assets/js/inline_js.js' %}"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+<script
+		src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
+<sciprt src="{% static 'admin_module/assets/js/inline_js.js' %}"></sciprt>
+<script src="{% static 'admin_module/assets/js/contact-us.js' %}"></script>
+
+{#Sweet alert : #}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 {% include 'components/message.html' %}
-{% include 'admin_module/components/admin_pagination.html' %}
+
 
 </body>
 </html>

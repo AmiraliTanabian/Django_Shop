@@ -2,7 +2,7 @@
 {% load static jformat %}
 
 {% block title %}
-	دسته بندی بلاگ | ادمین
+	تگ ها بلاگ | ادمین
 {% endblock %}
 
 {% block header_ref %}
@@ -33,11 +33,10 @@
 							<a href="{% url 'admin_home_page' %}">خانه</a>
 						</li>
 						<li>
-							<i class="fa fa-home"></i>
 							<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
 						</li>
 						<li>
-							دسته بندی ها
+							مدیریت تگ ها
 						</li>
 
 					</ul>
@@ -45,7 +44,7 @@
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
-							دسته بندی های وبلاگ
+							تگ های بلاگ
 						</h1>
 					</div>
 					<div class="header-buttons">
@@ -59,7 +58,7 @@
 							<i class="glyphicon glyphicon-fullscreen"></i>
 						</a>
 					</div>
-					<a href="{% url 'admin_add_blog_category' %}" class="btn btn-blue">افزودن دسته بندی</a>
+					<a href="" class="btn btn-blue">افزودن تگ</a>
 
 
 				</div>
@@ -80,10 +79,13 @@
 											<span></span> عنوان
 										</th>
 										<th>
-											<span></span>اسلاگ
+											<span></span> اسلاک
 										</th>
 										<th>
-											<span>وضعیت</span>
+											<span></span>وضعیت
+										</th>
+										<th>
+											<span></span>
 										</th>
 										<th>
 											<span></span>
@@ -93,24 +95,20 @@
 									</tr>
 									</thead>
 									<tbody>
-									{% for cat in cats %}
+									{% for tag in tags %}
 
 										<tr>
 											<td>
-												<a href="#">{{ cat.id }}</a>
+												<a href="#">{{ tag.id }}</a>
 											</td>
 											<td class="hidden-xs">
-												{{ cat.title }}
+												{{ tag.tag_name }}
 											</td>
 											<td class="hidden-xs">
-												{% if cat.parent %}
-													{{ cat.parent }}
-												{% else %}
-													-
-												{% endif %}
+												{{ tag.slug }}
 											</td>
 											<td>
-												{% if cat.is_active %}
+												{% if tag.is_active %}
 													<span class="label label-palegreen">
 														فعال
 													</span>
@@ -121,13 +119,13 @@
 												{% endif %}
 											</td>
 											<td>
-												{% if cat.is_active %}
-													<a onclick="SetCatDisable({{ cat.id }})"
+												{% if tag.is_active %}
+													<a onclick="SetCatDisable({{ tag.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														غیرفعالش کن!
 													</a>
 												{% else %}
-													<a onclick="SetCatActive({{ cat.id }})"
+													<a onclick="SetCatActive({{ tag.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														فعال شو!
 													</a>
@@ -136,7 +134,7 @@
 
 											</td>
 											<td>
-												<a onclick="BlogCatRemove({{ cat.id }})"
+												<a onclick="BlogCatRemove({{ tag.id }})"
 												   class="btn btn-danger"><i class="fa fa-remove"></i>
 													حذف
 												</a>

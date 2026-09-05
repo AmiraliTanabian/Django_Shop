@@ -13,7 +13,7 @@ from django.views.generic import FormView
 from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
-from news_module.models import Article, ArticleCategories
+from news_module.models import Article, ArticleCategories, ArticleTag
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm
@@ -322,3 +322,15 @@ def set_blog_cat_disable(request: HttpRequest, id):
             "msg": "تغییر وضعیت دسته بندی با خطا مواجه شد",
             "icon": "error",
         })
+
+
+class AdminBlogTagsList(ListView):
+    model = ArticleTag
+    paginate_by = 10
+    template_name = "admin_module/blog/admin_blog_tags.html"
+    context_object_name = "tags"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

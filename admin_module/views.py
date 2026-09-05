@@ -241,3 +241,26 @@ class ArticleCategoriesList(ListView):
     paginate_by = 10
     template_name = "admin_module/blog/admin_blog_category.html"
     context_object_name = "cats"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query
+
+
+def remove_category_ajax(request: HttpRequest, id):
+    try:
+        current_category = get_object_or_404(ArticleCategories, id=id)
+        current_category.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "دسته بندی با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
+        })

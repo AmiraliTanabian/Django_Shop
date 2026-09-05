@@ -18,4 +18,5 @@ urlpatterns = [
     path("blog/categories/", views.ArticleCategoriesList.as_view(), name="admin_blog_categories"),
 
     path("blog/<id>/", views.BlogEditPage.as_view(), name="admin_blog_edit_page"),
+    path("blog/remove-cat/<id>", views.remove_category_ajax, name="admin_blog_remove_category"),
 ]

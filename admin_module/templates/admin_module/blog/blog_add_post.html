@@ -10,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>ویرایش پست | ادمین</title>
+	<title>افزودن پست | ادمین</title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -678,13 +678,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
 
 					</li>
-					<li class="active">ویرایش پست</li>
+					<li class="active">افزودن پست</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						ویرایش پست
+						افزودن پست
 					</h1>
 				</div>
 				<div class="header-buttons">
@@ -704,7 +704,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 					<div class="col-lg-6 col-sm-6 col-xs-12">
 						<div class="widget">
 							<div class="widget-header bordered-top bordered-palegreen">
-								<span class="widget-caption">شناسه : {{ post.id }}</span>
+								<span class="widget-caption"></span>
 							</div>
 							<div class="widget-body">
 								<div class="collapse in">
@@ -725,18 +725,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 											{{ form.tags }}
 											{% if form.tags.errors %}{{ form.tags.errors }}{% endif %}
 										</div>
-										<div class="form-group">
-											<label for="xsinput">نویسنده</label>
-											<p class="form-control input-xs">
-												{{ post.author }}
-											</p>
-										</div>
-										<div class="form-group">
-											<label for="xsinput">تاریخ انتشار</label>
-											<p class="form-control input-xs">
-												{{ post.data|jformat:"%Y/%m/%d" }}
-											</p>
-										</div>
 										<div class="form-group {% if form.short_info.errors %}danger{% endif %}">
 											<label for="xsinput">{{ form.short_info.label }}</label>
 											{{ form.short_info }}
@@ -751,22 +739,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
 										<div class="form-group {% if form.image.errors %}danger{% endif %}">
 											<label for="xsinput">{{ form.image.label }}</label>
-											<br>
-											{% if post.image %}
-												<img src="{{ post.image.url }}"
-												     class="pull-right right img-thumbnail profile-image center-block"
-												     alt="site logo"
-												     height="140" width="140">
-												<br><br>
-												<br><br>
-											{% else %}
-												<p class="danger">
-													هنوز تصویر اصلی آپلود نشده!
-												</p>
-											{% endif %}
-
-
-											<br><br>
 											{{ form.image }}
 											{% if form.image.errors %}{{ form.image.errors }}{% endif %}
 										</div>
@@ -778,7 +750,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 										</label>
 										<br><br>
 										<button class="btn btn-sky" type="submit">
-											ویرایش
+											افزودن
 										</button>
 									</form>
 								</div>

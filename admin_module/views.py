@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.views.generic import FormView
 from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
@@ -221,3 +222,15 @@ class BlogEditPage(View):
             "form": form,
             "post": current_post,
         })
+
+
+class BlogAddPage(FormView):
+    form_class = EditArticleForm
+    template_name = "admin_module/blog/blog_add_post.html"
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        form.instance.author = current_user
+        form.save()
+        messages.success(self.request, "پست شما با موفقیت افزوده شد")
+        return redirect(reverse_lazy("admin_blog_list_page"))

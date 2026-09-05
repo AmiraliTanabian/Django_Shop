@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -35,7 +34,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=25, verbose_name='نام دسته بندی')),
                 ('slug', models.SlugField(max_length=25, null=True, unique=True, verbose_name='اسلاگ')),
                 ('is_active', models.BooleanField(default=True, verbose_name='فعال')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='category_child', to='news_module.articlecategories', verbose_name='دسته بندی والد(اختیاری)')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                             related_name='category_child', to='news_module.articlecategories',
+                                             verbose_name='دسته بندی والد(اختیاری)')),
             ],
             options={
                 'verbose_name': 'دسته بندی مقاله',
@@ -52,9 +53,11 @@ class Migration(migrations.Migration):
                 ('text', models.TextField(verbose_name='متن خبر')),
                 ('data', django_jalali.db.models.jDateTimeField(auto_now=True, verbose_name='تاریخ و زمان')),
                 ('is_active', models.BooleanField(default=True, verbose_name='فعال')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='نویسندخ مقاله')),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL,
+                                             verbose_name='نویسندخ مقاله')),
                 ('categories', models.ManyToManyField(to='news_module.articlecategories', verbose_name='دسته بندی ها')),
-                ('tags', models.ManyToManyField(related_name='article_list_by_tag', to='news_module.articletag', verbose_name='تگ ها')),
+                ('tags', models.ManyToManyField(related_name='article_list_by_tag', to='news_module.articletag',
+                                                verbose_name='تگ ها')),
             ],
             options={
                 'verbose_name': 'مقاله',
@@ -68,9 +71,12 @@ class Migration(migrations.Migration):
                 ('text', models.TextField(verbose_name='متن نظر')),
                 ('created_at', django_jalali.db.models.jDateTimeField(auto_now_add=True)),
                 ('is_active', models.BooleanField(default=False, verbose_name='فعال بودن نظر')),
-                ('article', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news_module.article', verbose_name='مقاله')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='news_module.articlecomment', verbose_name='نظر والد (اختیاری)')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='کاربر')),
+                ('blog', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news_module.blog',
+                                           verbose_name='مقاله')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                             to='news_module.articlecomment', verbose_name='نظر والد (اختیاری)')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL,
+                                           verbose_name='کاربر')),
             ],
             options={
                 'verbose_name': 'نظر برای مقاله',

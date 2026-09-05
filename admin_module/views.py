@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
+from news_module.models import Article
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm
 
@@ -191,3 +192,10 @@ def send_msg_answer_ajax(request: HttpRequest):
             "msg": 'ارسال ایمیل با مشکل مواجه شد \n لطفا دوباره تلاش کنید',
             "icon": "error"
         })
+
+
+class BlogListView(ListView):
+    paginate_by = 10
+    model = Article
+    template_name = "admin_module/blog/blog_list.html"
+    context_object_name = "posts"

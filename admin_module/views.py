@@ -284,3 +284,41 @@ class AddArticleCategory(View):
         return render(request, "admin_module/blog/add_blog_cat.html", {
             "form": form
         })
+
+
+def set_blog_cat_active(request: HttpRequest, id):
+    try:
+        current_cat = get_object_or_404(ArticleCategories, id=id)
+        current_cat.is_active = True
+        current_cat.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": "دسته بندی با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": "تغییر وضعیت دسته بندی با خطا مواجه شد",
+            "icon": "error",
+        })
+
+
+def set_blog_cat_disable(request: HttpRequest, id):
+    try:
+        current_cat = get_object_or_404(ArticleCategories, id=id)
+        current_cat.is_active = False
+        current_cat.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": "دسته بندی با موفقیت غیرفعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": "تغییر وضعیت دسته بندی با خطا مواجه شد",
+            "icon": "error",
+        })

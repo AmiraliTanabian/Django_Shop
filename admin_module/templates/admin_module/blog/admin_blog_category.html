@@ -88,6 +88,9 @@
 										<th>
 											<span></span>
 										</th>
+										<th>
+											<span></span>
+										</th>
 
 
 									</tr>
@@ -112,13 +115,28 @@
 											<td>
 												{% if cat.is_active %}
 													<span class="label label-palegreen">
-												فعال
-												</span>
+														فعال
+													</span>
 												{% else %}
 													<span class="label label-orange">
 												غیرفعال
 												</span>
 												{% endif %}
+											</td>
+											<td>
+												{% if cat.is_active %}
+													<a onclick="SetCatDisable({{ cat.id }})"
+													   class="btn btn-primary"><i class="fa fa-remove"></i>
+														غیرفعالش کن!
+													</a>
+												{% else %}
+													<a onclick="SetCatActive({{ cat.id }})"
+													   class="btn btn-primary"><i class="fa fa-remove"></i>
+														فعال شو!
+													</a>
+												{% endif %}
+
+
 											</td>
 											<td>
 												<a onclick="BlogCatRemove({{ cat.id }})"

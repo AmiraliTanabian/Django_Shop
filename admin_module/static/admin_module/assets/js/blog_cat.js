@@ -29,3 +29,29 @@ function BlogCatRemove(id) {
         }
     })
 }
+
+function SetCatActive(id) {
+    $.get('../set-active-cat/' + id + "/").then(re => Swal.fire({
+        title: re.title,
+        text: re.msg,
+        icon: re.icon,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: 'بستن',
+    }))
+    location.reload();
+}
+
+function SetCatDisable(id) {
+    $.get('../set-disable-cat/' + id + "/").then(re => Swal.fire({
+        title: re.title,
+        text: re.msg,
+        icon: re.icon,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: 'بستن',
+    }))
+    location.reload();
+}

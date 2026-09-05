@@ -42,11 +42,12 @@ class registerForm(forms.Form):
         "required": "لطفا تکرار رمز عبور خود را وارد کنید!"
     }, widget=forms.PasswordInput(attrs={
         "placeholder": "تکرار رمز عبور"
-    }), label="")
+    }), label="", validators=[MinLengthValidator(8,
+                                                 "حداقل تعداد کاراکتر های رمز عبور ۸ تا میباشد! ")])
 
     def clean(self):
-        password = self.cleaned_data["password"]
-        confirm_password = self.cleaned_data["confirm_password"]
+        password = self.cleaned_data.get("password")
+        confirm_password = self.cleaned_data.get("confirm_password")
 
         if password != confirm_password:
             raise forms.ValidationError("رمز عبور شما با تکرارش مطابقت ندارد! ")

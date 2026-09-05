@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
-{% load jformat %}
+{% load static jformat %}
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
 Version: 1.6.0
@@ -11,7 +10,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!-- Head -->
 <head>
 	<meta charset="utf-8"/>
-	<title>بلاگ - ادمین</title>
+	<title>ویرایش پست | ادمین</title>
 
 	<meta name="description" content="Dashboard"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -44,6 +43,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<link href="{% static "admin_module/assets/css/demo.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/typicons.min.css" %}" rel="stylesheet"/>
 	<link href="{% static "admin_module/assets/css/animate.min.css" %}" rel="stylesheet"/>
+	<!--For CKEditor5Widget -->
+	{{ form.media }}
 
 	<link id="skin-link" href="" rel="stylesheet" type="text/css"/>
 </head>
@@ -674,22 +675,23 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<a href="{% url 'admin_home_page' %}">خانه</a>
 					</li>
 					<li>
-						لیست بلاگ
-					</li>
+						<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
 
+					</li>
+					<li class="active">ویرایش پست</li>
 				</ul>
 			</div>
 			<div class="page-header position-relative">
 				<div class="header-title">
 					<h1>
-						پست های وبلاگ
+						ویرایش پست
 					</h1>
 				</div>
 				<div class="header-buttons">
 					<a class="sidebar-toggler" href="#">
 						<i class="fa fa-arrows-h"></i>
 					</a>
-					<a class="refresh" id="refresh-toggler" href="{% url 'admin_ads_setting_page' %}">
+					<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
 						<i class="glyphicon glyphicon-refresh"></i>
 					</a>
 					<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -699,77 +701,92 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			</div>
 			<div class="page-body">
 				<div class="row">
-					<div class="col-xs-12 col-md-12">
-						<div class="well with-header with-footer">
-							<div class="header bordered-pink">
-								پست های وبلاگ
+					<div class="col-lg-6 col-sm-6 col-xs-12">
+						<div class="widget">
+							<div class="widget-header bordered-top bordered-palegreen">
+								<span class="widget-caption">شناسه : {{ post.id }}</span>
 							</div>
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-								<tr>
-									<th>
-										<span></span> شناسه
-									</th>
-									<th>
-										<span></span> عنوان
-									</th>
-									<th class="hidden-xs">
-										<span>نویسنده</span>
-									</th>
-									<th>
-										<span></span> تاریخ
-									</th>
-									<th>
-										<span></span>وضعیت
-									</th>
-									<th>
-										<span></span>
-									</th>
+							<div class="widget-body">
+								<div class="collapse in">
+									<form role="form" method="post" action="#" enctype="multipart/form-data">
+										{% csrf_token %}
+										<div class="form-group {% if form.title.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.title.label }}</label>
+											{{ form.title }}
+											{% if form.title.errors %}{{ form.title.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.categories.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.categories.label }}</label>
+											{{ form.categories }}
+											{% if form.categories.errors %}{{ form.categories.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.tags.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.tags.label }}</label>
+											{{ form.tags }}
+											{% if form.tags.errors %}{{ form.tags.errors }}{% endif %}
+										</div>
+										<div class="form-group">
+											<label for="xsinput">نویسنده</label>
+											<p class="form-control input-xs">
+												{{ post.author }}
+											</p>
+										</div>
+										<div class="form-group">
+											<label for="xsinput">تاریخ انتشار</label>
+											<p class="form-control input-xs">
+												{{ post.data|jformat:"%Y/%m/%d" }}
+											</p>
+										</div>
+										<div class="form-group {% if form.short_info.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.short_info.label }}</label>
+											{{ form.short_info }}
+											{% if form.short_info.errors %}{{ form.short_info.errors }}{% endif %}
+										</div>
+										<div class="form-group {% if form.text.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.text.label }}</label>
+											{{ form.text }}
+											{% if form.text.errors %}{{ form.text.errors }}{% endif %}
+										</div>
+										<br><br>
 
-
-								</tr>
-								</thead>
-								<tbody>
-								{% for post in posts %}
-
-									<tr>
-										<td>
-											<a href="#">{{ post.id }}</a>
-										</td>
-										<td class="hidden-xs">
-											{{ post.title }}
-										</td>
-										<td class="hidden-xs">
-											{{ post.author }}
-										</td>
-										<td class="hidden-xs">
-											{{ post.data|jformat:"%Y/%m/%d" }}
-										</td>
-										<td>
-											{% if post.is_active %}
-												<span class="label label-palegreen">
-												فعال
-												</span>
+										<div class="form-group {% if form.site_logo.errors %}danger{% endif %}">
+											<label for="xsinput">{{ form.site_logo.label }}</label>
+											<br>
+											{% if post.image %}
+												<img src="{{ post.image.url }}"
+												     class="pull-right right img-thumbnail profile-image center-block"
+												     alt="site logo"
+												     height="140" width="140">
+												<br><br>
+												<br><br>
 											{% else %}
-												<span class="label label-orange">
-												غیرفعال
-												</span>
+												<p class="danger">
+													هنوز تصویر اصلی آپلود نشده!
+												</p>
 											{% endif %}
-										</td>
-										<td>
-											<a href="{% url 'admin_blog_edit_page' id=post.id %}"
-											   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
-												مشاهده
-											</a>
-										</td>
-									</tr>
 
-								{% endfor %}
-								</tbody>
-							</table>
+
+											<br><br>
+											{{ form.image }}
+											{% if form.image.errors %}{{ form.image.errors }}{% endif %}
+										</div>
+										<label class="checkbox-wrapper">
+											{{ form.is_active }}
+											<span class="checkmark"></span>
+											فعال باشد
+											{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
+										</label>
+										<br><br>
+										<button class="btn btn-sky" type="submit">
+											ویرایش
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -800,12 +817,10 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.resize.js"></script>
 <script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.pie.js"></script>
 <script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
-<script src="../../../static/admin_module/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
 <script src="{% static 'admin_module/assets/js/inline_js.js' %}"></script>
 
-
 {% include 'components/message.html' %}
-{% include 'admin_module/components/admin_pagination.html' %}
+
 
 </body>
 </html>

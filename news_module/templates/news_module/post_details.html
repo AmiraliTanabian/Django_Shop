@@ -35,7 +35,7 @@
 							<img src="{{ news.image.url }}" alt="{{ news.title }}">
 						</a>
 						<p>
-							{{ news.text }}
+							{{ news.text|safe }}
 						</p>
 						<div class="pager-area">
 							<ul class="pager pull-left">

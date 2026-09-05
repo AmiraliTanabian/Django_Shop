@@ -14,7 +14,7 @@ from django.views.generic import View, ListView
 from contact_module.models import ContactModel
 from news_module.models import Article
 from site_module.models import SiteSetting, SiteBanners, Slider
-from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm
+from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm
 
 
 # Create your views here.
@@ -199,3 +199,25 @@ class BlogListView(ListView):
     model = Article
     template_name = "admin_module/blog/blog_list.html"
     context_object_name = "posts"
+
+
+class BlogEditPage(View):
+    def get(self, request: HttpRequest, id):
+        current_post = get_object_or_404(Article, id=id)
+        form = EditArticleForm(instance=current_post)
+        return render(request, "admin_module/blog/blog_detail.html", {
+            "form": form,
+            "post": current_post,
+        })
+
+    def post(self, request: HttpRequest, id):
+        current_post = get_object_or_404(Article, id=id)
+        form = EditArticleForm(request.POST, request.FILES, instance=current_post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "پست با موفقیت ویرایش شد")
+
+        return render(request, "admin_module/blog/blog_detail.html", {
+            "form": form,
+            "post": current_post,
+        })

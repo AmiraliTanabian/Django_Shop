@@ -31,7 +31,8 @@ urlpatterns = [
     path("order/", include("order_module.urls")),
     path("news-letter/", include("newsletter_module.urls")),
     path("payment/", include("zarinpal_payment.urls")),
-    path("admin/", include("admin_module.urls"))
+    path("admin/", include("admin_module.urls")),
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

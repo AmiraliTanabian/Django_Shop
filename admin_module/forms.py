@@ -1,6 +1,8 @@
 from django import forms
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
+from news_module.models import Article
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -126,6 +128,32 @@ class AdminContactForm(forms.ModelForm):
             "answer": forms.Textarea(
                 attrs={
                     "class": "form-control input-xs",
+                }
+            ),
+
+        }
+
+
+class EditArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        exclude = ("author", "data")
+
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "short_info": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "text": CKEditor5Widget(
+                attrs={
+                    "class": "django_ckeditor_5 form-control input-xs",
                 }
             ),
 

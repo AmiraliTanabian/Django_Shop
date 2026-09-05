@@ -15,6 +15,7 @@ urlpatterns = [
     path("contact-us/send-answer/", views.send_msg_answer_ajax, name="admin_contact_send_email_ajax"),
     path("blog/list/", views.BlogListView.as_view(), name="admin_blog_list_page"),
     path("blog/add/", views.BlogAddPage.as_view(), name="admin_add_blog_post"),
+    path("blog/categories/", views.ArticleCategoriesList.as_view(), name="admin_blog_categories"),
 
     path("blog/<id>/", views.BlogEditPage.as_view(), name="admin_blog_edit_page"),
 ]

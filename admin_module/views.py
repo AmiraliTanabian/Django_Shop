@@ -13,7 +13,7 @@ from django.views.generic import FormView
 from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
-from news_module.models import Article
+from news_module.models import Article, ArticleCategories
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm
 
@@ -234,3 +234,10 @@ class BlogAddPage(FormView):
         form.save()
         messages.success(self.request, "پست شما با موفقیت افزوده شد")
         return redirect(reverse_lazy("admin_blog_list_page"))
+
+
+class ArticleCategoriesList(ListView):
+    model = ArticleCategories
+    paginate_by = 10
+    template_name = "admin_module/blog/admin_blog_category.html"
+    context_object_name = "cats"

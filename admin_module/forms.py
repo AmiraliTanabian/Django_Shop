@@ -2,7 +2,7 @@ from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
-from news_module.models import Article
+from news_module.models import Article, ArticleCategories
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -157,4 +157,24 @@ class EditArticleForm(forms.ModelForm):
                 }
             ),
 
+        }
+
+
+class AddArticleCatForm(forms.ModelForm):
+    class Meta:
+        model = ArticleCategories
+        fields = "__all__"
+
+        widgets = {
+            "slug": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
         }

@@ -15,7 +15,8 @@ from django.views.generic import View, ListView
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories
 from site_module.models import SiteSetting, SiteBanners, Slider
-from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm
+from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
+    AddArticleCatForm
 
 
 # Create your views here.
@@ -263,4 +264,23 @@ def remove_category_ajax(request: HttpRequest, id):
             "title": "خطا",
             "msg": "خطایی رخ داد.",
             "icon": "error",
+        })
+
+
+class AddArticleCategory(View):
+    def get(self, request: HttpRequest):
+        form = AddArticleCatForm()
+        return render(request, "admin_module/blog/add_blog_cat.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddArticleCatForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "دسته بندی با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_blog_categories"))
+
+        return render(request, "admin_module/blog/add_blog_cat.html", {
+            "form": form
         })

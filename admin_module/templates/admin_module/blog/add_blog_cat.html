@@ -1,0 +1,114 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat %}
+
+{% block title %}
+	افزودن دسته بندی بلاگ | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+	<!--For CKEditor5Widget -->
+	{{ form.media }}
+{% endblock %}
+
+{% block content %}
+	<!-- Loading Container -->
+	{% comment %} <div class="loading-container">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+	<!--  /Loading Container -->
+
+	{% include 'admin_module/components/navbar.html' %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
+
+						</li>
+						<li>
+							<a href="{% url 'admin_blog_categories' %}">لیست دسته بندی ها</a>
+						</li>
+						<li>
+							افزودن دسته بندی
+						</li>
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							افزودن دسته بندی
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<div class="widget">
+								<div class="widget-header bordered-top bordered-palegreen">
+									<span class="widget-caption"></span>
+								</div>
+								<div class="widget-body">
+									<div class="collapse in">
+										<form role="form" method="post" action="#" enctype="multipart/form-data">
+											{% csrf_token %}
+											<div class="form-group {% if form.title.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.title.label }}</label>
+												{{ form.title }}
+												{% if form.title.errors %}{{ form.title.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.parent.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.parent.label }}</label>
+												{{ form.parent }}
+												{% if form.parent.errors %}{{ form.parent.errors }}{% endif %}
+											</div>
+
+											<div class="form-group {% if form.slug.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.slug.label }}</label>
+												{{ form.slug }}
+												{% if form.slug.errors %}{{ form.slug.errors }}{% endif %}
+											</div>
+											<label class="checkbox-wrapper">
+												{{ form.is_active }}
+												<span class="checkmark"></span>
+												فعال باشد
+												{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
+											</label>
+											<br><br>
+											<button class="btn btn-sky" type="submit">
+												افزودن
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

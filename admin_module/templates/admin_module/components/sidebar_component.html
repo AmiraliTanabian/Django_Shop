@@ -1,54 +1,64 @@
-<ul class="nav sidebar-menu">
-	<li>
-		<a href="{% url 'admin_home_page' %}">
-			<i class="menu-icon glyphicon glyphicon-home"></i>
-			<span class="menu-text"> داشبورد </span>
-		</a>
-	</li>
-	<li>
-		<a href="{% url 'admin_setting_page' %}">
-			<i class="menu-icon glyphicon glyphicon-console"></i>
-			<span class="menu-text"> تنظیمات سایت </span>
-		</a>
-	</li>
-	<li>
-		<a href="{% url 'admin_blog_list_page' %}">
-			<i class="menu-icon glyphicon glyphicon-book"></i>
-			<span class="menu-text">بلاگ</span>
-		</a>
-	</li>
-	<li>
-		<a href="{% url 'admin_contact_us_list' %}">
-			<i class="menu-icon glyphicon glyphicon-phone"></i>
-			<span class="menu-text"> تماس با ما</span>
-		</a>
-	</li>
+<div class="page-sidebar" id="sidebar">
+	<!-- Page Sidebar Header-->
+	<div class="sidebar-header-wrapper">
+		<input type="text" class="searchinput"/>
+		<i class="searchicon fa fa-search"></i>
+		<div class="searchhelper">به جستجوی صفحات، گزارشات، پیام ها و ایمیل خود بپردازید</div>
+	</div>
+	<!-- /Page Sidebar Header -->
+	<ul class="nav sidebar-menu">
+		<li>
+			<a href="{% url 'admin_home_page' %}">
+				<i class="menu-icon glyphicon glyphicon-home"></i>
+				<span class="menu-text"> داشبورد </span>
+			</a>
+		</li>
+		<li>
+			<a href="{% url 'admin_setting_page' %}">
+				<i class="menu-icon glyphicon glyphicon-console"></i>
+				<span class="menu-text"> تنظیمات سایت </span>
+			</a>
+		</li>
+		<li>
+			<a href="{% url 'admin_blog_list_page' %}">
+				<i class="menu-icon glyphicon glyphicon-book"></i>
+				<span class="menu-text">بلاگ</span>
+			</a>
+		</li>
+		<li>
+			<a href="{% url 'admin_contact_us_list' %}">
+				<i class="menu-icon glyphicon glyphicon-phone"></i>
+				<span class="menu-text"> تماس با ما</span>
+			</a>
+		</li>
 
-	<li>
-		<a href="#" class="menu-dropdown">
-			<i class="menu-icon fa fa-envelope-o"></i>
-			<span class="menu-text"> ایمیل </span>
+		<li>
+			<a href="#" class="menu-dropdown">
+				<i class="menu-icon fa fa-envelope-o"></i>
+				<span class="menu-text"> ایمیل </span>
 
-			<i class="menu-expand"></i>
-		</a>
+				<i class="menu-expand"></i>
+			</a>
 
-		<ul class="submenu">
-			<li>
-				<a href="inbox.html">
-					<span class="menu-text">اینباکس</span>
-				</a>
-			</li>
+			<ul class="submenu">
+				<li>
+					<a href="inbox.html">
+						<span class="menu-text">اینباکس</span>
+					</a>
+				</li>
 
-			<li>
-				<a href="message-view.html">
-					<span class="menu-text">مشاهده ایمیل</span>
-				</a>
-			</li>
-			<li>
-				<a href="message-compose.html">
-					<span class="menu-text">ایجاد ایمیل</span>
-				</a>
-			</li>
-		</ul>
-	</li>
-</ul>
+				<li>
+					<a href="message-view.html">
+						<span class="menu-text">مشاهده ایمیل</span>
+					</a>
+				</li>
+				<li>
+					<a href="message-compose.html">
+						<span class="menu-text">ایجاد ایمیل</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+</div>

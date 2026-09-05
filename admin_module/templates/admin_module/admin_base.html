@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Dashboard"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>
+		{% block title %}{% endblock %}
+	</title>
+	{% include 'admin_module/components/header_refences.html' %}
+	{% block header_ref %}{% endblock %}
+</head>
+<body>
+{% block content %}{% endblock %}
+{% include 'components/message.html' %}
+{% include 'admin_module/components/admin_pagination.html' %}
+{% include 'admin_module/components/footer_references.html' %}
+{% block footer_ref %}{% endblock %}
+</body>
+</html>

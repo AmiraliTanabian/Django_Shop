@@ -17,6 +17,7 @@ urlpatterns = [
     path("blog/add/", views.BlogAddPage.as_view(), name="admin_add_blog_post"),
     path("blog/categories/", views.ArticleCategoriesList.as_view(), name="admin_blog_categories"),
     path("blog/add-cat/", views.AddArticleCategory.as_view(), name="admin_add_blog_category"),
+    path("blog/add-tag/", views.AddArticleTag.as_view(), name="admin_add_blog_tag"),
     path("blog/tags/", views.AdminBlogTagsList.as_view(), name="admin_blog_tags"),
 
     path("blog/<id>/", views.BlogEditPage.as_view(), name="admin_blog_edit_page"),

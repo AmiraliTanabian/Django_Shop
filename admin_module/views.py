@@ -16,7 +16,7 @@ from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm
+    AddArticleCatForm, AddArticleTagForm
 
 
 # Create your views here.
@@ -390,4 +390,23 @@ def set_blog_tag_disable(request: HttpRequest, id):
             "title": "تغییر وضعیت تگ",
             "msg": "تغییر وضعیت تگ با خطا مواجه شد",
             "icon": "error",
+        })
+
+
+class AddArticleTag(View):
+    def get(self, request: HttpRequest):
+        form = AddArticleTagForm()
+        return render(request, "admin_module/blog/add_blog_tag.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddArticleTagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "تگ با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_blog_tags"))
+
+        return render(request, "admin_module/blog/add_blog_tag.html", {
+            "form": form
         })

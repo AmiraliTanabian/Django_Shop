@@ -2,7 +2,9 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMessage
 from django.http import HttpRequest
 from django.http.response import JsonResponse
@@ -20,16 +22,24 @@ from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminConta
     AddArticleCatForm, AddArticleTagForm, EditCommentForms
 
 
-# Create your views here.
+@login_required()
 def index(request):
-    return render(request, "admin_module/index.html")
+    if request.user.is_staff:
+        return render(request, "admin_module/index.html")
+    raise PermissionDenied
 
 
+@permission_required(perm=['site_module.view_sitesetting', 'site_module.view_sitebanners', 'site_module.view_slider'],
+                     raise_exception=True)
 def main_setting_page(request):
     return render(request, "admin_module/settings/setting_main_page.html")
 
 
-class MainSetting(View):
+class MainSetting(PermissionRequiredMixin, View):
+    permission_required = ["site_module.change_sitesetting", "site_module.view_sitesetting",
+                           "site_module.add_sitesetting", "site_module.delete_sitesetting"]
+    permission_denied_message = "شما به تغییر تنظیمات سایت دسترسی ندارید"
+
     def get(self, request: HttpRequest):
         current_settings = SiteSetting.objects.all().first()
         form = SettingEditForms(instance=current_settings)
@@ -52,19 +62,21 @@ class MainSetting(View):
         })
 
 
-class SettingsAdsView(LoginRequiredMixin, ListView):
+class SettingsAdsView(PermissionRequiredMixin, ListView):
     model = SiteBanners
     paginate_by = 5
     context_object_name = "banners"
     template_name = "admin_module/settings/settings_ads.html"
+    permission_required = ['site_module.view_sitebanners']
+    permission_denied_message = "شما دسترسی به مشاهده تبلیغات سایت ندارید"
 
 
-class AdsEditView(View):
+class AdsEditView(PermissionRequiredMixin, View):
+    permission_required = ["site_module.add_sitebanners"]
+
     def get(self, request: HttpRequest, id):
-        print("View start")
         current_banner = get_object_or_404(SiteBanners, id=id)
         form = BannersEditForm(instance=current_banner)
-        print("View End")
 
         return render(request, "admin_module/settings/settings_edit_ads.html", {
             "form": form,
@@ -85,11 +97,13 @@ class AdsEditView(View):
         })
 
 
-class SliderListPage(ListView):
+class SliderListPage(PermissionRequiredMixin, ListView):
     template_name = "admin_module/settings/settings_sliders_list.html"
     context_object_name = "sliders"
     paginate_by = 5
     model = Slider
+    permission_required = ["site_module.view_slider"]
+    permission_denied_message = "شما دسترسی به دیدن اسلایدر ها ندارید"
 
     def get_queryset(self):
         query = super().get_queryset()
@@ -97,7 +111,15 @@ class SliderListPage(ListView):
         return query
 
 
-class SliderDetailView(View):
+class SliderDetailView(PermissionRequiredMixin, View):
+    permission_required = [
+        "site_module.view_slider",
+        "site_module.change_slider",
+        "site_module.delete_slider",
+        "site_module.add_slider"
+    ]
+    permission_denied_message = "شما دسترسی به تغییر یا افزودن اسلایدر ندارید"
+
     def get(self, request: HttpRequest, id):
         current_slider = get_object_or_404(Slider, id=id)
         form = EditSliderForm(instance=current_slider)
@@ -118,11 +140,15 @@ class SliderDetailView(View):
         })
 
 
-class ContactUsListView(ListView):
+class ContactUsListView(PermissionRequiredMixin, ListView):
     model = ContactModel
     paginate_by = 10
     template_name = "admin_module/contact-us/contact_us_list.html"
     context_object_name = "messages"
+    permission_required = [
+        'contact_module.view_contactmodel'
+    ]
+    permission_denied_message = "شما دسترسی به دیدن پیام ها ندارید"
 
     def get_queryset(self):
         query = super().get_queryset()
@@ -130,7 +156,15 @@ class ContactUsListView(ListView):
         return query
 
 
-class ContactUsDetailView(View):
+class ContactUsDetailView(PermissionRequiredMixin, View):
+    permission_required = [
+        "contact_module.view_contactmodel",
+        "contact_module.delete_contactmodel",
+        "contact_module.change_contactmodel",
+        "contact_module.add_contactmodel",
+    ]
+    permission_denied_message = "شما دسترسی به تغییرات در پیام های تماس با ما را ندارید"
+
     def get(self, request, id):
         current_obj = get_object_or_404(ContactModel, id=id)
         form = AdminContactForm(instance=current_obj)
@@ -151,6 +185,10 @@ class ContactUsDetailView(View):
         })
 
 
+@permission_required(perm=["contact_module.view_contactmodel",
+                           "contact_module.delete_contactmodel",
+                           "contact_module.change_contactmodel",
+                           "contact_module.add_contactmodel", ], raise_exception=True)
 def send_msg_answer_ajax(request: HttpRequest):
     answer = request.GET.get("answer")
     id = request.GET.get('id')
@@ -197,14 +235,26 @@ def send_msg_answer_ajax(request: HttpRequest):
         })
 
 
-class BlogListView(ListView):
+class BlogListView(PermissionRequiredMixin, ListView):
     paginate_by = 10
     model = Article
     template_name = "admin_module/blog/blog_list.html"
     context_object_name = "posts"
+    permission_required = [
+        "news_module.view_article",
+    ]
+    permission_denied_message = "شما دسترسی به دیدن لیست مقالات را ندارید"
 
 
-class BlogEditPage(View):
+class BlogEditPage(PermissionRequiredMixin, View):
+    permission_required = [
+        "news_module.view_article",
+        "news_module.delete_article",
+        "news_module.change_article",
+        "news_module.add_article",
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد تغییرات در مقالات را ندارید"
+
     def get(self, request: HttpRequest, id):
         current_post = get_object_or_404(Article, id=id)
         form = EditArticleForm(instance=current_post)
@@ -226,9 +276,16 @@ class BlogEditPage(View):
         })
 
 
-class BlogAddPage(FormView):
+class BlogAddPage(PermissionRequiredMixin, FormView):
     form_class = EditArticleForm
     template_name = "admin_module/blog/blog_add_post.html"
+    permission_required = [
+        "news_module.view_article",
+        "news_module.delete_article",
+        "news_module.change_article",
+        "news_module.add_article",
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد تغییرات در مقالات را ندارید"
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -238,11 +295,15 @@ class BlogAddPage(FormView):
         return redirect(reverse_lazy("admin_blog_list_page"))
 
 
-class ArticleCategoriesList(ListView):
+class ArticleCategoriesList(PermissionRequiredMixin, ListView):
     model = ArticleCategories
     paginate_by = 10
     template_name = "admin_module/blog/admin_blog_category.html"
     context_object_name = "cats"
+    permission_required = [
+        "news_module.view_articlecategories",
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده دسته بندی ها را ندارید"
 
     def get_queryset(self):
         query = super().get_queryset()
@@ -250,6 +311,7 @@ class ArticleCategoriesList(ListView):
         return query
 
 
+@permission_required(perm=["news_module.delete_articlecategories", ], raise_exception=True)
 def remove_category_ajax(request: HttpRequest, id):
     try:
         current_category = get_object_or_404(ArticleCategories, id=id)
@@ -268,7 +330,15 @@ def remove_category_ajax(request: HttpRequest, id):
         })
 
 
-class AddArticleCategory(View):
+class AddArticleCategory(PermissionRequiredMixin, View):
+    permission_required = [
+        "news_module.view_articlecategories",
+        "news_module.delete_articlecategories",
+        "news_module.change_articlecategories",
+        "news_module.add_articlecategories",
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد تغییر در دسته بندی مقالات را ندارید"
+
     def get(self, request: HttpRequest):
         form = AddArticleCatForm()
         return render(request, "admin_module/blog/add_blog_cat.html", {
@@ -287,6 +357,7 @@ class AddArticleCategory(View):
         })
 
 
+@permission_required(perm=["news_module.change_articlecategories", ], raise_exception=True)
 def set_blog_cat_active(request: HttpRequest, id):
     try:
         current_cat = get_object_or_404(ArticleCategories, id=id)
@@ -306,6 +377,7 @@ def set_blog_cat_active(request: HttpRequest, id):
         })
 
 
+@permission_required(perm=["news_module.change_articlecategories", ], raise_exception=True)
 def set_blog_cat_disable(request: HttpRequest, id):
     try:
         current_cat = get_object_or_404(ArticleCategories, id=id)
@@ -325,11 +397,15 @@ def set_blog_cat_disable(request: HttpRequest, id):
         })
 
 
-class AdminBlogTagsList(ListView):
+class AdminBlogTagsList(PermissionRequiredMixin, ListView):
     model = ArticleTag
     paginate_by = 10
     template_name = "admin_module/blog/admin_blog_tags.html"
     context_object_name = "tags"
+    permission_required = [
+        "news_module.view_articletag"
+    ]
+    permission_denied_message = "شما دسترسی برای مشاهده تگ های مقالات را ندارید"
 
     def get_queryset(self):
         query = super().get_queryset()
@@ -337,6 +413,8 @@ class AdminBlogTagsList(ListView):
         return query
 
 
+@permission_required(
+    perm=["news_module.delete_articletag"], raise_exception=True)
 def remove_tag_ajax(request: HttpRequest, id):
     try:
         current_tag = get_object_or_404(ArticleTag, id=id)
@@ -356,6 +434,9 @@ def remove_tag_ajax(request: HttpRequest, id):
         })
 
 
+@permission_required(
+    perm=["news_module.view_articletag", "news_module.delete_articletag", "news_module.change_articletag",
+          "news_module.add_articletag"], raise_exception=True)
 def set_blog_tag_active(request: HttpRequest, id):
     try:
         current_tag = get_object_or_404(ArticleTag, id=id)
@@ -375,6 +456,9 @@ def set_blog_tag_active(request: HttpRequest, id):
         })
 
 
+@permission_required(
+    perm=["news_module.view_articletag", "news_module.delete_articletag", "news_module.change_articletag",
+          "news_module.add_articletag"], raise_exception=True)
 def set_blog_tag_disable(request: HttpRequest, id):
     try:
         current_tag = get_object_or_404(ArticleTag, id=id)
@@ -394,7 +478,15 @@ def set_blog_tag_disable(request: HttpRequest, id):
         })
 
 
-class AddArticleTag(View):
+class AddArticleTag(PermissionRequiredMixin, View):
+    permission_required = [
+        "news_module.view_articletag",
+        "news_module.delete_articletag",
+        "news_module.change_articletag",
+        "news_module.add_articletag",
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد تغییرات در تگ مقالات را ندارید"
+
     def get(self, request: HttpRequest):
         form = AddArticleTagForm()
         return render(request, "admin_module/blog/add_blog_tag.html", {
@@ -413,11 +505,15 @@ class AddArticleTag(View):
         })
 
 
-class BlogPostCommentList(ListView):
+class BlogPostCommentList(PermissionRequiredMixin, ListView):
     model = ArticleComment
     paginate_by = 10
     context_object_name = "comments"
     template_name = "admin_module/blog/blog_post_comments.html"
+    permission_required = [
+        "news_module.view_articlecomment"
+    ]
+    permission_denied_message = "شما دسترسی برای مشاهده نظرات مقالات را ندارید"
 
     def get_queryset(self, *args, **kwargs):
         query = super().get_queryset(*args, **kwargs)
@@ -426,7 +522,15 @@ class BlogPostCommentList(ListView):
         return query
 
 
-class PostCommentDetail(View):
+class PostCommentDetail(PermissionRequiredMixin, View):
+    permission_required = [
+        "news_module.view_articlecomment"
+        "news_module.delete_articlecomment"
+        "news_module.change_articlecomment"
+        "news_module.add_articlecomment"
+    ]
+    permission_denied_message = "شما دسترسی برای ایجاد تغییرات در نظرات مقالات را ندارید"
+
     def get(self, request, comment_id):
         form = EditCommentForms()
         current_comment = get_object_or_404(ArticleComment, id=comment_id)

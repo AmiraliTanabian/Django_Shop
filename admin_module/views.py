@@ -16,7 +16,7 @@ from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm, AddArticleTagForm
+    AddArticleCatForm, AddArticleTagForm, EditCommentForms
 
 
 # Create your views here.
@@ -423,3 +423,26 @@ class BlogPostCommentList(ListView):
         current_article = get_object_or_404(Article, id=self.kwargs.get('post_id'))
         query = query.filter(article=current_article).order_by("-id")
         return query
+
+
+class PostCommentDetail(View):
+    def get(self, request, comment_id):
+        form = EditCommentForms()
+        current_comment = get_object_or_404(ArticleComment, id=comment_id)
+        return render(request, "admin_module/blog/blog_comment_detail.html", {
+            "form": form,
+            "comment": current_comment,
+        })
+
+    def post(self, request, comment_id):
+        form = EditCommentForms(request.POST)
+        current_comment = get_object_or_404(ArticleComment, id=comment_id)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "کامنت مورد نظر با موفقیت ویرایش شد")
+            return redirect(reverse_lazy("admin_blog_post_comments", args=[current_comment.article.id]))
+        
+        return render(request, "admin_module/blog/blog_comment_detail.html", {
+            "form": form,
+            "comment": current_comment,
+        })

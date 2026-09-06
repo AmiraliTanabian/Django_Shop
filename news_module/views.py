@@ -117,8 +117,6 @@ class TagPageView(ListView):
 
 def add_article_comment(request):
     if request.user.is_authenticated:
-        print("Salam")
-        print(request.GET)
         comment_text = request.GET["comment_text"]
         article_id = request.GET["article_id"]
         parent_id = request.GET["parent_id"]

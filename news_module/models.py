@@ -54,13 +54,21 @@ class Article(models.Model):
         return self.title
 
 
+class CommentStatusChoices(models.TextChoices):
+    APPROVED = ("approved", "تایید شده")
+    REJECTED = ("rejected", "رد شده")
+    PENDING = ("pending", "در انتظار بررسی")
+
+
 class ArticleComment(models.Model):
     user = models.ForeignKey(User_model, on_delete=models.CASCADE, verbose_name="کاربر")
     parent = models.ForeignKey("self", on_delete=models.CASCADE,
                                verbose_name="نظر والد (اختیاری)", blank=True, null=True)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="مقاله")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="مقاله", null=True)
     text = models.TextField(verbose_name="متن نظر")
     created_at = jDateTimeField(auto_now_add=True)
+    status = models.CharField(choices=CommentStatusChoices, max_length=100, verbose_name="وضعیت نظر",
+                              default=CommentStatusChoices.PENDING)
     is_active = models.BooleanField(default=False, verbose_name="فعال بودن نظر")
 
     class Meta:

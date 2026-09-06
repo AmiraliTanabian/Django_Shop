@@ -47,7 +47,8 @@ class PostDetailView(DetailView):
         context["current_cats"] = current_cats
 
         current_comments = ArticleComment.objects.filter(is_active=True, article__id=self.object.pk,
-                                                         parent=None).prefetch_related("articlecomment_set")
+                                                         parent=None, status="approved").prefetch_related(
+            "articlecomment_set")
         context["comments"] = current_comments
 
         add_comment_url = settings.SITE_URL + reverse_lazy("add_article_comment")

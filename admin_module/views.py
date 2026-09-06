@@ -438,10 +438,13 @@ class PostCommentDetail(View):
         form = EditCommentForms(request.POST)
         current_comment = get_object_or_404(ArticleComment, id=comment_id)
         if form.is_valid():
-            form.save()
+            comment_status = form.cleaned_data.get("status")
+            current_comment.status = comment_status
+            current_comment.save()
+
             messages.success(request, "کامنت مورد نظر با موفقیت ویرایش شد")
             return redirect(reverse_lazy("admin_blog_post_comments", args=[current_comment.article.id]))
-        
+
         return render(request, "admin_module/blog/blog_comment_detail.html", {
             "form": form,
             "comment": current_comment,

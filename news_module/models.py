@@ -69,7 +69,7 @@ class ArticleComment(models.Model):
     created_at = jDateTimeField(auto_now_add=True)
     status = models.CharField(choices=CommentStatusChoices, max_length=100, verbose_name="وضعیت نظر",
                               default=CommentStatusChoices.PENDING)
-    is_active = models.BooleanField(default=False, verbose_name="فعال بودن نظر")
+    is_active = models.BooleanField(default=True, verbose_name="فعال بودن نظر")
 
     class Meta:
         verbose_name = "نظر برای مقاله"

@@ -203,4 +203,4 @@ class AddArticleTagForm(forms.ModelForm):
 class EditCommentForms(forms.ModelForm):
     class Meta:
         model = ArticleComment
-        fields = ("is_active",)
+        fields = ("status",)

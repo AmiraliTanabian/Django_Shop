@@ -112,14 +112,18 @@
 												{{ comment.created_at|jformat:"%Y/%m/%d" }}
 											</td>
 											<td>
-												{% if comment.is_active %}
+												{% if comment.status == "approved" %}
 													<span class="label label-palegreen">
-												فعال
+												تایید
+												</span>
+												{% elif comment.status == "rejected" %}
+													<span class="label label-red">
+												رد
 												</span>
 												{% else %}
-													<span class="label label-orange">
-												غیرفعال
-												</span>
+													<span class="label label-yellow">
+												در انتظار بررسی
+													</span>
 												{% endif %}
 											</td>
 											<td>

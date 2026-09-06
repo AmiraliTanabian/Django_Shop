@@ -353,3 +353,41 @@ def remove_tag_ajax(request: HttpRequest, id):
             "msg": "خطایی رخ داد.",
             "icon": "error",
         })
+
+
+def set_blog_tag_active(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ArticleTag, id=id)
+        current_tag.is_active = True
+        current_tag.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": " تگ با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": "تغییر وضعیت تگ با خطا مواجه شد",
+            "icon": "error",
+        })
+
+
+def set_blog_tag_disable(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ArticleTag, id=id)
+        current_tag.is_active = False
+        current_tag.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": " تگ با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": "تغییر وضعیت تگ با خطا مواجه شد",
+            "icon": "error",
+        })

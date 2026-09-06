@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMessage
 from django.http import HttpRequest
@@ -449,3 +450,10 @@ class PostCommentDetail(View):
             "form": form,
             "comment": current_comment,
         })
+
+
+def admin_logout(request: HttpRequest):
+    if request.user:
+        logout(request)
+        messages.success(request, "ادمین عزیز شما خارج شدید")
+    return redirect(reverse_lazy('login_page'))

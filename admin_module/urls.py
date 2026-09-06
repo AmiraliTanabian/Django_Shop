@@ -29,4 +29,5 @@ urlpatterns = [
     path("blog/set-disable-tag/<id>/", views.set_blog_tag_disable, name="admin_tag_blog_set_disable"),
     path("blog/comments/<post_id>", views.BlogPostCommentList.as_view(), name="admin_blog_post_comments"),
     path("blog/comment/<comment_id>", views.PostCommentDetail.as_view(), name="admin_comment_detail_page"),
+    path("logout", views.admin_logout, name="admin_logout"),
 ]

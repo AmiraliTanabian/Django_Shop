@@ -41,3 +41,9 @@ def product_view(product):
 @register.filter(name="number_separator")
 def number_separator(value):
     return f'{value:,}'
+
+
+@register.simple_tag(name="get_django_admin_url")
+def get_django_admin_url():
+    url = settings.SITE_URL + settings.DJANGO_ADMIN_URL + '/'
+    return url

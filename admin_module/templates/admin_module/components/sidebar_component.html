@@ -1,3 +1,4 @@
+{% load global_filters %}
 <div class="page-sidebar" id="sidebar">
 	<!-- Page Sidebar Header-->
 	<div class="sidebar-header-wrapper">
@@ -57,7 +58,13 @@
 						<span class="menu-text">ایجاد ایمیل</span>
 					</a>
 				</li>
+
 			</ul>
+		<li>
+			<a href="{% get_django_admin_url %}" target="_blank">
+				<i class="menu-icon glyphicon glyphicon-dashboard"></i>
+				<span class="menu-text">پنل ادمین دوم</span>
+			</a>
 		</li>
 	</ul>
 

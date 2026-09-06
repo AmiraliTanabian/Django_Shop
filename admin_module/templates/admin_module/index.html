@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 {% extends 'admin_module/admin_base.html' %}
-{% load static %}
+{% load static admin_tags %}
 
 {% block title %}
 	پنل ادمین
@@ -14,20 +13,12 @@
 	</div>
 	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 	<div class="main-container container-fluid">
 		<!-- Page Container -->
 		<div class="page-container">
-			<!-- Page Sidebar -->
-			<div class="page-sidebar" id="sidebar">
-				<!-- Page Sidebar Header-->
-				<div class="sidebar-header-wrapper">
-					<input type="text" class="searchinput"/>
-					<i class="searchicon fa fa-search"></i>
-					<div class="searchhelper">به جستجوی صفحات، گزارشات، پیام ها و ایمیل خود بپردازید</div>
-				</div>
-				{% include 'admin_module/components/sidebar_component.html' %}
-			</div>
+
+			{% include 'admin_module/components/sidebar_component.html' %}
 			{% include 'admin_module/components/chat_bar.html' %}
 			<!-- Page Content -->
 			<div class="page-content">

@@ -88,6 +88,9 @@
 										<th>
 											<span></span>
 										</th>
+										<th>
+											<span></span>
+										</th>
 
 
 									</tr>
@@ -123,6 +126,12 @@
 												<a href="{% url 'admin_blog_edit_page' id=post.id %}"
 												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
 													ویرایش
+												</a>
+											</td>
+											<td>
+												<a href="{% url 'admin_blog_post_comments' post_id=post.id %}"
+												   class="btn btn-default btn-xs pink"><i class="fa fa-comment"></i>
+													نظرات
 												</a>
 											</td>
 										</tr>

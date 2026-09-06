@@ -2,7 +2,7 @@
 {% load static jformat %}
 
 {% block title %}
-	دسته بندی بلاگ | ادمین
+	نظرات پست | ادمین
 {% endblock %}
 
 {% block header_ref %}
@@ -36,7 +36,7 @@
 							<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
 						</li>
 						<li>
-							دسته بندی ها
+							نظرات مقاله
 						</li>
 
 					</ul>
@@ -44,7 +44,8 @@
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
-							دسته بندی های وبلاگ
+							شناسه ی پست :
+							{{ comments.first.article.id }}
 						</h1>
 					</div>
 					<div class="header-buttons">
@@ -58,7 +59,6 @@
 							<i class="glyphicon glyphicon-fullscreen"></i>
 						</a>
 					</div>
-					<a href="{% url 'admin_add_blog_category' %}" class="btn btn-blue">افزودن دسته بندی</a>
 
 
 				</div>
@@ -67,7 +67,7 @@
 						<div class="col-xs-12 col-md-12">
 							<div class="well with-header with-footer">
 								<div class="header bordered-pink">
-
+									نظرات پست
 								</div>
 								<table class="table table-striped table-bordered table-hover">
 									<thead>
@@ -76,43 +76,44 @@
 											<span></span> شناسه
 										</th>
 										<th>
-											<span></span> عنوان
+											<span></span> مقاله
+										</th>
+										<th class="hidden-xs">
+											<span>کاربر</span>
 										</th>
 										<th>
-											<span></span>اسلاگ
+											<span></span> تاریخ
 										</th>
 										<th>
-											<span>وضعیت</span>
+											<span></span>وضعیت
 										</th>
 										<th>
 											<span></span>
 										</th>
 
-
 									</tr>
 									</thead>
 									<tbody>
-									{% for cat in cats %}
+									{% for comment in comments %}
 
 										<tr>
 											<td>
-												<a href="#">{{ cat.id }}</a>
+												<a href="#">{{ comment.id }}</a>
 											</td>
 											<td class="hidden-xs">
-												{{ cat.title }}
+												{{ comment.article }}
 											</td>
 											<td class="hidden-xs">
-												{% if cat.parent %}
-													{{ cat.parent }}
-												{% else %}
-													-
-												{% endif %}
+												{{ comment.user }}
+											</td>
+											<td class="hidden-xs">
+												{{ comment.created_at|jformat:"%Y/%m/%d" }}
 											</td>
 											<td>
-												{% if cat.is_active %}
+												{% if comment.is_active %}
 													<span class="label label-palegreen">
-														فعال
-													</span>
+												فعال
+												</span>
 												{% else %}
 													<span class="label label-orange">
 												غیرفعال
@@ -120,24 +121,9 @@
 												{% endif %}
 											</td>
 											<td>
-												{% if cat.is_active %}
-													<a onclick="SetCatDisable({{ cat.id }})"
-													   class="btn btn-primary"><i class="fa fa-remove"></i>
-														غیرفعالش کن!
-													</a>
-												{% else %}
-													<a onclick="SetCatActive({{ cat.id }})"
-													   class="btn btn-primary"><i class="fa fa-remove"></i>
-														فعال شو!
-													</a>
-												{% endif %}
-
-
-											</td>
-											<td>
-												<a onclick="BlogCatRemove({{ cat.id }})"
-												   class="btn btn-danger"><i class="fa fa-remove"></i>
-													حذف
+												<a href=""
+												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
+													مشاهده
 												</a>
 											</td>
 										</tr>
@@ -151,12 +137,4 @@
 			</div>
 		</div>
 	</div>
-{% endblock %}
-
-{% block footer_ref %}
-	<script src="{% static 'admin_module/assets/js/blog_cat.js' %}"></script>
-
-
-	{#Sweet alert : #}
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

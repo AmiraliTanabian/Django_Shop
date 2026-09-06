@@ -177,3 +177,5 @@ cython_debug/
 *pyc
 .idea
 note.txt
+
+db.sqlite3

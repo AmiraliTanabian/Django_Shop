@@ -334,3 +334,22 @@ class AdminBlogTagsList(ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+
+def remove_tag_ajax(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ArticleTag, id=id)
+        current_tag.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "تگ با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except Exception as Error:
+        print(Error)
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
+        })

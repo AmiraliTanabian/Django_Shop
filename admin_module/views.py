@@ -17,6 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
+from product_module.models import Product
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms
@@ -561,3 +562,19 @@ def admin_logout(request: HttpRequest):
         logout(request)
         messages.success(request, "ادمین عزیز شما خارج شدید")
     return redirect(reverse_lazy('login_page'))
+
+
+class ProductsListView(PermissionRequiredMixin, ListView):
+    paginate_by = 10
+    model = Product
+    template_name = "admin_module/products/products_list.html"
+    context_object_name = "products"
+    permission_required = [
+        "product_module.view_product",
+    ]
+    permission_denied_message = "شما دسترسی به دیدن لیست محصولات را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

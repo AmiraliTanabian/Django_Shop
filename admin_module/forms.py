@@ -3,6 +3,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
+from product_module.models import Product
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -204,3 +205,24 @@ class EditCommentForms(forms.ModelForm):
     class Meta:
         model = ArticleComment
         fields = ("status",)
+
+
+class EditProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        exclude = ("is_available", "order_count")
+
+        widgets = {
+            "name": forms.TextInput(attrs={
+                "class": "form-control input-xs",
+            }),
+            "price": forms.TextInput(attrs={
+                "class": "form-control input-xs",
+            }),
+            "count": forms.TextInput(attrs={
+                "class": "form-control input-xs",
+            }),
+            "info": CKEditor5Widget(attrs={
+                "class": "django_ckeditor_5 form-control input-xs",
+            }),
+        }

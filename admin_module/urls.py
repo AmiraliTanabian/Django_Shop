@@ -30,5 +30,6 @@ urlpatterns = [
     path("blog/comments/<post_id>", views.BlogPostCommentList.as_view(), name="admin_blog_post_comments"),
     path("blog/comment/<comment_id>", views.PostCommentDetail.as_view(), name="admin_comment_detail_page"),
     path("logout", views.admin_logout, name="admin_logout"),
-    path("products/", views.ProductsListView.as_view(), name="admin_products_list")
+    path("products/", views.ProductsListView.as_view(), name="admin_products_list"),
+    path("products/<id>", views.ProductEditView.as_view(), name="admin_product_edit"),
 ]

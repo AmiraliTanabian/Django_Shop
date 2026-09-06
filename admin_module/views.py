@@ -20,7 +20,7 @@ from news_module.models import Article, ArticleCategories, ArticleTag, ArticleCo
 from product_module.models import Product
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm, AddArticleTagForm, EditCommentForms
+    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm
 
 
 @login_required()
@@ -578,3 +578,24 @@ class ProductsListView(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+
+class ProductEditView(View):
+    def get(self, request: HttpRequest, id):
+        product = get_object_or_404(Product, id=id)
+        form = EditProductForm(instance=product)
+        return render(request, "admin_module/products/product_detail.html", {
+            "form": form,
+            "product": product
+        })
+
+    def post(self, request: HttpRequest, id):
+        product = get_object_or_404(Product, id=id)
+        form = EditProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "محصول مورد نظر با موفقیت ویرایش")
+        return render(request, "admin_module/products/product_detail.html", {
+            "form": form,
+            "product": product
+        })

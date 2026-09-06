@@ -2,7 +2,7 @@
 {% load static jformat %}
 
 {% block title %}
-	ویرایش پست | ادمین
+	ویرایش محصول | ادمین
 {% endblock %}
 
 {% block header_ref %}
@@ -35,16 +35,16 @@
 							<a href="{% url 'admin_home_page' %}">خانه</a>
 						</li>
 						<li>
-							<a href="{% url 'admin_blog_list_page' %}">لیست بلاگ</a>
+							<a href="{% url 'admin_products_list' %}">لیست محصولات</a>
 
 						</li>
-						<li class="active">ویرایش پست</li>
+						<li class="active">ویرایش محصول</li>
 					</ul>
 				</div>
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
-							ویرایش پست
+							ویرایش محصول
 						</h1>
 					</div>
 					<div class="header-buttons">
@@ -64,26 +64,38 @@
 						<div class="col-lg-6 col-sm-6 col-xs-12">
 							<div class="widget">
 								<div class="widget-header bordered-top bordered-palegreen">
-									<span class="widget-caption">شناسه : {{ post.id }}</span>
+									<span class="widget-caption">شناسه محصول : {{ product.id }}</span>
 								</div>
 								<div class="widget-body">
 									<div class="collapse in">
 										<form role="form" method="post" action="#" enctype="multipart/form-data">
 											{% csrf_token %}
-											<div class="form-group {% if form.title.errors %}danger{% endif %}">
-												<label for="xsinput">{{ form.title.label }}</label>
-												{{ form.title }}
-												{% if form.title.errors %}{{ form.title.errors }}{% endif %}
+											<div class="form-group {% if form.name.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.name.label }}</label>
+												{{ form.name }}
+												{% if form.name.errors %}{{ form.name.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.price.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.price.label }}</label>
+												{{ form.price }}
+												{% if form.price.errors %}{{ form.price.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.count.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.count.label }}</label>
+												{{ form.count }}
+												{% if form.count.errors %}{{ form.count.errors }}{% endif %}
 											</div>
 											<div class="form-group {% if form.categories.errors %}danger{% endif %}">
 												<label for="xsinput">{{ form.categories.label }}</label>
 												{{ form.categories }}
 												{% if form.categories.errors %}{{ form.categories.errors }}{% endif %}
-												<a href="{% url 'admin_add_blog_category' %}" target="_blank"
+
+												<a href="" target="_blank"
 												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
 												   class="btn btn-blue">
 													افزودن دسته بندی
 												</a>
+
 											</div>
 											<div class="form-group {% if form.tags.errors %}danger{% endif %}">
 												<label for="xsinput">{{ form.tags.label }}</label>
@@ -96,35 +108,28 @@
 													افزودن تگ
 												</a>
 											</div>
-											<div class="form-group">
-												<label for="xsinput">نویسنده</label>
-												<p class="form-control input-xs">
-													{{ post.author }}
-												</p>
-											</div>
-											<div class="form-group">
-												<label for="xsinput">تاریخ انتشار</label>
-												<p class="form-control input-xs">
-													{{ post.data|jformat:"%Y/%m/%d" }}
-												</p>
-											</div>
-											<div class="form-group {% if form.short_info.errors %}danger{% endif %}">
-												<label for="xsinput">{{ form.short_info.label }}</label>
-												{{ form.short_info }}
-												{% if form.short_info.errors %}{{ form.short_info.errors }}{% endif %}
-											</div>
-											<div class="form-group {% if form.text.errors %}danger{% endif %}">
-												<label for="xsinput">{{ form.text.label }}</label>
-												{{ form.text }}
-												{% if form.text.errors %}{{ form.text.errors }}{% endif %}
-											</div>
-											<br><br>
+											<div class="form-group {% if form.brand.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.brand.label }}</label>
+												{{ form.brand }}
+												{% if form.brand.errors %}{{ form.brand.errors }}{% endif %}
 
-											<div class="form-group {% if form.image.errors %}danger{% endif %}">
-												<label for="xsinput">{{ form.image.label }}</label>
+												<a href="{% url 'admin_add_blog_category' %}" target="_blank"
+												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
+												   class="btn btn-blue">
+													افزودن برند
+												</a>
+											</div>
+											<div class="form-group {% if form.info.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.info.label }}</label>
+												{{ form.info }}
+												{% if form.info.errors %}{{ form.info.errors }}{% endif %}
+											</div>
+
+											<div class="form-group {% if form.banner.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.banner.label }}</label>
 												<br>
-												{% if post.image %}
-													<img src="{{ post.image.url }}"
+												{% if product.banner %}
+													<img src="{{ product.banner.url }}"
 													     class="pull-right right img-thumbnail profile-image center-block"
 													     alt="site logo"
 													     height="140" width="140">
@@ -132,14 +137,14 @@
 													<br><br>
 												{% else %}
 													<p class="danger">
-														هنوز تصویر اصلی آپلود نشده!
+														هنوز تصویر اصلی محصول آپلود نشده!
 													</p>
 												{% endif %}
 
 
 												<br><br>
-												{{ form.image }}
-												{% if form.image.errors %}{{ form.image.errors }}{% endif %}
+												{{ form.banner }}
+												{% if form.banner.errors %}{{ form.banner.errors }}{% endif %}
 											</div>
 											<label class="checkbox-wrapper">
 												{{ form.is_active }}

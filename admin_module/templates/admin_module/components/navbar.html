@@ -1,3 +1,4 @@
+{% load static %}
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="navbar-container">
@@ -257,21 +258,31 @@
 						<li>
 							<a class="login-area dropdown-toggle" data-toggle="dropdown">
 								<div class="avatar" title="View your public profile">
-									<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg">
+									{% if user.profile_image %}
+										<img src="{{ user.profile_image.url }}">
+									{% else %}
+										<img src="{% static 'images/blog/default-user-profile.jpg' %}">
+									{% endif %}
 								</div>
 								<section>
-									<h2><span class="profile"><span>دیوید استیونسون </span></span></h2>
+									<h2><span class="profile"><span>{{ user }}</span></span></h2>
 								</section>
 							</a>
 							<!--Login Area Dropdown-->
 							<ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
-								<li class="username"><a>دیوید استیونسون</a></li>
-								<li class="email"><a>David.Stevenson@live.com</a></li>
+								<li class="username"><a>{{ user.username }}</a></li>
+								<li class="email"><a>{{ user.email }}</a></li>
 								<!--Avatar Area-->
 								<li>
 									<div class="avatar-area">
-										<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
-										     class="avatar">
+										{% if user.profile_image %}
+											<img src="{{ user.profile_image.url }}"
+											     class="avatar">
+										{% else %}
+											<img src="{% static 'images/blog/default-user-profile.jpg' %}"
+											     class="avatar">
+										{% endif %}
+
 										<span class="caption">تغییر تصویر</span>
 									</div>
 								</li>
@@ -314,7 +325,7 @@
 								</li>
 								<!--/Theme Selector Area-->
 								<li class="dropdown-footer">
-									<a href="login.html">
+									<a class="danger" href="{% url 'admin_logout' %}">
 										خروج از سیستم
 									</a>
 								</li>

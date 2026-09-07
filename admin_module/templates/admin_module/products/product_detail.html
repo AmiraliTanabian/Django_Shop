@@ -46,6 +46,8 @@
 						<h1>
 							ویرایش محصول
 						</h1>
+						<a onclick="RemoveProduct({{ product.id }})" class="btn btn-danger">حذف
+							محصول</a>
 					</div>
 					<div class="header-buttons">
 						<a class="sidebar-toggler" href="#">
@@ -166,4 +168,10 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block footer_ref %}
+	<script src="{% static 'admin_module/assets/js/product_handler.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}

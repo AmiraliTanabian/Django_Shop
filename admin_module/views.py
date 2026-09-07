@@ -830,3 +830,22 @@ class AddProductTag(PermissionRequiredMixin, View):
         return render(request, "admin_module/products/add_product_tag.html", {
             "form": form
         })
+
+
+@permission_required(perm=["product_module.delete_product"], raise_exception=True)
+def remove_product_ajax(request: HttpRequest, id):
+    try:
+        current_product = get_object_or_404(Product, id=id)
+        current_product.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "محصول با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
+        })

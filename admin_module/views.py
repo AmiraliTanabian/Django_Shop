@@ -17,7 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product
+from product_module.models import Product, ProductCategory
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm
@@ -626,4 +626,39 @@ class AddProductView(PermissionRequiredMixin, View):
             return redirect(reverse_lazy("admin_products_list"))
         return render(request, "admin_module/products/add_product.html", {
             "form": form,
+        })
+
+
+class ProductCategoriesList(PermissionRequiredMixin, ListView):
+    model = ProductCategory
+    paginate_by = 10
+    template_name = "admin_module/products/product_categories_list.html"
+    context_object_name = "cats"
+    permission_required = [
+        "product_module.view_productcategory",
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده دسته بندی ها را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query
+
+
+@permission_required(perm=["product_module.delete_productcategory", ], raise_exception=True)
+def remove_product_category_ajax(request: HttpRequest, id):
+    try:
+        current_category = get_object_or_404(ProductCategory, id=id)
+        current_category.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "دسته بندی با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
         })

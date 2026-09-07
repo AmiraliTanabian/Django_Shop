@@ -12,8 +12,6 @@ function BlogCatRemove(id) {
     }).then((re) => {
         if (re.isConfirmed) {
             $.get("../remove-cat/" + id + "", {}).then(re => {
-                console.log("My Result:")
-                console.log(re)
                 Swal.fire({
                     title: re.title,
                     text: re.msg,

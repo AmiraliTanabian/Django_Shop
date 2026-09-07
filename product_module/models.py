@@ -22,7 +22,7 @@ class ProductCategory(models.Model):
                                related_name="childs")
     title = models.CharField(max_length=50, verbose_name="عنوان دسته بندی")
     slug = models.SlugField(verbose_name="اسلاگ", allow_unicode=True, db_index=True, unique=True)
-    is_active = models.BooleanField(verbose_name="فعال")
+    is_active = models.BooleanField(verbose_name="فعال", default=True)
 
     class Meta:
         verbose_name = "دسته بندی محصول"

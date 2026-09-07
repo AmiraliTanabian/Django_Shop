@@ -20,7 +20,7 @@ from news_module.models import Article, ArticleCategories, ArticleTag, ArticleCo
 from product_module.models import Product, ProductCategory
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm
+    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm
 
 
 @login_required()
@@ -703,4 +703,28 @@ def set_product_cat_disable(request: HttpRequest, id):
             "title": "تغییر وضعیت تگ",
             "msg": "تغییر وضعیت تگ با خطا مواجه شد",
             "icon": "error",
+        })
+
+
+class AddProductCategory(PermissionRequiredMixin, View):
+    permission_required = [
+        "product_module.add_productcategory"
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد دسته بندی محصولات را ندارید"
+
+    def get(self, request: HttpRequest):
+        form = AddProductCatForm()
+        return render(request, "admin_module/products/add_product_cat.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddProductCatForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "دسته بندی با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_product_categories_list"))
+
+        return render(request, "admin_module/products/add_product_cat.html", {
+            "form": form
         })

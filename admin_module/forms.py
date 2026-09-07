@@ -3,7 +3,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product
+from product_module.models import Product, ProductCategory
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -225,4 +225,24 @@ class EditProductForm(forms.ModelForm):
             "info": CKEditor5Widget(attrs={
                 "class": "django_ckeditor_5 form-control input-xs",
             }),
+        }
+
+
+class AddProductCatForm(forms.ModelForm):
+    class Meta:
+        model = ProductCategory
+        fields = "__all__"
+
+        widgets = {
+            "slug": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
         }

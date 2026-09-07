@@ -90,7 +90,7 @@
 												{{ form.categories }}
 												{% if form.categories.errors %}{{ form.categories.errors }}{% endif %}
 
-												<a href="" target="_blank"
+												<a href="{% url 'admin_add_product_category' %}" target="_blank"
 												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
 												   class="btn btn-blue">
 													افزودن دسته بندی

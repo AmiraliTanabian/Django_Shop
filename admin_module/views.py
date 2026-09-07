@@ -744,3 +744,23 @@ class AdminProductTagsList(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+
+@permission_required(
+    perm=["product_module.delete_producttag"], raise_exception=True)
+def remove_product_tag_ajax(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ProductTag, id=id)
+        current_tag.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "تگ با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
+        })

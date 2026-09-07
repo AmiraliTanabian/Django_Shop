@@ -17,7 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product, ProductCategory
+from product_module.models import Product, ProductCategory, ProductTag
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm
@@ -728,3 +728,19 @@ class AddProductCategory(PermissionRequiredMixin, View):
         return render(request, "admin_module/products/add_product_cat.html", {
             "form": form
         })
+
+
+class AdminProductTagsList(PermissionRequiredMixin, ListView):
+    model = ProductTag
+    paginate_by = 10
+    template_name = "admin_module/products/product_tag_list.html"
+    context_object_name = "tags"
+    permission_required = [
+        "product_module.view_producttag"
+    ]
+    permission_denied_message = "شما دسترسی برای مشاهده تگ های محصولات را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

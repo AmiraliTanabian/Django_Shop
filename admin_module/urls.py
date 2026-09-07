@@ -34,5 +34,7 @@ urlpatterns = [
     path("products/<id>", views.ProductEditView.as_view(), name="admin_product_edit"),
     path("products/add/", views.AddProductView.as_view(), name="admin_product_add"),
     path("products/categorires/", views.ProductCategoriesList.as_view(), name="admin_product_categories_list"),
-    path("products/remove-cat/<id>", views.remove_product_category_ajax, name="admin_product_categories_list"),
+    path("products/remove-cat/<id>", views.remove_product_category_ajax, name="admin_remove_product_cat"),
+    path("products/set-active-cat/<id>/", views.set_product_cat_active, name="admin_set_product_cat_active"),
+    path("products/set-disable-cat/<id>/", views.set_product_cat_disable, name="admin_set_product_cat_disable"),
 ]

@@ -662,3 +662,45 @@ def remove_product_category_ajax(request: HttpRequest, id):
             "msg": "خطایی رخ داد.",
             "icon": "error",
         })
+
+
+@permission_required(
+    perm=["product_module.change_productcategory"], raise_exception=True)
+def set_product_cat_active(request: HttpRequest, id):
+    try:
+        current_category = get_object_or_404(ProductCategory, id=id)
+        current_category.is_active = True
+        current_category.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": " دسته بندی با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت دسته بندی",
+            "msg": "تغییر وضعیت دسته بندی با خطا مواجه شد",
+            "icon": "error",
+        })
+
+
+@permission_required(
+    perm=["product_module.change_productcategory"], raise_exception=True)
+def set_product_cat_disable(request: HttpRequest, id):
+    try:
+        current_category = get_object_or_404(ProductCategory, id=id)
+        current_category.is_active = False
+        current_category.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": " تگ با موفقیت غیرفعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": "تغییر وضعیت تگ با خطا مواجه شد",
+            "icon": "error",
+        })

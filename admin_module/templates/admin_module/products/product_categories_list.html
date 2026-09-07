@@ -121,12 +121,12 @@
 											</td>
 											<td>
 												{% if cat.is_active %}
-													<a onclick="SetCatDisable({{ cat.id }})"
+													<a onclick="setProductCategoryDisable({{ cat.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														غیرفعالش کن!
 													</a>
 												{% else %}
-													<a onclick="SetCatActive({{ cat.id }})"
+													<a onclick="setProductCategoryActive({{ cat.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														فعال شو!
 													</a>

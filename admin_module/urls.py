@@ -32,4 +32,5 @@ urlpatterns = [
     path("logout", views.admin_logout, name="admin_logout"),
     path("products/", views.ProductsListView.as_view(), name="admin_products_list"),
     path("products/<id>", views.ProductEditView.as_view(), name="admin_product_edit"),
+    path("products/add/", views.AddProductView.as_view(), name="admin_product_add"),
 ]

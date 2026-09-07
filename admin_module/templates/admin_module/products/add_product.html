@@ -1,0 +1,153 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat %}
+
+{% block title %}
+	افزودن محصول | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+	<!--For CKEditor5Widget -->
+	{{ form.media }}
+{% endblock %}
+
+{% block content %}
+	<!-- Loading Container -->
+	{% comment %} <div class="loading-container">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+	<!--  /Loading Container -->
+
+	{% include 'admin_module/components/navbar.html' %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							<a href="{% url 'admin_products_list' %}">لیست محصولات</a>
+
+						</li>
+						<li class="active">افزودن محصول</li>
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							افزودن محصول
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_setting_main_page' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<div class="widget">
+								<div class="widget-header bordered-top bordered-palegreen">
+									<span class="widget-caption"></span>
+								</div>
+								<div class="widget-body">
+									<div class="collapse in">
+										<form role="form" method="post" action="#" enctype="multipart/form-data">
+											{% csrf_token %}
+											<div class="form-group {% if form.name.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.name.label }}</label>
+												{{ form.name }}
+												{% if form.name.errors %}{{ form.name.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.price.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.price.label }}</label>
+												{{ form.price }}
+												{% if form.price.errors %}{{ form.price.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.count.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.count.label }}</label>
+												{{ form.count }}
+												{% if form.count.errors %}{{ form.count.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.categories.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.categories.label }}</label>
+												{{ form.categories }}
+												{% if form.categories.errors %}{{ form.categories.errors }}{% endif %}
+
+												<a href="" target="_blank"
+												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
+												   class="btn btn-blue">
+													افزودن دسته بندی
+												</a>
+
+											</div>
+											<div class="form-group {% if form.tags.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.tags.label }}</label>
+												{{ form.tags }}
+												{% if form.tags.errors %}{{ form.tags.errors }}{% endif %}
+
+												<a href="{% url 'admin_add_blog_tag' %}" target="_blank"
+												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
+												   class="btn btn-blue">
+													افزودن تگ
+												</a>
+											</div>
+											<div class="form-group {% if form.brand.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.brand.label }}</label>
+												{{ form.brand }}
+												{% if form.brand.errors %}{{ form.brand.errors }}{% endif %}
+
+												<a href="{% url 'admin_add_blog_category' %}" target="_blank"
+												   onclick="window.open(this.href, 'popup', 'width=600,height=500'); return false;"
+												   class="btn btn-blue">
+													افزودن برند
+												</a>
+											</div>
+											<div class="form-group {% if form.info.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.info.label }}</label>
+												{{ form.info }}
+												{% if form.info.errors %}{{ form.info.errors }}{% endif %}
+											</div>
+
+											<div class="form-group {% if form.banner.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.banner.label }}</label>
+												{{ form.banner }}
+												{% if form.banner.errors %}{{ form.banner.errors }}{% endif %}
+											</div>
+											<label class="checkbox-wrapper">
+												{{ form.is_active }}
+												<span class="checkmark"></span>
+												فعال باشد
+												{% if form.is_active.errors %}{{ form.is_active.errors }}{% endif %}
+											</label>
+											<br><br>
+											<button class="btn btn-sky" type="submit">
+												افزودن
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

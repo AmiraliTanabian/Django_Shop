@@ -580,7 +580,12 @@ class ProductsListView(PermissionRequiredMixin, ListView):
         return query
 
 
-class ProductEditView(View):
+class ProductEditView(PermissionRequiredMixin, View):
+    context_object_name = "products"
+    permission_required = [
+        "product_module.change_product",
+    ]
+
     def get(self, request: HttpRequest, id):
         product = get_object_or_404(Product, id=id)
         form = EditProductForm(instance=product)
@@ -598,4 +603,27 @@ class ProductEditView(View):
         return render(request, "admin_module/products/product_detail.html", {
             "form": form,
             "product": product
+        })
+
+
+class AddProductView(PermissionRequiredMixin, View):
+    permission_required = [
+        "product_module.add_product"
+    ]
+    permission_denied_message = "شما دسترسی افزودن کالا را ندارید"
+
+    def get(self, request: HttpRequest):
+        form = EditProductForm()
+        return render(request, "admin_module/products/add_product.html", {
+            "form": form,
+        })
+
+    def post(self, request: HttpRequest):
+        form = EditProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "محصول مورد نظر با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_products_list"))
+        return render(request, "admin_module/products/add_product.html", {
+            "form": form,
         })

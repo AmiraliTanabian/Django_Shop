@@ -764,3 +764,45 @@ def remove_product_tag_ajax(request: HttpRequest, id):
             "msg": "خطایی رخ داد.",
             "icon": "error",
         })
+
+
+@permission_required(
+    perm=['product_module.change_producttag'], raise_exception=True)
+def set_product_tag_active(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ProductTag, id=id)
+        current_tag.is_active = True
+        current_tag.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": " تگ با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": "تغییر وضعیت تگ با خطا مواجه شد",
+            "icon": "error",
+        })
+
+
+@permission_required(
+    perm=["product_module.change_producttag"], raise_exception=True)
+def set_product_tag_disable(request: HttpRequest, id):
+    try:
+        current_tag = get_object_or_404(ProductTag, id=id)
+        current_tag.is_active = False
+        current_tag.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": " تگ با موفقیت غیرفعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت تگ",
+            "msg": "تغییر وضعیت تگ با خطا مواجه شد",
+            "icon": "error",
+        })

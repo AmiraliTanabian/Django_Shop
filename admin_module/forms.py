@@ -3,7 +3,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product, ProductCategory
+from product_module.models import Product, ProductCategory, ProductTag
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -241,6 +241,26 @@ class AddProductCatForm(forms.ModelForm):
             ),
 
             "title": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+        }
+
+
+class AddProductTagForm(forms.ModelForm):
+    class Meta:
+        model = ProductTag
+        fields = "__all__"
+
+        widgets = {
+            "slug": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+
+            "tag_name": forms.TextInput(
                 attrs={
                     "class": "form-control input-xs",
                 }

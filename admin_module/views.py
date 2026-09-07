@@ -20,7 +20,7 @@ from news_module.models import Article, ArticleCategories, ArticleTag, ArticleCo
 from product_module.models import Product, ProductCategory, ProductTag
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm
+    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm
 
 
 @login_required()
@@ -805,4 +805,28 @@ def set_product_tag_disable(request: HttpRequest, id):
             "title": "تغییر وضعیت تگ",
             "msg": "تغییر وضعیت تگ با خطا مواجه شد",
             "icon": "error",
+        })
+
+
+class AddProductTag(PermissionRequiredMixin, View):
+    permission_required = [
+        "product_module.add_producttag"
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد   تگ محصولات را ندارید"
+
+    def get(self, request: HttpRequest):
+        form = AddProductTagForm()
+        return render(request, "admin_module/products/add_product_tag.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddProductTagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "تگ با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_product_tags_list"))
+
+        return render(request, "admin_module/products/add_product_tag.html", {
+            "form": form
         })

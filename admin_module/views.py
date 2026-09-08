@@ -20,7 +20,8 @@ from news_module.models import Article, ArticleCategories, ArticleTag, ArticleCo
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
-    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm
+    AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
+    EditProductCommentForm
 
 
 @login_required()
@@ -533,16 +534,16 @@ class PostCommentDetail(PermissionRequiredMixin, View):
     permission_denied_message = "شما دسترسی برای ایجاد تغییرات در نظرات مقالات را ندارید"
 
     def get(self, request, comment_id):
-        form = EditCommentForms()
         current_comment = get_object_or_404(ArticleComment, id=comment_id)
+        form = EditCommentForms(instance=current_comment)
         return render(request, "admin_module/blog/blog_comment_detail.html", {
             "form": form,
             "comment": current_comment,
         })
 
     def post(self, request, comment_id):
-        form = EditCommentForms(request.POST)
         current_comment = get_object_or_404(ArticleComment, id=comment_id)
+        form = EditCommentForms(request.POST, instance=current_comment)
         if form.is_valid():
             comment_status = form.cleaned_data.get("status")
             current_comment.status = comment_status
@@ -872,3 +873,39 @@ class ProductCommentList(PermissionRequiredMixin, ListView):
         context = super().get_context_data(*args, **kwargs)
         context["product"] = current_product
         return context
+
+
+class ProductCommentDetail(PermissionRequiredMixin, View):
+    permission_required = [
+        "product_module.change_productcomment"
+    ]
+    permission_denied_message = "شما دسترسی برای ایجاد تغییرات در نظرات محصولات را ندارید"
+
+    def get(self, request, comment_id):
+        current_comment = get_object_or_404(ProductComment, id=comment_id)
+        form = EditProductCommentForm(instance=current_comment)
+        score_range = range(current_comment.score)
+        return render(request, "admin_module/products/product_comment_detail.html", {
+            "form": form,
+            "comment": current_comment,
+            "score_range": score_range,
+        })
+
+    def post(self, request, comment_id):
+        current_comment = get_object_or_404(ProductComment, id=comment_id)
+        form = EditProductCommentForm(request.POST, instance=current_comment)
+        score_range = range(current_comment.score)
+
+        if form.is_valid():
+            comment_status = form.cleaned_data.get("status")
+            current_comment.status = comment_status
+            current_comment.save()
+
+            messages.success(request, "کامنت مورد نظر با موفقیت ویرایش شد")
+            return redirect(reverse_lazy("admin_product_comments", args=[current_comment.product.id]))
+
+        return render(request, "admin_module/products/product_comment_detail.html", {
+            "form": form,
+            "comment": current_comment,
+            "score_range": score_range
+        })

@@ -3,7 +3,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product, ProductCategory, ProductTag
+from product_module.models import Product, ProductCategory, ProductTag, ProductComment
 from site_module.models import SiteSetting, SiteBanners, Slider
 
 
@@ -266,3 +266,9 @@ class AddProductTagForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class EditProductCommentForm(forms.ModelForm):
+    class Meta:
+        model = ProductComment
+        fields = ("status",)

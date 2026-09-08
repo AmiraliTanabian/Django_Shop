@@ -925,3 +925,22 @@ class ProductBrandList(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+
+@permission_required(perm=["product_module.delete_brand", ], raise_exception=True)
+def remove_product_category_ajax(request: HttpRequest, id):
+    try:
+        current_brand = get_object_or_404(Brand, id=id)
+        current_brand.delete()
+        return JsonResponse({
+            "title": "موفق",
+            "msg": "برند با موفقیت حدف شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "خطا",
+            "msg": "خطایی رخ داد.",
+            "icon": "error",
+        })

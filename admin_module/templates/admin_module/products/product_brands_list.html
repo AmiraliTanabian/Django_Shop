@@ -125,7 +125,7 @@
 
 											</td>
 											<td>
-												<a onclick="removeProductCategory({{ brand.id }})"
+												<a onclick="RemoveBrand({{ brand.id }})"
 												   class="btn btn-danger"><i class="fa fa-remove"></i>
 													حذف
 												</a>
@@ -144,7 +144,7 @@
 {% endblock %}
 
 {% block footer_ref %}
-	<script src="{% static 'admin_module/assets/js/product_cat.js' %}"></script>
+	<script src="{% static 'admin_module/assets/js/product_brand_handler.js' %}"></script>
 
 
 	{#Sweet alert : #}

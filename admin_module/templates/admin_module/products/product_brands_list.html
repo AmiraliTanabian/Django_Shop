@@ -1,23 +1,17 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static jformat global_filters %}
+{% load static jformat admin_tags %}
 
 {% block title %}
-	محصولات | ادمین
+	مدیریت برند محصولات | ادمین
 {% endblock %}
 
 {% block header_ref %}
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 {% endblock %}
 
-<!-- Body -->
 {% block content %}
-	<!-- Loading Container -->
-	{#	<div class="loading-container">#}
-	{#		<div class="loader"></div>#}
-	{#	</div>#}
-	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">
@@ -33,7 +27,10 @@
 							<a href="{% url 'admin_home_page' %}">خانه</a>
 						</li>
 						<li>
-							لیست محصولات
+							<a href="{% url 'admin_products_list' %}">لیست محصولات</a>
+						</li>
+						<li>
+							لیست برند ها
 						</li>
 
 					</ul>
@@ -41,25 +38,22 @@
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
-							لیست محصولات
+							برند های محصولات
 						</h1>
 					</div>
 					<div class="header-buttons">
 						<a class="sidebar-toggler" href="#">
 							<i class="fa fa-arrows-h"></i>
 						</a>
-						<a class="refresh" id="refresh-toggler" href="{% url 'admin_ads_setting_page' %}">
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_product_brands' %}">
 							<i class="glyphicon glyphicon-refresh"></i>
 						</a>
 						<a class="fullscreen" id="fullscreen-toggler" href="#">
 							<i class="glyphicon glyphicon-fullscreen"></i>
 						</a>
 					</div>
-					<a href="{% url 'admin_product_add' %}" class="btn btn-blue">افزودن محصول</a>
-					<a href="{% url 'admin_product_categories_list' %}" class="btn btn-blue">مدیریت دسته بندی
-						محصولات</a>
-					<a href="{% url 'admin_product_tags_list' %}" class="btn btn-blue">مدیریت تگ محصولات</a>
-					<a href="{% url 'admin_product_brands' %}" class="btn btn-blue">مدیریت برند</a>
+					<a href="{% url 'admin_add_product_category' %}" class="btn btn-blue">افزودن برند</a>
+
 
 				</div>
 				<div class="page-body">
@@ -67,7 +61,7 @@
 						<div class="col-xs-12 col-md-12">
 							<div class="well with-header with-footer">
 								<div class="header bordered-pink">
-									دسته بندی محصولات
+
 								</div>
 								<table class="table table-striped table-bordered table-hover">
 									<thead>
@@ -78,17 +72,11 @@
 										<th>
 											<span></span> عنوان
 										</th>
-										<th class="hidden-xs">
-											<span>قیمت</span>
+										<th>
+											<span></span>اسلاگ
 										</th>
 										<th>
-											<span></span>تعداد
-										</th>
-										<th>
-											<span>وضعیت موجودی</span>
-										</th>
-										<th>
-											<span></span>
+											<span>وضعیت</span>
 										</th>
 										<th>
 											<span></span>
@@ -98,49 +86,48 @@
 									</tr>
 									</thead>
 									<tbody>
-									{% for product in products %}
+									{% for brand in brands %}
 
 										<tr>
 											<td>
-												<a href="#">{{ product.id }}</a>
+												<a href="#">{{ brand.id }}</a>
 											</td>
 											<td class="hidden-xs">
-												<a target="_blank" style="color: black;"
-												   href="{% url 'product_detail' pk=product.id %}">
-													{{ product.name }}
-												</a>
+												{{ brand.title }}
 											</td>
 											<td class="hidden-xs">
-												{{ product.price|price_separator }}
-											</td>
-											<td class="hidden-xs">
-												{% if product.count != 0 %}
-													{{ product.count }}
-												{% else %}
-													-
-												{% endif %}
+												{{ brand.slug }}
 											</td>
 											<td>
-												{% if product.count != 0 %}
+												{% if brand.is_active %}
 													<span class="label label-palegreen">
-												موجود
-												</span>
+														فعال
+													</span>
 												{% else %}
 													<span class="label label-orange">
-												ناموجود
+												غیرفعال
 												</span>
 												{% endif %}
 											</td>
 											<td>
-												<a href="{% url 'admin_product_edit' id=product.id %}"
-												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
-													ویرایش
-												</a>
+												{% if brand.is_active %}
+													<a onclick="setProductCategoryDisable({{ brand.id }})"
+													   class="btn btn-primary"><i class="fa fa-remove"></i>
+														غیرفعالش کن!
+													</a>
+												{% else %}
+													<a onclick="setProductCategoryActive({{ brand.id }})"
+													   class="btn btn-primary"><i class="fa fa-remove"></i>
+														فعال شو!
+													</a>
+												{% endif %}
+
+
 											</td>
 											<td>
-												<a href="{% url 'admin_product_comments' product_id=product.id %}"
-												   class="btn btn-default btn-xs pink"><i class="fa fa-comment"></i>
-													نظرات
+												<a onclick="removeProductCategory({{ brand.id }})"
+												   class="btn btn-danger"><i class="fa fa-remove"></i>
+													حذف
 												</a>
 											</td>
 										</tr>
@@ -154,4 +141,12 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block footer_ref %}
+	<script src="{% static 'admin_module/assets/js/product_cat.js' %}"></script>
+
+
+	{#Sweet alert : #}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

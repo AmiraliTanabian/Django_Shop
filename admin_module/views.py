@@ -17,7 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product, ProductCategory, ProductTag, ProductComment
+from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
@@ -909,3 +909,19 @@ class ProductCommentDetail(PermissionRequiredMixin, View):
             "comment": current_comment,
             "score_range": score_range
         })
+
+
+class ProductBrandList(PermissionRequiredMixin, ListView):
+    paginate_by = 10
+    model = Brand
+    template_name = "admin_module/products/product_brands_list.html"
+    context_object_name = "brands"
+    permission_required = [
+        "product_module.view_brand",
+    ]
+    permission_denied_message = "شما دسترسی به دیدن لیست برند محصولات را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

@@ -7,7 +7,7 @@ from django_jalali.db.models import jDateTimeField
 class Brand(models.Model):
     title = models.CharField(max_length=50, verbose_name="عنوان برند")
     slug = models.SlugField(verbose_name="اسلاگ", allow_unicode=True, db_index=True, unique=True)
-    is_active = models.BooleanField(verbose_name="فعال")
+    is_active = models.BooleanField(verbose_name="فعال", default=True)
 
     class Meta:
         verbose_name = "برند"

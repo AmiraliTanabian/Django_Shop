@@ -21,7 +21,7 @@ from product_module.models import Product, ProductCategory, ProductTag, ProductC
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
-    EditProductCommentForm
+    EditProductCommentForm, AddProductBrandForm
 
 
 @login_required()
@@ -985,4 +985,28 @@ def set_product_brand_disable(request: HttpRequest, id):
             "title": "تغییر وضعیت برند",
             "msg": "تغییر وضعیت برند با خطا مواجه شد",
             "icon": "error",
+        })
+
+
+class AddProductBrand(PermissionRequiredMixin, View):
+    permission_required = [
+        "product_module.add_brand"
+    ]
+    permission_denied_message = "شما دسترسی به ایجاد برند محصولات را ندارید"
+
+    def get(self, request: HttpRequest):
+        form = AddProductBrandForm()
+        return render(request, "admin_module/products/add_product_brand.html", {
+            "form": form
+        })
+
+    def post(self, request: HttpRequest):
+        form = AddProductBrandForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "برند با موفقیت افزوده شد")
+            return redirect(reverse_lazy("admin_product_brands"))
+
+        return render(request, "admin_module/products/add_product_brand.html", {
+            "form": form
         })

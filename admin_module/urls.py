@@ -33,6 +33,7 @@ urlpatterns = [
     path("products/", views.ProductsListView.as_view(), name="admin_products_list"),
     path("products/add-cat/", views.AddProductCategory.as_view(), name="admin_add_product_category"),
     path("products/add-tag/", views.AddProductTag.as_view(), name="admin_add_product_tag"),
+    path("products/add-brand/", views.AddProductBrand.as_view(), name="admin_add_product_brand"),
     path("products/remove-product/<id>/", views.remove_product_ajax, name="admin_remove_product"),
     path("products/comments/<product_id>/", views.ProductCommentList.as_view(), name="admin_product_comments"),
     path("products/comment/<comment_id>/", views.ProductCommentDetail.as_view(), name="admin_product_comment_detail"),

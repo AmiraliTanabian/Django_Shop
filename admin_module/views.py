@@ -927,8 +927,8 @@ class ProductBrandList(PermissionRequiredMixin, ListView):
         return query
 
 
-@permission_required(perm=["product_module.delete_brand", ], raise_exception=True)
-def remove_product_category_ajax(request: HttpRequest, id):
+@permission_required(perm=["product_module.delete_brand"], raise_exception=True)
+def remove_product_brand_ajax(request: HttpRequest, id):
     try:
         current_brand = get_object_or_404(Brand, id=id)
         current_brand.delete()
@@ -941,7 +941,10 @@ def remove_product_category_ajax(request: HttpRequest, id):
     except:
         return JsonResponse({
             "title": "خطا",
-            "msg": "خطایی رخ داد.",
+            "msg": '''
+            خظایی رخ داد 
+            ( توجه کنید نمیتوانید برند هایی که محصولی برای آنها ثبت شده است را حذف کنید )
+            ''',
             "icon": "error",
         })
 

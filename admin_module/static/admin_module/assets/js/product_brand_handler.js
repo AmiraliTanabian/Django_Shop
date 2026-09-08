@@ -9,25 +9,27 @@ function RemoveBrand(id) {
         confirmButtonText: "حذف",
         cancelButtonText: "لغو"
 
-    }).then((re) => {
-        if (re.isConfirmed) {
-            $.get("../remove-brand/" + id, {}).then(re => {
-                Swal.fire({
-                    title: re.title,
-                    text: re.msg,
-                    icon: re.icon,
-                    showCancelButton: false,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: 'بستن',
-                })
-            }).then(finally_result => location.reload())
+    }).then((result) => {
 
+        if (result.isConfirmed) {
+
+            $.get("../remove-brand/" + id, {}).then(response => {
+
+                Swal.fire({
+                    title: response.title,
+                    text: response.msg,
+                    icon: response.icon,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: 'بستن',
+                }).then(() => {
+                    location.reload();
+                });
+
+            });
 
         }
-    })
+    });
 }
-
 
 function SetProductBrandActive(id) {
     $.get('../set-active-brand/' + id + "/").then(
@@ -49,7 +51,7 @@ function SetProductBrandActive(id) {
 }
 
 function SetProductBrandDisable(id) {
-    $.get('../set-disable-brand/' + id + "/").then(
+    $.get('../set-disable-tag/' + id + "/").then(
         re => {
             Swal.fire({
                 title: re.title,

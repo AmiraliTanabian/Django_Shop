@@ -14,10 +14,11 @@
 				<span class="menu-text"> داشبورد </span>
 			</a>
 		</li>
+
 		<li>
-			<a href="{% url 'admin_setting_page' %}">
-				<i class="menu-icon glyphicon glyphicon-console"></i>
-				<span class="menu-text"> تنظیمات سایت </span>
+			<a href="{% url 'admin_order_list_page' %}">
+				<i class="menu-icon glyphicon glyphicon-shopping-cart"></i>
+				<span class="menu-text"> سفارش ها </span>
 			</a>
 		</li>
 		<li>
@@ -38,7 +39,12 @@
 				<span class="menu-text"> تماس با ما</span>
 			</a>
 		</li>
-
+		<li>
+			<a href="{% url 'admin_setting_page' %}">
+				<i class="menu-icon glyphicon glyphicon-console"></i>
+				<span class="menu-text"> تنظیمات سایت </span>
+			</a>
+		</li>
 		<li>
 			<a href="#" class="menu-dropdown">
 				<i class="menu-icon fa fa-envelope-o"></i>

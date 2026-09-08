@@ -20,7 +20,7 @@ class ProductPageView(ListView):
     template_name = "product_module/product_list.html"
     model = Product
     context_object_name = "products"
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         query = super().get_queryset().filter(is_active=True)

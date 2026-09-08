@@ -1,15 +1,8 @@
 {% extends "base.html" %}
-{% load render_partial %}
-{% load static %}
-{% load global_filters %}
+{% load global_filters render_partial static %}
+
 {% block title %}
 	محصولات |‌فروشگاه اینترنتی
-{% endblock %}
-
-{% block header_references %}
-
-	<script src="{% static "js/order_handler_ajax.js" %}"></script>
-
 {% endblock %}
 
 {% block content %}
@@ -97,5 +90,6 @@
 {% block footer_references %}
 	<script src="{% static 'js/price_filter.js' %}"></script>
 	<script src="/static/js/main.js"></script>
+	<script src="{% static "js/order_handler_ajax.js" %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

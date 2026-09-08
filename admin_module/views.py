@@ -17,6 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
+from order_module.models import orderModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
@@ -1057,3 +1058,16 @@ def add_product_gallery_ajax(request: HttpRequest):
         "success": True,
         "msg": "گالری محصول با موفقیت افزوده شد",
     })
+
+
+class OrderList(ListView):
+    paginate_by = 10
+    model = orderModel
+    template_name = "admin_module/order/order_list.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.filter(is_paid=True)
+        query = query.order_by("-id")
+        return query

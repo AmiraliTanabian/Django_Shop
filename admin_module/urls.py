@@ -56,4 +56,6 @@ urlpatterns = [
     path("products/set-active-cat/<id>/", views.set_product_cat_active, name="admin_set_product_cat_active"),
     path("products/set-disable-cat/<id>/", views.set_product_cat_disable, name="admin_set_product_cat_disable"),
     path("products/remove-gallery/<id>/", views.remove_product_gallery_ajax, name="admin_remove_product_gallery"),
+    path("orders/", views.OrderList.as_view(), name="admin_order_list_page"),
+
 ]

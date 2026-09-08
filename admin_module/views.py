@@ -944,3 +944,45 @@ def remove_product_category_ajax(request: HttpRequest, id):
             "msg": "خطایی رخ داد.",
             "icon": "error",
         })
+
+
+@permission_required(
+    perm=["product_module.change_brand"], raise_exception=True)
+def set_product_brand_active(request: HttpRequest, id):
+    try:
+        current_brand = get_object_or_404(Brand, id=id)
+        current_brand.is_active = True
+        current_brand.save()
+        return JsonResponse({
+            "title": "تغییر برند",
+            "msg": " برند با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت برند",
+            "msg": "تغییر وضعیت برند با خطا مواجه شد",
+            "icon": "error",
+        })
+
+
+@permission_required(
+    perm=["product_module.change_brand"], raise_exception=True)
+def set_product_brand_disable(request: HttpRequest, id):
+    try:
+        current_brand = get_object_or_404(Brand, id=id)
+        current_brand.is_active = False
+        current_brand.save()
+        return JsonResponse({
+            "title": "تغییر وضعیت برند",
+            "msg": " برند با موفقیت فعال شد",
+            "icon": "success",
+        })
+
+    except:
+        return JsonResponse({
+            "title": "تغییر وضعیت برند",
+            "msg": "تغییر وضعیت برند با خطا مواجه شد",
+            "icon": "error",
+        })

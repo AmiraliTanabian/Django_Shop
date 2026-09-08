@@ -111,12 +111,12 @@
 											</td>
 											<td>
 												{% if brand.is_active %}
-													<a onclick="setProductCategoryDisable({{ brand.id }})"
+													<a onclick="SetProductBrandDisable({{ brand.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														غیرفعالش کن!
 													</a>
 												{% else %}
-													<a onclick="setProductCategoryActive({{ brand.id }})"
+													<a onclick="SetProductBrandActive({{ brand.id }})"
 													   class="btn btn-primary"><i class="fa fa-remove"></i>
 														فعال شو!
 													</a>

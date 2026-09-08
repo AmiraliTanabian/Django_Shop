@@ -39,8 +39,11 @@ urlpatterns = [
     path("products/brands/", views.ProductBrandList.as_view(), name="admin_product_brands"),
     path("products/tags/", views.AdminProductTagsList.as_view(), name="admin_product_tags_list"),
     path("products/remove-tag/<id>", views.remove_product_tag_ajax, name="admin_remove_product_tag"),
-    path("products/set-active-tag/<id>/", views.set_product_tag_active, name="admin_remove_product_tag"),
-    path("products/set-disable-tag/<id>/", views.set_product_tag_disable, name="admin_remove_product_tag"),
+    path("products/set-active-tag/<id>/", views.set_product_tag_active, name="admin_set_active_tag"),
+    path("products/set-disable-tag/<id>/", views.set_product_tag_disable, name="admin_set_disable_tag"),
+    path("products/set-active-brand/<id>/", views.set_product_brand_active, name="admin_set_active_brand"),
+
+    path("products/set-disable-brand/<id>/", views.set_product_brand_disable, name="admin_set_disable_brand"),
 
     path("products/<id>", views.ProductEditView.as_view(), name="admin_product_edit"),
     path("products/add/", views.AddProductView.as_view(), name="admin_product_add"),

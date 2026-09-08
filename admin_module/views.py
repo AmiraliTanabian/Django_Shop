@@ -17,7 +17,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand
+from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
@@ -589,21 +589,26 @@ class ProductEditView(PermissionRequiredMixin, View):
 
     def get(self, request: HttpRequest, id):
         product = get_object_or_404(Product, id=id)
+        galleries = ProductGallery.objects.filter(product=product)
         form = EditProductForm(instance=product)
         return render(request, "admin_module/products/product_detail.html", {
             "form": form,
-            "product": product
+            "product": product,
+            "galleries": galleries
         })
 
     def post(self, request: HttpRequest, id):
         product = get_object_or_404(Product, id=id)
-        form = EditProductForm(request.POST, instance=product)
+        form = EditProductForm(request.POST, instance=self)
+        galleries = ProductGallery.objects.filter(product)
+
         if form.is_valid():
             form.save()
             messages.success(request, "محصول مورد نظر با موفقیت ویرایش")
         return render(request, "admin_module/products/product_detail.html", {
             "form": form,
-            "product": product
+            "product": product,
+            "galleries": galleries
         })
 
 

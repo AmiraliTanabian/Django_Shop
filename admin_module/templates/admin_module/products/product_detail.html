@@ -7,6 +7,7 @@
 
 {% block header_ref %}
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/product_galler.css' %}">
 	<!--For CKEditor5Widget -->
 	{{ form.media }}
 {% endblock %}
@@ -164,14 +165,53 @@
 							</div>
 						</div>
 					</div>
+					<div class="section-gap">
+						<div class="gallery-head">
+							<div class="field-label">گالری محصول</div>
+							<input type="file" id="fileInput" accept="image/*" multiple style="display: none">
+						</div>
+
+						<div class="gallery-grid" id="galleryGrid">
+							{% for gallery in galleries %}
+								<div class="gallery-item" data-id="1">
+									<img src="{{ gallery.banner.url }}"
+									     alt="">
+									<div class="remove-overlay" title="حذف تصویر">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										     stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3 6 5 6 21 6"></polyline>
+											<path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+											<path d="M10 11v6"></path>
+											<path d="M14 11v6"></path>
+											<path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+										</svg>
+									</div>
+								</div>
+							{% endfor %}
+
+							<div class="gallery-add-tile" id="addTile">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+								     stroke-linecap="round" stroke-linejoin="round">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+								افزودن تصویر
+							</div>
+						</div>
+					</div>
+
 				</div>
+
+
 			</div>
 		</div>
+	</div>
 	</div>
 {% endblock %}
 
 {% block footer_ref %}
 	<script src="{% static 'admin_module/assets/js/product_handler.js' %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="{% static 'admin_module/assets/js/product_gallery_handler.js' %}"></script>
 
 {% endblock %}

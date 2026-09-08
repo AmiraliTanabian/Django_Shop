@@ -1020,20 +1020,14 @@ class AddProductBrand(PermissionRequiredMixin, View):
         })
 
 
+@permission_required(perm=["product_module.delete_productgallery"], raise_exception=True)
 def remove_product_gallery_ajax(request: HttpRequest, id):
     try:
         product_gallery = get_object_or_404(ProductGallery, id=id)
-        current_product = product_gallery.product
         product_gallery.delete()
 
-        # create html result
-        galleries = ProductGallery.objects.filter(product=current_product)
-        result = render_to_string("admin_module/products/component/product_gallery_component.html", {
-            "galleries": galleries
-        })
         return JsonResponse({
             "status": "ok",
-            "result": result,
         })
 
     except:
@@ -1043,3 +1037,23 @@ def remove_product_gallery_ajax(request: HttpRequest, id):
             "msg": "حذف با خطا مواجه شد",
             "icon": "error",
         })
+
+
+@permission_required(perm=["product_module.add_productgallery"], raise_exception=True)
+def add_product_gallery_ajax(request: HttpRequest):
+    if request.method == "GET":
+        return JsonResponse({
+            "success": False,
+            "msg": "درخواست نامعتبر"
+        })
+    # get file and create product banner
+    file = request.FILES["file"]
+    product_id = request.POST.get("product_id")
+    product = get_object_or_404(Product, id=product_id)
+    product_gallery = ProductGallery(product=product, banner=file)
+    product_gallery.save()
+
+    return JsonResponse({
+        "success": True,
+        "msg": "گالری محصول با موفقیت افزوده شد",
+    })

@@ -165,15 +165,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="section-gap">
+					<div class="section-gap" id="section-gap">
 						<div class="gallery-head">
 							<div class="field-label">گالری محصول</div>
-							<input type="file" id="fileInput" accept="image/*" multiple style="display: none">
+							<input onchange="galleryUploader(this, {{ product.id }})" type="file" id="fileInput"
+							       accept="image/*" multiple
+							       style="display: none">
 						</div>
 
 						<div class="gallery-grid" id="galleryGrid">
 							{% for gallery in galleries %}
-								<div class="gallery-item" data-id="1">
+								<div class="gallery-item" data-id="{{ gallery.id }}">
 									<img src="{{ gallery.banner.url }}"
 									     alt="">
 									<div onclick="removeProductGallery({{ gallery.id }})" class="remove-overlay"
@@ -190,7 +192,8 @@
 								</div>
 							{% endfor %}
 
-							<div class="gallery-add-tile" id="addTile">
+							<div class="gallery-add-tile"
+							     id="addTile">
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 								     stroke-linecap="round" stroke-linejoin="round">
 									<line x1="12" y1="5" x2="12" y2="19"></line>

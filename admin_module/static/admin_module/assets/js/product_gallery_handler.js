@@ -29,6 +29,8 @@ fileInput.addEventListener('change', (e) => {
 galleryGrid.addEventListener('click', (e) => {
     const overlay = e.target.closest('.remove-overlay');
     if (overlay) {
-        overlay.closest('.gallery-item').remove();
+        // overlay.closest('.gallery-item').remove();
+        const galleryId = overlay.dataset.id;
+        removeProductGallery(galleryId);
     }
 });

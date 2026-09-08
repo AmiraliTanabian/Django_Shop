@@ -176,7 +176,8 @@
 								<div class="gallery-item" data-id="1">
 									<img src="{{ gallery.banner.url }}"
 									     alt="">
-									<div class="remove-overlay" title="حذف تصویر">
+									<div onclick="removeProductGallery({{ gallery.id }})" class="remove-overlay"
+									     title="حذف تصویر">
 										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 										     stroke-linecap="round" stroke-linejoin="round">
 											<polyline points="3 6 5 6 21 6"></polyline>
@@ -213,5 +214,6 @@
 	<script src="{% static 'admin_module/assets/js/product_handler.js' %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="{% static 'admin_module/assets/js/product_gallery_handler.js' %}"></script>
+	<script src="{% static 'admin_module/assets/js/product_gallery_ajax.js' %}"></script>
 
 {% endblock %}

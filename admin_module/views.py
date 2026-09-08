@@ -1018,3 +1018,28 @@ class AddProductBrand(PermissionRequiredMixin, View):
         return render(request, "admin_module/products/add_product_brand.html", {
             "form": form
         })
+
+
+def remove_product_gallery_ajax(request: HttpRequest, id):
+    try:
+        product_gallery = get_object_or_404(ProductGallery, id=id)
+        current_product = product_gallery.product
+        product_gallery.delete()
+
+        # create html result
+        galleries = ProductGallery.objects.filter(product=current_product)
+        result = render_to_string("admin_module/products/component/product_gallery_component.html", {
+            "galleries": galleries
+        })
+        return JsonResponse({
+            "status": "ok",
+            "result": result,
+        })
+
+    except:
+        return JsonResponse({
+            "status": "error",
+            "title": "حدف گالری محصول",
+            "msg": "حذف با خطا مواجه شد",
+            "icon": "error",
+        })

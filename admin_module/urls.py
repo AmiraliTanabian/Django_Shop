@@ -53,4 +53,5 @@ urlpatterns = [
     path("products/remove-brand/<id>", views.remove_product_brand_ajax, name="admin_remove_product_brand"),
     path("products/set-active-cat/<id>/", views.set_product_cat_active, name="admin_set_product_cat_active"),
     path("products/set-disable-cat/<id>/", views.set_product_cat_disable, name="admin_set_product_cat_disable"),
+    path("products/remove-gallery/<id>/", views.remove_product_gallery_ajax, name="admin_remove_product_gallery"),
 ]

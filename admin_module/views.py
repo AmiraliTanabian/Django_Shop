@@ -1208,3 +1208,20 @@ class NewsLettersListView(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_newsletters = newsLetterModel.objects.all()
+        count_of_newsletters = all_newsletters.count()
+        count_of_active = all_newsletters.filter(is_active=True).count()
+        count_of_disable = count_of_newsletters - count_of_active
+        active_percent = (count_of_active / count_of_newsletters) * 100
+        disable_percent = (count_of_disable / count_of_newsletters) * 100
+
+        context["count_of_newsletter"] = count_of_newsletters
+        context["count_of_active_newsletter"] = count_of_active
+        context["count_of_disable_newsletter"] = count_of_disable
+        context["active_percent"] = int(active_percent)
+        context["disable_percent"] = int(disable_percent)
+
+        return context

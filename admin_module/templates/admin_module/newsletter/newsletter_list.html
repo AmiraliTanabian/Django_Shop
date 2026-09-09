@@ -54,6 +54,67 @@
 				</div>
 				<div class="page-body">
 					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-themeprimary">
+									<div class="databox-piechart">
+										<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
+										     data-barcolor="#fff" data-linecap="butt" data-percent="0"
+										     data-animate="500" data-linewidth="3" data-size="47"
+										     data-trackcolor="rgba(255,255,255,0.1)"
+										     style="width: 47px; height: 47px; line-height: 47px;"><span
+												class="white font-90"></span>
+											<canvas width="58" height="58" style="width: 47px; height: 47px;"></canvas>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number themeprimary">{{ count_of_newsletter }}</span>
+									<div class="databox-text darkgray">خبرنامه</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-bg-themefourthcolor" style="background-color: green;">
+									<div class="databox-piechart">
+										<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
+										     data-linecap="butt" data-percent="{{ active_percent }}" data-animate="500"
+										     data-linewidth="3"
+										     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"
+										     style="width: 47px; height: 47px; line-height: 47px;"><span
+												class="white font-90">{{ active_percent }}%</span>
+											<canvas width="58" height="58" style="width: 47px; height: 47px;"></canvas>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number themethirdcolor">{{ count_of_active_newsletter }}</span>
+									<div class="databox-text darkgray">خبرنامه فعال</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-themesecondary">
+									<div class="databox-piechart">
+										<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
+										     data-linecap="butt" data-percent="{{ disable_percent }}" data-animate="500"
+										     data-linewidth="3"
+										     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
+										     style="width: 47px; height: 47px; line-height: 47px;"><span
+												class="white font-90">{{ disable_percent }}</span>
+											<canvas width="58" height="58" style="width: 47px; height: 47px;"></canvas>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number themesecondary">{{ count_of_disable_newsletter }}</span>
+									<div class="databox-text darkgray">خبرنامه غیرفعال شده</div>
+
+								</div>
+							</div>
+						</div>
 						<div class="col-xs-12 col-md-12">
 							<div class="well with-header with-footer">
 								<div class="header bordered-pink">

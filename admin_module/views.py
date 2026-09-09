@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMessage
+from django.http import Http404
 from django.http import HttpRequest
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
@@ -22,7 +23,7 @@ from newsletter_module.models import newsLetterModel
 from order_module.models import orderModel, orderProductModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
-from user_profile_module.models import ticket_model
+from user_profile_module.models import ticket_model, UnitsChoices
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
     EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm
@@ -1242,3 +1243,43 @@ class TicketListView(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        units = UnitsChoices.choices
+        context['units'] = units
+        return context
+
+
+class UnitTicketView(PermissionRequiredMixin, ListView):
+    model = ticket_model
+    paginate_by = 20
+    context_object_name = "tickets"
+    template_name = "admin_module/tickets/tickets_unit_list.html"
+    permission_required = [
+        "user_profile_module.view_ticket_model"
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده لیست تیکت ها را ندارید"
+
+    def get_queryset(self):
+        try:
+            unit = UnitsChoices(self.kwargs["unit"])
+        except ValueError:
+            raise Http404
+
+        query = super().get_queryset().filter(Unit=unit)
+        query = query.order_by("-id")
+        return query
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        units = UnitsChoices.choices
+
+        current_unit = UnitsChoices(self.kwargs["unit"])
+        unit_persian_lbl = current_unit.label
+
+        context['units'] = units
+        context["user_unit_persian"] = unit_persian_lbl
+        context["user_unit_english"] = current_unit.value
+
+        return context

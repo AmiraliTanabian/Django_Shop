@@ -47,3 +47,8 @@ def number_separator(value):
 def get_django_admin_url():
     url = settings.SITE_URL + settings.DJANGO_ADMIN_URL + '/'
     return url
+
+
+@register.filter(name="second_index")
+def second_index(value):
+    return value[1]

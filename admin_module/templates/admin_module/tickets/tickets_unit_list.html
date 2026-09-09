@@ -2,7 +2,7 @@
 {% load static jformat global_filters admin_tags %}
 
 {% block title %}
-	تیکت ها | ادمین
+	تیکت های واحد {{ user_unit_persian }} | ادمین
 {% endblock %}
 
 {% block header_ref %}
@@ -35,21 +35,25 @@
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
-							تیکت ها
+							تیکت های واحد
+							{{ user_unit_persian }}
 						</h1>
 					</div>
 					<div class="header-buttons">
 						<a class="sidebar-toggler" href="#">
 							<i class="fa fa-arrows-h"></i>
 						</a>
-						<a class="refresh" id="refresh-toggler" href="{% url 'admin_tickets_list' %}">
+						<a class="refresh" id="refresh-toggler"
+						   href="{% url 'admin_unit_ticket_list' unit=user_unit_english %}">
 							<i class="glyphicon glyphicon-refresh"></i>
 						</a>
 						<a class="fullscreen" id="fullscreen-toggler" href="#">
 							<i class="glyphicon glyphicon-fullscreen"></i>
 						</a>
 					</div>
-
+					<a href="{% url 'admin_tickets_list' %}" class="btn btn-blue">
+						همه تیکت ها
+					</a>
 					{% for unit in units %}
 						<a href="{% url 'admin_unit_ticket_list' unit=unit|first %}" class="btn btn-blue">
 							تیک های واحد
@@ -62,7 +66,7 @@
 						<div class="col-xs-12 col-md-12">
 							<div class="well with-header with-footer">
 								<div class="header bordered-pink">
-									تیکت ها
+									تیکت های واحد {{ user_unit_persian }}
 								</div>
 								<table class="table table-striped table-bordered table-hover">
 									<thead>

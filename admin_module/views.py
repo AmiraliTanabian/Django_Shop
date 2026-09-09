@@ -23,7 +23,7 @@ from product_module.models import Product, ProductCategory, ProductTag, ProductC
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
-    EditProductCommentForm, AddProductBrandForm, EditOrder
+    EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm
 
 
 @login_required()
@@ -1119,7 +1119,7 @@ class UserListView(PermissionRequiredMixin, ListView):
     template_name = "admin_module/user/user_list.html"
     context_object_name = "users"
     permission_required = [
-        "auth_module.view_user"
+        "auth_module.view_user",
     ]
     permission_denied_message = "شما دسترسی به مشاهده لیست کاربران را ندارید"
 
@@ -1127,3 +1127,61 @@ class UserListView(PermissionRequiredMixin, ListView):
         query = super().get_queryset()
         query = query.order_by("-id")
         return query
+
+
+class UserEditView(PermissionRequiredMixin, View):
+    permission_required = [
+        "auth_module.view_user",
+        "auth_module.change_user",
+    ]
+    permission_denied_message = "شما دسترسی به ویرایش لیست کاربران را ندارید"
+
+    def get(self, request: HttpRequest, id):
+        user = get_object_or_404(get_user_model(), id=id)
+        form = UserEditForm(instance=user)
+        return render(request, "admin_module/user/user_detail.html", {
+            "form": form,
+            "user": user,
+        })
+
+    def post(self, request: HttpRequest, id):
+        user = get_object_or_404(get_user_model(), id=id)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "کاربر با موفقیت ویرایش شد")
+
+        return render(request, "admin_module/user/user_detail.html", {
+            "form": form,
+            "user": user,
+        })
+
+
+def set_user_active(request: HttpRequest, id):
+    try:
+        user = get_object_or_404(get_user_model(), id=id)
+        user.is_active = True
+        user.save()
+        return JsonResponse({
+            "success": True,
+        })
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": e
+        })
+
+
+def set_user_disable(request: HttpRequest, id):
+    try:
+        user = get_object_or_404(get_user_model(), id=id)
+        user.is_active = False
+        user.save()
+        return JsonResponse({
+            "success": True,
+        })
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": e
+        })

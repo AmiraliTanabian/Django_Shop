@@ -1,6 +1,7 @@
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 
+from auth_module.models import User
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from order_module.models import orderModel
@@ -299,3 +300,48 @@ class EditOrder(forms.ModelForm):
     class Meta:
         model = orderModel
         fields = ("status",)
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "address", "about_user", "profile_image",
+                  "phone_number")
+
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "phone_number": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "email": forms.EmailInput(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "address": forms.Textarea(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+            "about_user": forms.Textarea(
+                attrs={
+                    "class": "form-control input-xs",
+                }
+            ),
+        }

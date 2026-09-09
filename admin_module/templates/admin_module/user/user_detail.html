@@ -1,0 +1,218 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat admin_tags %}
+
+{% block title %}
+	ویرایش کاربر | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	{% admin_navbar_inclution %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							<a href="{% url 'admin_order_list_page' %}">لیست کاربر ها</a>
+
+						</li>
+						<li>
+							ویرایش کاربر با شناسه {{ user.id }}
+						</li>
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							ویرایش کاربر
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler"
+						   href="{% url 'admin_user_detail' id=user.id %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<div class="widget">
+								<div class="widget-header bordered-top bordered-palegreen">
+									<span class="widget-caption">
+										شناسه کاربر : {{ user.id }}
+									</span>
+								</div>
+								<div class="widget-body">
+									<div class="collapse in">
+										<form role="form" method="post" action="#" enctype="multipart/form-data">
+											{% csrf_token %}
+											<div class="form-group">
+												<label for="xsinput">حساب تایید شده</label>
+												{% if user.account_activated %}
+													<p class="label label-green">
+														تایید شده
+													</p>
+												{% else %}
+													<p class="label label-red">
+														تایید نشده
+													</p>
+												{% endif %}
+											</div>
+											<div class="form-group">
+												<label for="xsinput">حساب فعال است</label>
+												{% if user.is_active %}
+													<p id="user_status_label" class="label label-green">
+														فعال
+													</p>
+
+													<button id="user_status_btn" type="button"
+													        class="btn btn-danger btn-sm"
+													        onclick="setUserDisable({{ user.id }})">کاربر رو غیرفعال
+														کن!
+													</button>
+												{% else %}
+													<p id="user_status_label" class="label label-red">
+														غیرفعال
+													</p>
+													<button id="user_status_btn" onclick="setUserActive({{ user.id }})"
+													        type="button"
+													        class="btn btn-success btn-sm">کاربر رو فعال
+														کن!
+													</button>
+												{% endif %}
+											</div>
+											<div class="form-group">
+												<label for="xsinput">دسترسی کاربر</label>
+												{% if user.account_activated %}
+													<p class="label label-green">
+														ادمین ( با تمام دسترسی ها )
+													</p>
+												{% else %}
+													<p class="label label-red">
+														دسترسی معمولی
+													</p>
+												{% endif %}
+												<p class="alert alert-info">
+													منظور از ادمین ، ابر کاربر ( superuser ) یعنی ادمینی که تمام دسترسی
+													ها را داشته باشد است
+													<br>
+													پس ممکن است کاربر ادمینی با اختیارات محدود باشد ولی سیستم دسترسی آن
+													را
+													دسترسی معمولی قرار بدهد
+												</p>
+											</div>
+											<div class="form-group">
+												<label for="xsinput">شناسه کاربر</label>
+												<p class="form-control input-xs">
+													{{ user.id }}
+												</p>
+											</div>
+											<div class="form-group {% if form.first_name.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.first_name.label }}</label>
+												{{ form.first_name }}
+												{% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.last_name.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.last_name.label }}</label>
+												{{ form.last_name }}
+												{% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.username.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.username.label }}</label>
+												{{ form.username }}
+												{% if form.username.errors %}{{ form.username.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.email.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.email.label }}</label>
+												{{ form.email }}
+												{% if form.email.errors %}{{ form.email.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.phone_number.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.phone_number.label }}</label>
+												{{ form.phone_number }}
+												{% if form.phone_number.errors %}
+													{{ form.phone_number.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.image.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.image.label }}</label>
+												<br>
+												{% if user.profile_image %}
+													<img src="{{ user.profile_image.url }}"
+													     class="pull-right right img-thumbnail profile-image center-block"
+													     alt="site logo"
+													     height="140" width="140">
+													<br><br><br><br><br><br><br><br><br><br>
+												{% else %}
+													<p class="danger">
+														هنوز آواتاری آپلود نشده!
+													</p>
+												{% endif %}
+												<br><br>
+												{{ form.profile_image }}
+												{% if form.profile_image.errors %}
+													{{ form.profile_image.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.about_user.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.about_user.label }}</label>
+												{{ form.about_user }}
+												{% if form.about_user.errors %}{{ form.about_user.errors }}{% endif %}
+											</div>
+											<div class="form-group {% if form.address.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.address.label }}</label>
+												{{ form.address }}
+												{% if form.address.errors %}{{ form.address.errors }}{% endif %}
+											</div>
+											<div class="form-group">
+												<label for="xsinput">تاریخ آخرین ورود به سایت </label>
+												<p class="form-control input-xs">
+													{{ user.last_login.date|jformat:"%Y/%m/%d" }}
+												</p>
+											</div>
+
+											<div class="form-group">
+												<label for="xsinput">تاریخ پیوستن به سایت </label>
+												<p class="form-control input-xs">
+													{{ user.date_joined|jformat:"%Y/%m/%d" }}
+												</p>
+											</div>
+
+											<button class="btn btn-sky" type="submit">
+												ویرایش
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer_ref %}
+	<script src="{% static 'admin_module/assets/js/user_status_changer.js' %}"></script>
+{% endblock %}

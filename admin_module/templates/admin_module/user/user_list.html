@@ -42,7 +42,7 @@
 						<a class="sidebar-toggler" href="#">
 							<i class="fa fa-arrows-h"></i>
 						</a>
-						<a class="refresh" id="refresh-toggler" href="{% url 'admin_order_list_page' %}">
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_users_list' %}">
 							<i class="glyphicon glyphicon-refresh"></i>
 						</a>
 						<a class="fullscreen" id="fullscreen-toggler" href="#">
@@ -137,7 +137,7 @@
 												{% endif %}
 											</td>
 											<td>
-												<a href=""
+												<a href="{% url 'admin_user_detail' id=user.id %}"
 												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
 													مشاهده
 												</a>

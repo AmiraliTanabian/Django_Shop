@@ -59,5 +59,8 @@ urlpatterns = [
     path("orders/", views.OrderList.as_view(), name="admin_order_list_page"),
     path("orders/<order_id>", views.OrderDetailView.as_view(), name="admin_edit_order_page"),
     path("users/", views.UserListView.as_view(), name="admin_users_list"),
+    path("users/<id>", views.UserEditView.as_view(), name="admin_user_detail"),
+    path("users/set-user-enable/<id>/", views.set_user_active, name="admin_set_user_enable_ajax"),
+    path("users/set-user-diable/<id>/", views.set_user_disable, name="admin_set_user_disable_ajax"),
 
 ]

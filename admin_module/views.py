@@ -22,6 +22,7 @@ from newsletter_module.models import newsLetterModel
 from order_module.models import orderModel, orderProductModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
+from user_profile_module.models import ticket_model
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
     EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm
@@ -1225,3 +1226,19 @@ class NewsLettersListView(PermissionRequiredMixin, ListView):
         context["disable_percent"] = int(disable_percent)
 
         return context
+
+
+class TicketListView(PermissionRequiredMixin, ListView):
+    model = ticket_model
+    paginate_by = 20
+    context_object_name = "tickets"
+    template_name = "admin_module/tickets/ticket_list.html"
+    permission_required = [
+        "user_profile_module.view_ticket_model"
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده لیست تیکت ها را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

@@ -63,5 +63,6 @@ urlpatterns = [
     path("users/set-user-enable/<id>/", views.set_user_active, name="admin_set_user_enable_ajax"),
     path("users/set-user-diable/<id>/", views.set_user_disable, name="admin_set_user_disable_ajax"),
     path("newsletters/", views.NewsLettersListView.as_view(), name="admin_newsletter_list"),
+    path("tickets/", views.TicketListView.as_view(), name="admin_tickets_list"),
 
 ]

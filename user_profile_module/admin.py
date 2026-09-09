@@ -4,7 +4,8 @@ from .models import ticket_model, ticket_attachment, TicketAnswerModel
 
 
 class TicketAnswerAdmin(admin.ModelAdmin):
-    fields = ["text", "ticket"]
+    # fields = ["text", "ticket"]
+    pass
 
 
 admin.site.register(ticket_model, TicketAnswerAdmin)

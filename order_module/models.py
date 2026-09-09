@@ -20,6 +20,7 @@ class orderModel(models.Model):
     is_paid = models.BooleanField(verbose_name="پرداخت شده / نشده", default=False)
     status = models.CharField(max_length=255, verbose_name="وضعیت سفارش", choices=orderStatus,
                               default=orderStatus.pending_payment)
+    payment_id = models.CharField(verbose_name="شناسه پرداخت", null=True, max_length=255, blank=True)
 
     def __str__(self):
         return '{} -- {}'.format(self.id, str(self.user))
@@ -53,7 +54,7 @@ class orderModel(models.Model):
 
 class orderProductModel(models.Model):
     order = models.ForeignKey(orderModel, on_delete=models.CASCADE, verbose_name="سبد خرید")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول", related_name="order_products")
     count = models.IntegerField(verbose_name="تعداد", default=1)
     finally_price = models.BigIntegerField(verbose_name="قیمت نهایی محصول", null=True)
 

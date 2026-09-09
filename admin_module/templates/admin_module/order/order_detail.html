@@ -1,0 +1,157 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat admin_tags %}
+
+{% block title %}
+	ویرایش محصول | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	{% admin_navbar_inclution %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							<a href="{% url 'admin_order_list_page' %}">لیست سفارشات</a>
+
+						</li>
+						<li>
+							ویرایش سفارش با شناسه {{ order.id }}
+						</li>
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							ویرایش سفارش
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler"
+						   href="{% url 'admin_edit_order_page' order_id=order.id %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-6 col-sm-6 col-xs-12">
+							<div class="widget">
+								<div class="widget-header bordered-top bordered-palegreen">
+									<span class="widget-caption">
+										شناسه سفارش : {{ order.id }}
+									</span>
+								</div>
+								<div class="widget-body">
+									<div class="collapse in">
+										<form role="form" method="post" action="#" enctype="multipart/form-data">
+											{% csrf_token %}
+											<div class="form-group">
+												<label for="xsinput">کاربر</label>
+												<p class="form-control input-xs">
+													{{ order.user }}
+												</p>
+											</div>
+											<div class="form-group">
+												<label for="xsinput">تاریخ پرداخت : </label>
+												<p class="form-control input-xs">
+													{{ order.paid_date|jformat:"%Y/%m/%d" }}
+												</p>
+											</div>
+
+											<div class="form-group">
+												<label for="xsinput">شناسه پرداخت: </label>
+												<p class="form-control input-xs">
+													{% if order.payment_id %}
+														{{ order.payment_id }}
+													{% else %}
+														شناسه پرداخت وجود ندارد
+													{% endif %}
+												</p>
+											</div>
+											<div class="form-group {% if form.status.errors %}danger{% endif %}">
+												<label for="xsinput">{{ form.status.label }}</label>
+												{{ form.status }}
+												{% if form.status.errors %}{{ form.status.errors }}{% endif %}
+											</div>
+											<button class="btn btn-sky" type="submit">
+												ویرایش
+											</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<h3 class="title card-title">لیست محصولات سفارش</h3>
+
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th>
+								<span></span> شناسه
+							</th>
+							<th>
+								<span></span> نام
+							</th>
+							<th class="hidden-xs">
+								<span>تعداد </span>
+							</th>
+							<th>
+								<span></span> قیمت نهایی
+							</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						{% for product in products %}
+
+							<tr>
+								<td>
+									<a href="#">{{ product.id }}</a>
+								</td>
+								<td class="hidden-xs">
+									<a target="_blank" href="{% url 'product_detail' pk=product.product.id %}">
+										{{ product.product.name }}
+									</a>
+								</td>
+								<td class="hidden-xs">
+									{{ product.count }}
+								</td>
+								<td class="hidden-xs">
+									{{ product.finally_price }}
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

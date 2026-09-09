@@ -17,12 +17,12 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
-from order_module.models import orderModel
+from order_module.models import orderModel, orderProductModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
-    EditProductCommentForm, AddProductBrandForm
+    EditProductCommentForm, AddProductBrandForm, EditOrder
 
 
 @login_required()
@@ -1060,14 +1060,53 @@ def add_product_gallery_ajax(request: HttpRequest):
     })
 
 
-class OrderList(ListView):
+class OrderList(PermissionRequiredMixin, ListView):
     paginate_by = 10
     model = orderModel
     template_name = "admin_module/order/order_list.html"
     context_object_name = "orders"
+    permission_required = [
+        "order_module.view_ordermodel"
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده لیست سفارش ها را ندارید"
 
     def get_queryset(self):
         query = super().get_queryset()
-        query = query.filter(is_paid=True)
-        query = query.order_by("-id")
+        query = query.filter(is_paid=True).order_by("-id")
         return query
+
+
+class OrderDetailView(PermissionRequiredMixin, View):
+    permission_required = [
+        'order_module.change_ordermodel'
+    ]
+    permission_denied_message = "شما دسترسی برای ایجاد تغییرات در سفارش ها را ندارید"
+
+    def get(self, request, order_id):
+        current_order = get_object_or_404(orderModel, id=order_id)
+        form = EditOrder(instance=current_order)
+        order_products = orderProductModel.objects.filter(order=current_order)
+        return render(request, "admin_module/order/order_detail.html", {
+            "form": form,
+            "order": current_order,
+            "products": order_products,
+        })
+
+    def post(self, request, order_id):
+        current_order = get_object_or_404(orderModel, id=order_id)
+        form = EditOrder(request.POST, instance=current_order)
+        order_products = orderProductModel.objects.filter(order=current_order)
+
+        if form.is_valid():
+            order_status = form.cleaned_data.get("status")
+            current_order.status = order_status
+            current_order.save()
+
+            messages.success(request, "سفارش مورد نظر با موفقیت ویرایش شد")
+            return redirect(reverse_lazy("admin_order_list_page"))
+
+        return render(request, "admin_module/order/order_detail.html", {
+            "form": form,
+            "comment": current_order,
+            "products": order_products,
+        })

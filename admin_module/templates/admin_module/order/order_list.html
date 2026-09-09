@@ -100,30 +100,34 @@
 												{{ order.total_order_price|price_separator }}
 											</td>
 											<td>
-												{% if order.status == "pendingـreview" %}
-													<span class="label label-palegreen">
+												{% if order.status == "pending_review" %}
+													<span class="label label-yellow">
 												در انتظار بررسی
 												</span>
 												{% elif order.status == "preparing" %}
-													<span class="label label-red">
+													<span class="label label-yellow">
 												در حال آماده سازی
 												</span>
 												{% elif order.status == "shipped" %}
-													<span class="label label-yellow">
+													<span class="label label-blue">
 												ارسال شده
 													</span>
 												{% elif order.status == "delivered" %}
-													<span class="label label-yellow">
+													<span class="label label-green">
 														تحویل شده
 													</span>
 												{% elif order.status == "returned" %}
-													<span class="label label-yellow">
+													<span class="label label-red">
 													مرجوع شده
+													</span>
+												{% else %}
+													<span class="label label-yellow">
+													در انتظار پرداخت
 													</span>
 												{% endif %}
 											</td>
 											<td>
-												<a href=" "
+												<a href="{% url 'admin_edit_order_page' order_id=order.id %}"
 												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
 													مشاهده
 												</a>

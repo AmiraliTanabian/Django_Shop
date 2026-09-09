@@ -1,0 +1,156 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat global_filters admin_tags %}
+
+{% block title %}
+	کاربر ها | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	{% admin_navbar_inclution %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							کاربر ها
+						</li>
+
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							کاربر ها
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_order_list_page' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+
+
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<div class="well with-header with-footer">
+								<div class="header bordered-pink">
+									کاربران
+								</div>
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+									<tr>
+										<th>
+											<span></span> شناسه
+										</th>
+										<th>
+											<span></span> نام کاربری
+										</th>
+										<th class="hidden-xs">
+											<span>ایمیل</span>
+										</th>
+										<th>
+											<span></span>نام
+										</th>
+										<th>
+											<span></span>نام خانوادگی
+										</th>
+										<th>
+											<span></span>وضعیت حساب
+										</th>
+										<th>
+											<span>دسترسی ادمین</span>
+										</th>
+										<th></th>
+
+									</tr>
+									</thead>
+									<tbody>
+									{% for user in users %}
+
+										<tr>
+											<td>
+												{{ user.id }}
+											</td>
+											<td class="hidden-xs">
+												{{ user.username }}
+											</td>
+											<td class="hidden-xs">
+												{{ user.email }}
+											</td>
+											<td class="hidden-xs">
+												{% if user.first_name %}
+													{{ user.first_name }}
+												{% else %}
+													-
+												{% endif %}
+											</td>
+											<td class="hidden-xs">
+												{% if user.last_name %}
+													{{ user.last_name }}
+												{% else %}
+													-
+												{% endif %}
+											</td>
+											<td>
+												{% if user.account_activated %}
+													<span class="label label-green">
+												فعال شده
+													</span>
+												{% else %}
+													<span class="label label-red">
+												غیرفعال
+													</span>
+												{% endif %}
+											</td>
+											<td>
+												{% if user.is_superuser %}
+													<span class="label label-green">
+												ادمین است
+													</span>
+												{% else %}
+													<span class="label label-red">
+												ادمین نیست
+													</span>
+												{% endif %}
+											</td>
+											<td>
+												<a href=""
+												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
+													مشاهده
+												</a>
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

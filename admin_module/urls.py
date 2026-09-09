@@ -58,5 +58,6 @@ urlpatterns = [
     path("products/remove-gallery/<id>/", views.remove_product_gallery_ajax, name="admin_remove_product_gallery"),
     path("orders/", views.OrderList.as_view(), name="admin_order_list_page"),
     path("orders/<order_id>", views.OrderDetailView.as_view(), name="admin_edit_order_page"),
+    path("users/", views.UserListView.as_view(), name="admin_users_list"),
 
 ]

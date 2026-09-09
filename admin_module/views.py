@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -1110,3 +1111,19 @@ class OrderDetailView(PermissionRequiredMixin, View):
             "comment": current_order,
             "products": order_products,
         })
+
+
+class UserListView(PermissionRequiredMixin, ListView):
+    model = get_user_model()
+    paginate_by = 10
+    template_name = "admin_module/user/user_list.html"
+    context_object_name = "users"
+    permission_required = [
+        "auth_module.view_user"
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده لیست کاربران را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

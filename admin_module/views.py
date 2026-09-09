@@ -1139,14 +1139,17 @@ class UserEditView(PermissionRequiredMixin, View):
     def get(self, request: HttpRequest, id):
         user = get_object_or_404(get_user_model(), id=id)
         form = UserEditForm(instance=user)
+        user_orders = orderModel.objects.filter(user=user)
         return render(request, "admin_module/user/user_detail.html", {
             "form": form,
             "user": user,
+            "orders": user_orders,
         })
 
     def post(self, request: HttpRequest, id):
         user = get_object_or_404(get_user_model(), id=id)
         form = UserEditForm(request.POST, request.FILES, instance=user)
+        user_orders = orderModel.objects.filter(user=user)
         if form.is_valid():
             form.save()
             messages.success(request, "کاربر با موفقیت ویرایش شد")
@@ -1154,9 +1157,11 @@ class UserEditView(PermissionRequiredMixin, View):
         return render(request, "admin_module/user/user_detail.html", {
             "form": form,
             "user": user,
+            "orders": user_orders,
         })
 
 
+@permission_required(perm=["auth_module.change_user"], raise_exception=True)
 def set_user_active(request: HttpRequest, id):
     try:
         user = get_object_or_404(get_user_model(), id=id)
@@ -1172,6 +1177,7 @@ def set_user_active(request: HttpRequest, id):
         })
 
 
+@permission_required(perm=["auth_module.change_user"], raise_exception=True)
 def set_user_disable(request: HttpRequest, id):
     try:
         user = get_object_or_404(get_user_model(), id=id)

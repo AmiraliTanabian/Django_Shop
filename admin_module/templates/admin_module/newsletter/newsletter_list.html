@@ -1,0 +1,115 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat global_filters admin_tags %}
+
+{% block title %}
+	لیست ایمیل های خبرنامه | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	{% admin_navbar_inclution %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							خبرنامه
+						</li>
+
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							خبرنامه
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_newsletter_list' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+
+
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<div class="well with-header with-footer">
+								<div class="header bordered-pink">
+									خبرنامه ها
+								</div>
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+									<tr>
+										<th>
+											<span></span> شناسه
+										</th>
+										<th>
+											<span></span> ایمیل
+										</th>
+										<th class="hidden-xs">
+											<span>تاریخ </span>
+										</th>
+										<th>
+											<span></span>وضعیت
+										</th>
+
+									</tr>
+									</thead>
+									<tbody>
+									{% for newsletter in newsLetters %}
+
+										<tr>
+											<td>
+												<a href="#">{{ newsletter.id }}</a>
+											</td>
+											<td class="hidden-xs">
+												{{ newsletter.email }}
+											</td>
+											<td class="hidden-xs">
+												{{ newsletter.created_date|jformat:"%Y/%m/%d" }}
+											</td>
+											<td>
+												{% if newsletter.is_active %}
+													<span class="label label-green">
+												فعال
+													</span>
+												{% else %}
+													<span class="label label-red">
+												غیرفعال
+													</span>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -62,5 +62,6 @@ urlpatterns = [
     path("users/<id>", views.UserEditView.as_view(), name="admin_user_detail"),
     path("users/set-user-enable/<id>/", views.set_user_active, name="admin_set_user_enable_ajax"),
     path("users/set-user-diable/<id>/", views.set_user_disable, name="admin_set_user_disable_ajax"),
+    path("newsletters/", views.NewsLettersListView.as_view(), name="admin_newsletter_list"),
 
 ]

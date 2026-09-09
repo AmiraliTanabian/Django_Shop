@@ -18,6 +18,7 @@ from django.views.generic import View, ListView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
+from newsletter_module.models import newsLetterModel
 from order_module.models import orderModel, orderProductModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
@@ -1191,3 +1192,19 @@ def set_user_disable(request: HttpRequest, id):
             "success": False,
             "error": e
         })
+
+
+class NewsLettersListView(PermissionRequiredMixin, ListView):
+    model = newsLetterModel
+    paginate_by = 20
+    context_object_name = "newsLetters"
+    template_name = "admin_module/newsLetter/newsLetter_list.html"
+    permission_required = [
+        "newsletter_module.view_newslettermodel"
+    ]
+    permission_denied_message = "شما دسترسی به مشاهده لیست خبرنامه را ندارید"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        query = query.order_by("-id")
+        return query

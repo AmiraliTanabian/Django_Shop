@@ -1,5 +1,6 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static %}
+{% load static admin_tags %}
+
 {% block title %}
 	تنظیمات سایت | ادمین
 {% endblock %}
@@ -9,13 +10,8 @@
 {% endblock %}
 
 {% block content %}
-	<!-- Loading Container -->
-	{#	<div class="loading-container">#}
-	{#		<div class="loader"></div>#}
-	{#	</div>#}
-	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

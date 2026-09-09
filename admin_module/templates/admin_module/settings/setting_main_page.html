@@ -1,23 +1,18 @@
 {% extends 'admin_module/admin_base.html' %}
+{% load admin_tags static %}
 
 {% block title %}
 	تنظیمات | ادمین
 {% endblock %}
 
 {% block header_ref %}
-	{% load static %}
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/settings_main_page.css' %}">
 {% endblock %}
 
 {% block content %}
-	<!-- Loading Container -->
-	{#	<div class="loading-container">#}
-	{#		<div class="loader"></div>#}
-	{#	</div>#}
-	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

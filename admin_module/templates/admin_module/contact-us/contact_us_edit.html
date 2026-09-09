@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static jformat %}
+{% load static jformat admin_tags %}
 
 {% block title %}
 	مشاهده پیام | ادمین
@@ -12,12 +12,7 @@
 
 <!-- Body -->
 {% block content %}
-	{#<!-- Loading Container -->#}
-	{#<div class="loading-container">#}
-	{#	<div class="loader"></div>#}
-	{#</div>#}
-
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static jformat global_filters %}
+{% load static jformat global_filters admin_tags %}
 
 {% block title %}
 	سفارش ها | ادمین
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static %}
+{% load static admin_tags %}
 
 {% block title %}
 	ویرایش تبلیغات | ادمین
@@ -12,7 +12,7 @@
 	{#	<div class="loader"></div>#}
 	{#</div>#}
 	<!--  /Loading Container -->
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<div class="main-container container-fluid">
 		<!-- Page Container -->

@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static jformat %}
+{% load static jformat admin_tags %}
 
 {% block title %}
 	افزودن تگ محصول | ادمین
@@ -18,7 +18,7 @@
 	</div> {% endcomment %}
 	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

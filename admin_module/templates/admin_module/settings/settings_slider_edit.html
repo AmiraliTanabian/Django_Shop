@@ -1,10 +1,6 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static %}
-<!--
-BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
-Version: 1.6.0
-Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB06R48S4
--->
+{% load static admin_tags %}
+
 {% block title %}
 	ویرایش اسلایدر | ادمین
 {% endblock %}
@@ -14,13 +10,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 {% endblock %}
 
 {% block content %}
-	{#<!-- Loading Container -->#}
-	{#<div class="loading-container">#}
-	{#	<div class="loader"></div>#}
-	{#</div>#}
-	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

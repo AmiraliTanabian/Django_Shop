@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static jformat %}
+{% load static jformat admin_tags %}
 
 {% block title %}
 	ویرایش محصول | ادمین
@@ -13,13 +13,8 @@
 {% endblock %}
 
 {% block content %}
-	<!-- Loading Container -->
-	{% comment %} <div class="loading-container">
-		<div class="loader"></div>
-	</div> {% endcomment %}
-	<!--  /Loading Container -->
 
-	{% include 'admin_module/components/navbar.html' %}
+	{% admin_navbar_inclution %}
 
 	<!-- Main Container -->
 	<div class="main-container container-fluid">

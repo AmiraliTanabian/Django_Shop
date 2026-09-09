@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -5,9 +7,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMessage
-from django.db.models import Q
-from django.http import HttpRequest, Http404
-from django.shortcuts import render, redirect
+from django.http import HttpRequest
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -16,7 +17,6 @@ from django.views import View
 from django.views.generic import FormView
 
 from . import forms
-from . import models
 
 user_model = get_user_model()
 
@@ -64,22 +64,22 @@ class registerView(View):
                 form.add_error("username", "متاسفانه نام کاربری شما قبلا ثبت شده است :(")
 
             # The user has not previously requested an account registration
-            elif models.TempUser.objects.filter(Q(username=username) | Q(password=password)).exists():
+            elif user_model.objects.filter(username=username, password=password, account_activated=False).exists():
                 form.add_error("username",
                                "شما قبلا با این ایمیل یا نام کاربری درخواست ثبت حساب دادید.\nلطفا به ایمیل خود بروید و حساب را فعال کنید")
 
             else:
-                # Create temp user
-                random_string = get_random_string(72)
-                models.TempUser.objects.create(
+                active_code = get_random_string(72)
+                user_model.objects.create(
                     username=username,
                     email=email,
                     password=make_password(password),
-                    random_string=random_string
+                    active_code=active_code,
+                    active_code_sent_date=datetime.now(),
                 )
 
                 # Send mail to set user account activate
-                verification_url = reverse_lazy("verify_account", args=[random_string])
+                verification_url = reverse_lazy("verify_account", args=[active_code])
                 body_context = {
                     "verification_url": settings.SITE_URL + verification_url
                 }
@@ -123,25 +123,20 @@ class logoutView(LoginRequiredMixin, View):
 
 class verifyAccount(View):
     def get(self, request, random_string):
-        temp_user = models.TempUser.objects.filter(random_string=random_string).first()
-
-        if not temp_user:
-            raise Http404
+        user = get_object_or_404(get_user_model(), active_code=random_string, account_activated=False)
 
         # 12 * 3600 = 12h
-        elif timezone.now().timestamp() - temp_user.date.timestamp() > 12 * 3600:
+        if timezone.now().timestamp() - user.active_code_sent_date.timestamp() > 12 * 3600:
             context = {"status": "timeEnd"}
-            temp_user.delete()
+            user.delete()
 
 
         else:
             context = {"status": "Ok"}
-            username = temp_user.username
-            password = temp_user.password
-            email = temp_user.email
-            temp_user.delete()
-
-            UserObject = user_model(username=username, password=password, email=email)
-            UserObject.save()
+            user.account_activated = True
+            new_random_string = get_random_string(72)
+            user.active_code = new_random_string
+            user.active_code_sent_date = datetime.now()
+            user.save()
 
         return render(request, "auth_module/verify_result.html", context)

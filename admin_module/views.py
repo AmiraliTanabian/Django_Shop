@@ -34,7 +34,9 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         last_orders = orderModel.objects.filter(is_paid=True).order_by("-id")[:10]
+        unread_tickets = ticket_model.objects.filter(has_unread_reply=True).order_by("-id")[:10]
         context["last_orders"] = last_orders
+        context["unread_tickets"] = unread_tickets
         return context
 
 

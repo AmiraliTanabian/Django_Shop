@@ -99,8 +99,7 @@
 									</thead>
 									<tbody>
 									{% for ticket in tickets %}
-
-										<tr>
+										<tr{% if ticket.has_unread_reply %} class="ticket-unread"{% endif %}>
 											<td>
 												<a href="#">{{ ticket.id }}</a>
 											</td>
@@ -130,7 +129,7 @@
 												{{ ticket.created_date|jformat:"%Y/%m/%d" }}
 											</td>
 											<td>
-												{% if ticket.is_closed %}
+												{% if not ticket.is_closed %}
 													<p class="label label-yellow">باز</p>
 												{% else %}
 													<p class="label label-green">بسته</p>
@@ -143,7 +142,7 @@
 												{% endif %}
 											</td>
 											<td>
-												<a href=""
+												<a href="{% url 'admin_ticket_detail_view' id=ticket.id %}"
 												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>
 													مشاهده
 												</a>

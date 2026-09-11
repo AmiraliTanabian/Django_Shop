@@ -62,7 +62,7 @@
 
 									<p style="line-height: 1.8;">
 										<strong>متن تیکت:</strong><br>
-										{{ ticket.text | escape }}
+										{{ ticket.text | safe }}
 									</p>
 
 								</div>
@@ -79,11 +79,11 @@
 											<div class="panel-heading">
 												<strong>پاسخ ادمین</strong>
 												<span class="pull-left text-muted" style="font-size: 12px;">
-                                {{ ans.created_at|jformat:"%Y/%m/%d" }}
+                                                   {{ ans.created_at|jformat:"%Y/%m/%d" }}
                             </span>
 											</div>
 											<div class="panel-body">
-												{{ ans.text | linebreaks }}
+												{{ ans.text | safe }}
 											</div>
 										</div>
 
@@ -92,11 +92,11 @@
 											<div class="panel-heading">
 												<strong>پاسخ شما</strong>
 												<span class="pull-left text-muted" style="font-size: 12px;">
-                                {{ ans.created_at|jformat:"%Y/%m/%d" }}
+                                                {{ ans.created_at|jformat:"%Y/%m/%d" }}
                             </span>
 											</div>
 											<div class="panel-body">
-												{{ ans.text | linebreaks }}
+												{{ ans.text | safe }}
 											</div>
 										</div>
 									{% endif %}

@@ -104,7 +104,7 @@
 									<tbody>
 									{% for ticket in tickets %}
 
-										<tr>
+										<tr{% if ticket.has_unread_reply %} class="ticket-unread"{% endif %}>
 											<td>
 												<a href="#">{{ ticket.id }}</a>
 											</td>

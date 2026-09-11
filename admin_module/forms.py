@@ -7,6 +7,7 @@ from news_module.models import Article, ArticleCategories, ArticleTag, ArticleCo
 from order_module.models import orderModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand
 from site_module.models import SiteSetting, SiteBanners, Slider
+from user_profile_module.models import TicketAnswerModel, ticket_model
 
 
 class SettingEditForms(forms.ModelForm):
@@ -344,4 +345,30 @@ class UserEditForm(forms.ModelForm):
                     "class": "form-control input-xs",
                 }
             ),
+        }
+
+
+class SendTicketReplyForm(forms.ModelForm):
+    class Meta:
+        model = TicketAnswerModel
+        fields = ("text",)
+
+        widgets = {"text": CKEditor5Widget(
+            attrs={
+                "class": "django_ckeditor_5 form-control input-xs",
+                "placeholder": "متن پاسخ خود را اینجا قرار بدید."
+            }
+        ),
+        }
+
+
+class TicketUnitUpdateForm(forms.ModelForm):
+    class Meta:
+        model = ticket_model
+        fields = ("Unit",)
+        widgets = {
+            "Unit": forms.Select(attrs={
+                "class": "select-chip",
+                "aria-label": "واحد مربوطه",
+            })
         }

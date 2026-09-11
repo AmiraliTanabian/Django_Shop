@@ -1,0 +1,562 @@
+:root {
+    --bg: #EEF1F5;
+    --paper: #FFFFFF;
+    --ink: #2B3646;
+    --ink-soft: #7C8794;
+    --ink-faint: #A7AEB8;
+    --line: #E1E5EA;
+    --line-soft: #EBEEF2;
+    --accent: #2C9CE8;
+    --accent-ink: #1C77BA;
+    --accent-soft: #E5F2FC;
+    --brand-orange: #F5A623;
+    --admin: #2C9CE8;
+    --admin-ink: #FFFFFF;
+    --admin-line: rgba(255, 255, 255, .28);
+    --danger: #E0553F;
+    --danger-soft: #FBE9E6;
+    --warn: #F0A93E;
+    --warn-soft: #FDF1DF;
+    --ok: #27AE60;
+    --ok-soft: #E4F6EC;
+    --radius-s: 5px;
+    --radius-m: 8px;
+    --shadow: 0 1px 2px rgba(43, 54, 70, .04), 0 6px 18px -10px rgba(43, 54, 70, .14);
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+    }
+}
+
+/* ---------- Admin bar ---------- */
+.admin-bar {
+    background: var(--admin);
+    color: var(--admin-ink);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.admin-bar__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: rgba(255, 255, 255, .8);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumb b {
+    color: var(--admin-ink);
+    font-weight: 600;
+}
+
+.breadcrumb .sep {
+    color: rgba(255, 255, 255, .45);
+}
+
+.admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.select-chip {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, .14);
+    color: var(--admin-ink);
+    border: 1px solid var(--admin-line);
+    border-radius: var(--radius-s);
+    padding: 7px 32px 7px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23FFFFFF' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+}
+
+.select-chip:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 1px;
+}
+
+.select-chip option {
+    color: var(--ink);
+}
+
+/*.btn-close-ticket {*/
+/*    background: transparent;*/
+/*    color: #FFE1DB;*/
+/*    border: 1px solid rgba(255, 255, 255, .35);*/
+/*    border-radius: var(--radius-s);*/
+/*    padding: 7px 14px;*/
+/*    font-size: 13px;*/
+/*    cursor: pointer;*/
+/*    transition: background .15s ease, color .15s ease;*/
+/*}*/
+
+/*.btn-close-ticket:hover {*/
+/*    background: var(--danger);*/
+/*    color: #fff;*/
+/*    border-color: var(--danger);*/
+/*}*/
+
+
+.btn-close-ticket {
+    border-radius: var(--radius-s);
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+
+    background: var(--danger);
+    color: #fff;
+    border-color: var(--danger);
+}
+
+.btn-close-ticket:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 1px;
+}
+
+/* ---------- Shell ---------- */
+.shell {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 24px 120px;
+}
+
+/* ---------- Ticket header ---------- */
+.ticket-head {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow);
+    padding: 28px 28px 24px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
+.ticket-head::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--accent);
+}
+
+.ticket-head[data-priority="high"]::before {
+    background: var(--danger);
+}
+
+.ticket-head[data-priority="medium"]::before {
+    background: var(--warn);
+}
+
+.ticket-head[data-priority="low"]::before {
+    background: var(--ok);
+}
+
+.ticket-num {
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 6px;
+}
+
+.ticket-title {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.5;
+    margin: 0 0 18px;
+    letter-spacing: -.01em;
+}
+
+.meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 10px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--bg);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-s);
+    padding: 7px 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+
+.meta-item svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    opacity: .7;
+}
+
+.meta-item b {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-s);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.badge--high {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.badge--high .dot {
+    background: var(--danger);
+}
+
+.badge--medium {
+    background: var(--warn-soft);
+    color: var(--warn);
+}
+
+.badge--medium .dot {
+    background: var(--warn);
+}
+
+.badge--low {
+    background: var(--ok-soft);
+    color: var(--ok);
+}
+
+.badge--low .dot {
+    background: var(--ok);
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+    position: relative;
+    padding-right: 26px;
+    margin-bottom: 32px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: var(--line);
+}
+
+.msg {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.msg::before {
+    content: "";
+    position: absolute;
+    right: -25px;
+    top: 6px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ink-faint);
+}
+
+.msg--support::before {
+    border-color: var(--accent);
+}
+
+.msg__card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    padding: 18px 20px;
+}
+
+.msg--support .msg__card {
+    background: var(--accent-soft);
+    border-color: #C7E3F7;
+}
+
+.msg__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.msg__who {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.msg__name {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.msg__role {
+    font-size: 11px;
+    color: var(--accent-ink);
+    background: #C7E3F7;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.msg--user .msg__role {
+    display: none;
+}
+
+.msg__time {
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.msg__body {
+    color: var(--ink);
+    font-size: 14.5px;
+    line-height: 1.85;
+}
+
+.msg__body p {
+    margin: 0 0 10px;
+}
+
+.msg__body p:last-child {
+    margin-bottom: 0;
+}
+
+.attachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.attachment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+    padding: 7px 10px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease;
+}
+
+.msg--support .attachment {
+    background: #F0F8FE;
+}
+
+.attachment:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.attachment svg {
+    width: 15px;
+    height: 15px;
+    opacity: .65;
+    flex-shrink: 0;
+}
+
+.attachment .size {
+    color: var(--ink-faint);
+}
+
+/* ---------- Composer ---------- */
+.composer {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow);
+    padding: 18px 20px 16px;
+}
+
+.composer__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+}
+
+.composer textarea {
+    width: 100%;
+    min-height: 96px;
+    resize: vertical;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 14.5px;
+    line-height: 1.8;
+    padding: 12px 14px;
+    transition: border-color .15s ease;
+}
+
+.composer textarea::placeholder {
+    color: var(--ink-faint);
+}
+
+.composer textarea:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.composer__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.attach-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: transparent;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-s);
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+
+.attach-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.attach-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.send-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-s);
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background .15s ease;
+}
+
+.send-btn:hover {
+    background: var(--accent-ink);
+}
+
+.send-btn:focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 2px;
+}
+
+.send-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .shell {
+        padding: 20px 14px 100px;
+    }
+
+    .admin-bar__inner {
+        padding: 12px 16px;
+    }
+
+    .ticket-head {
+        padding: 22px 18px 20px;
+    }
+
+    .ticket-title {
+        font-size: 20px;
+    }
+
+    .timeline {
+        padding-right: 20px;
+    }
+
+    .msg::before {
+        right: -19px;
+        width: 9px;
+        height: 9px;
+    }
+
+    .composer__footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .send-btn {
+        justify-content: center;
+    }
+
+    .attach-btn {
+        justify-content: center;
+    }
+}

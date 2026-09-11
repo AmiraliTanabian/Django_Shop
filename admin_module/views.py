@@ -23,10 +23,10 @@ from newsletter_module.models import newsLetterModel
 from order_module.models import orderModel, orderProductModel
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
-from user_profile_module.models import ticket_model, UnitsChoices
+from user_profile_module.models import ticket_model, UnitsChoices, TicketAnswerModel, ticket_attachment
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
-    EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm
+    EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm, SendTicketReplyForm, TicketUnitUpdateForm
 
 
 @login_required()
@@ -1283,3 +1283,116 @@ class UnitTicketView(PermissionRequiredMixin, ListView):
         context["user_unit_english"] = current_unit.value
 
         return context
+
+
+class TicketDetail(PermissionRequiredMixin, View):
+    permission_required = [
+        "user_profile_module.change_ticket_model",
+    ]
+    permission_denied_message = "شما دسترسی به تغییر تیکت را ندارید"
+
+    def get(self, request: HttpRequest, id):
+        current_ticket = get_object_or_404(ticket_model, id=id)
+        if current_ticket.has_unread_reply:
+            current_ticket.has_unread_reply = False
+            current_ticket.save(update_fields=["has_unread_reply"])
+        ticket_answers = TicketAnswerModel.objects.filter(ticket=current_ticket)
+        files = ticket_attachment.objects.filter(ticket=current_ticket)
+        ticket_unit_lbl = UnitsChoices(current_ticket.Unit).label
+        form = SendTicketReplyForm()
+        unit_form = TicketUnitUpdateForm(instance=current_ticket)
+
+        return render(request, "admin_module/tickets/ticket_detial.html", {
+            "form": form,
+            "ticket": current_ticket,
+            "replies": ticket_answers,
+            "files": files,
+            "ticket_unit_lbl": ticket_unit_lbl,
+            "unit_form": unit_form,
+        })
+
+    def post(self, request: HttpRequest, id):
+        current_ticket = get_object_or_404(ticket_model, id=id)
+        ticket_answers = TicketAnswerModel.objects.filter(ticket=current_ticket)
+        files = ticket_attachment.objects.filter(ticket=current_ticket)
+        ticket_unit_lbl = UnitsChoices(current_ticket.Unit).label
+        form = SendTicketReplyForm(request.POST)
+        unit_form = TicketUnitUpdateForm(instance=current_ticket)
+
+        if form.is_valid():
+            reply_text = form.cleaned_data.get("text")
+            TicketAnswerModel.objects.create(
+                text=reply_text,
+                ticket=current_ticket,
+                user=request.user
+            )
+
+            messages.success(request, "پاسخ تیکت با موفقیت ارسال شد")
+            form = SendTicketReplyForm()
+
+        return render(request, "admin_module/tickets/ticket_detial.html", {
+            "form": form,
+            "ticket": current_ticket,
+            "replies": ticket_answers,
+            "files": files,
+            "ticket_unit_lbl": ticket_unit_lbl,
+            "unit_form": unit_form,
+        })
+
+
+class TicketUnitUpdateView(PermissionRequiredMixin, View):
+    permission_required = ["user_profile_module.change_ticket_model"]
+    permission_denied_message = "شما دسترسی به تغییر واحد تیکت را ندارید"
+
+    def post(self, request: HttpRequest, id):
+        current_ticket = get_object_or_404(ticket_model, id=id)
+        form = TicketUnitUpdateForm(request.POST, instance=current_ticket)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "واحد مربوط به تیکت با موفقیت تغییر کرد")
+        else:
+            messages.error(request, "واحد انتخاب‌شده معتبر نیست")
+
+        return redirect("admin_ticket_detail_view", id=id)
+
+
+@permission_required(perm=["user_profile_module.change_ticket_model"], raise_exception=True)
+def set_ticket_close(request: HttpRequest, id):
+    if request.method == "GET":
+        try:
+            current_ticket = get_object_or_404(ticket_model, id=id)
+
+            # msg when ticket was closed
+            if current_ticket.is_closed:
+                return JsonResponse({
+                    "success": False,
+                    "title": "بسته شدن تیکت",
+                    "icon": "warning",
+                    "msg": "تیکت قبل از درخواست شما بسته شده بود"
+                })
+            current_ticket.is_closed = True
+            current_ticket.save()
+            return JsonResponse({
+                "success": True,
+                "title": "بسته شدن تیکت",
+                "icon": "success",
+                "msg": "تیکت با موفقیت بسته شد"
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                "success": False,
+                "title": "بسته شدن تیکت",
+                "icon": "error",
+                "msg": "بسته شدن تیکت با ارر مواجه شد \n لطفا بعدا تلاش کنید"
+            })
+
+    # POST
+    else:
+        return JsonResponse({
+            "success": False,
+            "title": "بسته شدن تیکت",
+            "icon": "error",
+            "msg": "درخواست نامعتبر"
+        })

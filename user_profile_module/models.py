@@ -24,6 +24,7 @@ class ticket_model(models.Model):
     updated_date = models.DateTimeField(verbose_name="تاریخ بروزرسانی تیکت", auto_now=True)
     is_closed = models.BooleanField(verbose_name="بسته شدن تیکت", default=False)
     is_active = models.BooleanField(verbose_name="فعال / غیرفعال", default=True)
+    has_unread_reply = models.BooleanField(verbose_name="دارای پیام خوانده نشده ", default=True)
 
     def __str__(self):
         return self.title

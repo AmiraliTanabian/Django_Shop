@@ -1,0 +1,242 @@
+{% extends 'admin_module/admin_base.html' %}
+{% load static jformat global_filters admin_tags %}
+
+{% block title %}
+	جزییات تیکت | ادمین
+{% endblock %}
+
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/admin_ticket_detail.css' %}">
+	<!--For CKEditor5Widget -->
+	{{ form.media }}
+{% endblock %}
+
+{% block content %}
+
+	{% admin_navbar_inclution %}
+
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+			<div class="page-content">
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+						<li>
+							تیکت ها
+						</li>
+
+					</ul>
+				</div>
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							تیکت ها
+						</h1>
+					</div>
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_tickets_list' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+
+				</div>
+				<div class="page-body">
+					<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<div class="admin-bar" style="border-radius: 5px">
+								<div class="admin-bar__inner">
+									<div class="center-block admin-controls">
+										<form method="post" action="{% url 'admin_change_ticket_unit' id=ticket.id %}">
+											{% csrf_token %}
+											{{ unit_form.Unit }}
+											<button type="submit" class="unit-submit-button">ویرایش واحد</button>
+										</form>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="shell">
+								<section class="ticket-head" data-priority="high">
+									<div class="ticket-num">شماره تیکت: {{ ticket.id }}</div>
+									<h1 class="ticket-title">{{ ticket.title }}</h1>
+
+									<div class="meta-row">
+								        <span class="meta-item">
+								          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle
+										          cx="12" cy="8" r="3.4"></circle><path
+										          d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"></path></svg>
+									         کاربر:
+								        <b>
+									        <a target="_blank"
+									           href="{% url 'admin_user_detail' id=ticket.user.id %}">{{ ticket.user }}</a>
+								        </b>
+								        </span>
+										<span class="meta-item">
+								          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect
+										          x="3" y="7" width="18"
+										          height="13" rx="2"></rect><path>
+										          d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+								          واحد: <b>{{ ticket_unit_lbl }}</b>
+								        </span>
+										{% if ticket.Priority == "high" %}
+											<span class="badge badge--high"><span class="dot"></span>اولویت بالا</span>
+										{% elif ticket.Priority == "low" %}
+											<span class="badge badge--low"><span class="dot"></span>اولویت پایین</span>
+										{% else %}
+											<span class="badge badge--medium"><span
+													class="dot"></span>اولویت متوسط</span>
+										{% endif %}
+										{% if ticket.is_closed %}
+											<span class="badge badge--high"><span class="dot"></span>بسته</span>
+										{% else %}
+											<span class="badge badge--low"><span class="dot"></span>باز</span>
+										{% endif %}
+										<span class="meta-item">
+								          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle
+										          cx="12" cy="12" r="9"></circle><path
+										          d="M12 7v5l3.5 2"></path></svg>
+											{{ ticket.created_date|jformat:"%Y/%m/%d | %H:%M" }}
+								        </span>
+									</div>
+								</section>
+								<div class="timeline">
+									<article class="msg msg--user">
+										<div class="msg__card">
+											<div class="msg__head">
+												<div class="msg__who">
+													<span class="msg__name">{{ ticket.user }}</span>
+												</div>
+												<span class="msg__time">{{ ticket.created_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+											</div>
+											<div class="msg__body">
+												<p>
+													{{ ticket.text }}
+												</p>
+											</div>
+											<div class="attachments">
+												{% for file in files %}
+													<a target="_blank" href="{{ file.files.url }}" class="attachment">
+														<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														     stroke-width="1.8">
+															<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+															<path d="M14 2v6h6"></path>
+														</svg>
+														<span class="size"></span>
+													</a>
+												{% endfor %}
+											</div>
+										</div>
+									</article>
+
+									{% for reply in replies %}
+										{% if reply.user != ticket.user %}
+											<article class="msg msg--support">
+												<div class="msg__card">
+													<div class="msg__head">
+														<div class="msg__who">
+															<span class="msg__name">{{ reply.user }}</span>
+															<span class="msg__role">پشتیبانی</span>
+														</div>
+														<span class="msg__time">{{ reply.created_at|jformat:"%Y/%m/%d | %H:%M" }}</span>
+													</div>
+													<div class="msg__body">
+														<p>
+															{{ reply.text|safe }}
+														</p>
+													</div>
+												</div>
+											</article>
+										{% else %}
+											<article class="msg msg--user">
+												<div class="msg__card">
+													<div class="msg__head">
+														<div class="msg__who">
+															<span class="msg__name">{{ reply.user }}</span>
+														</div>
+														<span class="msg__time">{{ reply.created_at|jformat:"%Y/%m/%d | %H:%M" }}</span>
+													</div>
+													<div class="msg__body">
+														<p>
+															{{ reply.text|safe }}
+														</p>
+													</div>
+												</div>
+											</article>
+										{% endif %}
+									{% endfor %}
+
+								</div>
+
+								{% if not ticket.is_closed %}
+									<section class="composer">
+										<form action="#" method="post" enctype="multipart/form-data">
+											<div class="composer__label">ارسال پاسخ جدید</div>
+											{% csrf_token %}
+											{{ form.text }}
+											<div class="composer__footer">
+												{#										<button class="attach-btn">#}
+												{#											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"#}
+												{#											     stroke-width="1.8">#}
+												{#												<path d="M21.4 11.6 12.5 20.5a4.5 4.5 0 0 1-6.4-6.4l9-9a3 3 0 0 1 4.2 4.2l-9 9a1.5 1.5 0 0 1-2.1-2.1l8.4-8.4"/>#}
+												{#											</svg>#}
+												{#											پیوست فایل#}
+												{#										</button>#}
+												{% if not ticket.is_closed %}
+													<button class="btn-close-ticket"
+													        onclick="SetTickerClose({{ ticket.id }})">
+														بستن تیکت
+													</button>
+												{% else %}
+													<button disabled class="btn-close-ticket"
+													        onclick="SetTickerClose({{ ticket.id }})">
+														بستن تیکت
+													</button>
+												{% endif %}
+												<button class="send-btn">
+													ارسال پاسخ
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+													     stroke-width="1.8">
+														<path d="M22 2 11 13"/>
+														<path d="M22 2 15 22l-4-9-9-4z"/>
+													</svg>
+												</button>
+
+											</div>
+										</form>
+									</section>
+								{% else %}
+									<p class="center alert alert-danger">
+										تیکت بسته شده است و نمیتوانید برای آن پاسخی ثبت کنید
+									</p>
+								{% endif %}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer_ref %}
+	<script src="{% static 'admin_module/assets/js/ticket_handler.js' %}"></script>
+	{#	Swit alert:#}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock %}

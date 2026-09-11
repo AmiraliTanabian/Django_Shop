@@ -241,6 +241,8 @@ class TicketDetailView(LoginRequiredMixin, View):
                                              user=request.user,
                                              ticket=current_ticket
                                              )
+            current_ticket.has_unread_reply = True
+            current_ticket.save(update_fields=["has_unread_reply"])
             return redirect(reverse_lazy("ticket_detail_page", args=[id]))
 
         return render(request, "user_profile_module/ticket_detail.html", {

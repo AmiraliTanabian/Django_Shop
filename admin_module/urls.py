@@ -65,5 +65,8 @@ urlpatterns = [
     path("newsletters/", views.NewsLettersListView.as_view(), name="admin_newsletter_list"),
     path("tickets/", views.TicketListView.as_view(), name="admin_tickets_list"),
     path("tickets/unit/<unit>", views.UnitTicketView.as_view(), name="admin_unit_ticket_list"),
+    path("tickets/<id>", views.TicketDetail.as_view(), name="admin_ticket_detail_view"),
+    path("tickets/<id>/change-unit/", views.TicketUnitUpdateView.as_view(), name="admin_change_ticket_unit"),
+    path("tickets/set-ticket-close/<id>/", views.set_ticket_close, name="admin_set_ticket_close"),
 
 ]

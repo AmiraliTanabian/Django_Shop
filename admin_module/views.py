@@ -3,9 +3,8 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMessage
 from django.http import Http404
 from django.http import HttpRequest
@@ -15,7 +14,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import FormView
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, TemplateView
 
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
@@ -29,11 +28,14 @@ from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminConta
     EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm, SendTicketReplyForm, TicketUnitUpdateForm
 
 
-@login_required()
-def index(request):
-    if request.user.is_staff:
-        return render(request, "admin_module/index.html")
-    raise PermissionDenied
+class HomePageView(TemplateView):
+    template_name = "admin_module/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        last_orders = orderModel.objects.filter(is_paid=True).order_by("-id")[:10]
+        context["last_orders"] = last_orders
+        return context
 
 
 @permission_required(perm=['site_module.view_sitesetting', 'site_module.view_sitebanners', 'site_module.view_slider'],

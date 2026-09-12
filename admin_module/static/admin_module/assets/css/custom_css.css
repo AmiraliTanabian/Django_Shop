@@ -96,3 +96,11 @@
     padding: 7px 42px 7px 14px;
     background-position: left 14px center;
 }
+
+/* Keep long sales amounts and their currency label inside the dashboard card. */
+.databox.databox-vertical.databox-lg.sales-summary-databox .databox-number {
+    white-space: nowrap;
+    font-size: clamp(10px, 0.9vw, 14px);
+    line-height: 24px;
+    letter-spacing: -0.15px;
+}

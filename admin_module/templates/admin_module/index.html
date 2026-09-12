@@ -5,6 +5,9 @@
 	پنل ادمین
 {% endblock %}
 
+{% block header_ref %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
+{% endblock %}
 
 {% block content %}
 	<!-- Loading Container -->
@@ -504,7 +507,7 @@
 						<div class="col-lg-8 col-sm-12 col-xs-12">
 							<div class="row">
 								<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
 										<div class="databox-top bg-palegreen no-padding">
 											<div class="databox-stat white bg-palegreen font-120">
 												<i class="stat-icon fa fa-caret-down icon-xlg"></i>
@@ -528,11 +531,12 @@
 											<div class="databox-row">
 												<div class="databox-cell cell-6 text-align-left">
 													<span class="databox-text">فروش کل</span>
-													<span class="databox-number">$23,657</span>
+													<span class="databox-number">{{ total_sales|price_separator }}</span>
+
 												</div>
 												<div class="databox-cell cell-6 text-align-right">
 													<span class="databox-text">ماه جاری</span>
-													<span class="databox-number font-70">$1,257</span>
+													<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
 												</div>
 											</div>
 										</div>
@@ -627,7 +631,8 @@
 																<div class="row">
 																	<div class="ticket-user col-lg-6 col-sm-12">
 																		<i class="fa fa-user user-avatar"></i>
-																		<a class="user-name" href="{% url 'admin_ticket_detail_view' id=ticket.id %}">{{ ticket.user }}</a>
+																		<a class="user-name"
+																		   href="{% url 'admin_ticket_detail_view' id=ticket.id %}">{{ ticket.user }}</a>
 																		<span class="user-at">-</span>
 																		<span class="user-company">{{ ticket.title }}</span>
 																	</div>
@@ -648,7 +653,9 @@
 														{% endfor %}
 													</ul>
 												{% else %}
-													<div class="alert alert-info no-margin">تیکت خوانده‌نشده‌ای وجود ندارد.</div>
+													<div class="alert alert-info no-margin">تیکت خوانده‌نشده‌ای وجود
+														ندارد.
+													</div>
 												{% endif %}
 
 												{% comment %}
@@ -931,4 +938,3 @@
 
 	</div>
 {% endblock %}
-

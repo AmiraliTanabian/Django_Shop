@@ -1,11 +1,14 @@
 from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import EmailMessage
+from django.db.models.aggregates import Sum
+from django.db.models.expressions import F
 from django.http import Http404
 from django.http import HttpRequest
 from django.http.response import JsonResponse
@@ -35,8 +38,22 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         last_orders = orderModel.objects.filter(is_paid=True).order_by("-id")[:10]
         unread_tickets = ticket_model.objects.filter(has_unread_reply=True).order_by("-id")[:10]
+        total_sales = orderProductModel.objects.filter(order__is_paid=True).aggregate(
+            total=Sum(F("count") * F("finally_price"))
+        )
+
+        # Get last month total sales
+        this_month_start_day = datetime.now().replace(day=1)
+        this_month_end_day = this_month_start_day + relativedelta(months=1)
+        total_this_month_sales = orderProductModel.objects.filter(order__is_paid=True,
+                                                                  order__paid_date__gte=this_month_start_day,
+                                                                  order__paid_date__lt=this_month_end_day).aggregate(
+            total=Sum(F("count") * F("finally_price"))
+        )
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
+        context["total_sales"] = total_sales["total"] or 0
+        context["total_this_month_sales"] = total_this_month_sales["total"] or 0
         return context
 
 

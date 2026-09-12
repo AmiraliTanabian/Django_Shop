@@ -26,7 +26,8 @@ class CustomUserAdmin(UserAdmin):
                 ),
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (_("Important dates"),
+         {"fields": ("last_login", "date_joined", "account_activation_date", "active_code_sent_date")}),
     )
 
 

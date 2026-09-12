@@ -1,5 +1,5 @@
 {% extends 'admin_module/admin_base.html' %}
-{% load static admin_tags global_filters jformat %}
+{% load static admin_tags global_filters jformat humanize %}
 
 {% block title %}
 	پنل ادمین
@@ -425,95 +425,18 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-4 col-sm-12 col-xs-12">
-							<div class="widget">
-								<div class="widget-header bordered-bottom bordered-themeprimary">
-									<i class="widget-icon fa fa-tasks themeprimary"></i>
-									<span class="widget-caption themeprimary">فهرست وظایف</span>
-								</div><!--Widget Header-->
-								<div class="widget-body no-padding">
-									<div class="task-container">
-										<div class="task-search">
-                                            <span class="input-icon">
-                                                <input type="text" class="form-control" placeholder="جستجو">
-                                                <i class="fa fa-search gray"></i>
-                                            </span>
-										</div>
-										<ul class="tasks-list">
-											<li class="task-item">
-												<div class="task-check">
-													<label>
-														<input type="checkbox">
-														<span class="text"></span>
-													</label>
-												</div>
-												<div class="task-state">
-                                                    <span class="label label-yellow">
-                                                        در حال انجام
-                                                    </span>
-												</div>
-												<div class="task-time">یک ساعت پیش</div>
-												<div class="task-body">از مدیر سیستم بخواهید پایتون 3 را روی سرور نصب و
-													اجرا
-													کند
-												</div>
-												<div class="task-creator"><a href="default.htm">بابک خرمدین</a></div>
-												<div class="task-assignedto">منسوب به شما</div>
-											</li>
-											<li class="task-item">
-												<div class="task-check">
-													<label>
-														<input type="checkbox">
-														<span class="text"></span>
-													</label>
-												</div>
-												<div class="task-state">
-                                                    <span class="label label-orange">
-                                                        فعال
-                                                    </span>
-												</div>
-												<div class="task-time">دو ساعت پیش</div>
-												<div class="task-body">مستندات ای پی آی جدید را همراه با تست و نحوه
-													پیاده
-													سازی بنویسید
-												</div>
-												<div class="task-creator"><a href="default.htm">بهرنگ علی فر</a></div>
-												<div class="task-assignedto">منسوب به شما</div>
-											</li>
-											<li class="task-item">
-												<div class="task-check">
-													<label>
-														<input type="checkbox">
-														<span class="text"></span>
-													</label>
-												</div>
-												<div class="task-state">
-                                                    <span class="label label-palegreen">
-                                                        تایید شده
-                                                    </span>
-												</div>
-												<div class="task-time">دیروز</div>
-												<div class="task-body">بازبینی کدها و نوشتن کدهای احمقانه و تست آن ها
-												</div>
-												<div class="task-creator"><a href="default.htm">بیل گیتز</a></div>
-												<div class="task-assignedto">منسوب به کیم</div>
-											</li>
-										</ul>
-									</div>
-								</div><!--Widget Body-->
-							</div>
 
-						</div>
-						<div class="col-lg-8 col-sm-12 col-xs-12">
-							<div class="row">
-								<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
-										<div class="databox-top bg-palegreen no-padding">
-											<div class="databox-stat white bg-palegreen font-120">
-												<i class="stat-icon fa fa-caret-down icon-xlg"></i>
-											</div>
-											<div class="horizontal-space space-lg"></div>
-											<div class="databox-sparkline no-margin">
+					</div>
+					<div class="col-lg-8 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
+									<div class="databox-top bg-palegreen no-padding">
+										<div class="databox-stat white bg-palegreen font-120">
+											<i class="stat-icon fa fa-caret-down icon-xlg"></i>
+										</div>
+										<div class="horizontal-space space-lg"></div>
+										<div class="databox-sparkline no-margin">
                                                 <span data-sparkline="compositebar" data-height="82px" data-width="100%"
                                                       data-barcolor="#b0dc81"
                                                       data-barwidth="10px" data-barspacing="5px"
@@ -525,31 +448,31 @@
                                                       data-composite="7, 6, 5, 7, 9, 10, 8, 7, 6, 6, 4, 7, 8">
                                                     8,4,1,2,4,6,2,4,4,8,10,7,10
                                                 </span>
-											</div>
 										</div>
-										<div class="databox-bottom no-padding">
-											<div class="databox-row">
-												<div class="databox-cell cell-6 text-align-left">
-													<span class="databox-text">فروش کل</span>
-													<span class="databox-number">{{ total_sales|price_separator }}</span>
+									</div>
+									<div class="databox-bottom no-padding">
+										<div class="databox-row">
+											<div class="databox-cell cell-6 text-align-left">
+												<span class="databox-text">فروش کل</span>
+												<span class="databox-number">{{ total_sales|price_separator }}</span>
 
-												</div>
-												<div class="databox-cell cell-6 text-align-right">
-													<span class="databox-text">ماه جاری</span>
-													<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
-												</div>
+											</div>
+											<div class="databox-cell cell-6 text-align-right">
+												<span class="databox-text">ماه جاری</span>
+												<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
-									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-										<div class="databox-top bg-orange no-padding">
-											<div class="databox-stat white bg-orange font-120">
-												<i class="stat-icon fa fa-caret-up icon-xlg"></i>
-											</div>
-											<div class="horizontal-space space-lg"></div>
-											<div class="databox-sparkline no-margin">
+							</div>
+							<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+									<div class="databox-top bg-orange no-padding">
+										<div class="databox-stat white bg-orange font-120">
+											<i class="stat-icon fa fa-caret-up icon-xlg"></i>
+										</div>
+										<div class="horizontal-space space-lg"></div>
+										<div class="databox-sparkline no-margin">
                                                 <span data-sparkline="compositebar" data-height="82px" data-width="100%"
                                                       data-barcolor="#fb7d64"
                                                       data-barwidth="10px" data-barspacing="5px"
@@ -561,31 +484,31 @@
                                                       data-composite="7, 6, 5, 7, 9, 10, 8, 6,2,4,1,2,7">
                                                     10,7,10,8,4,6, 6, 4, 7, 8 ,4,4,8
                                                 </span>
-											</div>
 										</div>
-										<div class="databox-bottom no-padding">
-											<div class="databox-row">
-												<div class="databox-cell cell-6 text-align-left">
-													<span class="databox-text">کل کاربران</span>
-													<span class="databox-number">76,109</span>
-												</div>
-												<div class="databox-cell cell-6 text-align-right">
-													<span class="databox-text">کاربران جدید</span>
-													<span class="databox-number font-70">7,540</span>
-												</div>
+									</div>
+									<div class="databox-bottom no-padding">
+										<div class="databox-row">
+											<div class="databox-cell cell-6 text-align-left">
+												<span class="databox-text">کل کاربران</span>
+												<span class="databox-number">{{ total_users_count|intcomma }}</span>
+											</div>
+											<div class="databox-cell cell-6 text-align-right">
+												<span class="databox-text">کاربران جدید</span>
+												<span class="databox-number font-70">{{ total_user_this_month|intcomma }}</span>
 											</div>
 										</div>
 									</div>
-
 								</div>
-								<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
-									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-										<div class="databox-top bg-azure no-padding">
-											<div class="databox-stat white bg-azure font-120">
-												<i class="stat-icon fa fa-caret-up icon-xlg"></i>
-											</div>
-											<div class="horizontal-space space-lg"></div>
-											<div class="databox-sparkline no-margin">
+
+							</div>
+							<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
+								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+									<div class="databox-top bg-azure no-padding">
+										<div class="databox-stat white bg-azure font-120">
+											<i class="stat-icon fa fa-caret-up icon-xlg"></i>
+										</div>
+										<div class="horizontal-space space-lg"></div>
+										<div class="databox-sparkline no-margin">
                                                 <span data-sparkline="compositebar" data-height="82px" data-width="100%"
                                                       data-barcolor="#3bcbef"
                                                       data-barwidth="10px" data-barspacing="5px"
@@ -597,296 +520,176 @@
                                                       data-composite="8,4,1,2,4,6,2,4,4,8,10,7,7">
                                                     7, 6, 5, 7, 9, 10, 8, 7, 6, 6, 4, 7, 8
                                                 </span>
+										</div>
+									</div>
+									<div class="databox-bottom no-padding">
+										<div class="databox-row">
+											<div class="databox-cell cell-6 text-align-left">
+												<span class="databox-text">کل بازدیدها</span>
+												<span class="databox-number">990,541</span>
+											</div>
+											<div class="databox-cell cell-6 text-align-right">
+												<span class="databox-text">ماه جاری</span>
+												<span class="databox-number font-70">292,123</span>
 											</div>
 										</div>
-										<div class="databox-bottom no-padding">
-											<div class="databox-row">
-												<div class="databox-cell cell-6 text-align-left">
-													<span class="databox-text">کل بازدیدها</span>
-													<span class="databox-number">990,541</span>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="widget">
+									<div class="widget-header bordered-bottom bordered-themesecondary">
+										<i class="widget-icon fa fa-tags themesecondary"></i>
+										<span class="widget-caption themesecondary">10 تیکت خوانده نشده جدید</span>
+									</div><!--Widget Header-->
+									<div class="widget-body no-padding">
+										<div class="tickets-container">
+											{% if unread_tickets %}
+												<ul class="tickets-list">
+													{% for ticket in unread_tickets %}
+														<li class="ticket-item">
+															<div class="row">
+																<div class="ticket-user col-lg-6 col-sm-12">
+																	<i class="fa fa-user user-avatar"></i>
+																	<a class="user-name"
+																	   href="{% url 'admin_ticket_detail_view' id=ticket.id %}">{{ ticket.user }}</a>
+																	<span class="user-at">-</span>
+																	<span class="user-company">{{ ticket.title }}</span>
+																</div>
+																<div class="ticket-time col-lg-4 col-sm-6 col-xs-12">
+																	<div class="divider hidden-md hidden-sm hidden-xs"></div>
+																	<i class="fa fa-clock-o"></i>
+																	<span class="time">{{ ticket.created_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+																</div>
+																<div class="ticket-type col-lg-2 col-sm-6 col-xs-12">
+																	<span class="divider hidden-xs"></span>
+																	<span class="type">{{ ticket.get_Unit_display }}</span>
+																</div>
+																<div class="ticket-state bg-palegreen">
+																	<i class="fa fa-envelope"></i>
+																</div>
+															</div>
+														</li>
+													{% endfor %}
+												</ul>
+											{% else %}
+												<div class="alert alert-info no-margin">تیکت خوانده‌نشده‌ای وجود
+													ندارد.
 												</div>
-												<div class="databox-cell cell-6 text-align-right">
-													<span class="databox-text">ماه جاری</span>
-													<span class="databox-number font-70">292,123</span>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+						<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+							<div class="databox-top">
+								<div class="databox-row row-12">
+									<div class="databox-cell cell-3 text-center">
+										<div class="databox-number number-xxlg sonic-silver">164</div>
+										<div class="databox-text storm-cloud">آنلاین</div>
+									</div>
+									<div class="databox-cell cell-9 text-align-center">
+										<div class="databox-row row-6 text-left">
+											<span class="badge badge-palegreen badge-empty margin-left-5"></span>
+											<span class="databox-inlinetext uppercase darkgray margin-left-5">جدید</span>
+											<span class="badge badge-yellow badge-empty margin-left-5"></span>
+											<span class="databox-inlinetext uppercase darkgray margin-left-5">بازگشتی</span>
+										</div>
+										<div class="databox-row row-6">
+											<div class="progress bg-yellow progress-no-radius">
+												<div class="progress-bar progress-bar-palegreen" role="progressbar"
+												     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+												     style="width: 78%">
 												</div>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="widget">
-										<div class="widget-header bordered-bottom bordered-themesecondary">
-											<i class="widget-icon fa fa-tags themesecondary"></i>
-											<span class="widget-caption themesecondary">10 تیکت خوانده نشده جدید</span>
-										</div><!--Widget Header-->
-										<div class="widget-body no-padding">
-											<div class="tickets-container">
-												{% if unread_tickets %}
-													<ul class="tickets-list">
-														{% for ticket in unread_tickets %}
-															<li class="ticket-item">
-																<div class="row">
-																	<div class="ticket-user col-lg-6 col-sm-12">
-																		<i class="fa fa-user user-avatar"></i>
-																		<a class="user-name"
-																		   href="{% url 'admin_ticket_detail_view' id=ticket.id %}">{{ ticket.user }}</a>
-																		<span class="user-at">-</span>
-																		<span class="user-company">{{ ticket.title }}</span>
-																	</div>
-																	<div class="ticket-time col-lg-4 col-sm-6 col-xs-12">
-																		<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																		<i class="fa fa-clock-o"></i>
-																		<span class="time">{{ ticket.created_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
-																	</div>
-																	<div class="ticket-type col-lg-2 col-sm-6 col-xs-12">
-																		<span class="divider hidden-xs"></span>
-																		<span class="type">{{ ticket.get_Unit_display }}</span>
-																	</div>
-																	<div class="ticket-state bg-palegreen">
-																		<i class="fa fa-envelope"></i>
-																	</div>
-																</div>
-															</li>
-														{% endfor %}
-													</ul>
-												{% else %}
-													<div class="alert alert-info no-margin">تیکت خوانده‌نشده‌ای وجود
-														ندارد.
-													</div>
-												{% endif %}
-
-												{% comment %}
-												<ul class="tickets-list">
-													<li class="ticket-item">
-														<div class="row">
-															<div class="ticket-user col-lg-6 col-sm-12">
-																<img src="../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
-																     class="user-avatar">
-																<span class="user-name">آدام جانسون</span>
-																<span class="user-at">از</span>
-																<span class="user-company">مایکروسافت</span>
-															</div>
-															<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
-																<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																<i class="fa fa-clock-o"></i>
-																<span class="time">1 ساعت پیش</span>
-															</div>
-															<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
-																<span class="divider hidden-xs"></span>
-																<span class="type">مشکل</span>
-															</div>
-															<div class="ticket-state bg-palegreen">
-																<i class="fa fa-check"></i>
-															</div>
-														</div>
-													</li>
-													<li class="ticket-item">
-														<div class="row">
-															<div class="ticket-user col-lg-6 col-sm-12">
-																<img src="../../static/admin_module/assets/img/avatars/divyia.jpg"
-																     class="user-avatar">
-																<span class="user-name">دیویا فیلیپس</span>
-																<span class="user-at">از</span>
-																<span class="user-company">دریبل</span>
-															</div>
-															<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
-																<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																<i class="fa fa-clock-o"></i>
-																<span class="time">3 ساعت پیش</span>
-															</div>
-															<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
-																<span class="divider hidden-xs"></span>
-																<span class="type">پرداخت ناموفق</span>
-															</div>
-															<div class="ticket-state bg-palegreen">
-																<i class="fa fa-check"></i>
-															</div>
-														</div>
-													</li>
-													<li class="ticket-item">
-														<div class="row">
-															<div class="ticket-user col-lg-6 col-sm-12">
-																<img src="../../static/admin_module/assets/img/avatars/matt-cheuvront.jpg"
-																     class="user-avatar">
-																<span class="user-name">نیکلای لارسن</span>
-																<span class="user-at">از</span>
-																<span class="user-company">گوگل</span>
-															</div>
-															<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
-																<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																<i class="fa fa-clock-o"></i>
-																<span class="time">18 ساعت پیش</span>
-															</div>
-															<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
-																<span class="divider hidden-xs"></span>
-																<span class="type">مشکل</span>
-															</div>
-															<div class="ticket-state bg-darkorange">
-																<i class="fa fa-times"></i>
-															</div>
-														</div>
-													</li>
-													<li class="ticket-item">
-														<div class="row">
-															<div class="ticket-user col-lg-6 col-sm-12">
-																<img src="../../static/admin_module/assets/img/avatars/sergey-azovskiy.jpg"
-																     class="user-avatar">
-																<span class="user-name">بیل جکسون</span>
-																<span class="user-at">از</span>
-																<span class="user-company">مبنا</span>
-															</div>
-															<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
-																<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																<i class="fa fa-clock-o"></i>
-																<span class="time">2 ساعت پیش</span>
-															</div>
-															<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
-																<span class="divider hidden-xs"></span>
-																<span class="type">پرداخت ناموفق</span>
-															</div>
-															<div class="ticket-state bg-palegreen">
-																<i class="fa fa-check"></i>
-															</div>
-														</div>
-													</li>
-													<li class="ticket-item">
-														<div class="row">
-															<div class="ticket-user col-lg-6 col-sm-12">
-																<img src="../../static/admin_module/assets/img/avatars/john-smith.jpg"
-																     class="user-avatar">
-																<span class="user-name">اریک کلپتون</span>
-																<span class="user-at">از</span>
-																<span class="user-company">موزیکر</span>
-															</div>
-															<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
-																<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																<i class="fa fa-clock-o"></i>
-																<span class="time">2 روز پیش</span>
-															</div>
-															<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
-																<span class="divider hidden-xs"></span>
-																<span class="type">اطلاعات</span>
-															</div>
-															<div class="ticket-state bg-yellow">
-																<i class="fa fa-info"></i>
-															</div>
-														</div>
-													</li>
-												</ul>
-												{% endcomment %}
-											</div>
+							<div class="databox-bottom">
+								<div class="databox-row row-12">
+									<div class="databox-cell cell-7 text-center  padding-5">
+										<div id="dashboard-pie-chart-sources" class="chart"></div>
+									</div>
+									<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30">
+										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+											<span class="databox-text sonic-silver pull-left no-margin">نوع</span>
+											<span class="databox-text sonic-silver pull-right no-margin uppercase">درصد</span>
+										</div>
+										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
+											<span class="databox-text darkgray pull-left no-margin hidden-xs">فید</span>
+											<span class="databox-text darkgray pull-right no-margin uppercase">46%</span>
+										</div>
+										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+											<span class="badge badge-orange badge-empty pull-left margin-5"></span>
+											<span class="databox-text darkgray pull-left no-margin hidden-xs">لینک</span>
+											<span class="databox-text darkgray pull-right no-margin uppercase">21%</span>
+										</div>
+										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
+											<span class="databox-text darkgray pull-left no-margin hidden-xs">مستقیم</span>
+											<span class="databox-text darkgray pull-right no-margin uppercase">12%</span>
+										</div>
+										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+											<span class="badge badge-palegreen badge-empty pull-left margin-5"></span>
+											<span class="databox-text darkgray pull-left no-margin hidden-xs">ایمیل</span>
+											<span class="databox-text darkgray pull-right no-margin uppercase">11%</span>
+										</div>
+										<div class="databox-row row-2 padding-10">
+											<span class="badge badge-yellow badge-empty pull-left margin-5"></span>
+											<span class="databox-text darkgray pull-left no-margin hidden-xs">ارگانیک</span>
+											<span class="databox-text darkgray pull-right no-margin uppercase">10%</span>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-								<div class="databox-top">
-									<div class="databox-row row-12">
-										<div class="databox-cell cell-3 text-center">
-											<div class="databox-number number-xxlg sonic-silver">164</div>
-											<div class="databox-text storm-cloud">آنلاین</div>
-										</div>
-										<div class="databox-cell cell-9 text-align-center">
-											<div class="databox-row row-6 text-left">
-												<span class="badge badge-palegreen badge-empty margin-left-5"></span>
-												<span class="databox-inlinetext uppercase darkgray margin-left-5">جدید</span>
-												<span class="badge badge-yellow badge-empty margin-left-5"></span>
-												<span class="databox-inlinetext uppercase darkgray margin-left-5">بازگشتی</span>
-											</div>
-											<div class="databox-row row-6">
-												<div class="progress bg-yellow progress-no-radius">
-													<div class="progress-bar progress-bar-palegreen" role="progressbar"
-													     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-													     style="width: 78%">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="databox-bottom">
-									<div class="databox-row row-12">
-										<div class="databox-cell cell-7 text-center  padding-5">
-											<div id="dashboard-pie-chart-sources" class="chart"></div>
-										</div>
-										<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30">
-											<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-												<span class="databox-text sonic-silver pull-left no-margin">نوع</span>
-												<span class="databox-text sonic-silver pull-right no-margin uppercase">درصد</span>
-											</div>
-											<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-												<span class="badge badge-blue badge-empty pull-left margin-5"></span>
-												<span class="databox-text darkgray pull-left no-margin hidden-xs">فید</span>
-												<span class="databox-text darkgray pull-right no-margin uppercase">46%</span>
-											</div>
-											<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-												<span class="badge badge-orange badge-empty pull-left margin-5"></span>
-												<span class="databox-text darkgray pull-left no-margin hidden-xs">لینک</span>
-												<span class="databox-text darkgray pull-right no-margin uppercase">21%</span>
-											</div>
-											<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-												<span class="badge badge-pink badge-empty pull-left margin-5"></span>
-												<span class="databox-text darkgray pull-left no-margin hidden-xs">مستقیم</span>
-												<span class="databox-text darkgray pull-right no-margin uppercase">12%</span>
-											</div>
-											<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-												<span class="badge badge-palegreen badge-empty pull-left margin-5"></span>
-												<span class="databox-text darkgray pull-left no-margin hidden-xs">ایمیل</span>
-												<span class="databox-text darkgray pull-right no-margin uppercase">11%</span>
-											</div>
-											<div class="databox-row row-2 padding-10">
-												<span class="badge badge-yellow badge-empty pull-left margin-5"></span>
-												<span class="databox-text darkgray pull-left no-margin hidden-xs">ارگانیک</span>
-												<span class="databox-text darkgray pull-right no-margin uppercase">10%</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<div class="databox databox-xxlg databox-vertical databox-inverted">
-								<div class="databox-top bg-whitesmoke no-padding">
-									<div class="databox-row row-2 bg-orange no-padding">
-										<div class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+						<div class="databox databox-xxlg databox-vertical databox-inverted">
+							<div class="databox-top bg-whitesmoke no-padding">
+								<div class="databox-row row-2 bg-orange no-padding">
+									<div class="databox-cell cell-1 text-align-center no-padding padding-top-5">
 										<span class="databox-number white"><i
 												class="fa fa-bar-chart-o no-margin"></i></span>
-										</div>
-										<div class="databox-cell cell-8 no-padding padding-top-5 text-align-left">
-											<span class="databox-number white hidden-xs">بازدید صفحات</span>
-										</div>
-										<div class="databox-cell cell-3 text-align-right padding-10">
-											<span class="databox-text white">13 آبان</span>
-										</div>
 									</div>
-									<div class="databox-row row-4">
-										<div class="databox-cell cell-6 no-padding padding-10 padding-left-20 text-align-left">
-											<span class="databox-number orange no-margin">534,908</span>
-											<span class="databox-text sky no-margin">بازدید کلی</span>
-										</div>
-										<div class="databox-cell cell-2 no-padding padding-10 text-align-left ">
-											<span class="databox-number orange no-margin  hidden-xs">4,129</span>
-											<span class="databox-text darkgray no-margin  hidden-xs">هفتگی</span>
-										</div>
-										<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-											<span class="databox-number orange no-margin  hidden-xs">329</span>
-											<span class="databox-text darkgray no-margin  hidden-xs">دیروز</span>
-										</div>
-										<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-											<span class="databox-number orange no-margin   hidden-xs">104</span>
-											<span class="databox-text darkgray no-margin  hidden-xs">امروز</span>
-										</div>
+									<div class="databox-cell cell-8 no-padding padding-top-5 text-align-left">
+										<span class="databox-number white hidden-xs">بازدید صفحات</span>
 									</div>
-									<div class="databox-row row-6 no-padding">
-										<div class="databox-sparkline">
+									<div class="databox-cell cell-3 text-align-right padding-10">
+										<span class="databox-text white">13 آبان</span>
+									</div>
+								</div>
+								<div class="databox-row row-4">
+									<div class="databox-cell cell-6 no-padding padding-10 padding-left-20 text-align-left">
+										<span class="databox-number orange no-margin">534,908</span>
+										<span class="databox-text sky no-margin">بازدید کلی</span>
+									</div>
+									<div class="databox-cell cell-2 no-padding padding-10 text-align-left ">
+										<span class="databox-number orange no-margin  hidden-xs">4,129</span>
+										<span class="databox-text darkgray no-margin  hidden-xs">هفتگی</span>
+									</div>
+									<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
+										<span class="databox-number orange no-margin  hidden-xs">329</span>
+										<span class="databox-text darkgray no-margin  hidden-xs">دیروز</span>
+									</div>
+									<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
+										<span class="databox-number orange no-margin   hidden-xs">104</span>
+										<span class="databox-text darkgray no-margin  hidden-xs">امروز</span>
+									</div>
+								</div>
+								<div class="databox-row row-6 no-padding">
+									<div class="databox-sparkline">
                                             <span data-sparkline="line" data-height="126px" data-width="100%"
                                                   data-fillcolor="#37c2e2" data-linecolor="#37c2e2"
                                                   data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
@@ -895,46 +698,46 @@
                                                   data-linewidth="2" data-spotradius="0">
                                                 5,7,6,5,9,4,3,7,2
                                             </span>
-										</div>
 									</div>
 								</div>
-								<div class="databox-bottom bg-sky no-padding">
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">شنبه</span>
-										<span class="databox-header white visible-xs">ش</span>
-									</div>
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">یک‌شنبه</span>
-										<span class="databox-header white visible-xs">ی</span>
-									</div>
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">دوشنبه</span>
-										<span class="databox-header white visible-xs">د</span>
-									</div>
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">سه‌شنبه</span>
-										<span class="databox-header white visible-xs">س</span>
-									</div>
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">چهارشنبه</span>
-										<span class="databox-header white visible-xs">چ</span>
-									</div>
-									<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-										<span class="databox-header white hidden-xs">پنج‌شنبه</span>
-										<span class="databox-header white visible-xs">پ</span>
-									</div>
+							</div>
+							<div class="databox-bottom bg-sky no-padding">
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">شنبه</span>
+									<span class="databox-header white visible-xs">ش</span>
+								</div>
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">یک‌شنبه</span>
+									<span class="databox-header white visible-xs">ی</span>
+								</div>
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">دوشنبه</span>
+									<span class="databox-header white visible-xs">د</span>
+								</div>
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">سه‌شنبه</span>
+									<span class="databox-header white visible-xs">س</span>
+								</div>
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">چهارشنبه</span>
+									<span class="databox-header white visible-xs">چ</span>
+								</div>
+								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
+									<span class="databox-header white hidden-xs">پنج‌شنبه</span>
+									<span class="databox-header white visible-xs">پ</span>
+								</div>
 
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Page Body -->
 			</div>
-			<!-- /Page Content -->
+			<!-- /Page Body -->
 		</div>
-		<!-- /Page Container -->
-		<!-- Main Container -->
+		<!-- /Page Content -->
+	</div>
+	<!-- /Page Container -->
+	<!-- Main Container -->
 
 	</div>
 {% endblock %}

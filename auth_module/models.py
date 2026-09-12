@@ -13,7 +13,8 @@ class User(AbstractUser):
     address = models.TextField(verbose_name="آدرس", blank=True, null=True)
     favorite_products = models.ManyToManyField(Product, verbose_name="کالاهای مورد علاقه", blank=True)
     active_code = models.CharField(max_length=72, verbose_name="عبارت فعال سازی", null=True, blank=True)
-    active_code_sent_date = jDateTimeField(verbose_name="زمان ارسال کد فعال سازی ایمیل", null=True, blank=True)
+    active_code_sent_date = jDateTimeField(verbose_name="زمان ارسال کد فعال سازی", null=True, blank=True)
+    account_activation_date = jDateTimeField(verbose_name="زمان فعال سازی حساب", null=True, blank=True)
     account_activated = models.BooleanField(verbose_name="حساب فعال شده", default=False)
 
     def __str__(self):

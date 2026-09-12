@@ -50,10 +50,19 @@ class HomePageView(TemplateView):
                                                                   order__paid_date__lt=this_month_end_day).aggregate(
             total=Sum(F("count") * F("finally_price"))
         )
+
+        # users stats
+        total_users_count = get_user_model().objects.all().count()
+        total_user_this_month = get_user_model().objects.filter(account_activation_date__gte=this_month_start_day,
+                                                                account_activation_date__lt=this_month_end_day,
+                                                                account_activated = True).count()
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
         context["total_this_month_sales"] = total_this_month_sales["total"] or 0
+        context["total_users_count"] = total_users_count
+        context["total_user_this_month"] = total_user_this_month
+
         return context
 
 

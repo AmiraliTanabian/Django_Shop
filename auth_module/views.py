@@ -137,6 +137,7 @@ class verifyAccount(View):
             new_random_string = get_random_string(72)
             user.active_code = new_random_string
             user.active_code_sent_date = datetime.now()
+            user.account_activation_date = datetime.now()
             user.save()
 
         return render(request, "auth_module/verify_result.html", context)

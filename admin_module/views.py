@@ -686,12 +686,12 @@ class ProductEditView(PermissionRequiredMixin, View):
 
     def post(self, request: HttpRequest, id):
         product = get_object_or_404(Product, id=id)
-        form = EditProductForm(request.POST, instance=self)
-        galleries = ProductGallery.objects.filter(product)
+        form = EditProductForm(request.POST, instance=product)
+        galleries = ProductGallery.objects.filter(product=product)
 
         if form.is_valid():
             form.save()
-            messages.success(request, "محصول مورد نظر با موفقیت ویرایش")
+            messages.success(request, "محصول مورد نظر با موفقیت ویرایش شد")
         return render(request, "admin_module/products/product_detail.html", {
             "form": form,
             "product": product,

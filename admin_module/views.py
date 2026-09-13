@@ -79,6 +79,12 @@ class HomePageView(TemplateView):
 
         most_sells_product = Product.objects.filter(is_active=True).order_by("-order_count")[:10]
 
+        # get product stats according stock
+        all_active_products = Product.objects.filter(is_active=True)
+        out_of_stock_products = all_active_products.filter(count=0)
+        low_stock_products = all_active_products.filter(count__lte=10)
+        enough_stack_products_count = all_active_products.count() - low_stock_products.count() - out_of_stock_products.count()
+
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
@@ -88,6 +94,16 @@ class HomePageView(TemplateView):
         context["total_user_this_month_percent"] = total_user_this_month_percent
         context["order_status_stats"] = order_status_stats
         context["most_sells_product"] = most_sells_product
+
+        context["all_active_products_count"] = all_active_products.count()
+        context["out_of_stock_products_count"] = out_of_stock_products.count()
+        context["out_of_stock_products_percent"] = int(
+            (out_of_stock_products.count() / all_active_products.count()) * 100)
+        context["low_stock_products_count"] = low_stock_products.count()
+        context["low_stock_products_percent"] = int((low_stock_products.count() / all_active_products.count()) * 100)
+        context["enough_stack_products_count"] = enough_stack_products_count
+        context["enough_stack_products_count_percent"] = int(
+            (enough_stack_products_count / all_active_products.count()) * 100)
 
         return context
 

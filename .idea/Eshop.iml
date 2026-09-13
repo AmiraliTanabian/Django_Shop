@@ -31,7 +31,14 @@
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/product_module/templates" />
         <option value="$MODULE_DIR$/user_profile_module/templates" />
-        <option value="$MODULE_DIR$/admin_panel_module/templates" />
+        <option value="$MODULE_DIR$/order_module/templates" />
+        <option value="$MODULE_DIR$/news_module/templates" />
+        <option value="$MODULE_DIR$/home_module/templates" />
+        <option value="$MODULE_DIR$/zarinpal_payment/templates" />
+        <option value="$MODULE_DIR$/contact_module/templates" />
+        <option value="$MODULE_DIR$/auth_module/templates" />
+        <option value="$MODULE_DIR$/admin_module/templates" />
+        <option value="$MODULE_DIR$/about_us_module/templates" />
       </list>
     </option>
   </component>

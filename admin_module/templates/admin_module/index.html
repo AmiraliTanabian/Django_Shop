@@ -324,6 +324,57 @@
 								</table>
 							</div>
 						</div>
+						<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+							<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+								<div class="databox-top">
+									<div class="databox-row row-12">
+										<div class="databox-cell cell-3 text-center">
+											<div class="databox-text storm-cloud">محصولات بر اساس موجودی</div>
+										</div>
+									</div>
+								</div>
+								<div class="databox-bottom">
+									<div class="databox-row row-20">
+										<div class="databox-cell cell-7 text-center padding-5">
+											<div id="dashboard-pie-chart-inventory" class="chart"
+											     style="padding: 0px; position: relative;"></div>
+										</div>
+										<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+												<span class="databox-text sonic-silver no-margin">عنوان</span>
+												<span class="databox-text sonic-silver no-margin">تعداد</span>
+												<span class="databox-text sonic-silver no-margin">درصد</span>
+											</div>
+											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-red badge-empty"></span>
+													محصولات ناموجود
+						                         </span>
+												<span class="databox-text darkgray no-margin">{{ out_of_stock_products_count }}</span>
+												<span class="databox-text darkgray no-margin">{{ out_of_stock_products_percent }}%</span>
+											</div>
+											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-yellow badge-empty"></span>
+													محصولات با موجودی کم
+						                         </span>
+												<span class="databox-text darkgray no-margin">{{ low_stock_products_count }}</span>
+												<span class="databox-text darkgray no-margin">{{ low_stock_products_percent }}%</span>
+											</div>
+											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-green badge-empty"></span>
+													محصولات موجودی کافی
+						                         </span>
+												<span class="databox-text darkgray no-margin">{{ enough_stack_products_count }}</span>
+												<span class="databox-text darkgray no-margin">{{ enough_stack_products_count_percent }}%</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -347,5 +398,29 @@
         ];
 	</script>
 
+	{#	for chart according product stock status : #}
+	<script>
+        var inventoryStatusChartData = [
+            {
+                label: "محصولات ناموجود",
+                data: {{ out_of_stock_products_count }},
+                color: "red"
+            },
+            {
+                label: "محصولات با موجودی کم",
+                data: {{ low_stock_products_count }},
+                color: "yellow"
+            },
+            {
+                label: "محصولات موجودی کافی",
+                data: {{ enough_stack_products_count }},
+                color: "green"
+            }
+        ];
+	</script>
+
+
 	<script src="{% static 'admin_module/assets/js/order_status_chart.js' %}"></script>
+	<script src="{% static 'admin_module/assets/js/inventory_status_chart.js' %}"></script>
+
 {% endblock %}

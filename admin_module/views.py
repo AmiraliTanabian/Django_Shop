@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import EmailMessage
+from django.db.models import Count
 from django.db.models.aggregates import Sum
 from django.db.models.expressions import F
 from django.http import Http404
@@ -22,7 +23,7 @@ from django.views.generic import View, ListView, TemplateView
 from contact_module.models import ContactModel
 from news_module.models import Article, ArticleCategories, ArticleTag, ArticleComment
 from newsletter_module.models import newsLetterModel
-from order_module.models import orderModel, orderProductModel
+from order_module.models import orderModel, orderProductModel, orderStatus
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
 from user_profile_module.models import ticket_model, UnitsChoices, TicketAnswerModel, ticket_attachment
@@ -55,13 +56,35 @@ class HomePageView(TemplateView):
         total_users_count = get_user_model().objects.all().count()
         total_user_this_month = get_user_model().objects.filter(account_activation_date__gte=this_month_start_day,
                                                                 account_activation_date__lt=this_month_end_day,
-                                                                account_activated = True).count()
+                                                                account_activated=True).count()
+        total_user_this_month_percent = int((total_user_this_month / total_users_count) * 100)
+
+        paid_orders = orderModel.objects.filter(is_paid=True)
+        total_paid_orders = paid_orders.count()
+        paid_order_counts = {
+            item["status"]: item["count"]
+            for item in paid_orders.values("status").annotate(count=Count("id"))
+        }
+        status_badges = ["blue", "pink", "palegreen", "yellow", "red", "orange"]
+        order_status_stats = []
+        for index, (status, label) in enumerate(orderStatus.choices):
+            count = paid_order_counts.get(status, 0)
+            percentage = round((count / total_paid_orders) * 100) if total_paid_orders else 0
+            order_status_stats.append({
+                "label": label,
+                "count": count,
+                "percentage": percentage,
+                "badge": status_badges[index],
+            })
+        print(order_status_stats)
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
         context["total_this_month_sales"] = total_this_month_sales["total"] or 0
         context["total_users_count"] = total_users_count
         context["total_user_this_month"] = total_user_this_month
+        context["total_user_this_month_percent"] = total_user_this_month_percent
+        context["order_status_stats"] = order_status_stats
 
         return context
 

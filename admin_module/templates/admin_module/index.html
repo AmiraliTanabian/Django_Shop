@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="{% static 'admin_module/assets/css/custom_css.css' %}">
 {% endblock %}
 
+
 {% block content %}
 	<!-- Loading Container -->
 	<div class="loading-container">
@@ -18,726 +19,284 @@
 
 	{% admin_navbar_inclution %}
 	<div class="main-container container-fluid">
-		<!-- Page Container -->
-		<div class="page-container">
+	<!-- Page Container -->
+	<div class="page-container">
 
-			{% include 'admin_module/components/sidebar_component.html' %}
-			{% include 'admin_module/components/chat_bar.html' %}
-			<!-- Page Content -->
-			<div class="page-content">
-				<!-- Page Breadcrumb -->
-				<div class="page-breadcrumbs">
-					<ul class="breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="{% url 'admin_home_page' %}">خانه</a>
-						</li>
-					</ul>
+		{% include 'admin_module/components/sidebar_component.html' %}
+		{% include 'admin_module/components/chat_bar.html' %}
+		<!-- Page Content -->
+		<div class="page-content">
+			<!-- Page Breadcrumb -->
+			<div class="page-breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="{% url 'admin_home_page' %}">خانه</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /Page Breadcrumb -->
+			<!-- Page Header -->
+			<div class="page-header position-relative">
+				<div class="header-title">
+					<h1>
+						داشبورد
+					</h1>
 				</div>
-				<!-- /Page Breadcrumb -->
-				<!-- Page Header -->
-				<div class="page-header position-relative">
-					<div class="header-title">
-						<h1>
-							داشبورد
-						</h1>
-					</div>
-					<!--Header Buttons-->
-					<div class="header-buttons">
-						<a class="sidebar-toggler" href="#">
-							<i class="fa fa-arrows-h"></i>
-						</a>
-						<a class="refresh" id="refresh-toggler" href="{% url 'admin_home_page' %}">
-							<i class="glyphicon glyphicon-refresh"></i>
-						</a>
-						<a class="fullscreen" id="fullscreen-toggler" href="#">
-							<i class="glyphicon glyphicon-fullscreen"></i>
-						</a>
-					</div>
-					<!--Header Buttons End-->
+				<!--Header Buttons-->
+				<div class="header-buttons">
+					<a class="sidebar-toggler" href="#">
+						<i class="fa fa-arrows-h"></i>
+					</a>
+					<a class="refresh" id="refresh-toggler" href="{% url 'admin_home_page' %}">
+						<i class="glyphicon glyphicon-refresh"></i>
+					</a>
+					<a class="fullscreen" id="fullscreen-toggler" href="#">
+						<i class="glyphicon glyphicon-fullscreen"></i>
+					</a>
 				</div>
-				<!-- /Page Header -->
-				<!-- Page Body -->
-				<div class="page-body">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									<div class="databox radius-bordered bg-white">
-										<div class="databox-right bg-themesecondary">
-											<div class="databox-piechart">
-												<div data-toggle="easypiechart" class="easyPieChart"
-												     data-barcolor="#fff"
-												     data-linecap="butt" data-percent="50" data-animate="500"
-												     data-linewidth="3" data-size="47"
-												     data-trackcolor="rgba(255,255,255,0.1)"><span
-														class="white font-90">50%</span></div>
-											</div>
-										</div>
-										<div class="databox-left">
-											<span class="databox-number themesecondary">14</span>
-											<div class="databox-text darkgray">تسک جدید</div>
-											<div class="databox-stat themesecondary radius-bordered">
-												<i class="stat-icon icon-lg fa fa-tasks"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									<div class="databox radius-bordered bg-white">
-										<div class="databox-right bg-themethirdcolor">
-											<div class="databox-piechart">
-												<div data-toggle="easypiechart" class="easyPieChart"
-												     data-barcolor="#fff"
-												     data-linecap="butt" data-percent="15" data-animate="500"
-												     data-linewidth="3" data-size="47"
-												     data-trackcolor="rgba(255,255,255,0.2)"><span
-														class="white font-90">15%</span></div>
-											</div>
-										</div>
-										<div class="databox-left">
-											<span class="databox-number themethirdcolor">1</span>
-											<div class="databox-text darkgray">ایمیل جدید</div>
-											<div class="databox-stat themethirdcolor radius-bordered">
-												<i class="stat-icon  icon-lg fa fa-envelope-o"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									<div class="databox radius-bordered bg-white">
-										<div class="databox-right bg-themeprimary">
-											<div class="databox-piechart">
-												<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
-												     data-barcolor="#fff" data-linecap="butt" data-percent="76"
-												     data-animate="500" data-linewidth="3" data-size="47"
-												     data-trackcolor="rgba(255,255,255,0.1)"><span
-														class="white font-90">76%</span></div>
-											</div>
-										</div>
-										<div class="databox-left">
-											<span class="databox-number themeprimary">98</span>
-											<div class="databox-text darkgray">کاربر جدید</div>
-											<div class="databox-state bg-themeprimary">
-												<i class="fa fa-check"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									<div class="databox radius-bordered bg-white">
-										<div class="databox-right no-padding">
-											<img src="../../static/admin_module/assets/img/avatars/john-smith.jpg"
-											     style="width:65px; height:65px;">
-										</div>
-										<div class="databox-left padding-top-20">
-											<div class="databox-stat palegreen">
-												<i class="stat-icon icon-xlg fa fa-phone"></i>
-											</div>
-											<div class="databox-text darkgray">علی مانوی</div>
-											<div class="databox-text darkgray">فروشنده نمونه</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="dashboard-box">
-										<div class="box-header">
-											<div class="deadline">
-												روزهای باقی مانده: 109
-											</div>
-										</div>
-										<div class="box-progress">
-											<div class="progress-handle">روز بیستم</div>
-											<div class="progress progress-xs progress-no-radius bg-whitesmoke">
-												<div class="progress-bar" role="progressbar" aria-valuenow="60"
-												     aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-												</div>
-											</div>
-										</div>
-										<div class="box-tabbs">
-											<div class="tabbable">
-												<ul class="nav nav-tabs tabs-flat  nav-justified" id="myTab11">
-													<li class="active">
-														<a data-toggle="tab" href="#realtime">
-															بازدید لحظه ای
-														</a>
-													</li>
-													<li>
-														<a data-toggle="tab" href="#visits">
-															بازدیدها
-														</a>
-													</li>
-													<li>
-														<a data-toggle="tab" id="contacttab" href="#bandwidth">
-															پهنای باند
-														</a>
-													</li>
-													<li>
-														<a data-toggle="tab" href="#sales">
-															آمار فروش
-														</a>
-													</li>
-												</ul>
-												<div class="tab-content tabs-flat no-padding">
-													<div id="realtime"
-													     class="tab-pane active padding-5 animated fadeInUp">
-														<div class="row">
-															<div class="col-lg-12">
-																<div id="dashboard-chart-realtime"
-																     class="chart chart-lg"></div>
-															</div>
-														</div>
-													</div>
-													<div id="visits" class="tab-pane  animated fadeInUp">
-														<div class="row">
-															<div class="col-lg-12 chart-container">
-																<div id="dashboard-chart-visits" class="chart chart-lg"
-																     style="width:100%"></div>
-															</div>
-														</div>
-
-													</div>
-													<div id="bandwidth" class="tab-pane padding-10 animated fadeInUp">
-														<div class="databox-sparkline bg-themeprimary">
-                                                            <span id="dashboard-bandwidth-chart"
-                                                                  data-sparkline="compositeline" data-height="250px"
-                                                                  data-width="100%" data-linecolor="#fff"
-                                                                  data-secondlinecolor="#eee"
-                                                                  data-fillcolor="rgba(255,255,255,.1)"
-                                                                  data-secondfillcolor="rgba(255,255,255,.25)"
-                                                                  data-spotradius="0"
-                                                                  data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
-                                                                  data-maxspotcolor="#ffce55"
-                                                                  data-highlightspotcolor="#fff"
-                                                                  data-highlightlinecolor="#fff"
-                                                                  data-linewidth="2" data-secondlinewidth="2"
-                                                                  data-composite="500, 400, 100, 450, 300, 200, 100, 200">
-                                                                300,300,400,300,200,300,300,200
-                                                            </span>
-														</div>
-													</div>
-													<div id="sales" class="tab-pane animated fadeInUp no-padding-bottom"
-													     style="padding:20px 20px 0 20px;">
-														<div class="row">
-															<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-																<div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
-																	<div class="databox-top">
-																		<div class="databox-sparkline">
-                                                                            <span data-sparkline="line"
-                                                                                  data-height="125px" data-width="100%"
-                                                                                  data-fillcolor="false"
-                                                                                  data-linecolor="themesecondary"
-                                                                                  data-spotcolor="#fafafa"
-                                                                                  data-minspotcolor="#fafafa"
-                                                                                  data-maxspotcolor="#ffce55"
-                                                                                  data-highlightspotcolor="#ffce55"
-                                                                                  data-highlightlinecolor="#ffce55"
-                                                                                  data-linewidth="1.5"
-                                                                                  data-spotradius="2">
-                                                                                1,2,4,3,5,6,8,7,11,14,11,12
-                                                                            </span>
-																		</div>
-																	</div>
-																	<div class="databox-bottom no-padding text-align-center">
-																		<span class="databox-number lightcarbon no-margin">224</span>
-																		<span class="databox-text lightcarbon no-margin">فروش / ساعت</span>
-
-																	</div>
-																</div>
-
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-																<div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
-																	<div class="databox-top">
-																		<div class="databox-sparkline">
-                                                                            <span data-sparkline="line"
-                                                                                  data-height="125px" data-width="100%"
-                                                                                  data-fillcolor="false"
-                                                                                  data-linecolor="themefourthcolor"
-                                                                                  data-spotcolor="#fafafa"
-                                                                                  data-minspotcolor="#fafafa"
-                                                                                  data-maxspotcolor="#8cc474"
-                                                                                  data-highlightspotcolor="#8cc474"
-                                                                                  data-highlightlinecolor="#8cc474"
-                                                                                  data-linewidth="1.5"
-                                                                                  data-spotradius="2">
-                                                                                100,208,450,298,450,776,234,680,1100,1400,1000,1200
-                                                                            </span>
-																		</div>
-																	</div>
-																	<div class="databox-bottom no-padding text-align-center">
-																		<span class="databox-number lightcarbon no-margin">7063$</span>
-																		<span class="databox-text lightcarbon no-margin">درآمد / ساعت</span>
-
-																	</div>
-																</div>
-
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-																<div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
-																	<div class="databox-top">
-																		<div class="databox-piechart">
-																			<div data-toggle="easypiechart"
-																			     class="easyPieChart block-center"
-																			     data-barcolor="themeprimary"
-																			     data-linecap="butt" data-percent="80"
-																			     data-animate="500"
-																			     data-linewidth="8" data-size="125"
-																			     data-trackcolor="#eee">
-																			<span class="font-200"><i
-																					class="fa fa-gift themeprimary"></i></span>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="databox-bottom no-padding text-align-center">
-																		<span class="databox-number lightcarbon no-margin">9</span>
-																		<span class="databox-text lightcarbon no-margin">سفارش جدید</span>
-
-																	</div>
-																</div>
-															</div>
-															<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-																<div class="databox databox-xlg databox-vertical databox-inverted  databox-shadowed">
-																	<div class="databox-top">
-																		<div class="databox-piechart">
-																			<div data-toggle="easypiechart"
-																			     class="easyPieChart block-center"
-																			     data-barcolor="themethirdcolor"
-																			     data-linecap="butt" data-percent="40"
-																			     data-animate="500"
-																			     data-linewidth="8" data-size="125"
-																			     data-trackcolor="#eee">
-																			<span class="white font-200"><i
-																					class="fa fa-tags themethirdcolor"></i></span>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="databox-bottom no-padding text-align-center">
-																		<span class="databox-number lightcarbon no-margin">11</span>
-																		<span class="databox-text lightcarbon no-margin">تیکت جدید</span>
-
-																	</div>
-																</div>
-															</div>
-
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="box-visits">
-											<div class="row">
-												<div class="col-lg-4 col-sm-4 col-xs-12">
-													<div class="notification">
-														<div class="clearfix">
-															<div class="notification-icon">
-																<i class="fa fa-gift palegreen bordered-1 bordered-palegreen"></i>
-															</div>
-															<div class="notification-body">
-																<span class="title">تولد نازنین</span>
-																<span class="description">08:30 pm</span>
-															</div>
-															<div class="notification-extra">
-																<i class="fa fa-calendar palegreen"></i>
-																<i class="fa fa-clock-o palegreen"></i>
-																<span class="description">خانه</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-sm-4 col-xs-12">
-													<div class="notification">
-														<div class="clearfix">
-															<div class="notification-icon">
-																<i class="fa fa-check azure bordered-1 bordered-azure"></i>
-															</div>
-															<div class="notification-body">
-																<span class="title">بیرون رفتن با خانواده</span>
-																<span class="description">03:30 pm - 05:15 pm</span>
-															</div>
-															<div class="notification-extra">
-																<i class="fa fa-clock-o azure"></i>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg-4 col-sm-4 col-xs-12">
-													<div class="notification">
-														<div class="clearfix">
-															<div class="notification-icon">
-																<i class="fa fa-phone bordered-1 bordered-orange orange"></i>
-															</div>
-															<div class="notification-body">
-																<span class="title">ملاقات با علی</span>
-																<span class="description">01:00 pm</span>
-															</div>
-															<div class="notification-extra">
-																<i class="fa fa-clock-o orange"></i>
-																<span class="description">دفتر</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-							<div class="orders-container">
-								<div class="orders-header">
-									<h6>آخرین سفارشات</h6>
-								</div>
-								<ul class="orders-list">
-									{% for last_order in last_orders %}
-										<li class="order-item">
-											<div class="row">
-												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-													<div class="item-booker">{{ last_order.user }}</div>
-													<div class="item-time">
-														<i class="fa fa-calendar"></i>
-														<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
-													</div>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-													<div class="item-price">
-														<span class="price">{{ last_order.total_order_price|price_separator }}</span>
-													</div>
-												</div>
-											</div>
-											<a target="_blank" class="item-more"
-											   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
-												<i></i>
-											</a>
-										</li>
-									{% endfor %}
-
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-
-					</div>
-					<div class="col-lg-8 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
-									<div class="databox-top bg-palegreen no-padding">
-										<div class="databox-stat white bg-palegreen font-120">
-											<i class="stat-icon fa fa-caret-down icon-xlg"></i>
-										</div>
-										<div class="horizontal-space space-lg"></div>
-										<div class="databox-sparkline no-margin">
-                                                <span data-sparkline="compositebar" data-height="82px" data-width="100%"
-                                                      data-barcolor="#b0dc81"
-                                                      data-barwidth="10px" data-barspacing="5px"
-                                                      data-fillcolor="false" data-linecolor="#fff" data-spotradius="3"
-                                                      data-linewidth="2"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
-                                                      data-maxspotcolor="#fff"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-composite="7, 6, 5, 7, 9, 10, 8, 7, 6, 6, 4, 7, 8">
-                                                    8,4,1,2,4,6,2,4,4,8,10,7,10
-                                                </span>
-										</div>
-									</div>
-									<div class="databox-bottom no-padding">
-										<div class="databox-row">
-											<div class="databox-cell cell-6 text-align-left">
-												<span class="databox-text">فروش کل</span>
-												<span class="databox-number">{{ total_sales|price_separator }}</span>
-
-											</div>
-											<div class="databox-cell cell-6 text-align-right">
-												<span class="databox-text">ماه جاری</span>
-												<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
-								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-									<div class="databox-top bg-orange no-padding">
-										<div class="databox-stat white bg-orange font-120">
-											<i class="stat-icon fa fa-caret-up icon-xlg"></i>
-										</div>
-										<div class="horizontal-space space-lg"></div>
-										<div class="databox-sparkline no-margin">
-                                                <span data-sparkline="compositebar" data-height="82px" data-width="100%"
-                                                      data-barcolor="#fb7d64"
-                                                      data-barwidth="10px" data-barspacing="5px"
-                                                      data-fillcolor="false" data-linecolor="#fff" data-spotradius="3"
-                                                      data-linewidth="2"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
-                                                      data-maxspotcolor="#fff"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-composite="7, 6, 5, 7, 9, 10, 8, 6,2,4,1,2,7">
-                                                    10,7,10,8,4,6, 6, 4, 7, 8 ,4,4,8
-                                                </span>
-										</div>
-									</div>
-									<div class="databox-bottom no-padding">
-										<div class="databox-row">
-											<div class="databox-cell cell-6 text-align-left">
-												<span class="databox-text">کل کاربران</span>
-												<span class="databox-number">{{ total_users_count|intcomma }}</span>
-											</div>
-											<div class="databox-cell cell-6 text-align-right">
-												<span class="databox-text">کاربران جدید</span>
-												<span class="databox-number font-70">{{ total_user_this_month|intcomma }}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-							<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
-								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-									<div class="databox-top bg-azure no-padding">
-										<div class="databox-stat white bg-azure font-120">
-											<i class="stat-icon fa fa-caret-up icon-xlg"></i>
-										</div>
-										<div class="horizontal-space space-lg"></div>
-										<div class="databox-sparkline no-margin">
-                                                <span data-sparkline="compositebar" data-height="82px" data-width="100%"
-                                                      data-barcolor="#3bcbef"
-                                                      data-barwidth="10px" data-barspacing="5px"
-                                                      data-fillcolor="false" data-linecolor="#fff" data-spotradius="3"
-                                                      data-linewidth="2"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
-                                                      data-maxspotcolor="#fff"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-composite="8,4,1,2,4,6,2,4,4,8,10,7,7">
-                                                    7, 6, 5, 7, 9, 10, 8, 7, 6, 6, 4, 7, 8
-                                                </span>
-										</div>
-									</div>
-									<div class="databox-bottom no-padding">
-										<div class="databox-row">
-											<div class="databox-cell cell-6 text-align-left">
-												<span class="databox-text">کل بازدیدها</span>
-												<span class="databox-number">990,541</span>
-											</div>
-											<div class="databox-cell cell-6 text-align-right">
-												<span class="databox-text">ماه جاری</span>
-												<span class="databox-number font-70">292,123</span>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="widget">
-									<div class="widget-header bordered-bottom bordered-themesecondary">
-										<i class="widget-icon fa fa-tags themesecondary"></i>
-										<span class="widget-caption themesecondary">10 تیکت خوانده نشده جدید</span>
-									</div><!--Widget Header-->
-									<div class="widget-body no-padding">
-										<div class="tickets-container">
-											{% if unread_tickets %}
-												<ul class="tickets-list">
-													{% for ticket in unread_tickets %}
-														<li class="ticket-item">
-															<div class="row">
-																<div class="ticket-user col-lg-6 col-sm-12">
-																	<i class="fa fa-user user-avatar"></i>
-																	<a class="user-name"
-																	   href="{% url 'admin_ticket_detail_view' id=ticket.id %}">{{ ticket.user }}</a>
-																	<span class="user-at">-</span>
-																	<span class="user-company">{{ ticket.title }}</span>
-																</div>
-																<div class="ticket-time col-lg-4 col-sm-6 col-xs-12">
-																	<div class="divider hidden-md hidden-sm hidden-xs"></div>
-																	<i class="fa fa-clock-o"></i>
-																	<span class="time">{{ ticket.created_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
-																</div>
-																<div class="ticket-type col-lg-2 col-sm-6 col-xs-12">
-																	<span class="divider hidden-xs"></span>
-																	<span class="type">{{ ticket.get_Unit_display }}</span>
-																</div>
-																<div class="ticket-state bg-palegreen">
-																	<i class="fa fa-envelope"></i>
-																</div>
-															</div>
-														</li>
-													{% endfor %}
-												</ul>
-											{% else %}
-												<div class="alert alert-info no-margin">تیکت خوانده‌نشده‌ای وجود
-													ندارد.
-												</div>
-											{% endif %}
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
+				<!--Header Buttons End-->
+			</div>
+			<!-- /Page Header -->
+			<!-- Page Body -->
+			<div class="page-body">
 				<div class="row">
-					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-						<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-							<div class="databox-top">
-								<div class="databox-row row-12">
-									<div class="databox-cell cell-3 text-center">
-										<div class="databox-number number-xxlg sonic-silver">164</div>
-										<div class="databox-text storm-cloud">آنلاین</div>
-									</div>
-									<div class="databox-cell cell-9 text-align-center">
-										<div class="databox-row row-6 text-left">
-											<span class="badge badge-palegreen badge-empty margin-left-5"></span>
-											<span class="databox-inlinetext uppercase darkgray margin-left-5">جدید</span>
-											<span class="badge badge-yellow badge-empty margin-left-5"></span>
-											<span class="databox-inlinetext uppercase darkgray margin-left-5">بازگشتی</span>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themesecondary">
+										<div class="databox-piechart">
+											<div data-toggle="easypiechart" class="easyPieChart"
+											     data-barcolor="#fff"
+											     data-linecap="butt" data-percent="50" data-animate="500"
+											     data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">50%</span></div>
 										</div>
-										<div class="databox-row row-6">
-											<div class="progress bg-yellow progress-no-radius">
-												<div class="progress-bar progress-bar-palegreen" role="progressbar"
-												     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-												     style="width: 78%">
-												</div>
-											</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number themesecondary">14</span>
+										<div class="databox-text darkgray">تسک جدید</div>
+										<div class="databox-stat themesecondary radius-bordered">
+											<i class="stat-icon icon-lg fa fa-tasks"></i>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="databox-bottom">
-								<div class="databox-row row-12">
-									<div class="databox-cell cell-7 text-center  padding-5">
-										<div id="dashboard-pie-chart-sources" class="chart"></div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themethirdcolor">
+										<div class="databox-piechart">
+											<div data-toggle="easypiechart" class="easyPieChart"
+											     data-barcolor="#fff"
+											     data-linecap="butt" data-percent="15" data-animate="500"
+											     data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.2)"><span
+													class="white font-90">15%</span></div>
+										</div>
 									</div>
-									<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30">
-										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-											<span class="databox-text sonic-silver pull-left no-margin">نوع</span>
-											<span class="databox-text sonic-silver pull-right no-margin uppercase">درصد</span>
+									<div class="databox-left">
+										<span class="databox-number themethirdcolor">1</span>
+										<div class="databox-text darkgray">ایمیل جدید</div>
+										<div class="databox-stat themethirdcolor radius-bordered">
+											<i class="stat-icon  icon-lg fa fa-envelope-o"></i>
 										</div>
-										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
-											<span class="databox-text darkgray pull-left no-margin hidden-xs">فید</span>
-											<span class="databox-text darkgray pull-right no-margin uppercase">46%</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themeprimary">
+										<div class="databox-piechart">
+											<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
+											     data-barcolor="#fff" data-linecap="butt"
+											     data-percent="{{ total_user_this_month_percent }}"
+											     data-animate="500" data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ total_user_this_month_percent }}%</span>
+											</div>
 										</div>
-										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-											<span class="badge badge-orange badge-empty pull-left margin-5"></span>
-											<span class="databox-text darkgray pull-left no-margin hidden-xs">لینک</span>
-											<span class="databox-text darkgray pull-right no-margin uppercase">21%</span>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number themeprimary">{{ total_user_this_month }}</span>
+										<div class="databox-text darkgray">کاربر جدید</div>
+										<div class="databox-state bg-themeprimary">
+											<i class="fa fa-user-plus"></i>
 										</div>
-										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
-											<span class="databox-text darkgray pull-left no-margin hidden-xs">مستقیم</span>
-											<span class="databox-text darkgray pull-right no-margin uppercase">12%</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right no-padding">
+										<img src="../../static/admin_module/assets/img/avatars/john-smith.jpg"
+										     style="width:65px; height:65px;">
+									</div>
+									<div class="databox-left padding-top-20">
+										<div class="databox-stat palegreen">
+											<i class="stat-icon icon-xlg fa fa-phone"></i>
 										</div>
-										<div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
-											<span class="badge badge-palegreen badge-empty pull-left margin-5"></span>
-											<span class="databox-text darkgray pull-left no-margin hidden-xs">ایمیل</span>
-											<span class="databox-text darkgray pull-right no-margin uppercase">11%</span>
-										</div>
-										<div class="databox-row row-2 padding-10">
-											<span class="badge badge-yellow badge-empty pull-left margin-5"></span>
-											<span class="databox-text darkgray pull-left no-margin hidden-xs">ارگانیک</span>
-											<span class="databox-text darkgray pull-right no-margin uppercase">10%</span>
-										</div>
+										<div class="databox-text darkgray">علی مانوی</div>
+										<div class="databox-text darkgray">فروشنده نمونه</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-						<div class="databox databox-xxlg databox-vertical databox-inverted">
-							<div class="databox-top bg-whitesmoke no-padding">
-								<div class="databox-row row-2 bg-orange no-padding">
-									<div class="databox-cell cell-1 text-align-center no-padding padding-top-5">
-										<span class="databox-number white"><i
-												class="fa fa-bar-chart-o no-margin"></i></span>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<div class="orders-container">
+							<div class="orders-header">
+								<h6>آخرین سفارشات</h6>
+							</div>
+							<ul class="orders-list">
+								{% for last_order in last_orders %}
+									<li class="order-item">
+										<div class="row">
+											<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
+												<div class="item-booker">{{ last_order.user }}</div>
+												<div class="item-time">
+													<i class="fa fa-calendar"></i>
+													<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
+												<div class="item-price">
+													<span class="price">{{ last_order.total_order_price|price_separator }}</span>
+												</div>
+											</div>
+										</div>
+										<a target="_blank" class="item-more"
+										   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
+											<i></i>
+										</a>
+									</li>
+								{% endfor %}
+
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+
+				</div>
+				<div class="col-lg-8 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
+								<div class="databox-top bg-palegreen no-padding">
+									<div class="databox-stat white bg-palegreen font-120">
+										<i class="stat-icon fa fa-caret-down icon-xlg"></i>
 									</div>
-									<div class="databox-cell cell-8 no-padding padding-top-5 text-align-left">
-										<span class="databox-number white hidden-xs">بازدید صفحات</span>
-									</div>
-									<div class="databox-cell cell-3 text-align-right padding-10">
-										<span class="databox-text white">13 آبان</span>
-									</div>
+									<div class="horizontal-space space-lg"></div>
 								</div>
-								<div class="databox-row row-4">
-									<div class="databox-cell cell-6 no-padding padding-10 padding-left-20 text-align-left">
-										<span class="databox-number orange no-margin">534,908</span>
-										<span class="databox-text sky no-margin">بازدید کلی</span>
-									</div>
-									<div class="databox-cell cell-2 no-padding padding-10 text-align-left ">
-										<span class="databox-number orange no-margin  hidden-xs">4,129</span>
-										<span class="databox-text darkgray no-margin  hidden-xs">هفتگی</span>
-									</div>
-									<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-										<span class="databox-number orange no-margin  hidden-xs">329</span>
-										<span class="databox-text darkgray no-margin  hidden-xs">دیروز</span>
-									</div>
-									<div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-										<span class="databox-number orange no-margin   hidden-xs">104</span>
-										<span class="databox-text darkgray no-margin  hidden-xs">امروز</span>
-									</div>
-								</div>
-								<div class="databox-row row-6 no-padding">
-									<div class="databox-sparkline">
-                                            <span data-sparkline="line" data-height="126px" data-width="100%"
-                                                  data-fillcolor="#37c2e2" data-linecolor="#37c2e2"
-                                                  data-spotcolor="#fafafa" data-minspotcolor="#fafafa"
-                                                  data-maxspotcolor="#ffce55"
-                                                  data-highlightspotcolor="#f5f5f5 " data-highlightlinecolor="#f5f5f5"
-                                                  data-linewidth="2" data-spotradius="0">
-                                                5,7,6,5,9,4,3,7,2
-                                            </span>
+								<div class="databox-bottom no-padding">
+									<div class="databox-row">
+										<div class="databox-cell cell-6 text-align-left">
+											<span class="databox-text">فروش کل</span>
+											<span class="databox-number">{{ total_sales|price_separator }}</span>
+
+										</div>
+										<div class="databox-cell cell-6 text-align-right">
+											<span class="databox-text">ماه جاری</span>
+											<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="databox-bottom bg-sky no-padding">
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">شنبه</span>
-									<span class="databox-header white visible-xs">ش</span>
+						</div>
+						<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
+							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+								<div class="databox-top bg-orange no-padding">
+									<div class="databox-stat white bg-orange font-120">
+										<i class="stat-icon fa fa-caret-up icon-xlg"></i>
+									</div>
 								</div>
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">یک‌شنبه</span>
-									<span class="databox-header white visible-xs">ی</span>
+								<div class="databox-bottom no-padding">
+									<div class="databox-row">
+										<div class="databox-cell cell-6 text-align-left">
+											<span class="databox-text">کل کاربران</span>
+											<span class="databox-number">{{ total_users_count|intcomma }}</span>
+										</div>
+										<div class="databox-cell cell-6 text-align-right">
+											<span class="databox-text">کاربران جدید</span>
+											<span class="databox-number font-70">{{ total_user_this_month|intcomma }}</span>
+										</div>
+									</div>
 								</div>
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">دوشنبه</span>
-									<span class="databox-header white visible-xs">د</span>
-								</div>
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">سه‌شنبه</span>
-									<span class="databox-header white visible-xs">س</span>
-								</div>
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">چهارشنبه</span>
-									<span class="databox-header white visible-xs">چ</span>
-								</div>
-								<div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-									<span class="databox-header white hidden-xs">پنج‌شنبه</span>
-									<span class="databox-header white visible-xs">پ</span>
-								</div>
+							</div>
 
+						</div>
+						<div class="row">
+							<div class="col-lg-20 col-md-12 col-sm-12 col-xs-12">
+								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+									<div class="databox-top">
+										<div class="databox-row row-12">
+											<div class="databox-cell cell-3 text-center">
+												<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
+											</div>
+										</div>
+									</div>
+									<div class="databox-bottom">
+										<div class="databox-row row-20">
+											<div class="databox-cell cell-7 text-center padding-5">
+												<div id="dashboard-pie-chart-sources" class="chart"
+												     style="padding: 0px; position: relative;"></div>
+											</div>
+											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+													<span class="databox-text sonic-silver no-margin">عنوان</span>
+													<span class="databox-text sonic-silver no-margin">تعداد</span>
+													<span class="databox-text sonic-silver no-margin">درصد</span>
+												</div>
+												{% for status in order_status_stats %}
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+                         <span class="databox-text darkgray no-margin order-status-title">
+                            <span class="badge badge-{{ status.badge }} badge-empty"></span>
+                            {{ status.label }}
+                         </span>
+														<span class="databox-text darkgray no-margin">{{ status.count }}</span>
+														<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- /Page Body -->
 		</div>
-		<!-- /Page Content -->
 	</div>
-	<!-- /Page Container -->
-	<!-- Main Container -->
+{% endblock %}
 
-	</div>
+سلام در قطعه کد داده شده دو تغییر اعمال کن
+
+1- الان داده ها از باکس مربوطه خارج شدند نباید این اتفاق بیفته
+2- داده ها روی خود نمودار بیار
+
+فقط دسترسی به index.html , فایل های استایل داری
+</div>
+
+{% block footer_ref %}
+	{#	for order chart according order status : #}
+	<script>
+        var orderStatusChartData = [
+            {% for status in order_status_stats %}
+                {
+                    label: "{{ status.label }}",
+                    data: {{ status.count }},
+                    color: "{{ status.badge }}"
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+	</script>
+
+	<script src="{% static 'admin_module/assets/js/order_status_chart.js' %}"></script>
 {% endblock %}

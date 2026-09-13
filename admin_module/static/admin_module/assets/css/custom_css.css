@@ -104,3 +104,36 @@
     line-height: 24px;
     letter-spacing: -0.15px;
 }
+
+.order-status-table .order-status-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42px 42px;
+    align-items: center;
+    gap: 4px;
+    direction: ltr;
+    min-height: 31px;
+}
+
+.order-status-table .order-status-row > span {
+    direction: rtl;
+    text-align: center;
+}
+
+.order-status-table .order-status-title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.order-status-table .order-status-title .badge {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.order-status-table {
+    max-height: 220px;
+    overflow-y: auto;
+}

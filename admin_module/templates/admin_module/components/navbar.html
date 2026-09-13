@@ -25,79 +25,6 @@
 				<div class="navbar-account">
 					<ul class="account-area">
 						<li>
-							<a class="dropdown-toggle" data-toggle="dropdown" title="Mails" href="#">
-								<i class="icon fa fa-envelope"></i>
-								<span class="badge">3</span>
-							</a>
-							<!--Messages Dropdown-->
-							<ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
-								<li>
-									<a href="#">
-										<img src="../../../static/admin_module/assets/img/avatars/divyia.jpg"
-										     class="message-avatar"
-										     alt="Divyia Austin">
-										<div class="message">
-                                                <span class="message-sender">
-                                                    دیویا فیلیپس
-                                                </span>
-											<span class="message-time">
-                                                    2 دقیقه پیش
-                                                </span>
-											<span class="message-subject">
-                                                    دستور پخت پای سیب ارسال می گردد
-                                                </span>
-											<span class="message-body">
-                                                    برای پختن پای سیب تنها لازم است تا سیب داشته باشید
-                                                </span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="../../../static/admin_module/assets/img/avatars/bing.png"
-										     class="message-avatar"
-										     alt="Microsoft Bing">
-										<div class="message">
-                                                <span class="message-sender">
-                                                    Bing.com
-                                                </span>
-											<span class="message-time">
-                                                    دیروز
-                                                </span>
-											<span class="message-subject">
-                                                    Bing Newsletter: The January Issue‏
-                                                </span>
-											<span class="message-body">
-                                                    Discover new music just in time for the Grammy® Awards.
-                                                </span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="../../../static/admin_module/assets/img/avatars/adam-jansen.jpg"
-										     class="message-avatar"
-										     alt="Divyia Austin">
-										<div class="message">
-                                                <span class="message-sender">
-                                                    Nicolas
-                                                </span>
-											<span class="message-time">
-                                                    Friday, September 22
-                                                </span>
-											<span class="message-subject">
-                                                    دوربین های 4کی جدید
-                                                </span>
-											<span class="message-body">
-                                                    انقلاب دوربین های 4کی به مرحله جدیدی رسیده است.
-                                                </span>
-										</div>
-									</a>
-								</li>
-							</ul>
-							<!--/Messages Dropdown-->
-						</li>
-						<li>
 							<a class="login-area dropdown-toggle" data-toggle="dropdown">
 								<div class="avatar" title="View your public profile">
 									{% if user.profile_image %}
@@ -125,13 +52,12 @@
 											     class="avatar">
 										{% endif %}
 
-										<span class="caption">تغییر تصویر</span>
 									</div>
 								</li>
 								<!--Avatar Area-->
 								<li class="edit">
-									<a href="profile.html" class="pull-left">پروفایل</a>
-									<a href="#" class="pull-right">تنظیمات</a>
+									<a target="_blank" href="{% url 'edit_profile_page' %}"
+									   style="display: flex; justify-content: center;">پروفایل</a>
 								</li>
 								<!--Theme Selector Area-->
 								<li class="theme-area">

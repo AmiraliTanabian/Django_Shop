@@ -146,69 +146,8 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-						<div class="orders-container">
-							<div class="orders-header">
-								<h6>آخرین سفارشات</h6>
-							</div>
-							<ul class="orders-list">
-								{% for last_order in last_orders %}
-									<li class="order-item">
-										<div class="row">
-											<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-												<div class="item-booker">{{ last_order.user }}</div>
-												<div class="item-time">
-													<i class="fa fa-calendar"></i>
-													<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
-												</div>
-											</div>
-											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-												<div class="item-price">
-													<span class="price">{{ last_order.total_order_price|price_separator }}</span>
-												</div>
-											</div>
-										</div>
-										<a target="_blank" class="item-more"
-										   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
-											<i></i>
-										</a>
-									</li>
-								{% endfor %}
-
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-
-				</div>
-				<div class="col-lg-8 col-sm-12 col-xs-12">
+				<div class="col-lg-12 col-sm-12 col-xs-12">
 					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
-								<div class="databox-top bg-palegreen no-padding">
-									<div class="databox-stat white bg-palegreen font-120">
-										<i class="stat-icon fa fa-caret-down icon-xlg"></i>
-									</div>
-									<div class="horizontal-space space-lg"></div>
-								</div>
-								<div class="databox-bottom no-padding">
-									<div class="databox-row">
-										<div class="databox-cell cell-6 text-align-left">
-											<span class="databox-text">فروش کل</span>
-											<span class="databox-number">{{ total_sales|price_separator }}</span>
-
-										</div>
-										<div class="databox-cell cell-6 text-align-right">
-											<span class="databox-text">ماه جاری</span>
-											<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 						<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
 							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
 								<div class="databox-top bg-orange no-padding">
@@ -231,43 +170,161 @@
 							</div>
 
 						</div>
-						<div class="row">
-							<div class="col-lg-20 col-md-12 col-sm-12 col-xs-12">
-								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-									<div class="databox-top">
-										<div class="databox-row row-12">
-											<div class="databox-cell cell-3 text-center">
-												<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
-											</div>
+					</div>
+				</div>
+
+				<div class="col-lg-12 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="section-title section-sales">
+							<div class="section-title-icon">
+								<i class="fa fa-money"></i>
+							</div>
+							<span class="section-title-text">فروش کل در یک نما</span>
+							<div class="section-title-line"></div>
+						</div>
+						<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+							<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+								<div class="databox-top">
+									<div class="databox-row row-12">
+										<div class="databox-cell cell-3 text-center">
+											<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
 										</div>
 									</div>
-									<div class="databox-bottom">
-										<div class="databox-row row-20">
-											<div class="databox-cell cell-7 text-center padding-5">
-												<div id="dashboard-pie-chart-sources" class="chart"
-												     style="padding: 0px; position: relative;"></div>
+								</div>
+								<div class="databox-bottom">
+									<div class="databox-row row-20">
+										<div class="databox-cell cell-7 text-center padding-5">
+											<div id="dashboard-pie-chart-sources" class="chart"
+											     style="padding: 0px; position: relative;"></div>
+										</div>
+										<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+												<span class="databox-text sonic-silver no-margin">عنوان</span>
+												<span class="databox-text sonic-silver no-margin">تعداد</span>
+												<span class="databox-text sonic-silver no-margin">درصد</span>
 											</div>
-											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-													<span class="databox-text sonic-silver no-margin">عنوان</span>
-													<span class="databox-text sonic-silver no-margin">تعداد</span>
-													<span class="databox-text sonic-silver no-margin">درصد</span>
-												</div>
-												{% for status in order_status_stats %}
-													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+											{% for status in order_status_stats %}
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
                          <span class="databox-text darkgray no-margin order-status-title">
                             <span class="badge badge-{{ status.badge }} badge-empty"></span>
                             {{ status.label }}
                          </span>
-														<span class="databox-text darkgray no-margin">{{ status.count }}</span>
-														<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
-													</div>
-												{% endfor %}
-											</div>
+													<span class="databox-text darkgray no-margin">{{ status.count }}</span>
+													<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
+												</div>
+											{% endfor %}
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<div class="orders-container">
+								<div class="orders-header">
+									<h6>آخرین سفارشات</h6>
+								</div>
+								<ul class="orders-list">
+									{% for last_order in last_orders %}
+										<li class="order-item">
+											<div class="row">
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
+													<div class="item-booker">{{ last_order.user }}</div>
+													<div class="item-time">
+														<i class="fa fa-calendar"></i>
+														<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
+													<div class="item-price">
+														<span class="price">{{ last_order.total_order_price|price_separator }}</span>
+													</div>
+												</div>
+											</div>
+											<a target="_blank" class="item-more"
+											   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
+												<i></i>
+											</a>
+										</li>
+									{% endfor %}
+
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
+								<div class="databox-top bg-palegreen no-padding">
+									<div class="databox-stat white bg-palegreen font-120">
+										<i class="stat-icon fa fa-caret-down icon-xlg"></i>
+									</div>
+									<div class="horizontal-space space-lg"></div>
+								</div>
+								<div class="databox-bottom no-padding">
+									<div class="databox-row">
+										<div class="databox-cell cell-6 text-align-left">
+											<span class="databox-text">فروش کل</span>
+											<span class="databox-number">{{ total_sales|price_separator }}</span>
+
+										</div>
+										<div class="databox-cell cell-6 text-align-right">
+											<span class="databox-text">ماه جاری</span>
+											<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-12 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="section-title section-sales">
+							<div class="section-title-icon">
+								<i class="fa fa-cubes"></i>
+							</div>
+							<span class="section-title-text"> محصولات در یک نما</span>
+							<div class="section-title-line"></div>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="well with-header  with-footer">
+								<div class="header bg-blue">
+									پر فروش ترین محصولات
+								</div>
+								<table class="table table-hover">
+									<thead class="bordered-darkorange">
+									<tr>
+										<th>
+											شناسه محصول
+										</th>
+										<th>
+											نام محصول
+										</th>
+										<th>
+											تعداد فروش
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+									{% for product in most_sells_product %}
+										<tr>
+											<td>
+												{{ product.id }}
+											</td>
+											<td>
+												<a href="{% url 'product_detail' pk=product.id %}">
+													{{ product.name }}
+												</a>
+											</td>
+											<td>
+												{{ product.order_count }}
+											</td>
+										</tr>
+									{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -276,12 +333,6 @@
 	</div>
 {% endblock %}
 
-سلام در قطعه کد داده شده دو تغییر اعمال کن
-
-1- الان داده ها از باکس مربوطه خارج شدند نباید این اتفاق بیفته
-2- داده ها روی خود نمودار بیار
-
-فقط دسترسی به index.html , فایل های استایل داری
 </div>
 
 {% block footer_ref %}

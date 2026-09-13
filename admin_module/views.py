@@ -76,7 +76,9 @@ class HomePageView(TemplateView):
                 "percentage": percentage,
                 "badge": status_badges[index],
             })
-        print(order_status_stats)
+
+        most_sells_product = Product.objects.filter(is_active=True).order_by("-order_count")[:10]
+
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
@@ -85,6 +87,7 @@ class HomePageView(TemplateView):
         context["total_user_this_month"] = total_user_this_month
         context["total_user_this_month_percent"] = total_user_this_month_percent
         context["order_status_stats"] = order_status_stats
+        context["most_sells_product"] = most_sells_product
 
         return context
 

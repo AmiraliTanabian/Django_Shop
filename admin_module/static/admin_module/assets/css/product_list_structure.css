@@ -1,0 +1,15 @@
+.products-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.products-grid .col-sm-4 {
+    float: none;
+    display: flex;
+}
+
+.products-grid .product-image-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

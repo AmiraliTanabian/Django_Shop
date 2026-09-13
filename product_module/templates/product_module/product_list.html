@@ -5,6 +5,10 @@
 	محصولات |‌فروشگاه اینترنتی
 {% endblock %}
 
+{% block header_references %}
+	<link rel="stylesheet" href="{% static 'admin_module/assets/css/product_list_structure.css' %}">
+{% endblock %}
+
 {% block content %}
 	<section id="advertisement">
 		<div class="container">
@@ -31,10 +35,12 @@
 
 
 
-						{% for product in products %}
-							{% include "components/product_component.html" %}
-						{% endfor %}
+						<div class="products-grid">
+							{% for product in products %}
+								{% include "components/product_component.html" %}
+							{% endfor %}
 
+						</div>
 						{% include "product_module/components/pagination_component.html" %}
 					</div><!--features_items-->
 				</div>
@@ -75,7 +81,6 @@
 								</div>
 							</div><!--/price-range-->
 						{% endif %}
-
 						{% include "components/banner_component.html" %}
 					</div>
 				</div>

@@ -374,7 +374,93 @@
 								</div>
 							</div>
 						</div>
-
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-storm-cloud">
+									<div class="databox-piechart">
+										<div id="total-products-pie" data-toggle="easypiechart" class="easyPieChart"
+										     data-barcolor="#fff" data-linecap="butt" data-percent="100"
+										     data-animate="500" data-linewidth="3" data-size="47"
+										     data-trackcolor="rgba(255,255,255,0.1)"><span
+												class="white font-90">100%</span>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number storm-cloud">{{ total_products_count }}</span>
+									<div class="databox-text darkgray">کل محصولات</div>
+									<div class="databox-state bg-storm-cloud">
+										<i class="fa fa-cubes"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-themeprimary">
+									<div class="databox-piechart">
+										<div id="active-products-pie" data-toggle="easypiechart" class="easyPieChart"
+										     data-barcolor="#fff" data-linecap="butt"
+										     data-percent="{{ active_products_percent }}"
+										     data-animate="500" data-linewidth="3" data-size="47"
+										     data-trackcolor="rgba(255,255,255,0.1)"><span
+												class="white font-90">{{ active_products_percent }}%</span>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number themeprimary">{{ all_active_products_count }}</span>
+									<div class="databox-text darkgray">محصولات فعال</div>
+									<div class="databox-state bg-themeprimary">
+										<i class="fa fa-check-circle"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-themesecondary">
+									<div class="databox-piechart">
+										<div id="inactive-products-pie" data-toggle="easypiechart" class="easyPieChart"
+										     data-barcolor="#fff"
+										     data-linecap="butt" data-percent="{{ inactive_products_percent }}"
+										     data-animate="500" data-linewidth="3"
+										     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span
+												class="white font-90">{{ inactive_products_percent }}%</span>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number themesecondary">{{ inactive_products_count }}</span>
+									<div class="databox-text darkgray">محصولات غیرفعال</div>
+									<div class="databox-stat themesecondary radius-bordered">
+										<i class="stat-icon icon-lg fa fa-ban"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="databox radius-bordered bg-white">
+								<div class="databox-right bg-orange">
+									<div class="databox-piechart">
+										<div id="out-of-stock-products-pie" data-toggle="easypiechart"
+										     class="easyPieChart" data-barcolor="#fff"
+										     data-linecap="butt" data-percent="{{ out_of_stock_products_percent }}"
+										     data-animate="500" data-linewidth="3"
+										     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+												class="white font-90">{{ out_of_stock_products_percent }}%</span>
+										</div>
+									</div>
+								</div>
+								<div class="databox-left">
+									<span class="databox-number orange">{{ out_of_stock_products_count }}</span>
+									<div class="databox-text darkgray">محصولات ناموجود</div>
+									<div class="databox-stat orange radius-bordered">
+										<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

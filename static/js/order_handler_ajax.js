@@ -18,18 +18,19 @@ function addToOrder(productId) {
             title: re.title,
             text: re.text,
             icon: re.icon,
-            showCancelButton: false,
+            showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: confirm,
+            cancelButtonText: "بستن",
 
         }).then((result) => {
             if (result.isConfirmed && re.status === "not_auth") {
                 location.href = "../../account/login"
                 // confirmButtonText: "ورود به حساب"
 
-            } else {
-                location.href = "../order"
+            } else if (result.isConfirmed) {
+                location.href = "../order/"
             }
         });
     })

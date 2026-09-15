@@ -588,12 +588,46 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+									<div class="databox-top">
+										<div class="databox-row row-12">
+											<div class="databox-cell cell-3 text-center">
+												<div class="databox-text storm-cloud">تیکت ها بر اساس واحد</div>
+											</div>
+										</div>
+									</div>
+									<div class="databox-bottom">
+										<div class="databox-row row-20">
+											<div class="databox-cell cell-7 text-center padding-5">
+												<div id="dashboard-pie-chart-ticket-units" class="chart"
+												     style="padding: 0px; position: relative;"></div>
+											</div>
+											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+													<span class="databox-text sonic-silver no-margin">عنوان</span>
+													<span class="databox-text sonic-silver no-margin">تعداد</span>
+													<span class="databox-text sonic-silver no-margin">درصد</span>
+												</div>
+												{% for tickets_stat in tickets_stats %}
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+													                         <span class="databox-text darkgray no-margin order-status-title">
+													                            <span class="badge badge-{{ tickets_stat.color }} badge-empty"></span>
+																				{{ tickets_stat.label }}
+													                         </span>
+														<span class="databox-text darkgray no-margin">{{ tickets_stat.count }}</span>
+														<span class="databox-text darkgray no-margin">{{ tickets_stat.percent }}%</span>
+													</div>
+												{% endfor %}
 
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -633,10 +667,20 @@
                 color: "green"
             }
         ];
+
+        var ticketUnitChartData = [
+            {% for tickets_stat in tickets_stats %}
+                {
+                    label: "{{ tickets_stat.label }}",
+                    data: {{ tickets_stat.count }},
+                    color: "{{ tickets_stat.color }}"
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
 	</script>
 
 
 	<script src="{% static 'admin_module/assets/js/order_status_chart.js' %}"></script>
-	<script src="{% static 'admin_module/assets/js/inventory_status_chart.js' %}"></script>
+	<script src="{% static 'admin_module/assets/js/stats_chart_handler.js' %}"></script>
 
 {% endblock %}

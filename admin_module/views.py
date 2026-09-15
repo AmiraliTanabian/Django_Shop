@@ -104,7 +104,32 @@ class HomePageView(TemplateView):
             is_active=False
         ).count()
 
-        last_unread_tickets = ticket_model.objects.filter(is_active=True, has_unread_reply=True, is_closed=False)
+        last_unread_tickets = ticket_model.objects.filter(is_active=True, has_unread_reply=True, is_closed=False)[:10]
+
+        # Tickets chart according ticket unit
+        ticket_colors = ["blue", "pink", "palegreen", "yellow", "red", "orange"]
+        ticket_stats = ticket_model.objects.filter(is_active=True).values("Unit").annotate(
+            count=Count("id"),
+        ).order_by("-count")
+
+        total_tickets_count = ticket_model.objects.filter(is_active=True).count()
+        tickets_lbl = dict(UnitsChoices.choices)  # {"unit_value" : "unit_lbl"}
+        tickets_result = []
+
+        for index, item in enumerate(ticket_stats):
+            count = item.get("count")
+            unit_value = item.get("Unit")
+            percent = int((count / total_tickets_count) * 100)
+            item_lbl = tickets_lbl.get(unit_value)
+            tickets_result.append({
+                "label": item_lbl,
+                "color": ticket_colors[index],
+                "percent": percent,
+                "count": count
+
+            })
+
+        print(tickets_result)
 
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
@@ -140,6 +165,7 @@ class HomePageView(TemplateView):
         context["inactive_users_percent"] = int(
             (inactive_users_count / total_users_count) * 100) if total_users_count else 0
         context["last_unread_tickets"] = last_unread_tickets
+        context["tickets_stats"] = tickets_result
 
         return context
 

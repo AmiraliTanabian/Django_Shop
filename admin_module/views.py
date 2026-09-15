@@ -92,6 +92,20 @@ class HomePageView(TemplateView):
         inactive_products_percent = int(
             (inactive_products_count / total_products_count) * 100) if total_products_count else 0
 
+        last_users = get_user_model().objects.filter(account_activated=True, is_active=True)[:10]
+
+        active_users_count = get_user_model().objects.filter(
+            is_active=True, account_activated=True
+        ).count()
+        unverified_users_count = get_user_model().objects.filter(
+            account_activated=False
+        ).count()
+        inactive_users_count = get_user_model().objects.filter(
+            is_active=False
+        ).count()
+
+        last_unread_tickets = ticket_model.objects.filter(is_active=True, has_unread_reply=True, is_closed=False)
+
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
@@ -115,6 +129,18 @@ class HomePageView(TemplateView):
         context["active_products_percent"] = active_products_percent
         context["inactive_products_count"] = inactive_products_count
         context["inactive_products_percent"] = inactive_products_percent
+        context["last_users"] = last_users
+        context["active_users_count"] = active_users_count
+        context["active_users_percent"] = int(
+            (active_users_count / total_users_count) * 100) if total_users_count else 0
+        context["unverified_users_count"] = unverified_users_count
+        context["unverified_users_percent"] = int(
+            (unverified_users_count / total_users_count) * 100) if total_users_count else 0
+        context["inactive_users_count"] = inactive_users_count
+        context["inactive_users_percent"] = int(
+            (inactive_users_count / total_users_count) * 100) if total_users_count else 0
+        context["last_unread_tickets"] = last_unread_tickets
+
         return context
 
 

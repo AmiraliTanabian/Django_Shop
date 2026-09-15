@@ -19,399 +19,586 @@
 
 	{% admin_navbar_inclution %}
 	<div class="main-container container-fluid">
-	<!-- Page Container -->
-	<div class="page-container">
+		<!-- Page Container -->
+		<div class="page-container">
 
-		{% include 'admin_module/components/sidebar_component.html' %}
-		{% include 'admin_module/components/chat_bar.html' %}
-		<!-- Page Content -->
-		<div class="page-content">
-			<!-- Page Breadcrumb -->
-			<div class="page-breadcrumbs">
-				<ul class="breadcrumb">
-					<li>
-						<i class="fa fa-home"></i>
-						<a href="{% url 'admin_home_page' %}">خانه</a>
-					</li>
-				</ul>
-			</div>
-			<!-- /Page Breadcrumb -->
-			<!-- Page Header -->
-			<div class="page-header position-relative">
-				<div class="header-title">
-					<h1>
-						داشبورد
-					</h1>
+			{% include 'admin_module/components/sidebar_component.html' %}
+			{% include 'admin_module/components/chat_bar.html' %}
+			<!-- Page Content -->
+			<div class="page-content">
+				<!-- Page Breadcrumb -->
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="{% url 'admin_home_page' %}">خانه</a>
+						</li>
+					</ul>
 				</div>
-				<!--Header Buttons-->
-				<div class="header-buttons">
-					<a class="sidebar-toggler" href="#">
-						<i class="fa fa-arrows-h"></i>
-					</a>
-					<a class="refresh" id="refresh-toggler" href="{% url 'admin_home_page' %}">
-						<i class="glyphicon glyphicon-refresh"></i>
-					</a>
-					<a class="fullscreen" id="fullscreen-toggler" href="#">
-						<i class="glyphicon glyphicon-fullscreen"></i>
-					</a>
+				<!-- /Page Breadcrumb -->
+				<!-- Page Header -->
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<h1>
+							داشبورد
+						</h1>
+					</div>
+					<!--Header Buttons-->
+					<div class="header-buttons">
+						<a class="sidebar-toggler" href="#">
+							<i class="fa fa-arrows-h"></i>
+						</a>
+						<a class="refresh" id="refresh-toggler" href="{% url 'admin_home_page' %}">
+							<i class="glyphicon glyphicon-refresh"></i>
+						</a>
+						<a class="fullscreen" id="fullscreen-toggler" href="#">
+							<i class="glyphicon glyphicon-fullscreen"></i>
+						</a>
+					</div>
+					<!--Header Buttons End-->
 				</div>
-				<!--Header Buttons End-->
-			</div>
-			<!-- /Page Header -->
-			<!-- Page Body -->
-			<div class="page-body">
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<!-- /Page Header -->
+				<!-- Page Body -->
+				<div class="page-body">
+					<div class="col-lg-12 col-sm-12 col-xs-12">
 						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themeprimary">
-										<div class="databox-piechart">
-											<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
-											     data-barcolor="#fff" data-linecap="butt"
-											     data-percent="{{ total_user_this_month_percent }}"
-											     data-animate="500" data-linewidth="3" data-size="47"
-											     data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ total_user_this_month_percent }}%</span>
+							<div class="section-title section-sales">
+								<div class="section-title-icon">
+									<i class="fa fa-money"></i>
+								</div>
+								<span class="section-title-text">فروش کل در یک نما</span>
+								<div class="section-title-line"></div>
+							</div>
+							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+									<div class="databox-top">
+										<div class="databox-row row-12">
+											<div class="databox-cell cell-3 text-center">
+												<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
 											</div>
 										</div>
 									</div>
-									<div class="databox-left">
-										<span class="databox-number themeprimary">{{ total_user_this_month }}</span>
-										<div class="databox-text darkgray">کاربر جدید</div>
-										<div class="databox-state bg-themeprimary">
-											<i class="fa fa-user-plus"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-12 col-sm-12 col-xs-12">
-					<div class="row">
-						<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
-							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-								<div class="databox-top bg-orange no-padding">
-									<div class="databox-stat white bg-orange font-120">
-										<i class="stat-icon fa fa-caret-up icon-xlg"></i>
-									</div>
-								</div>
-								<div class="databox-bottom no-padding">
-									<div class="databox-row">
-										<div class="databox-cell cell-6 text-align-left">
-											<span class="databox-text">کل کاربران</span>
-											<span class="databox-number">{{ total_users_count|intcomma }}</span>
-										</div>
-										<div class="databox-cell cell-6 text-align-right">
-											<span class="databox-text">کاربران جدید</span>
-											<span class="databox-number font-70">{{ total_user_this_month|intcomma }}</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-12 col-sm-12 col-xs-12">
-					<div class="row">
-						<div class="section-title section-sales">
-							<div class="section-title-icon">
-								<i class="fa fa-money"></i>
-							</div>
-							<span class="section-title-text">فروش کل در یک نما</span>
-							<div class="section-title-line"></div>
-						</div>
-						<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-							<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-								<div class="databox-top">
-									<div class="databox-row row-12">
-										<div class="databox-cell cell-3 text-center">
-											<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
-										</div>
-									</div>
-								</div>
-								<div class="databox-bottom">
-									<div class="databox-row row-20">
-										<div class="databox-cell cell-7 text-center padding-5">
-											<div id="dashboard-pie-chart-sources" class="chart"
-											     style="padding: 0px; position: relative;"></div>
-										</div>
-										<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-												<span class="databox-text sonic-silver no-margin">عنوان</span>
-												<span class="databox-text sonic-silver no-margin">تعداد</span>
-												<span class="databox-text sonic-silver no-margin">درصد</span>
+									<div class="databox-bottom">
+										<div class="databox-row row-20">
+											<div class="databox-cell cell-7 text-center padding-5">
+												<div id="dashboard-pie-chart-sources" class="chart"
+												     style="padding: 0px; position: relative;"></div>
 											</div>
-											{% for status in order_status_stats %}
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+													<span class="databox-text sonic-silver no-margin">عنوان</span>
+													<span class="databox-text sonic-silver no-margin">تعداد</span>
+													<span class="databox-text sonic-silver no-margin">درصد</span>
+												</div>
+												{% for status in order_status_stats %}
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
                          <span class="databox-text darkgray no-margin order-status-title">
                             <span class="badge badge-{{ status.badge }} badge-empty"></span>
                             {{ status.label }}
                          </span>
-													<span class="databox-text darkgray no-margin">{{ status.count }}</span>
-													<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
-												</div>
-											{% endfor %}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-							<div class="orders-container">
-								<div class="orders-header">
-									<h6>آخرین سفارشات</h6>
-								</div>
-								<ul class="orders-list">
-									{% for last_order in last_orders %}
-										<li class="order-item">
-											<div class="row">
-												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-													<div class="item-booker">{{ last_order.user }}</div>
-													<div class="item-time">
-														<i class="fa fa-calendar"></i>
-														<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+														<span class="databox-text darkgray no-margin">{{ status.count }}</span>
+														<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
 													</div>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-													<div class="item-price">
-														<span class="price">{{ last_order.total_order_price|price_separator }}</span>
-													</div>
-												</div>
+												{% endfor %}
 											</div>
-											<a target="_blank" class="item-more"
-											   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
-												<i></i>
-											</a>
-										</li>
-									{% endfor %}
-
-								</ul>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-							<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
-								<div class="databox-top bg-palegreen no-padding">
-									<div class="databox-stat white bg-palegreen font-120">
-										<i class="stat-icon fa fa-caret-down icon-xlg"></i>
-									</div>
-									<div class="horizontal-space space-lg"></div>
-								</div>
-								<div class="databox-bottom no-padding">
-									<div class="databox-row">
-										<div class="databox-cell cell-6 text-align-left">
-											<span class="databox-text">فروش کل</span>
-											<span class="databox-number">{{ total_sales|price_separator }}</span>
-
 										</div>
-										<div class="databox-cell cell-6 text-align-right">
-											<span class="databox-text">ماه جاری</span>
-											<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+								<div class="orders-container">
+									<div class="orders-header">
+										<h6>آخرین سفارشات</h6>
+									</div>
+									<ul class="orders-list">
+										{% for last_order in last_orders %}
+											<li class="order-item">
+												<div class="row">
+													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
+														<div class="item-booker">{{ last_order.user }}</div>
+														<div class="item-time">
+															<i class="fa fa-calendar"></i>
+															<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+														</div>
+													</div>
+													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
+														<div class="item-price">
+															<span class="price">{{ last_order.total_order_price|price_separator }}</span>
+														</div>
+													</div>
+												</div>
+												<a target="_blank" class="item-more"
+												   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
+													<i></i>
+												</a>
+											</li>
+										{% endfor %}
+
+									</ul>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
+									<div class="databox-top bg-palegreen no-padding">
+										<div class="databox-stat white bg-palegreen font-120">
+											<i class="stat-icon fa fa-caret-down icon-xlg"></i>
+										</div>
+										<div class="horizontal-space space-lg"></div>
+									</div>
+									<div class="databox-bottom no-padding">
+										<div class="databox-row">
+											<div class="databox-cell cell-6 text-align-left">
+												<span class="databox-text">فروش کل</span>
+												<span class="databox-number">{{ total_sales|price_separator }}</span>
+
+											</div>
+											<div class="databox-cell cell-6 text-align-right">
+												<span class="databox-text">ماه جاری</span>
+												<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="col-lg-12 col-sm-12 col-xs-12">
-					<div class="row">
-						<div class="section-title section-sales">
-							<div class="section-title-icon">
-								<i class="fa fa-cubes"></i>
-							</div>
-							<span class="section-title-text"> محصولات در یک نما</span>
-							<div class="section-title-line"></div>
-						</div>
-						<div class="col-xs-12 col-md-6">
-							<div class="well with-header  with-footer">
-								<div class="header bg-blue">
-									پر فروش ترین محصولات
+					<div class="col-lg-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="section-title section-sales">
+								<div class="section-title-icon">
+									<i class="fa fa-cubes"></i>
 								</div>
-								<table class="table table-hover">
-									<thead class="bordered-darkorange">
-									<tr>
-										<th>
-											شناسه محصول
-										</th>
-										<th>
-											نام محصول
-										</th>
-										<th>
-											تعداد فروش
-										</th>
-									</tr>
-									</thead>
-									<tbody>
-									{% for product in most_sells_product %}
-										<tr>
-											<td>
-												{{ product.id }}
-											</td>
-											<td>
-												<a href="{% url 'product_detail' pk=product.id %}">
-													{{ product.name }}
-												</a>
-											</td>
-											<td>
-												{{ product.order_count }}
-											</td>
-										</tr>
-									{% endfor %}
-									</tbody>
-								</table>
+								<span class="section-title-text"> محصولات در یک نما</span>
+								<div class="section-title-line"></div>
 							</div>
-						</div>
-						<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-							<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-								<div class="databox-top">
-									<div class="databox-row row-12">
-										<div class="databox-cell cell-3 text-center">
-											<div class="databox-text storm-cloud">محصولات بر اساس موجودی</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="well with-header  with-footer">
+									<div class="header bg-blue">
+										پر فروش ترین محصولات
+									</div>
+									<table class="table table-hover">
+										<thead class="bordered-darkorange">
+										<tr>
+											<th>
+												شناسه محصول
+											</th>
+											<th>
+												نام محصول
+											</th>
+											<th>
+												تعداد فروش
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+										{% for product in most_sells_product %}
+											<tr>
+												<td>
+													{{ product.id }}
+												</td>
+												<td>
+													<a href="{% url 'product_detail' pk=product.id %}">
+														{{ product.name }}
+													</a>
+												</td>
+												<td>
+													{{ product.order_count }}
+												</td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+									<div class="databox-top">
+										<div class="databox-row row-12">
+											<div class="databox-cell cell-3 text-center">
+												<div class="databox-text storm-cloud">محصولات بر اساس موجودی</div>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="databox-bottom">
-									<div class="databox-row row-20">
-										<div class="databox-cell cell-7 text-center padding-5">
-											<div id="dashboard-pie-chart-inventory" class="chart"
-											     style="padding: 0px; position: relative;"></div>
-										</div>
-										<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-												<span class="databox-text sonic-silver no-margin">عنوان</span>
-												<span class="databox-text sonic-silver no-margin">تعداد</span>
-												<span class="databox-text sonic-silver no-margin">درصد</span>
+									<div class="databox-bottom">
+										<div class="databox-row row-20">
+											<div class="databox-cell cell-7 text-center padding-5">
+												<div id="dashboard-pie-chart-inventory" class="chart"
+												     style="padding: 0px; position: relative;"></div>
 											</div>
-											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+													<span class="databox-text sonic-silver no-margin">عنوان</span>
+													<span class="databox-text sonic-silver no-margin">تعداد</span>
+													<span class="databox-text sonic-silver no-margin">درصد</span>
+												</div>
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
 						                         <span class="databox-text darkgray no-margin order-status-title">
 						                            <span class="badge badge-red badge-empty"></span>
 													محصولات ناموجود
 						                         </span>
-												<span class="databox-text darkgray no-margin">{{ out_of_stock_products_count }}</span>
-												<span class="databox-text darkgray no-margin">{{ out_of_stock_products_percent }}%</span>
-											</div>
-											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+													<span class="databox-text darkgray no-margin">{{ out_of_stock_products_count }}</span>
+													<span class="databox-text darkgray no-margin">{{ out_of_stock_products_percent }}%</span>
+												</div>
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
 						                         <span class="databox-text darkgray no-margin order-status-title">
 						                            <span class="badge badge-yellow badge-empty"></span>
 													محصولات با موجودی کم
 						                         </span>
-												<span class="databox-text darkgray no-margin">{{ low_stock_products_count }}</span>
-												<span class="databox-text darkgray no-margin">{{ low_stock_products_percent }}%</span>
-											</div>
-											<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+													<span class="databox-text darkgray no-margin">{{ low_stock_products_count }}</span>
+													<span class="databox-text darkgray no-margin">{{ low_stock_products_percent }}%</span>
+												</div>
+												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
 						                         <span class="databox-text darkgray no-margin order-status-title">
 						                            <span class="badge badge-green badge-empty"></span>
 													محصولات موجودی کافی
 						                         </span>
-												<span class="databox-text darkgray no-margin">{{ enough_stack_products_count }}</span>
-												<span class="databox-text darkgray no-margin">{{ enough_stack_products_count_percent }}%</span>
+													<span class="databox-text darkgray no-margin">{{ enough_stack_products_count }}</span>
+													<span class="databox-text darkgray no-margin">{{ enough_stack_products_count_percent }}%</span>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="databox radius-bordered bg-white">
-								<div class="databox-right bg-storm-cloud">
-									<div class="databox-piechart">
-										<div id="total-products-pie" data-toggle="easypiechart" class="easyPieChart"
-										     data-barcolor="#fff" data-linecap="butt" data-percent="100"
-										     data-animate="500" data-linewidth="3" data-size="47"
-										     data-trackcolor="rgba(255,255,255,0.1)"><span
-												class="white font-90">100%</span>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-storm-cloud">
+										<div class="databox-piechart">
+											<div id="total-products-pie" data-toggle="easypiechart" class="easyPieChart"
+											     data-barcolor="#fff" data-linecap="butt" data-percent="100"
+											     data-animate="500" data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">100%</span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="databox-left">
-									<span class="databox-number storm-cloud">{{ total_products_count }}</span>
-									<div class="databox-text darkgray">کل محصولات</div>
-									<div class="databox-state bg-storm-cloud">
-										<i class="fa fa-cubes"></i>
+									<div class="databox-left">
+										<span class="databox-number storm-cloud">{{ total_products_count }}</span>
+										<div class="databox-text darkgray">کل محصولات</div>
+										<div class="databox-state bg-storm-cloud">
+											<i class="fa fa-cubes"></i>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="databox radius-bordered bg-white">
-								<div class="databox-right bg-themeprimary">
-									<div class="databox-piechart">
-										<div id="active-products-pie" data-toggle="easypiechart" class="easyPieChart"
-										     data-barcolor="#fff" data-linecap="butt"
-										     data-percent="{{ active_products_percent }}"
-										     data-animate="500" data-linewidth="3" data-size="47"
-										     data-trackcolor="rgba(255,255,255,0.1)"><span
-												class="white font-90">{{ active_products_percent }}%</span>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themeprimary">
+										<div class="databox-piechart">
+											<div id="active-products-pie" data-toggle="easypiechart"
+											     class="easyPieChart"
+											     data-barcolor="#fff" data-linecap="butt"
+											     data-percent="{{ active_products_percent }}"
+											     data-animate="500" data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ active_products_percent }}%</span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="databox-left">
-									<span class="databox-number themeprimary">{{ all_active_products_count }}</span>
-									<div class="databox-text darkgray">محصولات فعال</div>
-									<div class="databox-state bg-themeprimary">
-										<i class="fa fa-check-circle"></i>
+									<div class="databox-left">
+										<span class="databox-number themeprimary">{{ all_active_products_count }}</span>
+										<div class="databox-text darkgray">محصولات فعال</div>
+										<div class="databox-state bg-themeprimary">
+											<i class="fa fa-check-circle"></i>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="databox radius-bordered bg-white">
-								<div class="databox-right bg-themesecondary">
-									<div class="databox-piechart">
-										<div id="inactive-products-pie" data-toggle="easypiechart" class="easyPieChart"
-										     data-barcolor="#fff"
-										     data-linecap="butt" data-percent="{{ inactive_products_percent }}"
-										     data-animate="500" data-linewidth="3"
-										     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span
-												class="white font-90">{{ inactive_products_percent }}%</span>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themesecondary">
+										<div class="databox-piechart">
+											<div id="inactive-products-pie" data-toggle="easypiechart"
+											     class="easyPieChart"
+											     data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ inactive_products_percent }}"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span
+													class="white font-90">{{ inactive_products_percent }}%</span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="databox-left">
-									<span class="databox-number themesecondary">{{ inactive_products_count }}</span>
-									<div class="databox-text darkgray">محصولات غیرفعال</div>
-									<div class="databox-stat themesecondary radius-bordered">
-										<i class="stat-icon icon-lg fa fa-ban"></i>
+									<div class="databox-left">
+										<span class="databox-number themesecondary">{{ inactive_products_count }}</span>
+										<div class="databox-text darkgray">محصولات غیرفعال</div>
+										<div class="databox-stat themesecondary radius-bordered">
+											<i class="stat-icon icon-lg fa fa-ban"></i>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="databox radius-bordered bg-white">
-								<div class="databox-right bg-orange">
-									<div class="databox-piechart">
-										<div id="out-of-stock-products-pie" data-toggle="easypiechart"
-										     class="easyPieChart" data-barcolor="#fff"
-										     data-linecap="butt" data-percent="{{ out_of_stock_products_percent }}"
-										     data-animate="500" data-linewidth="3"
-										     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-												class="white font-90">{{ out_of_stock_products_percent }}%</span>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-orange">
+										<div class="databox-piechart">
+											<div id="out-of-stock-products-pie" data-toggle="easypiechart"
+											     class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ out_of_stock_products_percent }}"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ out_of_stock_products_percent }}%</span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="databox-left">
-									<span class="databox-number orange">{{ out_of_stock_products_count }}</span>
-									<div class="databox-text darkgray">محصولات ناموجود</div>
-									<div class="databox-stat orange radius-bordered">
-										<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
+									<div class="databox-left">
+										<span class="databox-number orange">{{ out_of_stock_products_count }}</span>
+										<div class="databox-text darkgray">محصولات ناموجود</div>
+										<div class="databox-stat orange radius-bordered">
+											<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-lg-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="section-title section-sales">
+								<div class="section-title-icon">
+									<i class="fa fa-users"></i>
+								</div>
+								<span class="section-title-text">کاربران در یک نما</span>
+								<div class="section-title-line"></div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="well with-header  with-footer">
+									<div class="header bg-blue">
+										جدید ترین کاربران
+									</div>
+									<table class="table table-hover">
+										<thead class="bordered-darkorange">
+										<tr>
+											<th>
+												شناسه کاربر
+											</th>
+											<th>
+												نام کاربر
+											</th>
+											<th>
+												نام کاربری
+											</th>
+											<th>
+												تاریخ ثبت نام
+											</th>
+											<th></th>
+										</tr>
+										</thead>
+										<tbody>
+										{% for user in last_users %}
+											<tr>
+												<td>
+													{{ user.id }}
+												</td>
+												<td>
+													{{ user.first_name }}
+												</td>
+												<td>
+													{{ user.username }}
+												</td>
+												<td>
+													{{ user.date_joined|jformat:"%Y/%m/%d | %H:%M" }}
+												</td>
+												<td>
+													<a target="_blank" href="{% url 'admin_user_detail' id=user.id %}"
+													   class="btn btn-default btn-xs purple"><i
+															class="fa fa-edit"></i>
+														مشاهده
+													</a>
+												</td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+									<a href="{% url 'admin_users_list' %}" class="btn btn-info">همه کاربران</a>
+
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-blue">
+										<div class="databox-piechart">
+											<div id="total-users-pie" data-toggle="easypiechart"
+											     class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="100"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90"></span>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number blue">{{ total_users_count }}</span>
+										<div class="databox-text darkgray">کل کاربران</div>
+										<div class="databox-stat blue radius-bordered">
+											<i class="stat-icon icon-lg fa fa-users"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-palegreen">
+										<div class="databox-piechart">
+											<div id="active-users-pie" data-toggle="easypiechart"
+											     class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ active_users_percent }}"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ active_users_percent }}%</span>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number palegreen">{{ active_users_count }}</span>
+										<div class="databox-text darkgray">کاربران فعال</div>
+										<div class="databox-stat palegreen radius-bordered">
+											<i class="stat-icon icon-lg fa fa-user-check"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-yellow">
+										<div class="databox-piechart">
+											<div id="unverified-users-pie" data-toggle="easypiechart"
+											     class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ unverified_users_percent }}"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ unverified_users_percent }}%</span>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number yellow">{{ unverified_users_count }}</span>
+										<div class="databox-text darkgray">کاربران تأیید نشده</div>
+										<div class="databox-stat yellow radius-bordered">
+											<i class="stat-icon icon-lg fa fa-user-clock"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-red">
+										<div class="databox-piechart">
+											<div id="inactive-users-pie" data-toggle="easypiechart"
+											     class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ inactive_users_percent }}"
+											     data-animate="500" data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+													class="white font-90">{{ inactive_users_percent }}%</span>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number red">{{ inactive_users_count }}</span>
+										<div class="databox-text darkgray">کاربران غیرفعال</div>
+										<div class="databox-stat red radius-bordered">
+											<i class="stat-icon icon-lg fa fa-user-slash"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="section-title section-sales">
+								<div class="section-title-icon">
+									<i class="fa fa-ticket"></i>
+								</div>
+								<span class="section-title-text">تیکت ها در یک نما</span>
+								<div class="section-title-line"></div>
+							</div>
+
+							<div class="col-xs-12 col-md-6">
+								<div class="well with-header  with-footer">
+									<div class="header bg-blue">
+										جدید ترین تیکت های خوانده نشده
+									</div>
+									{% if unread_tickets %}
+										<table class="table table-hover">
+											<thead class="bordered-darkorange">
+											<tr>
+												<th>
+													شناسه تیکت
+												</th>
+												<th>
+													نام کاربر
+												</th>
+												<th>
+													عنوان
+												</th>
+												<th>
+													واحد مربوطه
+												</th>
+												<th>
+													تاریخ ساخت
+												</th>
+												<th></th>
+											</tr>
+											</thead>
+											<tbody>
+											{% for ticket in last_unread_tickets %}
+												<tr>
+													<td>
+														{{ ticket.id }}
+													</td>
+													<td>
+														{{ ticket.user }}
+													</td>
+													<td>
+														{{ ticket.title }}
+													</td>
+													<td>
+														{{ ticket.unit }}
+													</td>
+													<td>
+														{{ user.date_joined|jformat:"%Y/%m/%d | %H:%M" }}
+													</td>
+													<td>
+														<a target="_blank"
+														   href="{% url 'admin_ticket_detail_view' id=ticket.id %}"
+														   class="btn btn-default btn-xs purple"><i
+																class="fa fa-edit"></i>
+															مشاهده
+														</a>
+													</td>
+												</tr>
+											{% endfor %}
+											</tbody>
+										</table>
+									{% else %}
+										<div class="alert alert-block alert-success empty-state-box">
+											<i class="fa fa-check-circle"></i>
+											<strong>تیکت خوانده نشده‌ای ندارید!</strong>
+											<p class="empty-state-subtext">همه‌چیز مرتبه، خیالتون راحت باشه.</p>
+										</div>
+									{% endif %}
+									<br><br>
+									<div class="text-right" style="margin-top: 15px;">
+										<a href="{% url 'admin_tickets_list' %}" class="btn btn-outline btn-info">
+											<i class="fa fa-list-ul"></i>
+											مشاهده همه تیکت‌ها
+										</a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
 				</div>
+
 			</div>
 		</div>
 	</div>
 {% endblock %}
 
-</div>
 
 {% block footer_ref %}
 	{#	for order chart according order status : #}

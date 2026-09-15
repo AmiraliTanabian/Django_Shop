@@ -215,3 +215,21 @@
         font-size: 13px;
     }
 }
+
+.empty-state-box {
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.empty-state-box i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    display: block;
+    color: #5cb85c;
+}
+
+.empty-state-box .empty-state-subtext {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: #777;
+}

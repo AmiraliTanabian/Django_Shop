@@ -26,7 +26,7 @@ from newsletter_module.models import newsLetterModel
 from order_module.models import orderModel, orderProductModel, orderStatus
 from product_module.models import Product, ProductCategory, ProductTag, ProductComment, Brand, ProductGallery
 from site_module.models import SiteSetting, SiteBanners, Slider
-from user_profile_module.models import ticket_model, UnitsChoices, TicketAnswerModel, ticket_attachment
+from user_profile_module.models import ticket_model, UnitsChoices, TicketAnswerModel, ticket_attachment, PriorityChoices
 from .forms import SettingEditForms, BannersEditForm, EditSliderForm, AdminContactForm, EditArticleForm, \
     AddArticleCatForm, AddArticleTagForm, EditCommentForms, EditProductForm, AddProductCatForm, AddProductTagForm, \
     EditProductCommentForm, AddProductBrandForm, EditOrder, UserEditForm, SendTicketReplyForm, TicketUnitUpdateForm
@@ -112,14 +112,14 @@ class HomePageView(TemplateView):
             count=Count("id"),
         ).order_by("-count")
 
-        total_tickets_count = ticket_model.objects.filter(is_active=True).count()
+        active_tickets_count = ticket_model.objects.filter(is_active=True).count()
         tickets_lbl = dict(UnitsChoices.choices)  # {"unit_value" : "unit_lbl"}
         tickets_result = []
 
         for index, item in enumerate(ticket_stats):
             count = item.get("count")
             unit_value = item.get("Unit")
-            percent = int((count / total_tickets_count) * 100)
+            percent = int((count / active_tickets_count) * 100)
             item_lbl = tickets_lbl.get(unit_value)
             tickets_result.append({
                 "label": item_lbl,
@@ -129,7 +129,11 @@ class HomePageView(TemplateView):
 
             })
 
-        print(tickets_result)
+        # tickets stats
+        tickets_low_priority_count = ticket_model.objects.filter(is_active=True, Priority=PriorityChoices.low).count()
+        tickets_high_priority_count = ticket_model.objects.filter(is_active=True, Priority=PriorityChoices.high).count()
+        tickets_medium_priority_count = ticket_model.objects.filter(is_active=True,
+                                                                    Priority=PriorityChoices.medium).count()
 
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
@@ -166,6 +170,12 @@ class HomePageView(TemplateView):
             (inactive_users_count / total_users_count) * 100) if total_users_count else 0
         context["last_unread_tickets"] = last_unread_tickets
         context["tickets_stats"] = tickets_result
+        context["low_priority_tickets_count"] = tickets_low_priority_count
+        context["low_priority_tickets_percent"] = int((tickets_low_priority_count / active_tickets_count) * 100)
+        context["high_priority_tickets_count"] = tickets_high_priority_count
+        context["high_priority_tickets_percent"] = int((tickets_high_priority_count / active_tickets_count) * 100)
+        context["medium_priority_tickets_count"] = tickets_medium_priority_count
+        context["medium_priority_tickets_percent"] = int((tickets_medium_priority_count / active_tickets_count) * 100)
 
         return context
 

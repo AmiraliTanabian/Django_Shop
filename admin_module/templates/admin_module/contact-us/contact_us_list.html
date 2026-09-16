@@ -70,7 +70,10 @@
 											<span></span> تاریخ
 										</th>
 										<th>
-											<span></span>وضعیت
+											<span></span>خوانده شده / نشده
+										</th>
+										<th>
+											پاسخ داده شده / نشده
 										</th>
 										<th>
 											<span></span>
@@ -103,6 +106,15 @@
 												</span>
 												{% endif %}
 											</td>
+											<td>   {% if msg.is_answer %}
+												<span class="label label-palegreen">
+                                                    پاسخ داده شده
+												</span>
+											{% else %}
+												<span class="label label-orange">
+													پاسخ داده نشده
+												</span>
+											{% endif %} </td>
 											<td>
 												<a href="{% url 'admin_contact_detail_page' id=msg.id %}"
 												   class="btn btn-default btn-xs purple"><i class="fa fa-edit"></i>

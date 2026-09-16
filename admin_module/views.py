@@ -105,6 +105,8 @@ class HomePageView(TemplateView):
         ).count()
 
         last_unread_tickets = ticket_model.objects.filter(is_active=True, has_unread_reply=True, is_closed=False)[:10]
+        unread_tickets_counts = ticket_model.objects.filter(is_active=True, has_unread_reply=True,
+                                                            is_closed=False).count()
 
         # Tickets chart according ticket unit
         ticket_colors = ["blue", "pink", "palegreen", "yellow", "red", "orange"]
@@ -176,6 +178,7 @@ class HomePageView(TemplateView):
         context["high_priority_tickets_percent"] = int((tickets_high_priority_count / active_tickets_count) * 100)
         context["medium_priority_tickets_count"] = tickets_medium_priority_count
         context["medium_priority_tickets_percent"] = int((tickets_medium_priority_count / active_tickets_count) * 100)
+        context["unread_tickets_count"] = unread_tickets_counts
 
         return context
 
@@ -319,6 +322,11 @@ class ContactUsDetailView(PermissionRequiredMixin, View):
     def get(self, request, id):
         current_obj = get_object_or_404(ContactModel, id=id)
         form = AdminContactForm(instance=current_obj)
+
+        # set msg read
+        current_obj.is_read = True
+        current_obj.save()
+
         return render(request, "admin_module/contact-us/contact_us_edit.html", {
             "form": form,
             "contact_us": current_obj,
@@ -365,7 +373,7 @@ def send_msg_answer_ajax(request: HttpRequest):
         mail.content_subtype = "html"
         mail.send()
 
-        contact_model.is_read = True
+        contact_model.is_answer = True
         contact_model.answer_date = datetime.now()
         contact_model.answer = answer
         contact_model.save()

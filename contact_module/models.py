@@ -16,6 +16,7 @@ class ContactModel(models.Model):
                                         verbose_name="ادمین پاسخ دهنده ",
                                         null=True,
                                         blank=True)
+    is_answer = models.BooleanField(verbose_name="پاسخ داده شده", default=False)
     is_read = models.BooleanField(verbose_name="خوانده شده", default=False)
 
     class Meta:

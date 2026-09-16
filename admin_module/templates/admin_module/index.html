@@ -436,7 +436,6 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 								<div class="databox radius-bordered bg-white">
 									<div class="databox-right bg-palegreen">
@@ -518,6 +517,9 @@
 								<div class="well with-header  with-footer">
 									<div class="header bg-blue">
 										جدید ترین تیکت های خوانده نشده
+										{% if unread_tickets_count %}
+											({{ unread_tickets_count }})
+										{% endif %}
 									</div>
 									{% if unread_tickets %}
 										<table class="table table-hover">

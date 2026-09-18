@@ -11,22 +11,17 @@
 
 
 {% block content %}
-	<!-- Loading Container -->
 	<div class="loading-container">
 		<div class="loader"></div>
 	</div>
-	<!--  /Loading Container -->
 
 	{% admin_navbar_inclution %}
 	<div class="main-container container-fluid">
-		<!-- Page Container -->
 		<div class="page-container">
 
 			{% include 'admin_module/components/sidebar_component.html' %}
 			{% include 'admin_module/components/chat_bar.html' %}
-			<!-- Page Content -->
 			<div class="page-content">
-				<!-- Page Breadcrumb -->
 				<div class="page-breadcrumbs">
 					<ul class="breadcrumb">
 						<li>
@@ -35,15 +30,12 @@
 						</li>
 					</ul>
 				</div>
-				<!-- /Page Breadcrumb -->
-				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<h1>
 							داشبورد
 						</h1>
 					</div>
-					<!--Header Buttons-->
 					<div class="header-buttons">
 						<a class="sidebar-toggler" href="#">
 							<i class="fa fa-arrows-h"></i>
@@ -55,515 +47,357 @@
 							<i class="glyphicon glyphicon-fullscreen"></i>
 						</a>
 					</div>
-					<!--Header Buttons End-->
 				</div>
-				<!-- /Page Header -->
-				<!-- Page Body -->
 				<div class="page-body">
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="fa fa-money"></i>
+					{% if perms.order_module.view_ordermodel %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="fa fa-money"></i>
+									</div>
+									<span class="section-title-text">فروش کل در یک نما</span>
+									<div class="section-title-line"></div>
 								</div>
-								<span class="section-title-text">فروش کل در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
-							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-									<div class="databox-top">
-										<div class="databox-row row-12">
-											<div class="databox-cell cell-3 text-center">
-												<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت</div>
+								<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+									<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+										<div class="databox-top">
+											<div class="databox-row row-12">
+												<div class="databox-cell cell-3 text-center">
+													<div class="databox-text storm-cloud">سفارش ها با وضعیت های متفاوت
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="databox-bottom">
-										<div class="databox-row row-20">
-											<div class="databox-cell cell-7 text-center padding-5">
-												<div id="dashboard-pie-chart-sources" class="chart"
-												     style="padding: 0px; position: relative;"></div>
-											</div>
-											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-													<span class="databox-text sonic-silver no-margin">عنوان</span>
-													<span class="databox-text sonic-silver no-margin">تعداد</span>
-													<span class="databox-text sonic-silver no-margin">درصد</span>
+										<div class="databox-bottom">
+											<div class="databox-row row-20">
+												<div class="databox-cell cell-7 text-center padding-5">
+													<div id="dashboard-pie-chart-sources" class="chart"
+													     style="padding: 0px; position: relative;"></div>
 												</div>
-												{% for status in order_status_stats %}
-													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+												<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+														<span class="databox-text sonic-silver no-margin">عنوان</span>
+														<span class="databox-text sonic-silver no-margin">تعداد</span>
+														<span class="databox-text sonic-silver no-margin">درصد</span>
+													</div>
+													{% for status in order_status_stats %}
+														<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
                          <span class="databox-text darkgray no-margin order-status-title">
                             <span class="badge badge-{{ status.badge }} badge-empty"></span>
                             {{ status.label }}
                          </span>
-														<span class="databox-text darkgray no-margin">{{ status.count }}</span>
-														<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
-													</div>
-												{% endfor %}
+															<span class="databox-text darkgray no-margin">{{ status.count }}</span>
+															<span class="databox-text darkgray no-margin">{{ status.percentage }}%</span>
+														</div>
+													{% endfor %}
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-								<div class="orders-container">
-									<div class="orders-header">
-										<h6>آخرین سفارشات</h6>
-									</div>
-									<ul class="orders-list">
-										{% for last_order in last_orders %}
-											<li class="order-item">
-												<div class="row">
-													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-														<div class="item-booker">{{ last_order.user }}</div>
-														<div class="item-time">
-															<i class="fa fa-calendar"></i>
-															<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<div class="orders-container">
+										<div class="orders-header">
+											<h6>آخرین سفارشات</h6>
+										</div>
+										<ul class="orders-list">
+											{% for last_order in last_orders %}
+												<li class="order-item">
+													<div class="row">
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
+															<div class="item-booker">{{ last_order.user }}</div>
+															<div class="item-time">
+																<i class="fa fa-calendar"></i>
+																<span>{{ last_order.paid_date|jformat:"%Y/%m/%d | %H:%M" }}</span>
+															</div>
+														</div>
+														<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
+															<div class="item-price">
+																<span class="price">{{ last_order.total_order_price|price_separator }}</span>
+															</div>
 														</div>
 													</div>
-													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-														<div class="item-price">
-															<span class="price">{{ last_order.total_order_price|price_separator }}</span>
-														</div>
-													</div>
-												</div>
-												<a target="_blank" class="item-more"
-												   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
-													<i></i>
-												</a>
-											</li>
-										{% endfor %}
-
-									</ul>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-								<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
-									<div class="databox-top bg-palegreen no-padding">
-										<div class="databox-stat white bg-palegreen font-120">
-											<i class="stat-icon fa fa-caret-down icon-xlg"></i>
-										</div>
-										<div class="horizontal-space space-lg"></div>
-									</div>
-									<div class="databox-bottom no-padding">
-										<div class="databox-row">
-											<div class="databox-cell cell-6 text-align-left">
-												<span class="databox-text">فروش کل</span>
-												<span class="databox-number">{{ total_sales|price_separator }}</span>
-
-											</div>
-											<div class="databox-cell cell-6 text-align-right">
-												<span class="databox-text">ماه جاری</span>
-												<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="fa fa-cubes"></i>
-								</div>
-								<span class="section-title-text"> محصولات در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<div class="well with-header  with-footer">
-									<div class="header bg-blue">
-										پر فروش ترین محصولات
-									</div>
-									<table class="table table-hover">
-										<thead class="bordered-darkorange">
-										<tr>
-											<th>
-												شناسه محصول
-											</th>
-											<th>
-												نام محصول
-											</th>
-											<th>
-												تعداد فروش
-											</th>
-										</tr>
-										</thead>
-										<tbody>
-										{% for product in most_sells_product %}
-											<tr>
-												<td>
-													{{ product.id }}
-												</td>
-												<td>
-													<a href="{% url 'product_detail' pk=product.id %}">
-														{{ product.name }}
+													<a target="_blank" class="item-more"
+													   href="{% url 'admin_edit_order_page' order_id=last_order.id %}">
+														<i></i>
 													</a>
-												</td>
-												<td>
-													{{ product.order_count }}
-												</td>
-											</tr>
-										{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-									<div class="databox-top">
-										<div class="databox-row row-12">
-											<div class="databox-cell cell-3 text-center">
-												<div class="databox-text storm-cloud">محصولات بر اساس موجودی</div>
-											</div>
-										</div>
-									</div>
-									<div class="databox-bottom">
-										<div class="databox-row row-20">
-											<div class="databox-cell cell-7 text-center padding-5">
-												<div id="dashboard-pie-chart-inventory" class="chart"
-												     style="padding: 0px; position: relative;"></div>
-											</div>
-											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-													<span class="databox-text sonic-silver no-margin">عنوان</span>
-													<span class="databox-text sonic-silver no-margin">تعداد</span>
-													<span class="databox-text sonic-silver no-margin">درصد</span>
-												</div>
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
-						                         <span class="databox-text darkgray no-margin order-status-title">
-						                            <span class="badge badge-red badge-empty"></span>
-													محصولات ناموجود
-						                         </span>
-													<span class="databox-text darkgray no-margin">{{ out_of_stock_products_count }}</span>
-													<span class="databox-text darkgray no-margin">{{ out_of_stock_products_percent }}%</span>
-												</div>
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
-						                         <span class="databox-text darkgray no-margin order-status-title">
-						                            <span class="badge badge-yellow badge-empty"></span>
-													محصولات با موجودی کم
-						                         </span>
-													<span class="databox-text darkgray no-margin">{{ low_stock_products_count }}</span>
-													<span class="databox-text darkgray no-margin">{{ low_stock_products_percent }}%</span>
-												</div>
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
-						                         <span class="databox-text darkgray no-margin order-status-title">
-						                            <span class="badge badge-green badge-empty"></span>
-													محصولات موجودی کافی
-						                         </span>
-													<span class="databox-text darkgray no-margin">{{ enough_stack_products_count }}</span>
-													<span class="databox-text darkgray no-margin">{{ enough_stack_products_count_percent }}%</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-storm-cloud">
-										<div class="databox-piechart">
-											<div id="total-products-pie" data-toggle="easypiechart" class="easyPieChart"
-											     data-barcolor="#fff" data-linecap="butt" data-percent="100"
-											     data-animate="500" data-linewidth="3" data-size="47"
-											     data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">100%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number storm-cloud">{{ total_products_count }}</span>
-										<div class="databox-text darkgray">کل محصولات</div>
-										<div class="databox-state bg-storm-cloud">
-											<i class="fa fa-cubes"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themeprimary">
-										<div class="databox-piechart">
-											<div id="active-products-pie" data-toggle="easypiechart"
-											     class="easyPieChart"
-											     data-barcolor="#fff" data-linecap="butt"
-											     data-percent="{{ active_products_percent }}"
-											     data-animate="500" data-linewidth="3" data-size="47"
-											     data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ active_products_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themeprimary">{{ all_active_products_count }}</span>
-										<div class="databox-text darkgray">محصولات فعال</div>
-										<div class="databox-state bg-themeprimary">
-											<i class="fa fa-check-circle"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themesecondary">
-										<div class="databox-piechart">
-											<div id="inactive-products-pie" data-toggle="easypiechart"
-											     class="easyPieChart"
-											     data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ inactive_products_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span
-													class="white font-90">{{ inactive_products_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themesecondary">{{ inactive_products_count }}</span>
-										<div class="databox-text darkgray">محصولات غیرفعال</div>
-										<div class="databox-stat themesecondary radius-bordered">
-											<i class="stat-icon icon-lg fa fa-ban"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-orange">
-										<div class="databox-piechart">
-											<div id="out-of-stock-products-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ out_of_stock_products_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ out_of_stock_products_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number orange">{{ out_of_stock_products_count }}</span>
-										<div class="databox-text darkgray">محصولات ناموجود</div>
-										<div class="databox-stat orange radius-bordered">
-											<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="fa fa-users"></i>
-								</div>
-								<span class="section-title-text">کاربران در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<div class="well with-header  with-footer">
-									<div class="header bg-blue">
-										جدید ترین کاربران
-									</div>
-									<table class="table table-hover">
-										<thead class="bordered-darkorange">
-										<tr>
-											<th>
-												شناسه کاربر
-											</th>
-											<th>
-												نام کاربر
-											</th>
-											<th>
-												نام کاربری
-											</th>
-											<th>
-												تاریخ ثبت نام
-											</th>
-											<th></th>
-										</tr>
-										</thead>
-										<tbody>
-										{% for user in last_users %}
-											<tr>
-												<td>
-													{{ user.id }}
-												</td>
-												<td>
-													{{ user.first_name }}
-												</td>
-												<td>
-													{{ user.username }}
-												</td>
-												<td>
-													{{ user.date_joined|jformat:"%Y/%m/%d | %H:%M" }}
-												</td>
-												<td>
-													<a target="_blank" href="{% url 'admin_user_detail' id=user.id %}"
-													   class="btn btn-default btn-xs purple"><i
-															class="fa fa-edit"></i>
-														مشاهده
-													</a>
-												</td>
-											</tr>
-										{% endfor %}
-										</tbody>
-									</table>
-									<a href="{% url 'admin_users_list' %}" class="btn btn-info">همه کاربران</a>
+												</li>
+											{% endfor %}
 
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-blue">
-										<div class="databox-piechart">
-											<div id="total-users-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="100"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90"></span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number blue">{{ total_users_count }}</span>
-										<div class="databox-text darkgray">کل کاربران</div>
-										<div class="databox-stat blue radius-bordered">
-											<i class="stat-icon icon-lg fa fa-users"></i>
-										</div>
+										</ul>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-palegreen">
-										<div class="databox-piechart">
-											<div id="active-users-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ active_users_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ active_users_percent }}%</span>
+								<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+									<div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical sales-summary-databox">
+										<div class="databox-top bg-palegreen no-padding">
+											<div class="databox-stat white bg-palegreen font-120">
+												<i class="stat-icon fa fa-caret-down icon-xlg"></i>
 											</div>
+											<div class="horizontal-space space-lg"></div>
 										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number palegreen">{{ active_users_count }}</span>
-										<div class="databox-text darkgray">کاربران فعال</div>
-										<div class="databox-stat palegreen radius-bordered">
-											<i class="stat-icon icon-lg fa fa-user-check"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-yellow">
-										<div class="databox-piechart">
-											<div id="unverified-users-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ unverified_users_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ unverified_users_percent }}%</span>
+										<div class="databox-bottom no-padding">
+											<div class="databox-row">
+												<div class="databox-cell cell-6 text-align-left">
+													<span class="databox-text">فروش کل</span>
+													<span class="databox-number">{{ total_sales|price_separator }}</span>
+
+												</div>
+												<div class="databox-cell cell-6 text-align-right">
+													<span class="databox-text">ماه جاری</span>
+													<span class="databox-number font-70">{{ total_this_month_sales|price_separator }}</span>
+												</div>
 											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number yellow">{{ unverified_users_count }}</span>
-										<div class="databox-text darkgray">کاربران تأیید نشده</div>
-										<div class="databox-stat yellow radius-bordered">
-											<i class="stat-icon icon-lg fa fa-user-clock"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-red">
-										<div class="databox-piechart">
-											<div id="inactive-users-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ inactive_users_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ inactive_users_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number red">{{ inactive_users_count }}</span>
-										<div class="databox-text darkgray">کاربران غیرفعال</div>
-										<div class="databox-stat red radius-bordered">
-											<i class="stat-icon icon-lg fa fa-user-slash"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="fa fa-ticket"></i>
-								</div>
-								<span class="section-title-text">تیکت ها در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<div class="well with-header  with-footer">
-									<div class="header bg-blue">
-										جدید ترین تیکت های خوانده نشده
-										{% if unread_tickets_count %}
-											({{ unread_tickets_count }})
-										{% endif %}
+					{% endif %}
+					{% if perms.product_module.view_product %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="fa fa-cubes"></i>
 									</div>
-									{% if unread_tickets %}
+									<span class="section-title-text"> محصولات در یک نما</span>
+									<div class="section-title-line"></div>
+								</div>
+								<div class="col-xs-12 col-md-6">
+									<div class="well with-header  with-footer">
+										<div class="header bg-blue">
+											پر فروش ترین محصولات
+										</div>
 										<table class="table table-hover">
 											<thead class="bordered-darkorange">
 											<tr>
 												<th>
-													شناسه تیکت
+													شناسه محصول
+												</th>
+												<th>
+													نام محصول
+												</th>
+												<th>
+													تعداد فروش
+												</th>
+											</tr>
+											</thead>
+											<tbody>
+											{% for product in most_sells_product %}
+												<tr>
+													<td>
+														{{ product.id }}
+													</td>
+													<td>
+														<a href="{% url 'product_detail' pk=product.id %}">
+															{{ product.name }}
+														</a>
+													</td>
+													<td>
+														{{ product.order_count }}
+													</td>
+												</tr>
+											{% endfor %}
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+									<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+										<div class="databox-top">
+											<div class="databox-row row-12">
+												<div class="databox-cell cell-3 text-center">
+													<div class="databox-text storm-cloud">محصولات بر اساس موجودی</div>
+												</div>
+											</div>
+										</div>
+										<div class="databox-bottom">
+											<div class="databox-row row-20">
+												<div class="databox-cell cell-7 text-center padding-5">
+													<div id="dashboard-pie-chart-inventory" class="chart"
+													     style="padding: 0px; position: relative;"></div>
+												</div>
+												<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+														<span class="databox-text sonic-silver no-margin">عنوان</span>
+														<span class="databox-text sonic-silver no-margin">تعداد</span>
+														<span class="databox-text sonic-silver no-margin">درصد</span>
+													</div>
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-red badge-empty"></span>
+													محصولات ناموجود
+						                         </span>
+														<span class="databox-text darkgray no-margin">{{ out_of_stock_products_count }}</span>
+														<span class="databox-text darkgray no-margin">{{ out_of_stock_products_percent }}%</span>
+													</div>
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-yellow badge-empty"></span>
+													محصولات با موجودی کم
+						                         </span>
+														<span class="databox-text darkgray no-margin">{{ low_stock_products_count }}</span>
+														<span class="databox-text darkgray no-margin">{{ low_stock_products_percent }}%</span>
+													</div>
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+						                         <span class="databox-text darkgray no-margin order-status-title">
+						                            <span class="badge badge-green badge-empty"></span>
+													محصولات موجودی کافی
+						                         </span>
+														<span class="databox-text darkgray no-margin">{{ enough_stack_products_count }}</span>
+														<span class="databox-text darkgray no-margin">{{ enough_stack_products_count_percent }}%</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-storm-cloud">
+											<div class="databox-piechart">
+												<div id="total-products-pie" data-toggle="easypiechart"
+												     class="easyPieChart"
+												     data-barcolor="#fff" data-linecap="butt" data-percent="100"
+												     data-animate="500" data-linewidth="3" data-size="47"
+												     data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">100%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number storm-cloud">{{ total_products_count }}</span>
+											<div class="databox-text darkgray">کل محصولات</div>
+											<div class="databox-state bg-storm-cloud">
+												<i class="fa fa-cubes"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themeprimary">
+											<div class="databox-piechart">
+												<div id="active-products-pie" data-toggle="easypiechart"
+												     class="easyPieChart"
+												     data-barcolor="#fff" data-linecap="butt"
+												     data-percent="{{ active_products_percent }}"
+												     data-animate="500" data-linewidth="3" data-size="47"
+												     data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ active_products_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number themeprimary">{{ all_active_products_count }}</span>
+											<div class="databox-text darkgray">محصولات فعال</div>
+											<div class="databox-state bg-themeprimary">
+												<i class="fa fa-check-circle"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themesecondary">
+											<div class="databox-piechart">
+												<div id="inactive-products-pie" data-toggle="easypiechart"
+												     class="easyPieChart"
+												     data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ inactive_products_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span
+														class="white font-90">{{ inactive_products_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number themesecondary">{{ inactive_products_count }}</span>
+											<div class="databox-text darkgray">محصولات غیرفعال</div>
+											<div class="databox-stat themesecondary radius-bordered">
+												<i class="stat-icon icon-lg fa fa-ban"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-orange">
+											<div class="databox-piechart">
+												<div id="out-of-stock-products-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt"
+												     data-percent="{{ out_of_stock_products_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ out_of_stock_products_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number orange">{{ out_of_stock_products_count }}</span>
+											<div class="databox-text darkgray">محصولات ناموجود</div>
+											<div class="databox-stat orange radius-bordered">
+												<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					{% if perms.auth_module.view_user %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="fa fa-users"></i>
+									</div>
+									<span class="section-title-text">کاربران در یک نما</span>
+									<div class="section-title-line"></div>
+								</div>
+								<div class="col-xs-12 col-md-6">
+									<div class="well with-header  with-footer">
+										<div class="header bg-blue">
+											جدید ترین کاربران
+										</div>
+										<table class="table table-hover">
+											<thead class="bordered-darkorange">
+											<tr>
+												<th>
+													شناسه کاربر
 												</th>
 												<th>
 													نام کاربر
 												</th>
 												<th>
-													عنوان
+													نام کاربری
 												</th>
 												<th>
-													واحد مربوطه
-												</th>
-												<th>
-													تاریخ ساخت
+													تاریخ ثبت نام
 												</th>
 												<th></th>
 											</tr>
 											</thead>
 											<tbody>
-											{% for ticket in last_unread_tickets %}
+											{% for user in last_users %}
 												<tr>
 													<td>
-														{{ ticket.id }}
+														{{ user.id }}
 													</td>
 													<td>
-														{{ ticket.user }}
+														{{ user.first_name }}
 													</td>
 													<td>
-														{{ ticket.title }}
-													</td>
-													<td>
-														{{ ticket.unit }}
+														{{ user.username }}
 													</td>
 													<td>
 														{{ user.date_joined|jformat:"%Y/%m/%d | %H:%M" }}
 													</td>
 													<td>
 														<a target="_blank"
-														   href="{% url 'admin_ticket_detail_view' id=ticket.id %}"
+														   href="{% url 'admin_user_detail' id=user.id %}"
 														   class="btn btn-default btn-xs purple"><i
 																class="fa fa-edit"></i>
 															مشاهده
@@ -573,340 +407,518 @@
 											{% endfor %}
 											</tbody>
 										</table>
-										<br><br>
-										<div class="text-right" style="margin-top: 15px;">
-											<a href="{% url 'admin_tickets_list' %}" class="btn btn-outline btn-info">
-												<i class="fa fa-list-ul"></i>
-												مشاهده همه تیکت‌ها
-											</a>
-										</div>
-									{% else %}
-										<div class="alert alert-block alert-success empty-state-box">
-											<i class="fa fa-check-circle"></i>
-											<strong>تیکت خوانده نشده‌ای ندارید!</strong>
-											<p class="empty-state-subtext">همه‌چیز مرتبه، خیالتون راحت باشه.</p>
-										</div>
-									{% endif %}
+										<a href="{% url 'admin_users_list' %}" class="btn btn-info">همه کاربران</a>
+
+									</div>
 								</div>
-							</div>
-							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
-								<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
-									<div class="databox-top">
-										<div class="databox-row row-12">
-											<div class="databox-cell cell-3 text-center">
-												<div class="databox-text storm-cloud">تیکت ها بر اساس واحد</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-blue">
+											<div class="databox-piechart">
+												<div id="total-users-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt" data-percent="100"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90"></span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number blue">{{ total_users_count }}</span>
+											<div class="databox-text darkgray">کل کاربران</div>
+											<div class="databox-stat blue radius-bordered">
+												<i class="stat-icon icon-lg fa fa-users"></i>
 											</div>
 										</div>
 									</div>
-									<div class="databox-bottom">
-										<div class="databox-row row-20">
-											<div class="databox-cell cell-7 text-center padding-5">
-												<div id="dashboard-pie-chart-ticket-units" class="chart"
-												     style="padding: 0px; position: relative;"></div>
-											</div>
-											<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
-												<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
-													<span class="databox-text sonic-silver no-margin">عنوان</span>
-													<span class="databox-text sonic-silver no-margin">تعداد</span>
-													<span class="databox-text sonic-silver no-margin">درصد</span>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-palegreen">
+											<div class="databox-piechart">
+												<div id="active-users-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ active_users_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ active_users_percent }}%</span>
 												</div>
-												{% for tickets_stat in tickets_stats %}
-													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number palegreen">{{ active_users_count }}</span>
+											<div class="databox-text darkgray">کاربران فعال</div>
+											<div class="databox-stat palegreen radius-bordered">
+												<i class="stat-icon icon-lg fa fa-user-check"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-yellow">
+											<div class="databox-piechart">
+												<div id="unverified-users-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ unverified_users_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ unverified_users_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number yellow">{{ unverified_users_count }}</span>
+											<div class="databox-text darkgray">کاربران تأیید نشده</div>
+											<div class="databox-stat yellow radius-bordered">
+												<i class="stat-icon icon-lg fa fa-user-clock"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-red">
+											<div class="databox-piechart">
+												<div id="inactive-users-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ inactive_users_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ inactive_users_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number red">{{ inactive_users_count }}</span>
+											<div class="databox-text darkgray">کاربران غیرفعال</div>
+											<div class="databox-stat red radius-bordered">
+												<i class="stat-icon icon-lg fa fa-user-slash"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					{% if perms.user_profile_module.view_ticket_model %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="fa fa-ticket"></i>
+									</div>
+									<span class="section-title-text">تیکت ها در یک نما</span>
+									<div class="section-title-line"></div>
+								</div>
+								<div class="col-xs-12 col-md-6">
+									<div class="well with-header  with-footer">
+										<div class="header bg-blue">
+											جدید ترین تیکت های خوانده نشده
+											{% if unread_tickets_count %}
+												({{ unread_tickets_count }})
+											{% endif %}
+										</div>
+										{% if unread_tickets %}
+											<table class="table table-hover">
+												<thead class="bordered-darkorange">
+												<tr>
+													<th>
+														شناسه تیکت
+													</th>
+													<th>
+														نام کاربر
+													</th>
+													<th>
+														عنوان
+													</th>
+													<th>
+														واحد مربوطه
+													</th>
+													<th>
+														تاریخ ساخت
+													</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody>
+												{% for ticket in last_unread_tickets %}
+													<tr>
+														<td>
+															{{ ticket.id }}
+														</td>
+														<td>
+															{{ ticket.user }}
+														</td>
+														<td>
+															{{ ticket.title }}
+														</td>
+														<td>
+															{{ ticket.unit }}
+														</td>
+														<td>
+															{{ user.date_joined|jformat:"%Y/%m/%d | %H:%M" }}
+														</td>
+														<td>
+															<a target="_blank"
+															   href="{% url 'admin_ticket_detail_view' id=ticket.id %}"
+															   class="btn btn-default btn-xs purple"><i
+																	class="fa fa-edit"></i>
+																مشاهده
+															</a>
+														</td>
+													</tr>
+												{% endfor %}
+												</tbody>
+											</table>
+											<br><br>
+											<div class="text-right" style="margin-top: 15px;">
+												<a href="{% url 'admin_tickets_list' %}"
+												   class="btn btn-outline btn-info">
+													<i class="fa fa-list-ul"></i>
+													مشاهده همه تیکت‌ها
+												</a>
+											</div>
+										{% else %}
+											<div class="alert alert-block alert-success empty-state-box">
+												<i class="fa fa-check-circle"></i>
+												<strong>تیکت خوانده نشده‌ای ندارید!</strong>
+												<p class="empty-state-subtext">همه‌چیز مرتبه، خیالتون راحت باشه.</p>
+											</div>
+										{% endif %}
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+									<div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+										<div class="databox-top">
+											<div class="databox-row row-12">
+												<div class="databox-cell cell-3 text-center">
+													<div class="databox-text storm-cloud">تیکت ها بر اساس واحد</div>
+												</div>
+											</div>
+										</div>
+										<div class="databox-bottom">
+											<div class="databox-row row-20">
+												<div class="databox-cell cell-7 text-center padding-5">
+													<div id="dashboard-pie-chart-ticket-units" class="chart"
+													     style="padding: 0px; position: relative;"></div>
+												</div>
+												<div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30 order-status-table">
+													<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row order-status-header">
+														<span class="databox-text sonic-silver no-margin">عنوان</span>
+														<span class="databox-text sonic-silver no-margin">تعداد</span>
+														<span class="databox-text sonic-silver no-margin">درصد</span>
+													</div>
+													{% for tickets_stat in tickets_stats %}
+														<div class="databox-row bordered-bottom bordered-ivory padding-10 order-status-row">
 													                         <span class="databox-text darkgray no-margin order-status-title">
 													                            <span class="badge badge-{{ tickets_stat.color }} badge-empty"></span>
 																				{{ tickets_stat.label }}
 													                         </span>
-														<span class="databox-text darkgray no-margin">{{ tickets_stat.count }}</span>
-														<span class="databox-text darkgray no-margin">{{ tickets_stat.percent }}%</span>
-													</div>
+															<span class="databox-text darkgray no-margin">{{ tickets_stat.count }}</span>
+															<span class="databox-text darkgray no-margin">{{ tickets_stat.percent }}%</span>
+														</div>
+													{% endfor %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-red">
+											<div class="databox-piechart">
+												<div id="high-priority-tickets-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt"
+												     data-percent="{{ high_priority_tickets_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ high_priority_tickets_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number red">{{ high_priority_tickets_count }}</span>
+											<div class="databox-text darkgray">تیکت‌های اولویت بالا</div>
+											<div class="databox-stat red radius-bordered">
+												<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-yellow">
+											<div class="databox-piechart">
+												<div id="medium-priority-tickets-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt"
+												     data-percent="{{ medium_priority_tickets_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ medium_priority_tickets_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number yellow">{{ medium_priority_tickets_count }}</span>
+											<div class="databox-text darkgray">تیکت‌های اولویت متوسط</div>
+											<div class="databox-stat yellow radius-bordered">
+												<i class="stat-icon icon-lg fa fa-exclamation-circle"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-blue">
+											<div class="databox-piechart">
+												<div id="low-priority-tickets-pie" data-toggle="easypiechart"
+												     class="easyPieChart" data-barcolor="#fff"
+												     data-linecap="butt"
+												     data-percent="{{ low_priority_tickets_percent }}"
+												     data-animate="500" data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
+														class="white font-90">{{ low_priority_tickets_percent }}%</span>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number blue">{{ low_priority_tickets_count }}</span>
+											<div class="databox-text darkgray">تیکت‌های اولویت پایین</div>
+											<div class="databox-stat blue radius-bordered">
+												<i class="stat-icon icon-lg fa fa-info-circle"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					{% if perms.contact_module.view_contactmodel %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="fa fa-phone"></i>
+									</div>
+									<span class="section-title-text">ماژول تماس با ما در یک نما</span>
+									<div class="section-title-line"></div>
+								</div>
+								<div class="col-xs-12 col-md-6">
+									<div class="well with-header  with-footer">
+										<div class="header bg-blue">
+											جدید ترین پیغام های خوانده نشده
+											{% if unread_msg_count %}
+												({{ unread_msg_count }})
+											{% endif %}
+										</div>
+										{% if unread_msg %}
+											<table class="table table-hover">
+												<thead class="bordered-darkorange">
+												<tr>
+													<th>
+														شناسه پیغام
+													</th>
+													<th>
+														نام کاربر
+													</th>
+													<th>
+														ایمیل
+													</th>
+													<th>
+														عنوان
+													</th>
+													<th>
+														تاریخ
+													</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody>
+												{% for msg in unread_msg %}
+													<tr>
+														<td>
+															{{ msg.id }}
+														</td>
+														<td>
+															{{ msg.name }}
+														</td>
+														<td>
+															{{ msg.email }}
+														</td>
+														<td>
+															{{ msg.subject }}
+														</td>
+														<td>
+															{{ msg.date|jformat:"%Y/%m/%d | %H:%M" }}
+														</td>
+														<td>
+															<a target="_blank"
+															   href="{% url 'admin_contact_detail_page' id=msg.id %}"
+															   class="btn btn-default btn-xs purple"><i
+																	class="fa fa-edit"></i>
+																مشاهده
+															</a>
+														</td>
+													</tr>
 												{% endfor %}
+												</tbody>
+											</table>
+											<br><br>
+											<div class="text-right" style="margin-top: 15px;">
+												<a href="{% url 'admin_tickets_list' %}"
+												   class="btn btn-outline btn-info">
+													<i class="fa fa-list-ul"></i>
+													مشاهده همه پیغام
+												</a>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-red">
-										<div class="databox-piechart">
-											<div id="high-priority-tickets-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ high_priority_tickets_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ high_priority_tickets_percent }}%</span>
+										{% else %}
+											<div class="alert alert-block alert-success empty-state-box">
+												<i class="fa fa-check-circle"></i>
+												<strong>پیغام خوانده نشده‌ای ندارید!</strong>
+												<p class="empty-state-subtext">همه‌چیز مرتبه، خیالتون راحت باشه.</p>
 											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number red">{{ high_priority_tickets_count }}</span>
-										<div class="databox-text darkgray">تیکت‌های اولویت بالا</div>
-										<div class="databox-stat red radius-bordered">
-											<i class="stat-icon icon-lg fa fa-exclamation-triangle"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-yellow">
-										<div class="databox-piechart">
-											<div id="medium-priority-tickets-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt"
-											     data-percent="{{ medium_priority_tickets_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ medium_priority_tickets_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number yellow">{{ medium_priority_tickets_count }}</span>
-										<div class="databox-text darkgray">تیکت‌های اولویت متوسط</div>
-										<div class="databox-stat yellow radius-bordered">
-											<i class="stat-icon icon-lg fa fa-exclamation-circle"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-blue">
-										<div class="databox-piechart">
-											<div id="low-priority-tickets-pie" data-toggle="easypiechart"
-											     class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ low_priority_tickets_percent }}"
-											     data-animate="500" data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span
-													class="white font-90">{{ low_priority_tickets_percent }}%</span>
-											</div>
-										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number blue">{{ low_priority_tickets_count }}</span>
-										<div class="databox-text darkgray">تیکت‌های اولویت پایین</div>
-										<div class="databox-stat blue radius-bordered">
-											<i class="stat-icon icon-lg fa fa-info-circle"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="fa fa-phone"></i>
-								</div>
-								<span class="section-title-text">ماژول تماس با ما در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
-							<div class="col-xs-12 col-md-6">
-								<div class="well with-header  with-footer">
-									<div class="header bg-blue">
-										جدید ترین پیغام های خوانده نشده
-										{% if unread_msg_count %}
-											({{ unread_msg_count }})
 										{% endif %}
 									</div>
-									{% if unread_msg %}
-										<table class="table table-hover">
-											<thead class="bordered-darkorange">
-											<tr>
-												<th>
-													شناسه پیغام
-												</th>
-												<th>
-													نام کاربر
-												</th>
-												<th>
-													ایمیل
-												</th>
-												<th>
-													عنوان
-												</th>
-												<th>
-													تاریخ
-												</th>
-												<th></th>
-											</tr>
-											</thead>
-											<tbody>
-											{% for msg in unread_msg %}
-												<tr>
-													<td>
-														{{ msg.id }}
-													</td>
-													<td>
-														{{ msg.name }}
-													</td>
-													<td>
-														{{ msg.email }}
-													</td>
-													<td>
-														{{ msg.subject }}
-													</td>
-													<td>
-														{{ msg.date|jformat:"%Y/%m/%d | %H:%M" }}
-													</td>
-													<td>
-														<a target="_blank"
-														   href="{% url 'admin_contact_detail_page' id=msg.id %}"
-														   class="btn btn-default btn-xs purple"><i
-																class="fa fa-edit"></i>
-															مشاهده
-														</a>
-													</td>
-												</tr>
-											{% endfor %}
-											</tbody>
-										</table>
-										<br><br>
-										<div class="text-right" style="margin-top: 15px;">
-											<a href="{% url 'admin_tickets_list' %}" class="btn btn-outline btn-info">
-												<i class="fa fa-list-ul"></i>
-												مشاهده همه پیغام
-											</a>
-										</div>
-									{% else %}
-										<div class="alert alert-block alert-success empty-state-box">
-											<i class="fa fa-check-circle"></i>
-											<strong>پیغام خوانده نشده‌ای ندارید!</strong>
-											<p class="empty-state-subtext">همه‌چیز مرتبه، خیالتون راحت باشه.</p>
-										</div>
-									{% endif %}
 								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themeprimary">
-										<div class="databox-piechart">
-											<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
-											     data-barcolor="#fff" data-linecap="butt" data-percent="0"
-											     data-animate="500" data-linewidth="3" data-size="47"
-											     data-trackcolor="rgba(255,255,255,0.1)"
-											     style="width: 47px; height: 47px; line-height: 47px;"><span
-													class="white font-90"></span>
-												<canvas width="58" height="58"
-												        style="width: 47px; height: 47px;"></canvas>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themeprimary">
+											<div class="databox-piechart">
+												<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
+												     data-barcolor="#fff" data-linecap="butt" data-percent="0"
+												     data-animate="500" data-linewidth="3" data-size="47"
+												     data-trackcolor="rgba(255,255,255,0.1)"
+												     style="width: 47px; height: 47px; line-height: 47px;"><span
+														class="white font-90"></span>
+													<canvas width="58" height="58"
+													        style="width: 47px; height: 47px;"></canvas>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themeprimary">{{ all_msg_count }}</span>
-										<div class="databox-text darkgray">کل پیام ها</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themesecondary">
-										<div class="databox-piechart">
-											<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ unread_msg_percent }}"
-											     data-animate="500"
-											     data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
-											     style="width: 47px; height: 47px; line-height: 47px;"><span
-													class="white font-90">{{ unread_msg_percent }}%</span>
-												<canvas width="58" height="58"
-												        style="width: 47px; height: 47px;"></canvas>
-											</div>
+										<div class="databox-left">
+											<span class="databox-number themeprimary">{{ all_msg_count }}</span>
+											<div class="databox-text darkgray">کل پیام ها</div>
 										</div>
 									</div>
-									<div class="databox-left">
-										<span class="databox-number themesecondary">{{ unread_msg_count }}</span>
-										<div class="databox-text darkgray">پیام های خوانده نشده</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themesecondary">
+											<div class="databox-piechart">
+												<div data-toggle="easypiechart" class="easyPieChart"
+												     data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ unread_msg_percent }}"
+												     data-animate="500"
+												     data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
+												     style="width: 47px; height: 47px; line-height: 47px;"><span
+														class="white font-90">{{ unread_msg_percent }}%</span>
+													<canvas width="58" height="58"
+													        style="width: 47px; height: 47px;"></canvas>
+												</div>
+											</div>
+										</div>
+										<div class="databox-left">
+											<span class="databox-number themesecondary">{{ unread_msg_count }}</span>
+											<div class="databox-text darkgray">پیام های خوانده نشده</div>
 
+										</div>
 									</div>
 								</div>
-							</div>
 
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-12 col-sm-12 col-xs-12">
-						<div class="row">
-							<div class="section-title section-sales">
-								<div class="section-title-icon">
-									<i class="glyphicon glyphicon-envelope"></i>
+					{% endif %}
+					{% if perms.newsletter_module.view_newslettermodel %}
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="section-title section-sales">
+									<div class="section-title-icon">
+										<i class="glyphicon glyphicon-envelope"></i>
+									</div>
+									<span class="section-title-text">ماژول خبرنامه در یک نما</span>
+									<div class="section-title-line"></div>
 								</div>
-								<span class="section-title-text">ماژول خبرنامه در یک نما</span>
-								<div class="section-title-line"></div>
-							</div>
 
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themeprimary">
-										<div class="databox-piechart">
-											<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
-											     data-barcolor="#fff" data-linecap="butt" data-percent="0"
-											     data-animate="500" data-linewidth="3" data-size="47"
-											     data-trackcolor="rgba(255,255,255,0.1)"
-											     style="width: 47px; height: 47px; line-height: 47px;"><span
-													class="white font-90"></span>
-												<canvas width="58" height="58"
-												        style="width: 47px; height: 47px;"></canvas>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themeprimary">
+											<div class="databox-piechart">
+												<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
+												     data-barcolor="#fff" data-linecap="butt" data-percent="0"
+												     data-animate="500" data-linewidth="3" data-size="47"
+												     data-trackcolor="rgba(255,255,255,0.1)"
+												     style="width: 47px; height: 47px; line-height: 47px;"><span
+														class="white font-90"></span>
+													<canvas width="58" height="58"
+													        style="width: 47px; height: 47px;"></canvas>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themeprimary">{{ count_of_newsletter }}</span>
-										<div class="databox-text darkgray">خبرنامه</div>
+										<div class="databox-left">
+											<span class="databox-number themeprimary">{{ count_of_newsletter }}</span>
+											<div class="databox-text darkgray">خبرنامه</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-bg-themefourthcolor" style="background-color: green;">
-										<div class="databox-piechart">
-											<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ active_percent_newsletters }}"
-											     data-animate="500"
-											     data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"
-											     style="width: 47px; height: 47px; line-height: 47px;"><span
-													class="white font-90">{{ active_percent_newsletters }}%</span>
-												<canvas width="58" height="58"
-												        style="width: 47px; height: 47px;"></canvas>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-bg-themefourthcolor"
+										     style="background-color: green;">
+											<div class="databox-piechart">
+												<div data-toggle="easypiechart" class="easyPieChart"
+												     data-barcolor="#fff"
+												     data-linecap="butt" data-percent="{{ active_percent_newsletters }}"
+												     data-animate="500"
+												     data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.2)"
+												     style="width: 47px; height: 47px; line-height: 47px;"><span
+														class="white font-90">{{ active_percent_newsletters }}%</span>
+													<canvas width="58" height="58"
+													        style="width: 47px; height: 47px;"></canvas>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themethirdcolor">{{ count_of_active_newsletter }}</span>
-										<div class="databox-text darkgray">خبرنامه فعال</div>
+										<div class="databox-left">
+											<span class="databox-number themethirdcolor">{{ count_of_active_newsletter }}</span>
+											<div class="databox-text darkgray">خبرنامه فعال</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<div class="databox radius-bordered bg-white">
-									<div class="databox-right bg-themesecondary">
-										<div class="databox-piechart">
-											<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
-											     data-linecap="butt" data-percent="{{ disable_percent_newsletters }}"
-											     data-animate="500"
-											     data-linewidth="3"
-											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
-											     style="width: 47px; height: 47px; line-height: 47px;"><span
-													class="white font-90">{{ disable_percent_newsletters }}%</span>
-												<canvas width="58" height="58"
-												        style="width: 47px; height: 47px;"></canvas>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="databox radius-bordered bg-white">
+										<div class="databox-right bg-themesecondary">
+											<div class="databox-piechart">
+												<div data-toggle="easypiechart" class="easyPieChart"
+												     data-barcolor="#fff"
+												     data-linecap="butt"
+												     data-percent="{{ disable_percent_newsletters }}"
+												     data-animate="500"
+												     data-linewidth="3"
+												     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
+												     style="width: 47px; height: 47px; line-height: 47px;"><span
+														class="white font-90">{{ disable_percent_newsletters }}%</span>
+													<canvas width="58" height="58"
+													        style="width: 47px; height: 47px;"></canvas>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="databox-left">
-										<span class="databox-number themesecondary">{{ count_of_disable_newsletter }}</span>
-										<div class="databox-text darkgray">خبرنامه غیرفعال شده</div>
+										<div class="databox-left">
+											<span class="databox-number themesecondary">{{ count_of_disable_newsletter }}</span>
+											<div class="databox-text darkgray">خبرنامه غیرفعال شده</div>
 
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
+					{% endif %}
 				</div>
 			</div>
 		</div>

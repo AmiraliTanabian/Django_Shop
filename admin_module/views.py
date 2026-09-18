@@ -36,6 +36,9 @@ class HomePageView(TemplateView):
     template_name = "admin_module/index.html"
 
     def get_context_data(self, **kwargs):
+        if not self.request.user.is_staff:
+            raise Http404
+
         context = super().get_context_data(**kwargs)
         last_orders = orderModel.objects.filter(is_paid=True).order_by("-id")[:10]
         unread_tickets = ticket_model.objects.filter(has_unread_reply=True).order_by("-id")[:10]

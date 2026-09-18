@@ -136,6 +136,9 @@ class HomePageView(TemplateView):
         tickets_high_priority_count = ticket_model.objects.filter(is_active=True, Priority=PriorityChoices.high).count()
         tickets_medium_priority_count = ticket_model.objects.filter(is_active=True,
                                                                     Priority=PriorityChoices.medium).count()
+        # contact us
+        unread_msg = ContactModel.objects.filter(is_read=False).order_by("-id")[:12]
+        unread_msg_count = ContactModel.objects.filter(is_read=False).count()
 
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
@@ -179,6 +182,9 @@ class HomePageView(TemplateView):
         context["medium_priority_tickets_count"] = tickets_medium_priority_count
         context["medium_priority_tickets_percent"] = int((tickets_medium_priority_count / active_tickets_count) * 100)
         context["unread_tickets_count"] = unread_tickets_counts
+
+        context["unread_msg"] = unread_msg
+        context["unread_msg_count"] = unread_msg_count
 
         return context
 

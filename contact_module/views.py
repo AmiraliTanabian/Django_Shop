@@ -28,9 +28,6 @@ class ContactView(View):
             messages.success(request, "پیام شما با موفقیت ارسال شد \n نتیجه با ایمیل برای شما ارسال میشود")
             return redirect(reverse_lazy("home_page"))
 
-        print("form is invalid ")
-        print(form.errors)
-
         context = {
             "setting": site_setting,
             "form": form,

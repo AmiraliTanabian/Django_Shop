@@ -140,6 +140,12 @@ class HomePageView(TemplateView):
         unread_msg = ContactModel.objects.filter(is_read=False).order_by("-id")[:12]
         unread_msg_count = ContactModel.objects.filter(is_read=False).count()
 
+        # newsletters stats
+        all_newsletters = newsLetterModel.objects.all()
+        count_of_newsletters = all_newsletters.count()
+        count_of_active_newsletters = all_newsletters.filter(is_active=True).count()
+        count_of_disable_newsletters = count_of_newsletters - count_of_active_newsletters
+
         context["last_orders"] = last_orders
         context["unread_tickets"] = unread_tickets
         context["total_sales"] = total_sales["total"] or 0
@@ -185,6 +191,12 @@ class HomePageView(TemplateView):
 
         context["unread_msg"] = unread_msg
         context["unread_msg_count"] = unread_msg_count
+
+        context["count_of_newsletter"] = count_of_newsletters
+        context["count_of_active_newsletter"] = count_of_active_newsletters
+        context["count_of_disable_newsletter"] = count_of_disable_newsletters
+        context["active_percent_newsletters"] = int((count_of_active_newsletters / count_of_newsletters) * 100)
+        context["disable_percent_newsletters"] = int((count_of_disable_newsletters / count_of_newsletters) * 100)
 
         return context
 

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	قفل موقت حساب
+{% endblock %}
+{% block header_references %}
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+	      rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/login_try_limited.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+	<div class="lockout-block">
+		<div class="panel">
+			<div class="status-row">
+				<span class="status-dot" aria-hidden="true"></span>
+				<span>وضعیت حساب: قفل موقت</span>
+			</div>
+
+			<div class="lock-wrap">
+				<svg width="130" height="150" viewBox="0 0 130 150" fill="none" xmlns="http://www.w3.org/2000/svg"
+				     aria-hidden="true">
+					<path class="lock-shackle"
+					      d="M80 78V58C80 44.7452 69.2548 34 56 34V34C42.7452 34 32 44.7452 32 58V78"
+					      stroke="var(--brass-dim)" stroke-width="7" stroke-linecap="round"></path>
+					<g class="lock-ring">
+						<rect x="20" y="78" width="72" height="56" rx="4" fill="var(--ink-700)" stroke="var(--brass)"
+						      stroke-width="2"></rect>
+						<circle cx="56" cy="100" r="6" fill="var(--brass)"></circle>
+						<rect x="53" y="100" width="6" height="16" rx="2" fill="var(--brass)"></rect>
+					</g>
+				</svg>
+			</div>
+
+			<h1>دسترسی به حساب موقتاً مسدود شد</h1>
+			<p class="desc">
+				چند بار تلاش ناموفق برای ورود ثبت شده و برای محافظت از حساب شما، امکان ورود غیرفعال شده است. برای ادامه
+				با پشتیبانی تماس بگیرید.
+			</p>
+
+			<div class="actions">
+				<a class="btn btn-secondary" id="supportBtn" href="{% url 'contact_page' %}">تماس با پشتیبانی</a>
+			</div>
+
+			<div class="meta">
+				<span>آی پی مسدود شده : {{ ip }}</span>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

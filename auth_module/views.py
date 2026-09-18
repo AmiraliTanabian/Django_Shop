@@ -16,6 +16,7 @@ from django.utils.crypto import get_random_string
 from django.views import View
 from django.views.generic import FormView
 
+from utils.http_service import get_user_ip
 from . import forms
 
 user_model = get_user_model()
@@ -141,3 +142,10 @@ class verifyAccount(View):
             user.save()
 
         return render(request, "auth_module/verify_result.html", context)
+
+
+def login_limited_view(request, *args, **kwargs):
+    ip = get_user_ip(request)
+    return render(request, "auth_module/login_try_limited.html", {
+        "ip": ip,
+    })

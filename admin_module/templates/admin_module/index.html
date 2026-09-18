@@ -781,6 +781,51 @@
 									{% endif %}
 								</div>
 							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themeprimary">
+										<div class="databox-piechart">
+											<div id="users-pie" data-toggle="easypiechart" class="easyPieChart"
+											     data-barcolor="#fff" data-linecap="butt" data-percent="0"
+											     data-animate="500" data-linewidth="3" data-size="47"
+											     data-trackcolor="rgba(255,255,255,0.1)"
+											     style="width: 47px; height: 47px; line-height: 47px;"><span
+													class="white font-90"></span>
+												<canvas width="58" height="58"
+												        style="width: 47px; height: 47px;"></canvas>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number themeprimary">{{ all_msg_count }}</span>
+										<div class="databox-text darkgray">کل پیام ها</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+								<div class="databox radius-bordered bg-white">
+									<div class="databox-right bg-themesecondary">
+										<div class="databox-piechart">
+											<div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
+											     data-linecap="butt" data-percent="{{ unread_msg_percent }}"
+											     data-animate="500"
+											     data-linewidth="3"
+											     data-size="47" data-trackcolor="rgba(255,255,255,0.1)"
+											     style="width: 47px; height: 47px; line-height: 47px;"><span
+													class="white font-90">{{ unread_msg_percent }}%</span>
+												<canvas width="58" height="58"
+												        style="width: 47px; height: 47px;"></canvas>
+											</div>
+										</div>
+									</div>
+									<div class="databox-left">
+										<span class="databox-number themesecondary">{{ unread_msg_count }}</span>
+										<div class="databox-text darkgray">پیام های خوانده نشده</div>
+
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 					<div class="col-lg-12 col-sm-12 col-xs-12">

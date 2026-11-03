@@ -15,7 +15,9 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.views import View
 from django.views.generic import FormView
+from user_agents import parse
 
+from user_profile_module.models import UserSession
 from utils.http_service import get_user_ip
 from . import forms
 
@@ -34,6 +36,21 @@ class loginView(FormView):
 
         if is_authenticate:
             login(self.request, is_authenticate)
+            session_key = self.request.session.session_key
+
+            user_agent_string = self.request.META.get("HTTP_USER_AGENT", "")
+            # Separation data
+            ua = parse(user_agent_string)
+
+            UserSession.objects.create(
+                user=self.request.user,
+                session_key=session_key,
+                device_name=f"{ua.os.family} / {ua.browser.family}",
+                ip_address=self.request.META.get("REMOTE_ADDR"),
+                last_activity=timezone.now(),
+                expires_at=self.request.session.get_expiry_date()
+            )
+
             return redirect(reverse_lazy("home_page"))
 
         else:
@@ -112,6 +129,13 @@ class logoutView(LoginRequiredMixin, View):
 
     def get(self, request: HttpRequest):
         username = request.user.username
+
+        # remove use session
+        session_key = self.request.session.session_key
+        current_session = UserSession.objects.filter(user=self.request.user, session_key=session_key)[0]
+        current_session.is_active = False
+        current_session.save()
+
         logout(request)
         msg = f"""
         کاربر {username}
@@ -119,6 +143,7 @@ class logoutView(LoginRequiredMixin, View):
         از اینکه وقت خود را در سایت ما گذراندید ممنونیم :)
         """
         messages.success(request, msg)
+
         return redirect("home_page")
 
 

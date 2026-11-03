@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.sessions.models import Session
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -12,7 +13,7 @@ from phonenumbers import parse, is_valid_number
 
 from order_module.models import orderModel
 from .forms import EditProfileModelForm, EditPasswordForm, AddTicketForm, TicketAnswerForm
-from .models import ticket_model, TicketAnswerModel, ticket_attachment
+from .models import ticket_model, TicketAnswerModel, ticket_attachment, UserSession
 
 
 class ProfileDashboardPage(LoginRequiredMixin, TemplateView):
@@ -283,7 +284,51 @@ def remove_ticket_file(request, id):
             "msg": "file removed!",
             'file_id': id
         })
-    
 
-class ActiveSessionViews(TemplateView):
-    template_name = "user_profile_module/active_session_list.html"
+
+class ActiveSessionViews(LoginRequiredMixin, View):
+    login_url = reverse_lazy("login_page")
+
+    def get(self, request):
+        sessions = UserSession.objects.filter(user=self.request.user, is_active=True).order_by('-id')
+        return render(request, "user_profile_module/active_session_list.html", {
+            "sessions": sessions,
+        })
+
+
+def logout_session_ajax(request: HttpRequest):
+    if request.method == "POST":
+        session_key = request.POST.get("session_key")
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({
+                'success': False,
+                "title": "خطا",
+                "icon": "error",
+                'msg': "شما لاگین نکردید!"
+            })
+
+        try:
+            current_session = get_object_or_404(UserSession, session_key=session_key, user=user)
+            current_session.is_active = False
+            current_session.save()
+
+            # remove django session
+            current_django_session = Session.objects.get(session_key=session_key)
+            current_django_session.delete()
+
+            return JsonResponse({
+                'success': True,
+                "title": "موفقیت",
+                "icon": "success",
+                "msg": "سشن مورد نظر با موفقیت حذف شد"
+            })
+
+        except Exception as e:
+
+            return JsonResponse({
+                'success': False,
+                "title": "خطا",
+                "icon": "error",
+                "msg": "فرایند حذف سشن با خطا مواجه شد"
+            })

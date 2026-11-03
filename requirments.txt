@@ -9,3 +9,4 @@ redis==7.4.0
 celery==5.6.3
 django-celery-beat==2.9.0
 django-ckeditor-5==0.2.20
+user-agents

@@ -14,5 +14,6 @@ urlpatterns = [
     path("ticket/detial/<int:id>", views.TicketDetailView.as_view(), name="ticket_detail_page"),
     path("ticket/add-file-ajax/", views.ticket_add_file_ajax, name="add_file_to_ticket_ajax"),
     path("ticket/remove-file-ajax/<int:id>", views.remove_ticket_file, name="add_file_to_ticket_ajax"),
-    path("ticket/active-sessions/", views.ActiveSessionViews.as_view(), name="active_sessions_url"),
+    path("active-sessions/", views.ActiveSessionViews.as_view(), name="active_sessions_url"),
+    path("logout-session/", views.logout_session_ajax, name="logout_session_ajax"),
 ]

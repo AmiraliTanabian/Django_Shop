@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from auth_module.models import User
+
 
 class PriorityChoices(models.TextChoices):
     low = "low", "کم"
@@ -53,3 +55,28 @@ class TicketAnswerModel(models.Model):
     class Meta:
         verbose_name = "پاسخ تیکت"
         verbose_name_plural = " پاسخ های تیکت ها"
+
+
+class UserSession(models.Model):
+    user = models.ForeignKey(
+        User,
+        verbose_name="کاربر",
+        on_delete=models.CASCADE,
+        related_name="active_sessions"
+    )
+    session_key = models.CharField(max_length=64, unique=True)
+    ip_address = models.GenericIPAddressField(
+        null=True,
+        verbose_name="آدرس آی پی"
+    )
+    device_name = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="اطلاعات دستگاه"
+    )
+    created_at = models.DateTimeField(
+        verbose_name="تاریخ ورود",
+        auto_now_add=True)
+    last_activity = models.DateTimeField(verbose_name="تاریخ آخرین ویرایش")
+    is_active = models.BooleanField(verbose_name="فعال / غیرفعال", default=True)
+    expires_at = models.DateTimeField(verbose_name="تاریخ انقضای سشن")

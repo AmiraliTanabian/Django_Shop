@@ -23,6 +23,11 @@
 		<i class="glyphicon glyphicon-book" style="font-size: 15px"></i>
 		لیست تیکت ها
 	</a>
+	<a href="{% url "active_sessions_url" %}"
+	   class="list-group-item {% if request.resolver_match.url_name == "active_sessions_url" %}active{% endif %}">
+		<i class="glyphicon glyphicon-phone" style="font-size: 15px"></i>
+		نشست های فعال
+	</a>
 	<a href="{% url "logout_page" %}" class="list-group-item danger">
 		<i class="glyphicon glyphicon-log-out"></i>
 		خروج

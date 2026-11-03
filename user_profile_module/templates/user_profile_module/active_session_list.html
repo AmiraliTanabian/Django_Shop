@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	نشست های فعال | فروشگاه اینترنتی
+{% endblock %}
+{% block content %}
+	<div class="container" dir="rtl" lang="fa-IR">
+
+		<div class="contact-form">
+			<div class="row">
+				<div class="col-sm-8" dir="rtl">
+					<h1 class="text-center edit-profile-title">نشست‌های فعال</h1>
+					<p class="text-center text-muted">
+						دستگاه‌هایی که در حال حاضر به حساب کاربری شما وارد هستند.
+					</p>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2 class="panel-title">
+								<i class="glyphicon glyphicon-phone" aria-hidden="true"></i>
+								کامپیوتر شخصی — ویندوز
+								<span class="label label-success">این دستگاه</span>
+							</h2>
+						</div>
+						<div class="panel-body">
+							<dl class="dl-horizontal" style="margin-bottom: 0;">
+								<dt>مرورگر</dt>
+								<dd>Google Chrome</dd>
+								<dt>نشانی IP</dt>
+								<dd>192.168.1.12</dd>
+								<dt>موقعیت</dt>
+								<dd>تهران، ایران</dd>
+								<dt>آخرین فعالیت</dt>
+								<dd>هم‌اکنون</dd>
+							</dl>
+							<div class="text-left" style="margin-top: 15px;">
+								<button type="button" class="btn btn-danger">
+									<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+									خروج از این نشست
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2 class="panel-title">
+								<i class="glyphicon glyphicon-phone" aria-hidden="true"></i>
+								تلفن همراه — Android
+								<span class="label label-info">فعال</span>
+							</h2>
+						</div>
+						<div class="panel-body">
+							<dl class="dl-horizontal" style="margin-bottom: 0;">
+								<dt>مرورگر</dt>
+								<dd>Safari</dd>
+								<dt>نشانی IP</dt>
+								<dd>5.125.24.80</dd>
+								<dt>موقعیت</dt>
+								<dd>اصفهان، ایران</dd>
+								<dt>آخرین فعالیت</dt>
+								<dd>امروز، ساعت ۱۰:۳۵</dd>
+							</dl>
+							<div class="text-left" style="margin-top: 15px;">
+								<button type="button" class="btn btn-danger">
+									<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+									خروج از این نشست
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2 class="panel-title">
+								<i class="glyphicon glyphicon-phone" aria-hidden="true"></i>
+								لپ‌تاپ — macOS
+								<span class="label label-default">فعال</span>
+							</h2>
+						</div>
+						<div class="panel-body">
+							<dl class="dl-horizontal" style="margin-bottom: 0;">
+								<dt>مرورگر</dt>
+								<dd>Firefox</dd>
+								<dt>نشانی IP</dt>
+								<dd>31.24.201.16</dd>
+								<dt>موقعیت</dt>
+								<dd>شیراز، ایران</dd>
+								<dt>آخرین فعالیت</dt>
+								<dd>دیروز، ساعت ۱۸:۲۰</dd>
+							</dl>
+							<div class="text-left" style="margin-top: 15px;">
+								<button type="button" class="btn btn-danger">
+									<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+									خروج از این نشست
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					{% include "user_profile_module/components/profile_dashboard_menu_component.html" %}
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

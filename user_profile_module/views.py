@@ -283,3 +283,7 @@ def remove_ticket_file(request, id):
             "msg": "file removed!",
             'file_id': id
         })
+    
+
+class ActiveSessionViews(TemplateView):
+    template_name = "user_profile_module/active_session_list.html"

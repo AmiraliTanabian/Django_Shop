@@ -290,9 +290,11 @@ class ActiveSessionViews(LoginRequiredMixin, View):
     login_url = reverse_lazy("login_page")
 
     def get(self, request):
+        current_session_key = self.request.session.session_key
         sessions = UserSession.objects.filter(user=self.request.user, is_active=True).order_by('-id')
         return render(request, "user_profile_module/active_session_list.html", {
             "sessions": sessions,
+            "session_key": current_session_key,
         })
 
 
@@ -310,6 +312,16 @@ def logout_session_ajax(request: HttpRequest):
 
         try:
             current_session = get_object_or_404(UserSession, session_key=session_key, user=user)
+
+            # user try to log out current session
+            if current_session.session_key == request.session.session_key:
+                return JsonResponse({
+                    'success': False,
+                    "title": "خطا",
+                    "icon": "error",
+                    "msg": "نمیتوانید از حساب فعلی خارج شوید"
+                })
+
             current_session.is_active = False
             current_session.save()
 

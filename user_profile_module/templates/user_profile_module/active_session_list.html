@@ -3,6 +3,48 @@
 {% block title %}
 	نشست های فعال | فروشگاه اینترنتی
 {% endblock %}
+{% block header_references %}
+	<style>
+        .label-success {
+            display: inline-block;
+            margin-right: 8px;
+            padding: 3px 12px 3px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #1b7a3d;
+            background: linear-gradient(135deg, #e6f7ec 0%, #d2f0de 100%);
+            border: 1px solid #b6e3c7;
+            border-radius: 50px;
+            vertical-align: middle;
+            box-shadow: 0 1px 3px rgba(40, 167, 69, 0.15);
+        }
+
+        .label-success::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-left: 6px;
+            background: #28a745;
+            border-radius: 50%;
+            vertical-align: middle;
+            animation: session-pulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes session-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.55);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(40, 167, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+	</style>
+{% endblock %}
 {% block content %}
 	<div class="container" dir="rtl" lang="fa-IR">
 
@@ -18,7 +60,12 @@
 							<div class="panel-body">
 								<dl class="dl-horizontal" style="margin-bottom: 0;">
 									<dt>مرورگر</dt>
-									<dd>{{ session.device_name }}</dd>
+									<dd>
+										{{ session.device_name }}
+										{% if session.session_key == session_key %}
+											<label class="label-success">همین دستگاه</label>
+										{% endif %}
+									</dd>
 									<dt>نشانی IP</dt>
 									<dd>{{ session.ip_address }}</dd>
 									<dt>موقعیت</dt>
@@ -26,13 +73,15 @@
 									<dt>آخرین فعالیت</dt>
 									<dd>{{ session.last_activity|jformat:"%Y/%m/%d | %H:%M" }}</dd>
 								</dl>
-								<div class="text-left" style="margin-top: 15px;">
-									<button onclick="set_session_logout('{{ session.session_key }}')" type="button"
-									        class="btn btn-danger">
-										<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
-										خروج از این نشست
-									</button>
-								</div>
+								{% if not session.session_key == session_key %}
+									<div class="text-left" style="margin-top: 15px;">
+										<button onclick="set_session_logout('{{ session.session_key }}')" type="button"
+										        class="btn btn-danger">
+											<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+											خروج از این نشست
+										</button>
+									</div>
+								{% endif %}
 							</div>
 						</div>
 					{% endfor %}

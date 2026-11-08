@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('password-reset/done/',
          auth_views.PasswordResetDoneView.as_view(
-             template_name='registration/password_reset_done.html'
+             template_name='auth_module/password_reset_done.html'
          ),
          name='password_reset_done'),
 

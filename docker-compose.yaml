@@ -1,0 +1,7 @@
+services:
+  eshop:
+    build: .
+    container_name: eshop
+    ports:
+      - "8000:8000"
+    

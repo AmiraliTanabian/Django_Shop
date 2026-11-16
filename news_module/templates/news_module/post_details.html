@@ -193,7 +193,16 @@
 						</div>
 					</div><!--/Repaly Box-->
 				{% else %}
-					{% include "components/comment_without_login.html" %}
+					<div class="alert alert-info comment-alert text-center" style="visibility: hidden"
+					     role="alert">
+						<p>
+						</p>
+					</div>
+					<div class="alert-danger comment-alert text-center">
+						<p>
+							لطفا برای ثبت نظر ابتدا <a href="{% url "login_page" %}">لاگین</a> کنید
+						</p>
+					</div>
 				{% endif %}
 			</div>
 

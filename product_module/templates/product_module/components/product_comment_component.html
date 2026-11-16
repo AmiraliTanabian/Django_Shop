@@ -18,6 +18,14 @@
 	<input type="hidden" name="rating" id="rating-input">
 	<br>
 
+	{#	{% if form.errors %}#}
+	{#		{% for field in form.fields %}#}
+	{#			{% for error in field.errors %}#}
+	{#				{% include 'components/error_msg_component.html' with msg=error %}#}
+	{#			{% endfor %}#}
+	{#		{% endfor %}#}
+	{#	{% endif %}#}
+
 	<button type="submit" class="btn btn-default pull-left">
 		ارسـال
 	</button>

@@ -143,14 +143,30 @@ class ProductDetailView(View):
 
         form = ProductCommentForm(data=request.POST)
 
-        if form.is_valid():
-            score = int(request.POST["rating"])
-            new_comment = ProductComment(text=form.cleaned_data["text"], user=request.user,
-                                         product=self.loaded_product, score=score)
-            new_comment.save()
-            messages.success(request, "نظر شما ثبت شد بعد از تایید نمایش داده خواهد شد.")
+        if request.user.is_authenticated:
+            if form.is_valid():
+                score = request.POST.get("rating")
 
-        self.context["form"] = form
+                print(score)
+                # incorrect score
+                if not score or int(score) < 0 or int(score) > 5:
+                    # form.add_error('text', "امتیاز معتبر وارد کنید")
+                    self.context["comment_form"] = form
+                    form.add_error("text", "لطفا امتیاز محصول را وارد کنید")
+                    messages.error(request, "لظفا امتیاز محصول را وارد کنید.")
+                    return render(request, "product_module/product_detail.html", self.context)
+
+                new_comment = ProductComment(text=form.cleaned_data["text"], user=request.user,
+                                             product=self.loaded_product, score=int(score))
+                new_comment.save()
+                messages.success(request, "نظر شما ثبت شد بعد از تایید نمایش داده خواهد شد.")
+
+            # use ProductCommentForm() instead form --> to clear text field
+            self.context["comment_form"] = ProductCommentForm()
+            return render(request, "product_module/product_detail.html", self.context)
+
+        messages.error(request, "قبل از ثبت نظر باید لاگین کنید.")
+        self.context["comment_form"] = form
         return render(request, "product_module/product_detail.html", self.context)
 
 

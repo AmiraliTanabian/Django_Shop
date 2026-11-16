@@ -182,7 +182,8 @@
 									<span>*</span>
 									<input type="hidden" id="parentId" value>
 									<textarea class="center" id="message" rows="11"></textarea>
-									<a class="btn btn-primary" href="" onclick="addComment({{ news.id }})">
+									<a class="btn btn-primary" href=""
+									   onclick='addComment({{ news.id }}, "{{ site_url }}")'>
 										ارسـال نظـر</a>
 								</div>
 							</div>
@@ -192,16 +193,7 @@
 						</div>
 					</div><!--/Repaly Box-->
 				{% else %}
-					<div class="alert alert-info comment-alert text-center" style="visibility: hidden"
-										role="alert">
-					<p>
-					</p>
-					</div>
-					<div class="alert-danger comment-alert text-center">
-						<p>
-							لطفا برای ثبت نظر ابتدا <a href="{% url "login_page" %}">لاگین</a> کنید
-						</p>
-					</div>				
+					{% include "components/comment_without_login.html" %}
 				{% endif %}
 			</div>
 
@@ -256,4 +248,8 @@
 
 		</div>
 	</div>
+{% endblock %}
+
+{% block footer_references %}
+	<script src="{% static 'js/blog_comment_ajax.js' %}"></script>
 {% endblock %}

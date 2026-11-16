@@ -57,6 +57,9 @@ class PostDetailView(DetailView):
         context["banners"] = SiteBanners.objects.filter(is_active=True,
                                                         position=SiteBanners.PositionChoices.post_detail)
 
+        # add site url to context for use on ajax comment sender on blog module
+        context["site_url"] = settings.SITE_URL
+
         return context
 
 

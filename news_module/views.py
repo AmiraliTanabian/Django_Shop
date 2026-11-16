@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db.models.aggregates import Min, Max
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 
@@ -121,12 +122,22 @@ class TagPageView(ListView):
 
 def add_article_comment(request):
     if request.user.is_authenticated:
-        comment_text = request.GET["comment_text"]
-        article_id = request.GET["article_id"]
-        parent_id = request.GET["parent_id"]
-        user = request.user
+        try:
+            comment_text = request.GET["comment_text"]
+            article_id = request.GET["article_id"]
+            parent_id = request.GET["parent_id"]
+            user = request.user
 
-        article_comment = ArticleComment(user=user, parent_id=parent_id, article_id=article_id, text=comment_text)
-        article_comment.save()
+            article_comment = ArticleComment(user=user, parent_id=parent_id, article_id=article_id, text=comment_text)
+            article_comment.save()
 
-    return HttpResponse("Comment Added!")
+            # show result
+            success_result = render_to_string("components/success_msg_component.html", {
+                "msg": "کامنت شما با موفقیت ثبت شد. در صورت تایید در سایت نمایش داده می شود"
+            })
+            return HttpResponse(success_result)
+        except Exception as Error:
+            # show error
+            error_result = render_to_string("components/error_msg_component.html", {
+                "msg": "ثبت ارر با خطا مواجه شد بعدا دوباره تلاش کنید یا با پشتیبانی ارتباط بگیرید"
+            })

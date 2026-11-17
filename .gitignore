@@ -176,3 +176,4 @@ cython_debug/
 *pyc
 .idea
 note.txt
+settings.py

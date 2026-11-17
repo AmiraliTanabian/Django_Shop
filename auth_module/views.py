@@ -35,6 +35,16 @@ class loginView(FormView):
         is_authenticate = authenticate(self.request, username=username, password=password)
 
         if is_authenticate:
+
+            # user was not activate or user is_active = False
+            user = is_authenticate
+            if (not user.account_activated or not user.is_active) and not user.is_superuser:
+                messages.error(self.request, "نام کاربری یا رمز عبور شما نادرست است")
+                return render(self.request, "auth_module/login_page.html",
+                                          {"form": form})
+
+            
+            # user was active 
             login(self.request, is_authenticate)
             session_key = self.request.session.session_key
 

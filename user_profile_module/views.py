@@ -161,8 +161,8 @@ class orderPageView(LoginRequiredMixin, DetailView):
     model = orderModel
 
     def get_queryset(self):
-        query = super().get_queryset()
-        query.filter(user=self.request.user).prefetch_related("orderproductmodel_set")
+        query = super().get_queryset().filter(user=self.request.user)
+        query.prefetch_related("orderproductmodel_set")
         return query
 
 

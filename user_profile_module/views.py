@@ -190,8 +190,11 @@ class AddTicketView(LoginRequiredMixin, View):
             ticket_attachments.remove("")
             for id in ticket_attachments:
                 attachment = ticket_attachment.objects.get(id=int(id))
-                attachment.ticket = current_ticket
-                attachment.save()
+
+                # Check the attachment user and checking that the attached file has not already been registered for a ticket
+                if attachment.ticket is not None and attachment.user == self.request.user:
+                    attachment.ticket = current_ticket
+                    attachment.save()
 
             messages.success(request, "تیکت شما با موفقیت ثبت شد \n پاسخ آن را در همان بخش دریافت میکنید")
             return redirect(reverse_lazy("ticket_list_page"))
@@ -260,7 +263,7 @@ def ticket_add_file_ajax(request):
         file = request.FILES.get('ticket_file')
 
         if file:
-            attachment = ticket_attachment.objects.create(files=file)
+            attachment = ticket_attachment.objects.create(user=request.user, files=file)
 
             return JsonResponse({
                 'success': True,
@@ -277,11 +280,18 @@ def ticket_add_file_ajax(request):
 def remove_ticket_file(request, id):
     if request.method == "GET":
         file = get_object_or_404(ticket_attachment, id=int(id))
-        file.delete()
+        if file.user == request.user:
+            file.delete()
+
+            return JsonResponse({
+                'success': True,
+                "msg": "file removed!",
+                'file_id': id
+            })
 
         return JsonResponse({
-            'success': True,
-            "msg": "file removed!",
+            'success': False,
+            "msg": "file does not belong to the user.",
             'file_id': id
         })
 

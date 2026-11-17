@@ -26,7 +26,7 @@ class ticket_model(models.Model):
     updated_date = models.DateTimeField(verbose_name="تاریخ بروزرسانی تیکت", auto_now=True)
     is_closed = models.BooleanField(verbose_name="بسته شدن تیکت", default=False)
     is_active = models.BooleanField(verbose_name="فعال / غیرفعال", default=True)
-    has_unread_reply = models.BooleanField(verbose_name="دارای پیام خوانده نشده ", default=True)
+    has_unread_reply = models.BooleanField(verbose_name="دارای پیام خوانده نشده ", default=False, null=True)
 
     def __str__(self):
         return self.title
@@ -37,6 +37,7 @@ class ticket_model(models.Model):
 
 
 class ticket_attachment(models.Model):
+    user = models.ForeignKey(User, verbose_name="کاربر", null=True, on_delete=models.CASCADE)
     files = models.FileField(verbose_name="پیوست", upload_to="tickets")
     ticket = models.ForeignKey(ticket_model, on_delete=models.CASCADE, verbose_name="تیکت ها", null=True)
     created_time = models.DateTimeField(verbose_name="زمان آپلود فایل", null=True, auto_now_add=True)
